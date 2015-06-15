@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -123,6 +123,7 @@
                                 <exclude reference="aeR-h6-1Z8"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="aBW-2b-LOu"/>
                                 <exclude reference="Z9y-0N-crk"/>
                                 <exclude reference="mlW-oY-wwo"/>
                                 <exclude reference="ztZ-70-Q1m"/>
@@ -138,7 +139,6 @@
                                 <exclude reference="mbt-yx-6Pu"/>
                                 <exclude reference="tOa-wD-Dgt"/>
                                 <exclude reference="uZA-2u-23y"/>
-                                <exclude reference="aBW-2b-LOu"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -150,6 +150,7 @@
                                 <include reference="aeR-h6-1Z8"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="aBW-2b-LOu"/>
                                 <include reference="Z9y-0N-crk"/>
                                 <include reference="mlW-oY-wwo"/>
                                 <include reference="ztZ-70-Q1m"/>
@@ -165,7 +166,6 @@
                                 <include reference="mbt-yx-6Pu"/>
                                 <include reference="tOa-wD-Dgt"/>
                                 <include reference="uZA-2u-23y"/>
-                                <include reference="aBW-2b-LOu"/>
                             </mask>
                         </variation>
                     </view>
@@ -190,6 +190,7 @@
                         <viewControllerLayoutGuide type="bottom" id="vGW-ph-1Qh"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="OLB-dl-Tfc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGl-lb-gcp">
@@ -619,7 +620,6 @@
         <!--Title-->
         <scene sceneID="bSL-zc-86E">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Y2B-GT-sj0" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="v4F-Xi-xrx" customClass="DiscoverViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6hG-fy-q16"/>
@@ -657,13 +657,13 @@
                                 <exclude reference="sEZ-Hq-SUm"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="IJt-yb-EsM"/>
                                 <exclude reference="CkX-Iq-LKm"/>
                                 <exclude reference="K8S-LR-PNZ"/>
                                 <exclude reference="jHu-TP-ceG"/>
                                 <exclude reference="5DB-uc-5Xc"/>
                                 <exclude reference="7ue-ym-z9k"/>
                                 <exclude reference="S5B-Xz-3vr"/>
-                                <exclude reference="IJt-yb-EsM"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -672,13 +672,13 @@
                                 <include reference="sEZ-Hq-SUm"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="IJt-yb-EsM"/>
                                 <include reference="CkX-Iq-LKm"/>
                                 <include reference="K8S-LR-PNZ"/>
                                 <include reference="jHu-TP-ceG"/>
                                 <include reference="5DB-uc-5Xc"/>
                                 <include reference="7ue-ym-z9k"/>
                                 <include reference="S5B-Xz-3vr"/>
-                                <include reference="IJt-yb-EsM"/>
                             </mask>
                         </variation>
                     </view>
@@ -687,6 +687,7 @@
                         <outlet property="searchDisplayController" destination="joH-dt-LFz" id="eM9-QF-tnz"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y2B-GT-sj0" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <searchDisplayController id="joH-dt-LFz">
                     <connections>
                         <outlet property="delegate" destination="v4F-Xi-xrx" id="kAA-Zg-Stz"/>
