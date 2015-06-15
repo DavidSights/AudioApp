@@ -159,8 +159,6 @@
 		9A1A03191B2E0889003243ED /* AudioApp */ = {
 			isa = PBXGroup;
 			children = (
-				97DB9C501B2F67A7006C8FB5 /* ProfileViewController.h */,
-				97DB9C511B2F67A7006C8FB5 /* ProfileViewController.m */,
 				9A1A031E1B2E0889003243ED /* AppDelegate.h */,
 				9A1A031F1B2E0889003243ED /* AppDelegate.m */,
 				9A1A03241B2E0889003243ED /* FeedViewController.h */,
@@ -172,6 +170,8 @@
 				9A1A03751B2F361C003243ED /* LoginViewController.m */,
 				9A1A03791B2F54DB003243ED /* DiscoverViewController.h */,
 				9A1A037A1B2F54DB003243ED /* DiscoverViewController.m */,
+				97DB9C501B2F67A7006C8FB5 /* ProfileViewController.h */,
+				97DB9C511B2F67A7006C8FB5 /* ProfileViewController.m */,
 				9A1A03521B2E08E3003243ED /* Model */,
 				9A1A032A1B2E0889003243ED /* Images.xcassets */,
 				9A1A032C1B2E0889003243ED /* LaunchScreen.xib */,

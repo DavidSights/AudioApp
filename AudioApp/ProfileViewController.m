@@ -8,7 +8,14 @@
 
 #import "ProfileViewController.h"
 #import <Parse/Parse.h>
+
 @interface ProfileViewController ()
+
+@property (weak, nonatomic) IBOutlet UILabel *displayNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *postsLikesController;
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
 
 @end
 
@@ -16,19 +23,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
 }
 
--(void)viewWillAppear:(BOOL)animated{
-
-    PFUser *currentUser = [PFUser currentUser]; //show current user in console
-    if (currentUser) {
-        NSLog(@"Current user: %@", currentUser.username);
-    }
-    else {
+-(void)viewDidAppear:(BOOL)animated {
+    PFUser *currentUser = [PFUser currentUser];
+    if (currentUser != nil) {
+        self.usernameLabel.text = currentUser.username;
+        self.displayNameLabel.text = currentUser[@"displayName"];
+        self.aboutLabel.text = currentUser[@"about"];
+    } else {
         [self.tabBarController setSelectedIndex:0];
     }
-
 }
 
 @end
