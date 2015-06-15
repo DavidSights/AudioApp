@@ -7,6 +7,7 @@
 //
 
 #import "OptionsViewController.h"
+#import <Parse/Parse.h>
 
 @interface OptionsViewController ()
 
@@ -20,7 +21,12 @@
 
 - (IBAction)logoutButtonPressed:(id)sender {
 
-    // Set up logout here.
+    [self dismissViewControllerAnimated:YES completion:nil];
+
+    [PFUser logOut];
+//logout of account
+
+
 }
 
 @end

@@ -124,10 +124,9 @@
 
                 NSLog(@"%@",user.username);
 
-                   [self dismissViewControllerAnimated:YES completion:nil];
 
 
-                // Do stuff after successful login.
+                [self dismissViewControllerAnimated:YES completion:nil];
 
 
             } else {

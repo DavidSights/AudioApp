@@ -17,15 +17,32 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"%@", self.description);
-    if ([PFUser currentUser] == nil) {
-        [self performSegueWithIdentifier:@"login" sender:nil];
+    PFUser *currentUser = [PFUser currentUser]; //show current user in console
+    if (currentUser) {
+        NSLog(@"Current user: %@", currentUser.username);
+    }
+    else {
+        [self performSegueWithIdentifier:@"login" sender:self];
     }
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+    PFUser *currentUser = [PFUser currentUser]; //show current user in console
+    if (currentUser) {
+        NSLog(@"Current user: %@", currentUser.username);
+    }
+    else {
+        [self performSegueWithIdentifier:@"login" sender:self];
+    }
+}
+
+
 - (IBAction)onLogoutTapped:(id)sender {
 
 
     [PFUser logOut];
+    [self dismissViewControllerAnimated:YES completion:nil];
+
     [self performSegueWithIdentifier:@"login" sender:self];//log
 }
 
