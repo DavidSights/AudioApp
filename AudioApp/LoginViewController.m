@@ -28,7 +28,6 @@
     self.usernameTextField.delegate = self;
     self.passwordTextField.delegate = self;
     self.emailTextField.delegate = self;
-    // Align toggle buttons to right justification.
     self.loginToggleButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     self.signUpToggleButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
 
@@ -65,40 +64,27 @@
 
 - (IBAction)forgotPasswordButtonPressed:(id)sender {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Reset Password" message:@"Enter email" preferredStyle:UIAlertControllerStyleAlert];
+
     //adding text field to alert controller
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-
-        //adds the placeholder text in the field
-        textField.placeholder = @"Enter email";
-
-
+        textField.placeholder = @"Enter email"; //adds the placeholder text in the field
     }];
 
-    //cancels alert controller
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-    //
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]; //cancels alert controller
+
     //saves what you wrote
     UIAlertAction *resetAction =  [UIAlertAction actionWithTitle:@"Reset" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
         UITextField *emailTextField = alertController.textFields[0];
         [PFUser requestPasswordResetForEmailInBackground:emailTextField.text];
-
-
     }];
 
     //add cancelAction variable to alertController
     [alertController addAction:cancelAction];
-
-
     [alertController addAction:resetAction];
-
 
     //activates alertcontroler
     [self presentViewController:alertController animated:true completion:nil];
-    
-
-
-    
 }
 
 //– (void)giveCakeToUser:(PFUser *)user
@@ -115,6 +101,7 @@
 //    // This is a triumph.
 //    [self warnUserAboutCakeAvailability];
 //}
+
 - (IBAction)signUpButton:(id)sender {
     NSString *username=[self.usernameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString *password =[self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
