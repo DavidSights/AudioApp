@@ -64,9 +64,57 @@
 }
 
 - (IBAction)forgotPasswordButtonPressed:(id)sender {
-    // Code
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Reset Password" message:@"Enter email" preferredStyle:UIAlertControllerStyleAlert];
+    //adding text field to alert controller
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+
+        //adds the placeholder text in the field
+        textField.placeholder = @"Enter email";
+
+
+    }];
+
+    //cancels alert controller
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    //
+    //saves what you wrote
+    UIAlertAction *resetAction =  [UIAlertAction actionWithTitle:@"Reset" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+
+        UITextField *emailTextField = alertController.textFields[0];
+        [PFUser requestPasswordResetForEmailInBackground:emailTextField.text];
+
+
+    }];
+
+    //add cancelAction variable to alertController
+    [alertController addAction:cancelAction];
+
+
+    [alertController addAction:resetAction];
+
+
+    //activates alertcontroler
+    [self presentViewController:alertController animated:true completion:nil];
+    
+
+
+    
 }
 
+//– (void)giveCakeToUser:(PFUser *)user
+//{       PFUser *currentUser = [PFUser currentUser]; //show current user in console
+//
+//    if (![[user objectForKey:@”emailVerified”] boolValue]) {
+//        // Refresh to make sure the user did not recently verify
+//        [user refresh];
+//        if (![[user objectForKey:@”emailVerified”] boolValue]) {
+//            [self redirectWithMessage:@”You must verify your email address for cake”];
+//            return;
+//        }
+//    }
+//    // This is a triumph.
+//    [self warnUserAboutCakeAvailability];
+//}
 - (IBAction)signUpButton:(id)sender {
     NSString *username=[self.usernameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString *password =[self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -97,6 +145,7 @@
 
     if ([username length]==0 || [password length]==0 ) {
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Something's wrong..." message:@"Did you forget to enter your username or password?" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+
         [alertView show];
     } else {
         [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error) {
