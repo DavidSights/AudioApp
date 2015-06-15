@@ -22,5 +22,11 @@
         [self performSegueWithIdentifier:@"login" sender:nil];
     }
 }
+- (IBAction)onLogoutTapped:(id)sender {
+
+
+    [PFUser logOut];
+    [self performSegueWithIdentifier:@"login" sender:self];//log
+}
 
 @end
