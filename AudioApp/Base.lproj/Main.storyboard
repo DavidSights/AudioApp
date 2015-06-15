@@ -129,6 +129,9 @@
                                         <include reference="wUU-Ow-V87"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="loginButton:" destination="DKP-sw-KJf" eventType="touchUpInside" id="jic-D6-ff2"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y51-s3-Y2E">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -151,6 +154,9 @@
                                         <include reference="lPt-d8-sg9"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="signUpButton:" destination="DKP-sw-KJf" eventType="touchUpInside" id="bab-Nc-adM"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ODg-Dx-7bO" userLabel="Sign Up Toggle">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>

@@ -7,8 +7,8 @@
 //
 
 #import "LoginViewController.h"
-
-@interface LoginViewController ()
+#import <Parse/Parse.h>
+@interface LoginViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
@@ -24,7 +24,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.usernameTextField.delegate = self;
+    self.passwordTextField.delegate = self;
+    self.emailTextField.delegate = self;
     // Align toggle buttons to right justification.
     self.loginToggleButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     self.signUpToggleButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
@@ -60,4 +62,94 @@
 
 - (IBAction)forgotPasswordButtonPressed:(id)sender {
 }
+- (IBAction)signUpButton:(id)sender {
+
+    NSString *username=[self.usernameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *password =[self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *email=[self.emailTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+
+    if ([username length]==0 || [password length]==0 ||[email length]==0) {
+        UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"oops" message:@"enter Username, password, and email adress" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+
+
+        [alertview show];
+    }
+
+
+    else{
+
+        PFUser *newUser = [PFUser user];
+        newUser.username=username;
+        newUser.password=password;
+        newUser.email=email;
+
+        [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (error) {
+                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"sorry" message:[error.userInfo objectForKey:@"error"] delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
+                [alertView show];
+
+            }
+
+            else{
+                [self dismissViewControllerAnimated:YES completion:nil];
+
+            }
+        }];
+
+
+    }
+    
+    
+
+}
+- (IBAction)loginButton:(id)sender {
+
+    NSString *username = [self.usernameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    NSString *password = [self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+
+
+    if ([username length]==0 || [password length]==0 ) {
+
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Seriously?😡" message:@"enter Username and password" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles:nil];
+
+        [alertView show];
+
+    }else{
+        [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error) {
+
+            if (user) {
+
+                NSLog(@"%@",user.username);
+
+                   [self dismissViewControllerAnimated:YES completion:nil];
+
+
+                // Do stuff after successful login.
+
+
+            } else {
+
+                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"sorry" message:[error.userInfo objectForKey:@"error"] delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles:nil];
+                [alertView show];
+                
+                // The login failed. Check error to see why.
+            }
+        }];
+        
+    }
+
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+
+
+    [textField resignFirstResponder];
+    return YES;
+
+}
+
+
 @end
