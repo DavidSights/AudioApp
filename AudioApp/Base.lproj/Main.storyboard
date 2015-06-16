@@ -922,17 +922,32 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aey-C0-KCl">
                                         <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                         <color key="backgroundColor" red="0.90212126520000002" green="0.90212126520000002" blue="0.90212126520000002" alpha="0.78000000000000003" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="200" id="8To-Ys-fen"/>
+                                            <constraint firstAttribute="width" constant="200" id="aNR-Xp-QBO"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="89"/>
                                         <color key="textColor" red="0.49411764705882355" green="1" blue="0.42745098039215684" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="100" y="100" width="200" height="200"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="8To-Ys-fen"/>
+                                                <exclude reference="aNR-Xp-QBO"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="widthClass=compact">
+                                            <mask key="constraints">
+                                                <include reference="8To-Ys-fen"/>
+                                                <include reference="aNR-Xp-QBO"/>
+                                            </mask>
                                         </variation>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.54605115289999995" green="1" blue="0.50116181800000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="aey-C0-KCl" secondAttribute="centerX" id="HbA-Wh-RlS"/>
                                     <constraint firstAttribute="width" secondItem="1lt-co-piA" secondAttribute="height" multiplier="1:1" id="Mws-kh-P2j"/>
+                                    <constraint firstItem="aey-C0-KCl" firstAttribute="top" secondItem="1lt-co-piA" secondAttribute="top" constant="100" id="tIW-PU-IvZ"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="subviews">
@@ -940,6 +955,8 @@
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="Mws-kh-P2j"/>
+                                        <exclude reference="HbA-Wh-RlS"/>
+                                        <exclude reference="tIW-PU-IvZ"/>
                                     </mask>
                                 </variation>
                                 <variation key="widthClass=compact">
@@ -948,6 +965,8 @@
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="Mws-kh-P2j"/>
+                                        <include reference="HbA-Wh-RlS"/>
+                                        <include reference="tIW-PU-IvZ"/>
                                     </mask>
                                 </variation>
                             </view>
