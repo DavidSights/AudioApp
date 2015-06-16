@@ -67,7 +67,9 @@
         [self.recorder stop];
         [self.timer invalidate];
         //        self.recordTimeInt = 0;
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"done" message:@"tooo long" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"done" message:@"too long" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles:nil, nil];
+        self.navigationItem.rightBarButtonItem.enabled = true;
+
         //        count = nil;
         
         [alert show];

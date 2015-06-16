@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		975EF35A1B30A74E00A3E145 /* PostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EF3591B30A74E00A3E145 /* PostViewController.m */; };
 		9777D2D61B305E7700ED2B46 /* RecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9777D2D51B305E7700ED2B46 /* RecordViewController.m */; };
 		9777D2D81B30615200ED2B46 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9777D2D71B30615200ED2B46 /* AVFoundation.framework */; };
 		9777D2DB1B3076F400ED2B46 /* EditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9777D2DA1B3076F400ED2B46 /* EditViewController.m */; };
-		97DB9C521B2F67A7006C8FB5 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB9C511B2F67A7006C8FB5 /* ProfileViewController.m */; };
 		9A1A031D1B2E0889003243ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A031C1B2E0889003243ED /* main.m */; };
 		9A1A03201B2E0889003243ED /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A031F1B2E0889003243ED /* AppDelegate.m */; };
 		9A1A03231B2E0889003243ED /* AudioApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A03211B2E0889003243ED /* AudioApp.xcdatamodeld */; };
@@ -57,6 +57,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		975EF3581B30A74E00A3E145 /* PostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostViewController.h; sourceTree = "<group>"; };
+		975EF3591B30A74E00A3E145 /* PostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostViewController.m; sourceTree = "<group>"; };
 		9777D2D41B305E7700ED2B46 /* RecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordViewController.h; sourceTree = "<group>"; };
 		9777D2D51B305E7700ED2B46 /* RecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordViewController.m; sourceTree = "<group>"; };
 		9777D2D71B30615200ED2B46 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -173,6 +175,8 @@
 				9777D2D51B305E7700ED2B46 /* RecordViewController.m */,
 				9777D2D91B3076F400ED2B46 /* EditViewController.h */,
 				9777D2DA1B3076F400ED2B46 /* EditViewController.m */,
+				975EF3581B30A74E00A3E145 /* PostViewController.h */,
+				975EF3591B30A74E00A3E145 /* PostViewController.m */,
 				9A1A031E1B2E0889003243ED /* AppDelegate.h */,
 				9A1A031F1B2E0889003243ED /* AppDelegate.m */,
 				9A1A03241B2E0889003243ED /* FeedViewController.h */,
@@ -366,6 +370,7 @@
 				9A1A03451B2E08A9003243ED /* User.m in Sources */,
 				9A1A034B1B2E08C9003243ED /* Like.m in Sources */,
 				9A1A03481B2E08B7003243ED /* Post.m in Sources */,
+				975EF35A1B30A74E00A3E145 /* PostViewController.m in Sources */,
 				9A1A03231B2E0889003243ED /* AudioApp.xcdatamodeld in Sources */,
 				9777D2DB1B3076F400ED2B46 /* EditViewController.m in Sources */,
 				9A1A03761B2F361C003243ED /* LoginViewController.m in Sources */,

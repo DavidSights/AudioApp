@@ -7,7 +7,7 @@
 //
 
 #import "EditViewController.h"
-
+#import "PostViewController.h"
 @interface EditViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *viewOne;
 @property AVAudioPlayer *player;
@@ -134,5 +134,11 @@
 
 }
 
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    PostViewController *dvc = segue.destinationViewController;
+    dvc.recorder = self.recorder;
+
+}
 
 @end
