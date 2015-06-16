@@ -839,10 +839,88 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NtK-Qa-gwX">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DDE-Ki-xA5">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="64H-wy-eBY">
+                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <color key="backgroundColor" red="1" green="0.88257656294952624" blue="0.13301440751576776" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="36" y="26" width="30" height="30"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="Fsg-5H-NFQ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ITG-8n-ffu">
+                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <color key="backgroundColor" red="1" green="0.29960879315921318" blue="0.45182267220732897" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="141" y="26" width="30" height="30"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="puW-9i-V81"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z7p-gh-kyc">
+                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <color key="backgroundColor" red="0.29032046562260272" green="1" blue="0.32410121973401629" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="4">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="233" y="26" width="30" height="30"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="G4p-CX-SeC"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TcQ-6Y-vGL">
+                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <state key="normal" title="5">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="319" y="26" width="30" height="30"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="0yJ-9Q-u6M"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" none="YES" button="YES"/>
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="64H-wy-eBY"/>
+                                        <exclude reference="ITG-8n-ffu"/>
+                                        <exclude reference="Z7p-gh-kyc"/>
+                                        <exclude reference="TcQ-6Y-vGL"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="352" width="400" height="100"/>
+                                    <mask key="subviews">
+                                        <include reference="64H-wy-eBY"/>
+                                        <include reference="ITG-8n-ffu"/>
+                                        <include reference="Z7p-gh-kyc"/>
+                                        <include reference="TcQ-6Y-vGL"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NtK-Qa-gwX">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" red="0.32829638947004403" green="0.94321938805419492" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jpj-DC-NWB">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jpj-DC-NWB">
                                     <size key="itemSize" width="85" height="93"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -872,19 +950,26 @@
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="Xyw-YN-TtD"/>
+                                <exclude reference="DDE-Ki-xA5"/>
                                 <exclude reference="NtK-Qa-gwX"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="Xyw-YN-TtD"/>
+                                <include reference="DDE-Ki-xA5"/>
                                 <include reference="NtK-Qa-gwX"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="blackColorButton" destination="TcQ-6Y-vGL" id="VMt-3g-eBV"/>
                         <outlet property="collectionView" destination="NtK-Qa-gwX" id="e5A-5t-P0z"/>
+                        <outlet property="greenColorButton" destination="Z7p-gh-kyc" id="bRY-zh-858"/>
+                        <outlet property="redColorButton" destination="ITG-8n-ffu" id="qM2-iU-hNk"/>
                         <outlet property="timeButton" destination="CYO-KB-wyV" id="p0m-cO-jgl"/>
+                        <outlet property="viewOne" destination="Xyw-YN-TtD" id="dVY-Iy-5EW"/>
+                        <outlet property="yellowColorButton" destination="64H-wy-eBY" id="NIq-xn-L2q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qpq-PB-sUy" userLabel="First Responder" sceneMemberID="firstResponder"/>

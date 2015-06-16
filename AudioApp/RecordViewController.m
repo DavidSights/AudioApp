@@ -12,7 +12,6 @@
 
 @interface RecordViewController ()<AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *recordButton;
-@property (weak, nonatomic) IBOutlet UIButton *playButton;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
 @property AVAudioRecorder *recorder;
@@ -28,10 +27,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.navigationItem.rightBarButtonItem.enabled = false;
+
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"X" style:UIBarButtonItemStylePlain target:self action:@selector(editButtonPressed:)];
 
     self.navigationItem.leftBarButtonItem = editButton;
-    self.playButton.enabled = NO;
 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentPath = paths.lastObject;
@@ -136,14 +136,16 @@
         [self.recorder pause];
         [self.recordButton setTitle:@"Record" forState:UIControlStateNormal];
         [self.timer invalidate];
-        self.playButton.enabled = true;
+        self.navigationItem.rightBarButtonItem.enabled = true;
+
+
+
     }
 }
 
 
 -(void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
     [self.recordButton setTitle:@"record" forState:UIControlStateNormal];
-    self.playButton.enabled = YES;
 }
 
 -(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
