@@ -50,7 +50,7 @@
     [label setFont:[UIFont boldSystemFontOfSize:12]];
 //    NSString *string =[list objectAtIndex:section];
     /* Section header is in 0th index... */
-    [label setText:string];
+//    [label setText:string];
     [view addSubview:label];
     [view setBackgroundColor:[UIColor colorWithRed:166/255.0 green:177/255.0 blue:186/255.0 alpha:1.0]]; //your background color...
     return view;
