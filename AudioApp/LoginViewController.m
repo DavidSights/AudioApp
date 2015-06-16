@@ -8,7 +8,9 @@
 
 #import "LoginViewController.h"
 #import <Parse/Parse.h>
-@interface LoginViewController ()<UITextFieldDelegate>
+
+@interface LoginViewController () <UITextFieldDelegate>
+
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
@@ -25,6 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.passwordTextField.secureTextEntry = YES;
     self.usernameTextField.delegate = self;
     self.passwordTextField.delegate = self;
     self.emailTextField.delegate = self;
@@ -87,21 +90,6 @@
     [self presentViewController:alertController animated:true completion:nil];
 }
 
-//– (void)giveCakeToUser:(PFUser *)user
-//{       PFUser *currentUser = [PFUser currentUser]; //show current user in console
-//
-//    if (![[user objectForKey:@”emailVerified”] boolValue]) {
-//        // Refresh to make sure the user did not recently verify
-//        [user refresh];
-//        if (![[user objectForKey:@”emailVerified”] boolValue]) {
-//            [self redirectWithMessage:@”You must verify your email address for cake”];
-//            return;
-//        }
-//    }
-//    // This is a triumph.
-//    [self warnUserAboutCakeAvailability];
-//}
-
 - (IBAction)signUpButton:(id)sender {
     NSString *username=[self.usernameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString *password =[self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -150,5 +138,20 @@
     [textField resignFirstResponder];
     return YES;
 }
+
+//– (void)giveCakeToUser:(PFUser *)user {
+//       PFUser *currentUser = [PFUser currentUser]; //show current user in console
+//
+//    if (![[user objectForKey:@”emailVerified”] boolValue]) {
+//        // Refresh to make sure the user did not recently verify
+//        [user refresh];
+//        if (![[user objectForKey:@”emailVerified”] boolValue]) {
+//            [self redirectWithMessage:@”You must verify your email address for cake”];
+//            return;
+//        }
+//    }
+//    // This is a triumph.
+//    [self warnUserAboutCakeAvailability];
+//}
 
 @end

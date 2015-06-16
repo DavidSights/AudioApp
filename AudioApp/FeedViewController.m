@@ -20,8 +20,7 @@
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
     if (currentUser) {
         NSLog(@"Current user: %@", currentUser.username);
-    }
-    else {
+    } else {
         [self performSegueWithIdentifier:@"login" sender:self];
     }
 }
@@ -30,20 +29,9 @@
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
     if (currentUser) {
         NSLog(@"Current user: %@", currentUser.username);
-    }
-    else {
+    } else {
         [self performSegueWithIdentifier:@"login" sender:self];
     }
-}
-
-
-- (IBAction)onLogoutTapped:(id)sender {
-
-
-    [PFUser logOut];
-    [self dismissViewControllerAnimated:YES completion:nil];
-
-    [self performSegueWithIdentifier:@"login" sender:self];//log
 }
 
 @end

@@ -7,15 +7,17 @@
 //
 
 #import "ProfileViewController.h"
+#import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+
 
 @interface ProfileViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *displayNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *postsLikesController;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
 
 @end
 

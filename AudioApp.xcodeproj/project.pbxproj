@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		97DB9C521B2F67A7006C8FB5 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB9C511B2F67A7006C8FB5 /* ProfileViewController.m */; };
 		9A1A031D1B2E0889003243ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A031C1B2E0889003243ED /* main.m */; };
 		9A1A03201B2E0889003243ED /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A031F1B2E0889003243ED /* AppDelegate.m */; };
 		9A1A03231B2E0889003243ED /* AudioApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A03211B2E0889003243ED /* AudioApp.xcdatamodeld */; };
@@ -40,6 +39,7 @@
 		9A1A03761B2F361C003243ED /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A03751B2F361C003243ED /* LoginViewController.m */; };
 		9A1A037B1B2F54DB003243ED /* DiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A037A1B2F54DB003243ED /* DiscoverViewController.m */; };
 		9A1A037E1B2F57C1003243ED /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A037D1B2F57C1003243ED /* OptionsViewController.m */; };
+		9A1A037F1B2FA699003243ED /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB9C511B2F67A7006C8FB5 /* ProfileViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,14 +164,14 @@
 				9A1A03241B2E0889003243ED /* FeedViewController.h */,
 				9A1A03251B2E0889003243ED /* FeedViewController.m */,
 				9A1A03271B2E0889003243ED /* Main.storyboard */,
-				9A1A037C1B2F57C1003243ED /* OptionsViewController.h */,
-				9A1A037D1B2F57C1003243ED /* OptionsViewController.m */,
 				9A1A03741B2F361C003243ED /* LoginViewController.h */,
 				9A1A03751B2F361C003243ED /* LoginViewController.m */,
 				9A1A03791B2F54DB003243ED /* DiscoverViewController.h */,
 				9A1A037A1B2F54DB003243ED /* DiscoverViewController.m */,
 				97DB9C501B2F67A7006C8FB5 /* ProfileViewController.h */,
 				97DB9C511B2F67A7006C8FB5 /* ProfileViewController.m */,
+				9A1A037C1B2F57C1003243ED /* OptionsViewController.h */,
+				9A1A037D1B2F57C1003243ED /* OptionsViewController.m */,
 				9A1A03521B2E08E3003243ED /* Model */,
 				9A1A032A1B2E0889003243ED /* Images.xcassets */,
 				9A1A032C1B2E0889003243ED /* LaunchScreen.xib */,
@@ -347,6 +347,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A1A037F1B2FA699003243ED /* ProfileViewController.m in Sources */,
 				9A1A03451B2E08A9003243ED /* User.m in Sources */,
 				9A1A034B1B2E08C9003243ED /* Like.m in Sources */,
 				9A1A03481B2E08B7003243ED /* Post.m in Sources */,
@@ -356,7 +357,6 @@
 				9A1A03201B2E0889003243ED /* AppDelegate.m in Sources */,
 				9A1A03261B2E0889003243ED /* FeedViewController.m in Sources */,
 				9A1A037B1B2F54DB003243ED /* DiscoverViewController.m in Sources */,
-				97DB9C521B2F67A7006C8FB5 /* ProfileViewController.m in Sources */,
 				9A1A031D1B2E0889003243ED /* main.m in Sources */,
 				9A1A03511B2E08DC003243ED /* Message.m in Sources */,
 				9A1A034E1B2E08D1003243ED /* Comment.m in Sources */,
