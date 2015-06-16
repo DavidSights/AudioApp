@@ -45,8 +45,6 @@
             PFObject *post = [PFObject objectWithClassName:@"Post"];
             [post setObject:file forKey:@"audio"];
             [post setObject:currentUser forKey:@"author"];
-
-    
             [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (error) {
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
@@ -59,8 +57,28 @@
                     //                    [self reset];
                 }
             }];
-        }
+
+
+            PFObject *comment = [PFObject objectWithClassName:@"Comment"];
+            [comment setObject:self.commentTextView.text forKey:@"text"];
+            [comment setObject:post forKey:@"post"];
+            [comment setObject:currentUser forKey:@"author"];
+
+            [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (error) {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
+                                                                        message:@"Please try sending your message again."
+                                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    [alertView show];
+                }
+                else {
+                }
+            }];
+
+       }
     }];
+    [self.tabBarController setSelectedIndex:0];
+
 }
 
 
