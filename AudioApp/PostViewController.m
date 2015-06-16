@@ -32,8 +32,10 @@
 - (void)uploadPost {
     PFUser *currentUser = [PFUser currentUser];
     NSData *fileData = [NSData dataWithContentsOfURL:self.recorder.url];
+    NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject:self.theColor];
 
     PFFile *file = [PFFile fileWithName:@"audio.m4a" data:fileData];
+    PFFile *fileColor = [PFFile fileWithData:colorData];
     [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (error) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
@@ -45,6 +47,10 @@
             PFObject *post = [PFObject objectWithClassName:@"Post"];
             [post setObject:file forKey:@"audio"];
             [post setObject:currentUser forKey:@"author"];
+            [post setObject:fileColor forKey:@"color"];
+
+
+
             [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (error) {
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
