@@ -26,58 +26,46 @@
                                     <segment title="Likes"/>
                                 </segments>
                             </segmentedControl>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="C7h-It-XcI">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="G77-bq-7rc">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellID" id="ytP-op-2i5">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="MXu-eM-31A">
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ytP-op-2i5" id="XzP-h8-7gM">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MXu-eM-31A" id="sbv-u8-faX">
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="bB1-qa-1hX" id="XBT-gt-teF"/>
-                                    <outlet property="delegate" destination="bB1-qa-1hX" id="svZ-g4-QDt"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="C7h-It-XcI" firstAttribute="leading" secondItem="LSe-q3-lCP" secondAttribute="leadingMargin" constant="-16" id="2Z6-KX-RMc"/>
-                            <constraint firstItem="C7h-It-XcI" firstAttribute="bottom" secondItem="LSe-q3-lCP" secondAttribute="bottomMargin" id="KmT-a0-sn3"/>
-                            <constraint firstItem="C7h-It-XcI" firstAttribute="bottom" secondItem="LSe-q3-lCP" secondAttribute="bottomMargin" id="MNC-le-DjA"/>
-                            <constraint firstItem="C7h-It-XcI" firstAttribute="top" secondItem="LSe-q3-lCP" secondAttribute="topMargin" id="POH-RC-COj"/>
-                            <constraint firstItem="C7h-It-XcI" firstAttribute="top" secondItem="LSe-q3-lCP" secondAttribute="topMargin" id="YLO-NF-xa5"/>
-                            <constraint firstItem="C7h-It-XcI" firstAttribute="leading" secondItem="LSe-q3-lCP" secondAttribute="leadingMargin" constant="-16" id="eE0-om-kaj"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="C7h-It-XcI" secondAttribute="trailing" constant="-16" id="p6c-p8-fd3"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="C7h-It-XcI" secondAttribute="trailing" constant="-16" id="pn3-xo-3bt"/>
+                            <constraint firstItem="G77-bq-7rc" firstAttribute="top" secondItem="LSe-q3-lCP" secondAttribute="topMargin" id="5TD-P2-dpX"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="G77-bq-7rc" secondAttribute="trailing" constant="-16" id="KRO-jc-dAe"/>
+                            <constraint firstItem="G77-bq-7rc" firstAttribute="leading" secondItem="LSe-q3-lCP" secondAttribute="leadingMargin" constant="-16" id="oqf-Ep-fuR"/>
+                            <constraint firstItem="G77-bq-7rc" firstAttribute="bottom" secondItem="LSe-q3-lCP" secondAttribute="bottomMargin" id="wgB-wn-0QM"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="C7h-It-XcI"/>
+                                <exclude reference="G77-bq-7rc"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="2Z6-KX-RMc"/>
-                                <exclude reference="MNC-le-DjA"/>
-                                <exclude reference="POH-RC-COj"/>
-                                <exclude reference="pn3-xo-3bt"/>
+                                <exclude reference="5TD-P2-dpX"/>
+                                <exclude reference="KRO-jc-dAe"/>
+                                <exclude reference="oqf-Ep-fuR"/>
+                                <exclude reference="wgB-wn-0QM"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
-                                <include reference="C7h-It-XcI"/>
+                                <include reference="G77-bq-7rc"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="2Z6-KX-RMc"/>
-                                <exclude reference="KmT-a0-sn3"/>
-                                <include reference="MNC-le-DjA"/>
-                                <include reference="POH-RC-COj"/>
-                                <exclude reference="YLO-NF-xa5"/>
-                                <exclude reference="eE0-om-kaj"/>
-                                <exclude reference="p6c-p8-fd3"/>
-                                <include reference="pn3-xo-3bt"/>
+                                <include reference="5TD-P2-dpX"/>
+                                <include reference="KRO-jc-dAe"/>
+                                <include reference="oqf-Ep-fuR"/>
+                                <include reference="wgB-wn-0QM"/>
                             </mask>
                         </variation>
                     </view>
@@ -90,12 +78,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="postsLikesController" destination="aeR-h6-1Z8" id="zve-Ph-fRs"/>
-                        <outlet property="tableview" destination="C7h-It-XcI" id="cOU-mj-afU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QIU-CT-gho" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2884" y="1500"/>
+            <point key="canvasLocation" x="2883" y="1500"/>
         </scene>
         <!--Options View Controller-->
         <scene sceneID="ifg-q7-nCg">
@@ -151,15 +138,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="E6L-78-E0D">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="436" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="E6L-78-E0D">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellID" id="has-cg-8nS">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellID" rowHeight="436" id="has-cg-8nS">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="has-cg-8nS" id="kcr-ub-N9U">
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJa-oR-QIP">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                                    <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <variation key="widthClass=compact" fixedFrame="YES">
+                                                        <rect key="frame" x="0.0" y="18" width="400" height="400"/>
+                                                    </variation>
+                                                </view>
+                                            </subviews>
+                                            <variation key="default">
+                                                <mask key="subviews">
+                                                    <exclude reference="TJa-oR-QIP"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="widthClass=compact">
+                                                <mask key="subviews">
+                                                    <include reference="TJa-oR-QIP"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
