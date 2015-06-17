@@ -11,5 +11,6 @@
 @interface PostViewController : UIViewController
 
 @property AVAudioRecorder *recorder;
+@property UIColor *theColor;
 
 @end

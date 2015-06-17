@@ -138,6 +138,7 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     PostViewController *dvc = segue.destinationViewController;
     dvc.recorder = self.recorder;
+    dvc.theColor = self.viewOne.backgroundColor;
 
 }
 

@@ -111,11 +111,7 @@
 
     //activates alertcontroler
     [self presentViewController:alertController animated:true completion:nil];
-    
-    
-    
-    
-
+  
 }
 - (IBAction)onRecordPauseTapped:(id)sender {
     if (self.player.playing)
@@ -132,6 +128,7 @@
         [self beginRecording];
         //        [self.recorder record];
         [self.recordButton setTitle:@"Pause" forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem.enabled = false;
 
     }
     else{
