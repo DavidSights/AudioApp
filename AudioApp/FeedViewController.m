@@ -10,6 +10,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import <Parse/Parse.h>
 #import "PostTableViewCell.h"
+#import "LabelsAndButtonsTableViewCell.h"
+#import "CommentTableViewCell.h"
 
 
 @interface FeedViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -41,20 +43,59 @@
     return self.posts.count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) { // First cell should display the audio view.
+        return 200; // Height for audio view.
+    }
+    return  50;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    PFObject *currentObject = [self.posts objectAtIndex:section]; //Grab a specific post - each post is its own section
-    // Find the number of items to be displayed... 1. Audio View, 2. Likes and Plays labels, 3. First comment, 4. Second comment, 5. Third comment, 6. View more comments link ... 6 rows in this section, may vary depending on how many comments there are... 
-    return nil;
+    __block int numberOfComments;
+
+    PFObject *post = [self.posts objectAtIndex:section]; //Grab a specific post - each post is its own section
+    PFQuery *commentsQuery = [PFQuery queryWithClassName:@"Comment"];
+    [commentsQuery whereKey:@"post" equalTo:post];
+//    [commentsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        NSArray *comments = objects;
+//        if (!comments.count == 0) {
+//           numberOfComments = (int)comments.count;
+//        }
+//    }];
+
+    NSArray *comments = [commentsQuery findObjects];
+
+    if (comments) {
+
+        if (comments.count < 5) {
+            return 2 + comments.count;
+        } else {
+            return 8;
+        }
+    }
+
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    PFObject *object = [self.posts objectAtIndex:indexPath.row];
-
-    cell.textLabel.text = [NSString stringWithFormat:@"%@",[object objectForKey:@"createdAt"]];
-    NSLog(@"%@",[[object objectForKey:@"author"]objectForKey:@"username"]);
-
-    return cell;
+//    PostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
+//    NSLog(@"IndexPath.section: %ld", indexPath.section);
+//    NSLog(@"Index path: %ld",(long)indexPath.row);
+//    return cell;
+    if (indexPath.row == 0) {
+        PostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
+        return cell;
+    } else if (indexPath.row == 1) {
+        LabelsAndButtonsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"labelsAndButtonsCell"];
+        PFQuery *likesQuery = [PFQuery queryWithClassName:@"Like"];
+        [likesQuery whereKey:@"Post" equalTo:self.posts[indexPath.section]];
+        NSArray *likes = [likesQuery findObjects];
+        cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", likes.count];
+        return cell;
+    } else {
+        CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentCell"];
+        return cell;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -72,7 +113,7 @@
 #pragma mark - Parse
 
 - (void)queryFromParse {
-    NSLog(@"QUERY BEGAN.");
+//    NSLog(@"QUERY BEGAN.");
     PFQuery* query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -80,12 +121,12 @@
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         } else {
             self.posts = objects;
-            NSLog(@"%@", objects);
-            NSLog(@"Retrieved %lu messages", (unsigned long)[self.posts count]);
+//            NSLog(@"%@", objects);
+//            NSLog(@"Retrieved %lu messages", (unsigned long)[self.posts count]);
             [self.tableView reloadData];
-            NSLog(@"Reloaded tableview.");
+//            NSLog(@"Reloaded tableview.");
         }
-        NSLog(@"QUERY ENDED.");
+//        NSLog(@"QUERY ENDED.");
     }];
 }
 
