@@ -63,6 +63,7 @@
 //        }
 //    }];
 
+
     NSArray *comments = [commentsQuery findObjects];
 
     if (comments) {
