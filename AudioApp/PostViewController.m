@@ -82,6 +82,8 @@
             }];
        }
     }];
+
+ 
     [self.tabBarController setSelectedIndex:0];
     [self.navigationController popToRootViewControllerAnimated:true];
 

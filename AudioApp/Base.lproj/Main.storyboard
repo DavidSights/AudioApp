@@ -142,7 +142,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="400" height="1000"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="imageCell" rowHeight="430" id="b6T-lO-fya" customClass="PostImageTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="imageCell" rowHeight="430" id="b6T-lO-fya" customClass="PostImageTableViewCell">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="b6T-lO-fya" id="jG2-Va-7XU">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -177,7 +177,7 @@
                                             <outlet property="timerLabel" destination="WBu-14-QBH" id="WBu-Ub-g93"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="labelsAndButtonsCell" rowHeight="41" id="D6d-V6-8a1" customClass="LabelsAndButtonsTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="labelsAndButtonsCell" rowHeight="41" id="D6d-V6-8a1" customClass="LabelsAndButtonsTableViewCell">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D6d-V6-8a1" id="b0Q-3w-qBU">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -219,7 +219,7 @@
                                             <outlet property="playsLabel" destination="fis-IC-i3g" id="eeF-7Y-Cd3"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="commentCell" rowHeight="51" id="ov2-kL-sU5" customClass="CommentTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="commentCell" rowHeight="51" id="ov2-kL-sU5" customClass="CommentTableViewCell">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ov2-kL-sU5" id="hoe-ug-UpZ">
                                             <autoresizingMask key="autoresizingMask"/>
