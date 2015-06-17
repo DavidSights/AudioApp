@@ -39,13 +39,6 @@
     return self.posts.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    PFObject *object = [self.posts objectAtIndex:indexPath.row];
-
-    cell.textLabel.text = [NSString stringWithFormat:@"%@",[object objectForKey:@"createdAt"]];
-    return cell;
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (!self.player.playing) {
