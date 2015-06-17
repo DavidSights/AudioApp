@@ -50,7 +50,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     PFObject *object = [self.posts objectAtIndex:indexPath.row];
-
+//    [cell.usernameButton setTitle:[[object objectForKey:@"author"]objectForKey:@"username"] forState:UIControlStateNormal];
     cell.textLabel.text = [NSString stringWithFormat:@"%@",[object objectForKey:@"createdAt"]];
     NSLog(@"%@",[[object objectForKey:@"author"]objectForKey:@"username"]);
 
