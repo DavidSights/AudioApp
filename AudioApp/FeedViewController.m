@@ -12,6 +12,7 @@
 #import "PostTableViewCell.h"
 #import "LabelsAndButtonsTableViewCell.h"
 #import "CommentTableViewCell.h"
+#import "PostImageTableViewCell.h"
 
 
 @interface FeedViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -19,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSArray *posts;
 @property AVAudioPlayer *player;
-
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinnerActivityIndicator;
 @end
 
 @implementation FeedViewController
@@ -147,7 +148,10 @@
 - (id)initWithCoder:(NSCoder *)aDecoder{
     self = [super initWithCoder:aDecoder];
     if (self) {
+
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveNotification:) name:@"Test1" object:nil];
+
+
     }
     return self;
 }

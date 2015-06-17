@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -135,11 +135,11 @@
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="1000"/>
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="1000"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="71" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="E6L-78-E0D">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="1000"/>
+                                <rect key="frame" x="0.0" y="0.0" width="400" height="1000"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="imageCell" rowHeight="430" id="b6T-lO-fya" customClass="PostImageTableViewCell">
@@ -147,10 +147,10 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="b6T-lO-fya" id="jG2-Va-7XU">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="itK-iU-I3a">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="itK-iU-I3a">
                                                     <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBu-14-QBH">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBu-14-QBH">
                                                             <rect key="frame" x="8" y="8" width="384" height="384"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="200"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -268,7 +268,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="cgA-Ol-lGD"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="450" height="1000"/>
+                    <size key="freeformSize" width="400" height="1000"/>
                     <connections>
                         <outlet property="tableView" destination="E6L-78-E0D" id="Y8i-1o-Zue"/>
                         <segue destination="DKP-sw-KJf" kind="presentation" identifier="login" id="9ZU-SX-AB3"/>
@@ -903,7 +903,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="85" height="93"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -1080,8 +1080,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="blackColorButton" destination="TcQ-6Y-vGL" id="VMt-3g-eBV"/>
+                        <outlet property="blueColorButton" destination="fHC-Vk-Xap" id="atv-tA-89p"/>
                         <outlet property="collectionView" destination="NtK-Qa-gwX" id="e5A-5t-P0z"/>
                         <outlet property="greenColorButton" destination="Z7p-gh-kyc" id="bRY-zh-858"/>
+                        <outlet property="orangeColorButton" destination="ysd-4e-3Ug" id="IDX-QR-2dE"/>
+                        <outlet property="purpleColorButton" destination="Hmw-HP-7Jp" id="FpQ-I7-6MC"/>
                         <outlet property="redColorButton" destination="ITG-8n-ffu" id="qM2-iU-hNk"/>
                         <outlet property="timeButton" destination="CYO-KB-wyV" id="p0m-cO-jgl"/>
                         <outlet property="viewOne" destination="Xyw-YN-TtD" id="dVY-Iy-5EW"/>

@@ -20,7 +20,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *redColorButton;
 @property (weak, nonatomic) IBOutlet UIButton *greenColorButton;
 @property (weak, nonatomic) IBOutlet UIButton *blackColorButton;
+@property (weak, nonatomic) IBOutlet UIButton *blueColorButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *orangeColorButton;
+@property (weak, nonatomic) IBOutlet UIButton *purpleColorButton;
 @end
 
 @implementation EditViewController
@@ -33,8 +36,16 @@
 
     [self beginRecording];
 
-    self.yellowColorButton.layer.cornerRadius = self.yellowColorButton.frame.size.width/2;
-    
+    self.yellowColorButton.layer.cornerRadius = self.yellowColorButton.frame.size.width / 3;
+    self.blackColorButton.layer.cornerRadius = self.blackColorButton.frame.size.width / 3;
+    self.redColorButton.layer.cornerRadius = self.redColorButton.frame.size.width / 3;
+    self.greenColorButton.layer.cornerRadius = self.greenColorButton.frame.size.width / 3;
+    self.purpleColorButton.layer.cornerRadius = self.greenColorButton.frame.size.width / 3;
+    self.orangeColorButton.layer.cornerRadius = self.orangeColorButton.frame.size.width / 3;
+self.blueColorButton.layer.cornerRadius = self.blueColorButton.frame.size.width / 3;
+
+
+
 
 }
 
