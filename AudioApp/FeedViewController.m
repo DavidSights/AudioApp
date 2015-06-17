@@ -101,6 +101,7 @@
     PFObject *object = [self.posts objectAtIndex:indexPath.row];
 
     cell.textLabel.text = [NSString stringWithFormat:@"%@",[object objectForKey:@"createdAt"]];
+    NSLog(@"%@",[[object objectForKey:@"author"]objectForKey:@"username"]);
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

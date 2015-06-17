@@ -18,8 +18,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-
 }
 
 
@@ -80,11 +78,8 @@
                 else {
 //                    [self.tabBarController setSelectedIndex:0];
                     [[NSNotificationCenter defaultCenter]postNotificationName:@"Test1" object:self];
-
                 }
-
             }];
-
        }
     }];
     [self.tabBarController setSelectedIndex:0];
