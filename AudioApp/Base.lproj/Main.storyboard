@@ -228,32 +228,6 @@
                                                         <action selector="likeButtonPressed:" destination="BdP-IL-lQY" eventType="touchUpInside" id="jUX-21-7by"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RhO-xY-LJI">
-                                                    <rect key="frame" x="8" y="464" width="80" height="20"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="Fif-fT-9mV"/>
-                                                        <constraint firstAttribute="height" constant="20" id="NTy-bq-WFR"/>
-                                                        <constraint firstAttribute="width" constant="80" id="QsE-4G-tIs"/>
-                                                        <constraint firstAttribute="width" constant="80" id="i2v-Ah-0Dn"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="NTy-bq-WFR"/>
-                                                            <exclude reference="i2v-Ah-0Dn"/>
-                                                        </mask>
-                                                    </variation>
-                                                    <variation key="widthClass=compact">
-                                                        <mask key="constraints">
-                                                            <exclude reference="Fif-fT-9mV"/>
-                                                            <include reference="NTy-bq-WFR"/>
-                                                            <exclude reference="QsE-4G-tIs"/>
-                                                            <include reference="i2v-Ah-0Dn"/>
-                                                        </mask>
-                                                    </variation>
-                                                </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3bU-GL-PUg">
                                                     <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
                                                     <subviews>
@@ -351,6 +325,12 @@
                                                         <action selector="commentsButtonPressed:" destination="BdP-IL-lQY" eventType="touchUpInside" id="Rz9-6z-Nfa"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqF-GN-SMs">
+                                                    <rect key="frame" x="0.0" y="460" width="73" height="30"/>
+                                                    <state key="normal" title="user">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="CIh-4h-fLh" firstAttribute="trailing" secondItem="LSb-xP-EmM" secondAttribute="trailingMargin" id="1zt-4Y-9ZG"/>
@@ -363,8 +343,6 @@
                                                 <constraint firstItem="rq3-V1-n1l" firstAttribute="top" secondItem="3bU-GL-PUg" secondAttribute="bottom" constant="36" id="NQS-Wn-0Sv"/>
                                                 <constraint firstItem="pzG-5e-Pz3" firstAttribute="top" secondItem="3bU-GL-PUg" secondAttribute="bottom" constant="8" id="PA8-Vd-whf"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="3bU-GL-PUg" secondAttribute="trailing" constant="-8" id="PhP-91-FwY"/>
-                                                <constraint firstItem="RhO-xY-LJI" firstAttribute="top" secondItem="heD-wy-AI2" secondAttribute="bottom" constant="8" id="RN6-83-3R4"/>
-                                                <constraint firstItem="RhO-xY-LJI" firstAttribute="leading" secondItem="LSb-xP-EmM" secondAttribute="leadingMargin" id="U2I-M5-lhg"/>
                                                 <constraint firstItem="rq3-V1-n1l" firstAttribute="top" secondItem="3bU-GL-PUg" secondAttribute="bottom" constant="36" id="UGM-FD-2ia"/>
                                                 <constraint firstItem="pzG-5e-Pz3" firstAttribute="leading" secondItem="LSb-xP-EmM" secondAttribute="leadingMargin" id="WG9-Xw-SaA"/>
                                                 <constraint firstItem="heD-wy-AI2" firstAttribute="top" secondItem="pzG-5e-Pz3" secondAttribute="bottom" constant="8" id="XAM-3Y-Z7x"/>
@@ -373,8 +351,6 @@
                                                 <constraint firstItem="pzG-5e-Pz3" firstAttribute="top" secondItem="3bU-GL-PUg" secondAttribute="bottom" constant="8" id="aim-M3-fx1"/>
                                                 <constraint firstItem="heD-wy-AI2" firstAttribute="leading" secondItem="LSb-xP-EmM" secondAttribute="leadingMargin" id="bSC-cn-oQq"/>
                                                 <constraint firstItem="3bU-GL-PUg" firstAttribute="top" secondItem="LSb-xP-EmM" secondAttribute="topMargin" constant="-8" id="dHL-Tq-Anr"/>
-                                                <constraint firstItem="RhO-xY-LJI" firstAttribute="leading" secondItem="LSb-xP-EmM" secondAttribute="leadingMargin" id="dOV-Hk-sxb"/>
-                                                <constraint firstItem="RhO-xY-LJI" firstAttribute="top" secondItem="heD-wy-AI2" secondAttribute="bottom" constant="8" id="diz-P4-mdh"/>
                                                 <constraint firstItem="heD-wy-AI2" firstAttribute="leading" secondItem="LSb-xP-EmM" secondAttribute="leadingMargin" id="izO-EM-riE"/>
                                                 <constraint firstItem="3bU-GL-PUg" firstAttribute="leading" secondItem="LSb-xP-EmM" secondAttribute="leadingMargin" constant="-8" id="mxb-PP-VKZ"/>
                                                 <constraint firstItem="CIh-4h-fLh" firstAttribute="trailing" secondItem="LSb-xP-EmM" secondAttribute="trailingMargin" id="tDk-3l-X17"/>
@@ -389,8 +365,6 @@
                                                     <exclude reference="PA8-Vd-whf"/>
                                                     <exclude reference="BEi-dj-KaL"/>
                                                     <exclude reference="izO-EM-riE"/>
-                                                    <exclude reference="U2I-M5-lhg"/>
-                                                    <exclude reference="diz-P4-mdh"/>
                                                     <exclude reference="NQS-Wn-0Sv"/>
                                                     <exclude reference="xLd-37-svb"/>
                                                     <exclude reference="1zt-4Y-9ZG"/>
@@ -402,7 +376,6 @@
                                                     <include reference="heD-wy-AI2"/>
                                                     <include reference="pzG-5e-Pz3"/>
                                                     <include reference="CIh-4h-fLh"/>
-                                                    <include reference="RhO-xY-LJI"/>
                                                     <include reference="3bU-GL-PUg"/>
                                                     <include reference="rq3-V1-n1l"/>
                                                 </mask>
@@ -418,10 +391,6 @@
                                                     <exclude reference="XAM-3Y-Z7x"/>
                                                     <exclude reference="bSC-cn-oQq"/>
                                                     <include reference="izO-EM-riE"/>
-                                                    <exclude reference="RN6-83-3R4"/>
-                                                    <include reference="U2I-M5-lhg"/>
-                                                    <exclude reference="dOV-Hk-sxb"/>
-                                                    <include reference="diz-P4-mdh"/>
                                                     <exclude reference="LTz-Ge-mvW"/>
                                                     <include reference="NQS-Wn-0Sv"/>
                                                     <exclude reference="UGM-FD-2ia"/>
@@ -435,11 +404,11 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="audioView" destination="LSb-xP-EmM" id="6Nx-kb-17Q"/>
-                                            <outlet property="authorLabel" destination="RhO-xY-LJI" id="q6d-Yr-AUY"/>
                                             <outlet property="commentsButton" destination="rq3-V1-n1l" id="7HT-YK-YVt"/>
                                             <outlet property="likeButton" destination="CIh-4h-fLh" id="L7p-XB-0PK"/>
                                             <outlet property="likesLabel" destination="pzG-5e-Pz3" id="N5k-ty-qNE"/>
                                             <outlet property="playsLabel" destination="heD-wy-AI2" id="N3q-Vj-Pmd"/>
+                                            <outlet property="usernameButton" destination="eqF-GN-SMs" id="VzZ-Tx-JG8"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1099,7 +1068,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="85" height="93"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>

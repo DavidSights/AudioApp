@@ -52,6 +52,8 @@
     PFObject *object = [self.posts objectAtIndex:indexPath.row];
 
     cell.textLabel.text = [NSString stringWithFormat:@"%@",[object objectForKey:@"createdAt"]];
+    NSLog(@"%@",[[object objectForKey:@"author"]objectForKey:@"username"]);
+
     return cell;
 }
 
@@ -88,16 +90,6 @@
 }
 
 #pragma mark - Update Information
-
-- (void)viewDidAppear:(BOOL)animated {
-    PFUser *currentUser = [PFUser currentUser]; //show current user in console
-    if (currentUser) {
-        NSLog(@"Current user: %@", currentUser.username);
-        [self queryFromParse];
-    } else {
-        [self performSegueWithIdentifier:@"login" sender:self];
-    }
-}
 
 - (void)viewWillAppear:(BOOL)animated{
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
