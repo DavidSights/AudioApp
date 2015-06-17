@@ -45,7 +45,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) { // First cell should display the audio view.
-        return 200; // Height for audio view.
+        return 400; // Height for audio view.
     }
     return  50;
 }
@@ -66,21 +66,19 @@
     NSArray *comments = [commentsQuery findObjects];
 
     if (comments) {
-
         if (comments.count < 5) {
             return 2 + comments.count;
         } else {
             return 8;
         }
     }
-
     return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 //    PostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
-//    NSLog(@"IndexPath.section: %ld", indexPath.section);
-//    NSLog(@"Index path: %ld",(long)indexPath.row);
+    NSLog(@"IndexPath.section: %ld", indexPath.section);
+    NSLog(@"Index path: %ld",(long)indexPath.row);
 //    return cell;
     if (indexPath.row == 0) {
         PostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
@@ -90,7 +88,7 @@
         PFQuery *likesQuery = [PFQuery queryWithClassName:@"Like"];
         [likesQuery whereKey:@"Post" equalTo:self.posts[indexPath.section]];
         NSArray *likes = [likesQuery findObjects];
-        cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", likes.count];
+        cell.likesLabel.text = [NSString stringWithFormat:@"%lu Likes", (unsigned long)likes.count];
         return cell;
     } else {
         CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentCell"];
