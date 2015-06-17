@@ -8,8 +8,9 @@
 
 #import "FeedViewController.h"
 #import <Parse/Parse.h>
+#import "PostTableViewCell.h"
 
-@interface FeedViewController ()
+@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @end
 
@@ -34,6 +35,15 @@
     }
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    PostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+
+    return cell;
+}
 
 
 @end
