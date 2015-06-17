@@ -13,9 +13,11 @@
 
 
 @interface FeedViewController () <UITableViewDelegate, UITableViewDataSource>
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSArray *posts;
 @property AVAudioPlayer *player;
+
 @end
 
 @implementation FeedViewController
@@ -35,8 +37,14 @@
 
 #pragma mark - TableView
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.posts.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    PFObject *currentObject = [self.posts objectAtIndex:section]; //Grab a specific post - each post is its own section
+    // Find the number of items to be displayed... 1. Audio View, 2. Likes and Plays labels, 3. First comment, 4. Second comment, 5. Third comment, 6. View more comments link ... 6 rows in this section, may vary depending on how many comments there are... 
+    return nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
