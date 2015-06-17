@@ -45,7 +45,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) { // First cell should display the audio view.
-        return 400; // Height for audio view.
+        NSLog(@"THE VIEW IS THIS WIDE: %f", self.view.frame.size.width);
+//        return self.view.frame.size.width; // Height for audio view.
+        return [UIScreen mainScreen].bounds.size.width;
     }
     return  50;
 }
@@ -62,7 +64,6 @@
 //           numberOfComments = (int)comments.count;
 //        }
 //    }];
-
 
     NSArray *comments = [commentsQuery findObjects];
 
@@ -83,6 +84,7 @@
 //    return cell;
     if (indexPath.row == 0) {
         PostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
+        cell.backgroundColor = [UIColor yellowColor];
         return cell;
     } else if (indexPath.row == 1) {
         LabelsAndButtonsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"labelsAndButtonsCell"];
