@@ -20,24 +20,6 @@
 
 @implementation FeedViewController
 
--(id)initWithCoder:(NSCoder *)aDecoder{
-
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveNotification:) name:@"Test1" object:nil];
-    }
-    return self;
-}
-
-
--(void)receiveNotification:(NSNotification *)notification {
-    if ([notification.name isEqualToString:@"Test1"]) {
-
-        [self queryFromParse];
-        
-    }
-    
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.posts = [[NSArray alloc]init];
@@ -51,30 +33,35 @@
     }
 }
 
--(void)viewDidAppear:(BOOL)animated{
+#pragma mark - TableView
 
-    PFUser *currentUser = [PFUser currentUser]; //show current user in console
-    if (currentUser) {
-        NSLog(@"Current user: %@", currentUser.username);
-        [self queryFromParse];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.posts.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    PostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+    PFObject *object = [self.posts objectAtIndex:indexPath.row];
+
+    cell.textLabel.text = [NSString stringWithFormat:@"%@",[object objectForKey:@"createdAt"]];
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (!self.player.playing) {
+        PFObject *object = [self.posts objectAtIndex:indexPath.row];
+        PFFile *file = [object objectForKey:@"audio"];
+        NSData *data = [file getData];
+        self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
+        [self.player play];
     } else {
-        [self performSegueWithIdentifier:@"login" sender:self];
+        [self.player pause];
     }
 }
 
--(void)viewWillAppear:(BOOL)animated{
+#pragma mark - Parse
 
-    PFUser *currentUser = [PFUser currentUser]; //show current user in console
-    if (currentUser) {
-        NSLog(@"Current user: %@", currentUser.username);
-        [self queryFromParse];
-        [self.tableView reloadData];
-    } else {
-        [self performSegueWithIdentifier:@"login" sender:self];
-    }
-}
-
--(void)queryFromParse {
+- (void)queryFromParse {
     NSLog(@"QUERY BEGAN.");
     PFQuery* query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
@@ -92,9 +79,7 @@
     }];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.posts.count;
-}
+#pragma mark - Update Information
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
@@ -103,27 +88,34 @@
     cell.textLabel.text = [NSString stringWithFormat:@"%@",[object objectForKey:@"createdAt"]];
     NSLog(@"%@",[[object objectForKey:@"author"]objectForKey:@"username"]);
     return cell;
-}
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
-
-    if (!self.player.playing) {
-        PFObject *object = [self.posts objectAtIndex:indexPath.row];
-        PFFile *file = [object objectForKey:@"audio"];
-        NSData *data = [file getData];
-
-        self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
-        [self.player play];
-
-    }
-    else{
-
-        [self.player pause];
-
-    }
 
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    PFUser *currentUser = [PFUser currentUser]; //show current user in console
+    if (currentUser) {
+        NSLog(@"Current user: %@", currentUser.username);
+        [self queryFromParse];
+        [self.tableView reloadData];
+    } else {
+        [self performSegueWithIdentifier:@"login" sender:self];
+    }
+}
 
+#pragma mark - Notification Center
+
+- (id)initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveNotification:) name:@"Test1" object:nil];
+    }
+    return self;
+}
+
+- (void)receiveNotification:(NSNotification *)notification {
+    if ([notification.name isEqualToString:@"Test1"]) {
+        [self queryFromParse];
+    }
+}
 
 @end
