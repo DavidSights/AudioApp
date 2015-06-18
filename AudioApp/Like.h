@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
+#import "Post.h"
 
 @interface Like : NSObject
-@property PFObject *post;
+@property Post *post;
+
 - (instancetype)initPost:(PFObject *)post;
 @end

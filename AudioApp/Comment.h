@@ -8,10 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
+#import "Post.h"
 
 @interface Comment : NSObject
 @property NSString *text;
-@property PFObject *post;
+@property Post *post;
+
 - (instancetype)initWithText:(NSString *)text andPost:(PFObject *)post;
+
 - (void) save;
 @end

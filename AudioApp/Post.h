@@ -12,8 +12,15 @@
 @interface Post : NSObject
 
 @property PFFile *audioFile;
-@property NSString *comment;
+@property NSString *descriptionComment;
+@property NSArray *comments;
+@property NSArray *likes;
 
 - (instancetype)initWithAudioFile:(PFFile *)audioFile andComment:(NSString *)comment;
+
+- (instancetype)initWithPFObject:(PFObject *)post;
+
++ (void)queryCommentsAndLikesWithPost:(PFObject *)post andCompletion:(void(^)(NSArray *comments, NSArray *likes)) complete;
 - (void) save;
+
 @end

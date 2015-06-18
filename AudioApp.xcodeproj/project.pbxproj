@@ -44,7 +44,6 @@
 		9A1A037B1B2F54DB003243ED /* DiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A037A1B2F54DB003243ED /* DiscoverViewController.m */; };
 		9A1A037E1B2F57C1003243ED /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A037D1B2F57C1003243ED /* OptionsViewController.m */; };
 		9A1A037F1B2FA699003243ED /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB9C511B2F67A7006C8FB5 /* ProfileViewController.m */; };
-		9A27668E1B3109A10070AAD4 /* PostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A27668D1B3109A10070AAD4 /* PostTableViewCell.m */; };
 		9A6AF9A71B31E07A0040D5FF /* PostImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9A61B31E07A0040D5FF /* PostImageTableViewCell.m */; };
 		9A6AF9AA1B31EC800040D5FF /* LabelsAndButtonsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9A91B31EC800040D5FF /* LabelsAndButtonsTableViewCell.m */; };
 		9A6AF9AD1B31ED760040D5FF /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9AC1B31ED760040D5FF /* CommentTableViewCell.m */; };
@@ -116,8 +115,6 @@
 		9A1A037A1B2F54DB003243ED /* DiscoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoverViewController.m; sourceTree = "<group>"; };
 		9A1A037C1B2F57C1003243ED /* OptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsViewController.h; sourceTree = "<group>"; };
 		9A1A037D1B2F57C1003243ED /* OptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
-		9A27668C1B3109A10070AAD4 /* PostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostTableViewCell.h; sourceTree = "<group>"; };
-		9A27668D1B3109A10070AAD4 /* PostTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostTableViewCell.m; sourceTree = "<group>"; };
 		9A6AF9A51B31E07A0040D5FF /* PostImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostImageTableViewCell.h; sourceTree = "<group>"; };
 		9A6AF9A61B31E07A0040D5FF /* PostImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostImageTableViewCell.m; sourceTree = "<group>"; };
 		9A6AF9A81B31EC800040D5FF /* LabelsAndButtonsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelsAndButtonsTableViewCell.h; sourceTree = "<group>"; };
@@ -194,9 +191,6 @@
 				9A1A031F1B2E0889003243ED /* AppDelegate.m */,
 				9A1A03241B2E0889003243ED /* FeedViewController.h */,
 				9A1A03251B2E0889003243ED /* FeedViewController.m */,
-				9A1A03271B2E0889003243ED /* Main.storyboard */,
-				9A27668C1B3109A10070AAD4 /* PostTableViewCell.h */,
-				9A27668D1B3109A10070AAD4 /* PostTableViewCell.m */,
 				9A1A03741B2F361C003243ED /* LoginViewController.h */,
 				9A1A03751B2F361C003243ED /* LoginViewController.m */,
 				9A1A03791B2F54DB003243ED /* DiscoverViewController.h */,
@@ -205,6 +199,7 @@
 				97DB9C511B2F67A7006C8FB5 /* ProfileViewController.m */,
 				9A1A037C1B2F57C1003243ED /* OptionsViewController.h */,
 				9A1A037D1B2F57C1003243ED /* OptionsViewController.m */,
+				9A1A03271B2E0889003243ED /* Main.storyboard */,
 				9A1A03521B2E08E3003243ED /* Model */,
 				9A1A032A1B2E0889003243ED /* Images.xcassets */,
 				9A1A032C1B2E0889003243ED /* LaunchScreen.xib */,
@@ -404,7 +399,6 @@
 				9777D2DB1B3076F400ED2B46 /* EditViewController.m in Sources */,
 				9A6AF9A71B31E07A0040D5FF /* PostImageTableViewCell.m in Sources */,
 				9A1A03761B2F361C003243ED /* LoginViewController.m in Sources */,
-				9A27668E1B3109A10070AAD4 /* PostTableViewCell.m in Sources */,
 				9777D2D61B305E7700ED2B46 /* RecordViewController.m in Sources */,
 				9A1A037E1B2F57C1003243ED /* OptionsViewController.m in Sources */,
 				9A1A03201B2E0889003243ED /* AppDelegate.m in Sources */,
