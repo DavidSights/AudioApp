@@ -9,7 +9,6 @@
 #import "FeedViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import <Parse/Parse.h>
-#import "PostTableViewCell.h"
 #import "LabelsAndButtonsTableViewCell.h"
 #import "CommentTableViewCell.h"
 #import "PostImageTableViewCell.h"
@@ -47,14 +46,14 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) { // First cell should display the audio view.
         NSLog(@"THE VIEW IS THIS WIDE: %f", self.view.frame.size.width);
-//        return self.view.frame.size.width; // Height for audio view.
-        return [UIScreen mainScreen].bounds.size.width;
+        return self.view.frame.size.width; // Height for audio view.
+//        return [UIScreen mainScreen].bounds.size.width;
     }
     return  50;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    __block int numberOfComments;
+//    __block int numberOfComments;
 
     PFObject *post = [self.posts objectAtIndex:section]; //Grab a specific post - each post is its own section
     PFQuery *commentsQuery = [PFQuery queryWithClassName:@"Comment"];
@@ -82,12 +81,18 @@
 //    PostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
     NSLog(@"IndexPath.section: %ld", indexPath.section);
     NSLog(@"Index path: %ld",(long)indexPath.row);
-//    return cell;
+
     if (indexPath.row == 0) {
-        PostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
+
+        PostImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
+//        [cell.coloredView sizeToFit];
+        CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
+        cell.coloredView.frame = cellRect;
+        NSLog(@"%f, %f", cell.center.x, cell.center.y);
         cell.backgroundColor = [UIColor yellowColor];
         return cell;
     } else if (indexPath.row == 1) {
+
         LabelsAndButtonsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"labelsAndButtonsCell"];
         PFQuery *likesQuery = [PFQuery queryWithClassName:@"Like"];
         [likesQuery whereKey:@"Post" equalTo:self.posts[indexPath.section]];
@@ -95,6 +100,7 @@
         cell.likesLabel.text = [NSString stringWithFormat:@"%lu Likes", (unsigned long)likes.count];
         return cell;
     } else {
+
         CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentCell"];
         return cell;
     }
