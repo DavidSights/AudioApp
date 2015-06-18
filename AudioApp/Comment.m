@@ -26,7 +26,7 @@
 
     if (self) {
 
-        self.objectId = [comment objectForKey:@"objectId"];
+        self.objectId = comment[@"objectId"];
         self.user = comment[@"author"];
         self.text = comment[@"text"];
         self.post = comment[@"post"];

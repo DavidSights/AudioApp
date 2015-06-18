@@ -262,12 +262,6 @@
         }
     }
 
-    if () {
-        <#statements#>
-    }
-
-
-
     PFObject *like = [PFObject objectWithClassName:@"Like"];
     like[@"user"] = [PFUser currentUser];
     like[@"post"] = post.postObject;

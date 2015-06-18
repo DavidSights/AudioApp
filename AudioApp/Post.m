@@ -25,9 +25,9 @@
 
     if (self) {
 
-        self.objectId = [post objectForKey:@"objectId"];
-        self.audioFile = [post objectForKey:@"audio"];
-        self.descriptionComment = [post objectForKey:@"descriptionComment"];
+        self.objectId = post[@"objectId"];
+        self.audioFile = post[@"audio"];
+        self.descriptionComment = post[@"descriptionComment"];
         self.postObject = post;
     }
 

@@ -24,7 +24,7 @@
 
     if (self) {
 
-        self.objectId = [like objectForKey:@"objectId"];
+        self.objectId = like[@"objectId"];
         self.user = like[@"user"];
         self.post = like[@"post"];
         self.likeObject = like;
