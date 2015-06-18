@@ -13,6 +13,7 @@
 #import "CommentTableViewCell.h"
 #import "PostImageTableViewCell.h"
 #import "Post.h"
+#import "Comment.h"
 
 
 @interface FeedViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -58,13 +59,15 @@
 
     NSInteger commentCount = post.comments.count;
     NSLog(@"Comment count: %d", commentCount);
-    if (commentCount) {
-        if (commentCount < 5) {
-            return 2 + commentCount;
-        } else {
-            return 8;
-        }
+
+    if (commentCount < 5) {
+        NSLog(@"Comment count less than 5");
+
+        return commentCount + 2;
+    } else {
+        return 8;
     }
+
     return 3;
 }
 
@@ -111,14 +114,16 @@
     } else {
 
         CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentCell"];
+        Post *post = self.posts[indexPath.section];
+        PFObject *comment = post.comments[0];
+        NSLog(@"%@", comment[@"text"]);
+        cell.commentLabel.text = comment[@"text"];
         return cell;
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (!self.player.playing) {
-//        PFObject *object = [self.posts objectAtIndex:indexPath.row];
-//        PFFile *file = [object objectForKey:@"audio"];
         Post *post = self.posts[indexPath.section];
         NSData *data = [post.audioFile getData];
         self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
@@ -145,8 +150,15 @@
             for (PFObject *object in objects) {
 
                 Post *post = [[Post alloc] initWithPFObject:object];
-                [postsMutable addObject:post];
+                [Post queryCommentsAndLikesWithPost:object andCompletion:^(NSArray *comments, NSArray *likes) {
 
+                    post.comments = comments;
+                    post.likes = likes;
+
+                    [self.tableView reloadData];
+                }];
+
+                [postsMutable addObject:post];
             }
 
             self.posts = postsMutable;
@@ -161,10 +173,12 @@
 - (void)viewWillAppear:(BOOL)animated{
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
     if (currentUser) {
+
         NSLog(@"Current user: %@", currentUser.username);
         [self queryFromParse];
 //        [self.tableView reloadData];
     } else {
+
         [self performSegueWithIdentifier:@"login" sender:self];
     }
 }

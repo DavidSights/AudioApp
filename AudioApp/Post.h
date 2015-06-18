@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 
-@interface Post : NSObject
+@interface Post : PFObject
 
 @property PFFile *audioFile;
 @property NSString *descriptionComment;
@@ -20,8 +20,7 @@
 
 - (instancetype)initWithPFObject:(PFObject *)post;
 
--(void)queryCommentsAndLikesWithCompletion:(void(^)(NSArray *comments, NSArray *likes)) complete;
-
++ (void)queryCommentsAndLikesWithPost:(PFObject *)post andCompletion:(void(^)(NSArray *comments, NSArray *likes)) complete;
 - (void) save;
 
 @end

@@ -33,7 +33,7 @@
     return self;
 }
 
--(void)queryCommentsAndLikesWithPost:(PFObject *)post andCompletion:(void(^)(NSArray *comments, NSArray *likes)) complete {
++(void)queryCommentsAndLikesWithPost:(PFObject *)post andCompletion:(void(^)(NSArray *comments, NSArray *likes)) complete {
 
     PFQuery *commentsQuery = [[PFQuery alloc] initWithClassName:@"Comment"];
     [commentsQuery whereKey:@"post" equalTo:post];
