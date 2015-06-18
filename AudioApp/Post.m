@@ -28,34 +28,27 @@
 
         self.audioFile = [post objectForKey:@"audio"];
         self.descriptionComment = [post objectForKey:@"descriptionComment"];
+    }
 
-        PFQuery *commentsQuery = [[PFQuery alloc] initWithClassName:@"Comment"];
-        [commentsQuery whereKey:@"post" equalTo:post];
-        [commentsQuery orderByDescending:@"createdAt"];
+    return self;
+}
 
-        [commentsQuery findObjectsInBackgroundWithBlock:^(NSArray *comments, NSError *error) {
+-(void)queryCommentsAndLikesWithPost:(PFObject *)post andCompletion:(void(^)(NSArray *comments, NSArray *likes)) complete {
 
-            if (comments) {
-                self.comments = comments;
-            }
-        }];
+    PFQuery *commentsQuery = [[PFQuery alloc] initWithClassName:@"Comment"];
+    [commentsQuery whereKey:@"post" equalTo:post];
+    [commentsQuery orderByDescending:@"createdAt"];
+
+    [commentsQuery findObjectsInBackgroundWithBlock:^(NSArray *comments, NSError *error) {
 
         PFQuery *likesQuery = [[PFQuery alloc] initWithClassName:@"Like"];
         [likesQuery whereKey:@"post" equalTo:post];
 
         [likesQuery findObjectsInBackgroundWithBlock:^(NSArray *likes, NSError *error) {
 
-            if (likes) {
-                self.likes = likes;
-            }
+            complete(comments, likes);
         }];
-    }
-
-    return self;
-}
-
--(void)queryCommentsAndLikesWithCompletion:(void(^)(NSArray *comments, NSArray *likes)) complete {
-
+    }];
 
 }
 
