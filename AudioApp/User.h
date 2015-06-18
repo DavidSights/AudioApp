@@ -11,6 +11,7 @@
 
 @interface User : NSObject
 
+@property NSString *objectId;
 @property NSString *email, *password, *username;
 
 - (instancetype)initWithEmail:(NSString *)email Password:(NSString *)password andUsername:(NSString *)username;

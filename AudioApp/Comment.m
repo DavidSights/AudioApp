@@ -20,6 +20,22 @@
     return self;
 }
 
+- (instancetype)initWithCommentObject:(PFObject *)comment {
+
+    self = [super init];
+
+    if (self) {
+
+        self.objectId = [comment objectForKey:@"objectId"];
+        self.user = comment[@"author"];
+        self.text = comment[@"text"];
+        self.post = comment[@"post"];
+        self.commentObject = comment;
+    }
+
+    return self;
+}
+
 - (void) save {
     if (self) {
         PFObject *comment = [PFObject objectWithClassName:@"Comment"];

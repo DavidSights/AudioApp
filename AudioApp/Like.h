@@ -10,8 +10,16 @@
 #import <Parse/Parse.h>
 #import "Post.h"
 
+@class Post;
+
 @interface Like : NSObject
-@property Post *post;
+
+@property NSString *objectId;
+@property PFUser *user;
+@property PFObject *likeObject;
+@property PFObject *post;
 
 - (instancetype)initPost:(PFObject *)post;
+
+- (instancetype)initWithLikeObject:(PFObject *)like;
 @end

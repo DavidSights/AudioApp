@@ -18,6 +18,22 @@
     return self;
 }
 
+- (instancetype)initWithLikeObject:(PFObject *)like {
+
+    self = [super init];
+
+    if (self) {
+
+        self.objectId = [like objectForKey:@"objectId"];
+        self.user = like[@"user"];
+        self.post = like[@"post"];
+        self.likeObject = like;
+
+    }
+
+    return self;
+}
+
 - (void) save {
     if (self) {
         PFObject *like = [PFObject objectWithClassName:@"Like"];

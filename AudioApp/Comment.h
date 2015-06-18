@@ -10,11 +10,19 @@
 #import <Parse/Parse.h>
 #import "Post.h"
 
+@class Post;
+
 @interface Comment : NSObject
+
+@property NSString *objectId;
+@property PFObject *commentObject;
+@property PFUser *user;
 @property NSString *text;
-@property Post *post;
+@property PFObject *post;
 
 - (instancetype)initWithText:(NSString *)text andPost:(PFObject *)post;
+
+- (instancetype)initWithCommentObject:(PFObject *)comment;
 
 - (void) save;
 @end

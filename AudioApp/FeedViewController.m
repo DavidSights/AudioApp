@@ -120,15 +120,16 @@
         LabelsAndButtonsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"labelsAndButtonsCell"];
         cell.likesButton.tag = indexPath.section;
         Post *post = self.posts[indexPath.section];
+//        NSLog(@"Likes: %d", post.likes.count);
         cell.likesLabel.text = [NSString stringWithFormat:@"%lu Likes", (unsigned long)post.likes.count];
         return cell;
     } else {
 
         CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentCell"];
         Post *post = self.posts[indexPath.section];
-        PFObject *comment = post.comments[0];
-        NSLog(@"%@", comment[@"text"]);
-        cell.commentLabel.text = comment[@"text"];
+        Comment *comment = post.comments[0];
+        NSLog(@"%@", comment.text);
+        cell.commentLabel.text = comment.text;
         return cell;
     }
 }
@@ -148,7 +149,7 @@
 
 - (void)queryFromParse {
 
-    PFQuery* query = [PFQuery queryWithClassName:@"Post"];
+    PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 
@@ -218,33 +219,66 @@
 }
 
 - (IBAction)onLikesButtonTapped:(UIButton *)sender {
-    PFQuery *query = [PFQuery queryWithClassName:@"Like"];
-    [query whereKey:@"post" equalTo:[self.posts objectAtIndex:sender.tag]];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *likes, NSError *error) {
-        if (likes.count != 0) {
-            PFObject *like = [likes firstObject];
-            if (like[@"user"] == [PFUser currentUser]) {
-                [like deleteInBackgroundWithBlock:^(BOOL completed, NSError *error) {
-                    if (completed) {
-                        NSLog(@"Like deleted.");
-                        [self.tableView reloadData];
-                    } else {
-                        NSLog(@"There was an error deleting the like: %@", error.localizedDescription);
-                    }
-                }];
-            }
+
+//    PFQuery *query = [PFQuery queryWithClassName:@"Like"];
+//    [query whereKey:@"post" equalTo:[self.posts objectAtIndex:sender.tag]];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *likes, NSError *error) {
+//        if (likes.count != 0) {
+//            PFObject *like = [likes firstObject];
+//            if (like[@"user"] == [PFUser currentUser]) {
+//                [like deleteInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+//                    if (completed) {
+//                        NSLog(@"Like deleted.");
+//                        [self.tableView reloadData];
+//                    } else {
+//                        NSLog(@"There was an error deleting the like: %@", error.localizedDescription);
+//                    }
+//                }];
+//            }
+//        } else {
+//            PFObject *like = [PFObject objectWithClassName:@"Like"];
+//            like[@"user"] = [PFUser currentUser];
+//            like[@"post"] = self.posts[sender.tag];
+//            [like saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+//                if (succeeded) {
+//                    NSLog(@"Like saved.");
+//                    [self.tableView reloadData];
+//                } else {
+//                    NSLog(@"Error saving like: %@", error.localizedDescription);
+//                }
+//            }];
+//        }
+//    }];
+
+    Post *post = self.posts[sender.tag];
+
+    NSArray *likes = post.likes;
+
+    for (PFObject *like in likes) {
+
+        if ([like objectForKey:@"user"] == [PFUser currentUser]) {
+
+            
+        }
+    }
+
+    if () {
+        <#statements#>
+    }
+
+
+
+    PFObject *like = [PFObject objectWithClassName:@"Like"];
+    like[@"user"] = [PFUser currentUser];
+    like[@"post"] = post.postObject;
+    [like saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+
+        if (succeeded) {
+
+
         } else {
-            PFObject *like = [PFObject objectWithClassName:@"Like"];
-            like[@"user"] = [PFUser currentUser];
-            like[@"post"] = self.posts[sender.tag];
-            [like saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
-                if (succeeded) {
-                    NSLog(@"Like saved.");
-                    [self.tableView reloadData];
-                } else {
-                    NSLog(@"Error saving like: %@", error.localizedDescription);
-                }
-            }];
+
+            NSLog(@"Error saving like: %@", error.localizedDescription);
         }
     }];
 }

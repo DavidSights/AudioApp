@@ -8,9 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
+#import "Comment.h"
+#import "Like.h"
 
 @interface Post : NSObject
 
+@property NSString *objectId;
+@property PFObject *postObject;
 @property PFFile *audioFile;
 @property NSString *descriptionComment;
 @property NSArray *comments;

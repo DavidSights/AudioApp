@@ -13,6 +13,7 @@
 
 @property NSString *text;
 @property PFUser *recipient;
+
 - (instancetype)initWithText:(NSString *)text andRecipient:(PFUser *)recipient;
 
 @end

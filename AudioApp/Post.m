@@ -7,7 +7,6 @@
 //
 
 #import "Post.h"
-#import "Comment.h"
 
 @implementation Post
 
@@ -26,8 +25,10 @@
 
     if (self) {
 
+        self.objectId = [post objectForKey:@"objectId"];
         self.audioFile = [post objectForKey:@"audio"];
         self.descriptionComment = [post objectForKey:@"descriptionComment"];
+        self.postObject = post;
     }
 
     return self;
@@ -41,12 +42,26 @@
 
     [commentsQuery findObjectsInBackgroundWithBlock:^(NSArray *comments, NSError *error) {
 
+        NSMutableArray *commentsMutable = [NSMutableArray new];
+        for (PFObject *commentObject in comments) {
+
+            Comment *comment = [[Comment alloc] initWithCommentObject:commentObject];
+            [commentsMutable addObject:comment];
+        }
+
         PFQuery *likesQuery = [[PFQuery alloc] initWithClassName:@"Like"];
         [likesQuery whereKey:@"post" equalTo:post];
 
         [likesQuery findObjectsInBackgroundWithBlock:^(NSArray *likes, NSError *error) {
 
-            complete(comments, likes);
+            NSMutableArray *likesMutable = [NSMutableArray new];
+            for (PFObject *likeObject in comments) {
+
+                Like *like = [[Like alloc] initWithLikeObject:likeObject];
+                [likesMutable addObject:like];
+            }
+
+            complete(commentsMutable, likesMutable);
         }];
     }];
 
