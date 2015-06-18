@@ -12,6 +12,7 @@
 #import "LabelsAndButtonsTableViewCell.h"
 #import "CommentTableViewCell.h"
 #import "PostImageTableViewCell.h"
+#import "Post.h"
 
 
 @interface FeedViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -45,7 +46,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) { // First cell should display the audio view.
-        NSLog(@"THE VIEW IS THIS WIDE: %f", self.view.frame.size.width);
         return self.view.frame.size.width; // Height for audio view.
 //        return [UIScreen mainScreen].bounds.size.width;
     }
@@ -53,23 +53,14 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    __block int numberOfComments;
 
-    PFObject *post = [self.posts objectAtIndex:section]; //Grab a specific post - each post is its own section
-    PFQuery *commentsQuery = [PFQuery queryWithClassName:@"Comment"];
-    [commentsQuery whereKey:@"post" equalTo:post];
-//    [commentsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-//        NSArray *comments = objects;
-//        if (!comments.count == 0) {
-//           numberOfComments = (int)comments.count;
-//        }
-//    }];
+    Post *post = self.posts[section];
 
-    NSArray *comments = [commentsQuery findObjects];
-
-    if (comments) {
-        if (comments.count < 5) {
-            return 2 + comments.count;
+    NSInteger commentCount = post.comments.count;
+    NSLog(@"Comment count: %d", commentCount);
+    if (commentCount) {
+        if (commentCount < 5) {
+            return 2 + commentCount;
         } else {
             return 8;
         }
@@ -77,8 +68,26 @@
     return 3;
 }
 
+//-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    // Remove seperator inset
+//    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+//        [cell setSeparatorInset:UIEdgeInsetsZero];
+//    }
+//
+//    // Prevent the cell from inheriting the Table View's margin settings
+//    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+//        [cell setPreservesSuperviewLayoutMargins:NO];
+//    }
+//
+//    // Explictly set your cell's layout margins
+//    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+//        [cell setLayoutMargins:UIEdgeInsetsZero];
+//    }
+//}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    PostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
+
     NSLog(@"IndexPath.section: %ld", indexPath.section);
     NSLog(@"Index path: %ld",(long)indexPath.row);
 
@@ -88,16 +97,16 @@
 //        [cell.coloredView sizeToFit];
         CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
         cell.coloredView.frame = cellRect;
+        cell.layoutMargins = UIEdgeInsetsZero;
+        cell.preservesSuperviewLayoutMargins = NO;
         NSLog(@"%f, %f", cell.center.x, cell.center.y);
         cell.backgroundColor = [UIColor yellowColor];
         return cell;
     } else if (indexPath.row == 1) {
 
         LabelsAndButtonsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"labelsAndButtonsCell"];
-        PFQuery *likesQuery = [PFQuery queryWithClassName:@"Like"];
-        [likesQuery whereKey:@"Post" equalTo:self.posts[indexPath.section]];
-        NSArray *likes = [likesQuery findObjects];
-        cell.likesLabel.text = [NSString stringWithFormat:@"%lu Likes", (unsigned long)likes.count];
+        Post *post = self.posts[indexPath.section];
+        cell.likesLabel.text = [NSString stringWithFormat:@"%lu Likes", (unsigned long)post.likes.count];
         return cell;
     } else {
 
@@ -108,9 +117,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (!self.player.playing) {
-        PFObject *object = [self.posts objectAtIndex:indexPath.row];
-        PFFile *file = [object objectForKey:@"audio"];
-        NSData *data = [file getData];
+//        PFObject *object = [self.posts objectAtIndex:indexPath.row];
+//        PFFile *file = [object objectForKey:@"audio"];
+        Post *post = self.posts[indexPath.section];
+        NSData *data = [post.audioFile getData];
         self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
         [self.player play];
     } else {
@@ -121,20 +131,28 @@
 #pragma mark - Parse
 
 - (void)queryFromParse {
-//    NSLog(@"QUERY BEGAN.");
+
     PFQuery* query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+
         if (error) {
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         } else {
-            self.posts = objects;
-//            NSLog(@"%@", objects);
-//            NSLog(@"Retrieved %lu messages", (unsigned long)[self.posts count]);
+
+            NSMutableArray *postsMutable = [NSMutableArray new];
+
+            for (PFObject *object in objects) {
+
+                Post *post = [[Post alloc] initWithPFObject:object];
+                [postsMutable addObject:post];
+
+            }
+
+            self.posts = postsMutable;
+
             [self.tableView reloadData];
-//            NSLog(@"Reloaded tableview.");
         }
-//        NSLog(@"QUERY ENDED.");
     }];
 }
 
@@ -145,7 +163,7 @@
     if (currentUser) {
         NSLog(@"Current user: %@", currentUser.username);
         [self queryFromParse];
-        [self.tableView reloadData];
+//        [self.tableView reloadData];
     } else {
         [self performSegueWithIdentifier:@"login" sender:self];
     }
