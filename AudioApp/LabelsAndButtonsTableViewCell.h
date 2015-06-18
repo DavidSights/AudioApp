@@ -11,5 +11,6 @@
 @interface LabelsAndButtonsTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *likesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *playsLabel;
+@property (weak, nonatomic) IBOutlet UIButton *likesButton;
 
 @end

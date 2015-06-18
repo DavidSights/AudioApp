@@ -208,13 +208,18 @@
                                                     <state key="normal" title="Like">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <variation key="widthClass=compact" fixedFrame="YES">
+                                                        <rect key="frame" x="172" y="5" width="30" height="30"/>
+                                                    </variation>
                                                     <connections>
                                                         <action selector="likeButtonPressed:" destination="D6d-V6-8a1" eventType="touchUpInside" id="Ozf-cv-Y5j"/>
+                                                        <action selector="onLikesButtonTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="tb6-l6-Ywp"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="likesButton" destination="Tvt-Cb-DuV" id="kHg-Eb-xpd"/>
                                             <outlet property="likesLabel" destination="SGv-y6-iFi" id="TgD-Gv-9Dd"/>
                                             <outlet property="playsLabel" destination="fis-IC-i3g" id="eeF-7Y-Cd3"/>
                                         </connections>

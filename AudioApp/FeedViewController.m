@@ -21,12 +21,16 @@
 @property NSArray *posts;
 @property AVAudioPlayer *player;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinnerActivityIndicator;
+@property BOOL isSpinning;
+@property BOOL isUnliked;
+@property NSArray *likes;
 @end
 
 @implementation FeedViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.isUnliked = false;
     self.posts = [[NSArray alloc]init];
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
     if (currentUser) {
@@ -36,7 +40,16 @@
     } else {
         [self performSegueWithIdentifier:@"login" sender:self];
     }
+
+    //also put in view did appear/view will appear
+    if (self.isSpinning == true) {
+        //spinn
+    }else if (self.isSpinning == false){
+
+        //stop spinnig
+    }
 }
+
 
 #pragma mark - TableView
 
@@ -78,19 +91,17 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    PostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
-    NSLog(@"IndexPath.section: %ld", indexPath.section);
-    NSLog(@"Index path: %ld",(long)indexPath.row);
-//    return cell;
     if (indexPath.row == 0) {
         PostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
         return cell;
     } else if (indexPath.row == 1) {
         LabelsAndButtonsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"labelsAndButtonsCell"];
-        PFQuery *likesQuery = [PFQuery queryWithClassName:@"Like"];
-        [likesQuery whereKey:@"Post" equalTo:self.posts[indexPath.section]];
-        NSArray *likes = [likesQuery findObjects];
-        cell.likesLabel.text = [NSString stringWithFormat:@"%lu Likes", (unsigned long)likes.count];
+        cell.likesButton.tag = indexPath.section;
+        PFQuery *query = [PFQuery queryWithClassName:@"Like"];
+        [query whereKey:@"post" equalTo:[self.posts objectAtIndex:indexPath.section]];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *likes, NSError *error) {
+            cell.likesLabel.text = [NSString stringWithFormat:@"%lu likes", (unsigned long)likes.count];
+        }];
         return cell;
     } else {
         CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentCell"];
@@ -100,7 +111,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (!self.player.playing) {
-        PFObject *object = [self.posts objectAtIndex:indexPath.row];
+        PFObject *object = [self.posts objectAtIndex:indexPath.section];
         PFFile *file = [object objectForKey:@"audio"];
         NSData *data = [file getData];
         self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
@@ -113,7 +124,6 @@
 #pragma mark - Parse
 
 - (void)queryFromParse {
-//    NSLog(@"QUERY BEGAN.");
     PFQuery* query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -133,6 +143,8 @@
 #pragma mark - Update Information
 
 - (void)viewWillAppear:(BOOL)animated{
+    self.isUnliked = false;
+
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
     if (currentUser) {
         NSLog(@"Current user: %@", currentUser.username);
@@ -149,8 +161,8 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
 
+        //if the notification is touched stop spinng. if is not touched start spinning
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveNotification:) name:@"Test1" object:nil];
-
 
     }
     return self;
@@ -158,8 +170,41 @@
 
 - (void)receiveNotification:(NSNotification *)notification {
     if ([notification.name isEqualToString:@"Test1"]) {
+
+        self.isSpinning = false;
         [self queryFromParse];
     }
 }
 
+- (IBAction)onLikesButtonTapped:(UIButton *)sender {
+    PFQuery *query = [PFQuery queryWithClassName:@"Like"];
+    [query whereKey:@"post" equalTo:[self.posts objectAtIndex:sender.tag]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *likes, NSError *error) {
+        if (likes.count != 0) {
+            PFObject *like = [likes firstObject];
+            if (like[@"user"] == [PFUser currentUser]) {
+                [like deleteInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+                    if (completed) {
+                        NSLog(@"Like deleted.");
+                        [self.tableView reloadData];
+                    } else {
+                        NSLog(@"There was an error deleting the like: %@", error.localizedDescription);
+                    }
+                }];
+            }
+        } else {
+            PFObject *like = [PFObject objectWithClassName:@"Like"];
+            like[@"user"] = [PFUser currentUser];
+            like[@"post"] = self.posts[sender.tag];
+            [like saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+                if (succeeded) {
+                    NSLog(@"Like saved.");
+                    [self.tableView reloadData];
+                } else {
+                    NSLog(@"Error saving like: %@", error.localizedDescription);
+                }
+            }];
+        }
+    }];
+}
 @end
