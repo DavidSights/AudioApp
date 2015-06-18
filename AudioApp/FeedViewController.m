@@ -251,29 +251,36 @@
 //    }];
 
     Post *post = self.posts[sender.tag];
+    BOOL shouldCreateLikeObject = NO;
 
-    NSArray *likes = post.likes;
+    for (PFObject *like in post.likes) {
 
-    for (PFObject *like in likes) {
+        if (like[@"user"] == [PFUser currentUser]) {
 
-        if ([like objectForKey:@"user"] == [PFUser currentUser]) {
-
-            
+            shouldCreateLikeObject = YES;
+            [like deleteEventually];
+            NSMutableArray *tempArray = [post.likes mutableCopy];
+            [tempArray removeObject:like];
+            post.likes = tempArray;
         }
     }
 
-    PFObject *like = [PFObject objectWithClassName:@"Like"];
-    like[@"user"] = [PFUser currentUser];
-    like[@"post"] = post.postObject;
-    [like saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    if (shouldCreateLikeObject) {
 
-        if (succeeded) {
+        PFObject *like = [PFObject objectWithClassName:@"Like"];
+        like[@"user"] = [PFUser currentUser];
+        like[@"post"] = post.postObject;
+        [like saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 
+            if (succeeded) {
 
-        } else {
+                NSLog(@"Like object saved");
 
-            NSLog(@"Error saving like: %@", error.localizedDescription);
-        }
-    }];
+            } else {
+
+                NSLog(@"Error saving like: %@", error.localizedDescription);
+            }
+        }];
+    }
 }
 @end
