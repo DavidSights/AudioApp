@@ -11,6 +11,7 @@
 		9777D2D61B305E7700ED2B46 /* RecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9777D2D51B305E7700ED2B46 /* RecordViewController.m */; };
 		9777D2D81B30615200ED2B46 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9777D2D71B30615200ED2B46 /* AVFoundation.framework */; };
 		9777D2DB1B3076F400ED2B46 /* EditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9777D2DA1B3076F400ED2B46 /* EditViewController.m */; };
+		979E17901B34C64C003E2227 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 979E178F1B34C64C003E2227 /* SettingsViewController.m */; };
 		9A1A031D1B2E0889003243ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A031C1B2E0889003243ED /* main.m */; };
 		9A1A03201B2E0889003243ED /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A031F1B2E0889003243ED /* AppDelegate.m */; };
 		9A1A03231B2E0889003243ED /* AudioApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A03211B2E0889003243ED /* AudioApp.xcdatamodeld */; };
@@ -68,6 +69,8 @@
 		9777D2D71B30615200ED2B46 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		9777D2D91B3076F400ED2B46 /* EditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditViewController.h; sourceTree = "<group>"; };
 		9777D2DA1B3076F400ED2B46 /* EditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditViewController.m; sourceTree = "<group>"; };
+		979E178E1B34C64C003E2227 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		979E178F1B34C64C003E2227 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		97DB9C501B2F67A7006C8FB5 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		97DB9C511B2F67A7006C8FB5 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		9A1A03171B2E0889003243ED /* AudioApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -204,6 +207,8 @@
 				9A1A03741B2F361C003243ED /* LoginViewController.h */,
 				9A1A03751B2F361C003243ED /* LoginViewController.m */,
 				9A1A03271B2E0889003243ED /* Main.storyboard */,
+				979E178E1B34C64C003E2227 /* SettingsViewController.h */,
+				979E178F1B34C64C003E2227 /* SettingsViewController.m */,
 				9A6AF9A41B31E0510040D5FF /* Cells */,
 				9A1A03521B2E08E3003243ED /* Model */,
 				9A1A032A1B2E0889003243ED /* Images.xcassets */,
@@ -400,6 +405,7 @@
 				9A6AF9AD1B31ED760040D5FF /* CommentTableViewCell.m in Sources */,
 				9A1A03481B2E08B7003243ED /* Post.m in Sources */,
 				975EF35A1B30A74E00A3E145 /* PostViewController.m in Sources */,
+				979E17901B34C64C003E2227 /* SettingsViewController.m in Sources */,
 				9A1A03231B2E0889003243ED /* AudioApp.xcdatamodeld in Sources */,
 				9777D2DB1B3076F400ED2B46 /* EditViewController.m in Sources */,
 				9A6AF9A71B31E07A0040D5FF /* PostImageTableViewCell.m in Sources */,
