@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -135,12 +135,12 @@
                                                     <exclude reference="42S-u8-AK2"/>
                                                     <exclude reference="rqT-s2-FGj"/>
                                                     <exclude reference="tqr-Nk-xkl"/>
-                                                    <exclude reference="3Ao-8Z-Hfy"/>
-                                                    <exclude reference="Og3-2j-9qW"/>
-                                                    <exclude reference="jlm-tg-5oQ"/>
                                                     <exclude reference="OaS-rK-lD8"/>
                                                     <exclude reference="XZN-ql-5Pv"/>
                                                     <exclude reference="qhv-XV-svU"/>
+                                                    <exclude reference="3Ao-8Z-Hfy"/>
+                                                    <exclude reference="Og3-2j-9qW"/>
+                                                    <exclude reference="jlm-tg-5oQ"/>
                                                     <exclude reference="Rb1-J4-GJD"/>
                                                     <exclude reference="gGL-29-ctx"/>
                                                 </mask>
@@ -156,12 +156,12 @@
                                                     <include reference="42S-u8-AK2"/>
                                                     <include reference="rqT-s2-FGj"/>
                                                     <include reference="tqr-Nk-xkl"/>
-                                                    <include reference="3Ao-8Z-Hfy"/>
-                                                    <include reference="Og3-2j-9qW"/>
-                                                    <include reference="jlm-tg-5oQ"/>
                                                     <include reference="OaS-rK-lD8"/>
                                                     <include reference="XZN-ql-5Pv"/>
                                                     <include reference="qhv-XV-svU"/>
+                                                    <include reference="3Ao-8Z-Hfy"/>
+                                                    <include reference="Og3-2j-9qW"/>
+                                                    <include reference="jlm-tg-5oQ"/>
                                                     <include reference="Rb1-J4-GJD"/>
                                                     <include reference="gGL-29-ctx"/>
                                                 </mask>
@@ -176,6 +176,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jLY-sZ-rWw">
                                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                                     <color key="backgroundColor" red="1" green="0.73347437999999998" blue="0.90348660319999996" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="QK8-Q5-8Q1"/>
+                                                    </constraints>
                                                     <state key="normal" title="Settings">
                                                         <color key="titleColor" red="0.77405753970000002" green="0.34709059190000002" blue="0.68749345399999995" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -185,32 +188,73 @@
                                                             <integer key="value" value="5"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
-                                                    <variation key="widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="8" y="8" width="384" height="30"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="QK8-Q5-8Q1"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="QK8-Q5-8Q1"/>
+                                                        </mask>
                                                     </variation>
                                                 </button>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="oL6-JY-jhh">
                                                     <rect key="frame" x="-61" y="-14" width="123" height="29"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="28" id="fGo-Ps-S7O"/>
+                                                    </constraints>
                                                     <segments>
                                                         <segment title="Posts"/>
                                                         <segment title="Likes"/>
                                                     </segments>
                                                     <color key="tintColor" red="0.77405753968253965" green="0.34709059187937075" blue="0.68749345400561779" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <variation key="widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="8" y="48" width="384" height="29"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="fGo-Ps-S7O"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="fGo-Ps-S7O"/>
+                                                        </mask>
                                                     </variation>
                                                 </segmentedControl>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="oL6-JY-jhh" firstAttribute="trailing" secondItem="0GY-OI-lPN" secondAttribute="trailingMargin" id="3Ht-ml-pdi"/>
+                                                <constraint firstItem="oL6-JY-jhh" firstAttribute="top" secondItem="jLY-sZ-rWw" secondAttribute="bottom" constant="10" id="CgP-qb-4NS"/>
+                                                <constraint firstItem="jLY-sZ-rWw" firstAttribute="leading" secondItem="0GY-OI-lPN" secondAttribute="leadingMargin" id="Gne-Aw-06q"/>
+                                                <constraint firstItem="jLY-sZ-rWw" firstAttribute="trailing" secondItem="0GY-OI-lPN" secondAttribute="trailingMargin" id="KfV-p2-oGA"/>
+                                                <constraint firstItem="jLY-sZ-rWw" firstAttribute="top" secondItem="0GY-OI-lPN" secondAttribute="topMargin" id="m5x-pR-ZZU"/>
+                                                <constraint firstItem="oL6-JY-jhh" firstAttribute="leading" secondItem="0GY-OI-lPN" secondAttribute="leadingMargin" id="pZ2-eS-Lmw"/>
+                                            </constraints>
                                             <variation key="default">
                                                 <mask key="subviews">
                                                     <exclude reference="jLY-sZ-rWw"/>
                                                     <exclude reference="oL6-JY-jhh"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <exclude reference="Gne-Aw-06q"/>
+                                                    <exclude reference="KfV-p2-oGA"/>
+                                                    <exclude reference="m5x-pR-ZZU"/>
+                                                    <exclude reference="3Ht-ml-pdi"/>
+                                                    <exclude reference="CgP-qb-4NS"/>
+                                                    <exclude reference="pZ2-eS-Lmw"/>
                                                 </mask>
                                             </variation>
                                             <variation key="widthClass=compact">
                                                 <mask key="subviews">
                                                     <include reference="jLY-sZ-rWw"/>
                                                     <include reference="oL6-JY-jhh"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <include reference="Gne-Aw-06q"/>
+                                                    <include reference="KfV-p2-oGA"/>
+                                                    <include reference="m5x-pR-ZZU"/>
+                                                    <include reference="3Ht-ml-pdi"/>
+                                                    <include reference="CgP-qb-4NS"/>
+                                                    <include reference="pZ2-eS-Lmw"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
