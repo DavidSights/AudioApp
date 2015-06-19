@@ -11,5 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 @interface EditViewController : UIViewController
+
 @property AVAudioRecorder *recorder;
+
 @end
