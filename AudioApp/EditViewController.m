@@ -13,7 +13,6 @@
 
 @property (weak, nonatomic) IBOutlet UIView *viewOne;
 @property AVAudioPlayer *player;
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *timeButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property int recordTimeInt;
@@ -37,6 +36,7 @@
     [self.player prepareToPlay];
     [self playRecordedAudio];
 
+    // Make color buttons circles.
     self.yellowColorButton.layer.cornerRadius = self.yellowColorButton.frame.size.width / 3;
     self.blackColorButton.layer.cornerRadius = self.blackColorButton.frame.size.width / 3;
     self.redColorButton.layer.cornerRadius = self.redColorButton.frame.size.width / 3;
@@ -53,6 +53,7 @@
 }
 
 - (void)playRecordedAudio {
+    self.player.numberOfLoops = -1;
     [self.player play];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0
                                                   target:self
@@ -70,16 +71,12 @@
     if (self.player.playing) {
         [self.player pause];
     } else if (!self.player.playing){
-
         AVAudioSession *session = [AVAudioSession sharedInstance];
-
         NSError *setCategoryError = nil;
         if (![session setCategory:AVAudioSessionCategoryPlayback
                       withOptions:AVAudioSessionCategoryOptionMixWithOthers
                             error:&setCategoryError]) {
-
             NSLog(@"%@", setCategoryError);
-            // handle error
         }
         [self.player play];
     }
@@ -137,6 +134,5 @@
     dvc.recorder = self.recorder;
     dvc.theColor = self.viewOne.backgroundColor;
 }
-
 
 @end
