@@ -33,11 +33,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-
     self.player = [[AVAudioPlayer alloc]initWithContentsOfURL:self.recorder.url error:nil];
     [self.player prepareToPlay];
-
-    [self beginRecording];
+    [self playRecordedAudio];
 
     self.yellowColorButton.layer.cornerRadius = self.yellowColorButton.frame.size.width / 3;
     self.blackColorButton.layer.cornerRadius = self.blackColorButton.frame.size.width / 3;
@@ -49,15 +47,12 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-
-
     self.player = [[AVAudioPlayer alloc]initWithContentsOfURL:self.recorder.url error:nil];
     [self.player prepareToPlay];
-    [self beginRecording];
+    [self playRecordedAudio];
 }
 
--(void)beginRecording {
-
+- (void)playRecordedAudio {
     [self.player play];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0
                                                   target:self
@@ -66,7 +61,7 @@
                                                  repeats:YES];
 }
 
--(NSTimeInterval)playingTime {
+- (NSTimeInterval)playingTime {
     [self.timeButton setTitle:[NSString stringWithFormat:@"%.0f",self.player.currentTime] forState:UIControlStateNormal];
     return self.player.currentTime;
 }
