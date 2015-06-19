@@ -54,8 +54,10 @@
 
         [likesQuery findObjectsInBackgroundWithBlock:^(NSArray *likes, NSError *error) {
 
+            NSLog(@"Likes.count: %d", likes.count);
+
             NSMutableArray *likesMutable = [NSMutableArray new];
-            for (PFObject *likeObject in comments) {
+            for (PFObject *likeObject in likes) {
 
                 Like *like = [[Like alloc] initWithLikeObject:likeObject];
                 [likesMutable addObject:like];
