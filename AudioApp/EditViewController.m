@@ -58,17 +58,6 @@
 
 -(void)beginRecording {
 
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-
-    NSError *setCategoryError = nil;
-    if (![session setCategory:AVAudioSessionCategoryPlayback
-                  withOptions:AVAudioSessionCategoryOptionMixWithOthers
-                        error:&setCategoryError]) {
-
-        NSLog(@"%@", setCategoryError);
-        // handle error
-    }
-
     [self.player play];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0
                                                   target:self
