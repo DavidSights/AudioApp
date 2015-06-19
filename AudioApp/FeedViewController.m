@@ -71,10 +71,10 @@
     Post *post = self.posts[section];
 
     NSInteger commentCount = post.comments.count;
-    NSLog(@"Comment count: %d", commentCount);
+//    NSLog(@"Comment count: %d", commentCount);
 
     if (commentCount < 5) {
-        NSLog(@"Comment count less than 5");
+//        NSLog(@"Comment count less than 5");
 
         return commentCount + 2;
     } else {
@@ -120,7 +120,7 @@
         LabelsAndButtonsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"labelsAndButtonsCell"];
         cell.likesButton.tag = indexPath.section;
         Post *post = self.posts[indexPath.section];
-//        NSLog(@"Likes: %d", post.likes.count);
+        NSLog(@"Likes: %lu", (unsigned long)post.likes.count);
         cell.likesLabel.text = [NSString stringWithFormat:@"%lu Likes", (unsigned long)post.likes.count];
         return cell;
     } else {
@@ -128,7 +128,7 @@
         CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentCell"];
         Post *post = self.posts[indexPath.section];
         Comment *comment = post.comments[0];
-        NSLog(@"%@", comment.text);
+//        NSLog(@"%@", comment.text);
         cell.commentLabel.text = comment.text;
         return cell;
     }
@@ -188,7 +188,7 @@
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
     if (currentUser) {
 
-        NSLog(@"Current user: %@", currentUser.username);
+//        NSLog(@"Current user: %@", currentUser.username);
         [self queryFromParse];
 //        [self.tableView reloadData];
     } else {
@@ -250,31 +250,45 @@
 //        }
 //    }];
 
+    LabelsAndButtonsTableViewCell *cell = (LabelsAndButtonsTableViewCell *)sender.superview.superview;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+
     Post *post = self.posts[sender.tag];
-    BOOL shouldCreateLikeObject = NO;
+    BOOL shouldCreateLikeObject = YES;
 
-    for (PFObject *like in post.likes) {
+    for (Like *like in post.likes) {
 
-        if (like[@"user"] == [PFUser currentUser]) {
+        PFUser *user = like.user;
 
-            shouldCreateLikeObject = YES;
-            [like deleteEventually];
+        if (user == [PFUser currentUser]) {
+
+            shouldCreateLikeObject = NO;
+            [like.likeObject deleteEventually];
             NSMutableArray *tempArray = [post.likes mutableCopy];
             [tempArray removeObject:like];
             post.likes = tempArray;
+
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
     }
 
     if (shouldCreateLikeObject) {
 
-        PFObject *like = [PFObject objectWithClassName:@"Like"];
-        like[@"user"] = [PFUser currentUser];
-        like[@"post"] = post.postObject;
-        [like saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+
+        PFObject *likeObject = [PFObject objectWithClassName:@"Like"];
+        likeObject[@"user"] = [PFUser currentUser];
+        likeObject[@"post"] = post.postObject;
+        [likeObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 
             if (succeeded) {
 
                 NSLog(@"Like object saved");
+                Like *like = [[Like alloc] initWithLikeObject:likeObject];
+                NSMutableArray *tempArray = [post.likes mutableCopy];
+                [tempArray addObject:like];
+                post.likes = tempArray;
+
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 
             } else {
 
