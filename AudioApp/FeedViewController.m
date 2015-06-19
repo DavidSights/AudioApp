@@ -119,6 +119,16 @@
     if (!self.player.playing) {
         Post *post = self.posts[indexPath.section];
         NSData *data = [post.audioFile getData];
+        AVAudioSession *session = [AVAudioSession sharedInstance];
+
+        NSError *setCategoryError = nil;
+        if (![session setCategory:AVAudioSessionCategoryPlayback
+                      withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                            error:&setCategoryError]) {
+
+            NSLog(@"%@", setCategoryError);
+            // handle error
+        }
         self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
         [self.player play];
     } else {
