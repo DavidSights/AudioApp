@@ -24,12 +24,12 @@
 
 @end
 
-static const CGFloat kNavBarHeight = 52.0f;
-static const CGFloat kLabelHeight = 14.0f;
-static const CGFloat kMargin = 10.0f;
-static const CGFloat kSpacer = 2.0f;
-static const CGFloat kLabelFontSize = 12.0f;
-static const CGFloat kAddressHeight = 24.0f;
+//static const CGFloat kNavBarHeight = 52.0f;
+//static const CGFloat kLabelHeight = 14.0f;
+//static const CGFloat kMargin = 10.0f;
+//static const CGFloat kSpacer = 2.0f;
+//static const CGFloat kLabelFontSize = 12.0f;
+//static const CGFloat kAddressHeight = 24.0f;
 
 @implementation ProfileViewController
 
