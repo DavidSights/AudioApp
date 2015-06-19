@@ -96,7 +96,7 @@
         cell.layoutMargins = UIEdgeInsetsZero;
         cell.preservesSuperviewLayoutMargins = NO;
         NSLog(@"%f, %f", cell.center.x, cell.center.y);
-        cell.backgroundColor = [UIColor yellowColor];
+//        cell.backgroundColor = [UIColor yellowColor];
         return cell;
     } else if (indexPath.row == 1) {
         LabelsAndButtonsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"labelsAndButtonsCell"];
