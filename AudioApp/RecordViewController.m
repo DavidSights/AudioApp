@@ -126,7 +126,6 @@
         AVAudioSession *sessions = [AVAudioSession sharedInstance];
         [sessions setActive:YES error:nil];
         [self beginRecording];
-        //        [self.recorder record];
         [self.recordButton setTitle:@"Pause" forState:UIControlStateNormal];
         self.navigationItem.rightBarButtonItem.enabled = false;
 

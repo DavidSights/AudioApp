@@ -33,6 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+
     self.player = [[AVAudioPlayer alloc]initWithContentsOfURL:self.recorder.url error:nil];
     [self.player prepareToPlay];
 
@@ -48,12 +49,26 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+
+
     self.player = [[AVAudioPlayer alloc]initWithContentsOfURL:self.recorder.url error:nil];
     [self.player prepareToPlay];
     [self beginRecording];
 }
 
 -(void)beginRecording {
+
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+
+    NSError *setCategoryError = nil;
+    if (![session setCategory:AVAudioSessionCategoryPlayback
+                  withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                        error:&setCategoryError]) {
+
+        NSLog(@"%@", setCategoryError);
+        // handle error
+    }
+
     [self.player play];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0
                                                   target:self
@@ -71,6 +86,17 @@
     if (self.player.playing) {
         [self.player pause];
     } else if (!self.player.playing){
+
+        AVAudioSession *session = [AVAudioSession sharedInstance];
+
+        NSError *setCategoryError = nil;
+        if (![session setCategory:AVAudioSessionCategoryPlayback
+                      withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                            error:&setCategoryError]) {
+
+            NSLog(@"%@", setCategoryError);
+            // handle error
+        }
         [self.player play];
     }
 }
@@ -96,6 +122,16 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
     cell.backgroundColor = [UIColor colorWithRed:0 green:1 blue:0 alpha:0.5];
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+
+    NSError *setCategoryError = nil;
+    if (![session setCategory:AVAudioSessionCategoryPlayback
+                  withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                        error:&setCategoryError]) {
+
+        NSLog(@"%@", setCategoryError);
+        // handle error
+    }
     self.player.currentTime = 0;
     [self.player play];
 }
