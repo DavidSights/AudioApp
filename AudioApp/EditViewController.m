@@ -87,7 +87,8 @@
 
 -(UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"filterCellID" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor redColor];
+    cell.backgroundColor = [UIColor colorWithRed:249/255.0 green:217.0/255 blue:119/255.0 alpha:1.0];
+    cell.layer.cornerRadius = cell.frame.size.width/2;
     return cell;
 }
 
