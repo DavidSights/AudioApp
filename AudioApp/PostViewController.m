@@ -31,15 +31,14 @@
 
     PFUser *currentUser = [PFUser currentUser];
     NSData *fileData = [NSData dataWithContentsOfURL:self.recorder.url];
-    NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject:self.theColor];
+    NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject:self.postColor];
 
     PFFile *file = [PFFile fileWithName:@"audio.m4a" data:fileData];
     PFFile *fileColor = [PFFile fileWithData:colorData];
     [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (error) {
-            
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
-                                                                message:@"Please try sending your message again."
+                                                                message:[NSString stringWithFormat:@"Error: %@", error.localizedDescription]
                                                                delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alertView show];
         }
