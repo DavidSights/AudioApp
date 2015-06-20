@@ -46,6 +46,7 @@
 		9A1A037E1B2F57C1003243ED /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A037D1B2F57C1003243ED /* OptionsViewController.m */; };
 		9A1A037F1B2FA699003243ED /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB9C511B2F67A7006C8FB5 /* ProfileViewController.m */; };
 		9A2E7FD31B3585B500A372CE /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2E7FD21B3585B500A372CE /* TabBarController.m */; };
+		9A2E7FD61B3590F700A372CE /* ProfileInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2E7FD51B3590F700A372CE /* ProfileInfoTableViewCell.m */; };
 		9A6AF9A71B31E07A0040D5FF /* PostImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9A61B31E07A0040D5FF /* PostImageTableViewCell.m */; };
 		9A6AF9AA1B31EC800040D5FF /* LabelsAndButtonsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9A91B31EC800040D5FF /* LabelsAndButtonsTableViewCell.m */; };
 		9A6AF9AD1B31ED760040D5FF /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9AC1B31ED760040D5FF /* CommentTableViewCell.m */; };
@@ -121,6 +122,8 @@
 		9A1A037D1B2F57C1003243ED /* OptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
 		9A2E7FD11B3585B500A372CE /* TabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarController.h; sourceTree = "<group>"; };
 		9A2E7FD21B3585B500A372CE /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarController.m; sourceTree = "<group>"; };
+		9A2E7FD41B3590F700A372CE /* ProfileInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileInfoTableViewCell.h; sourceTree = "<group>"; };
+		9A2E7FD51B3590F700A372CE /* ProfileInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileInfoTableViewCell.m; sourceTree = "<group>"; };
 		9A6AF9A51B31E07A0040D5FF /* PostImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostImageTableViewCell.h; sourceTree = "<group>"; };
 		9A6AF9A61B31E07A0040D5FF /* PostImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostImageTableViewCell.m; sourceTree = "<group>"; };
 		9A6AF9A81B31EC800040D5FF /* LabelsAndButtonsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelsAndButtonsTableViewCell.h; sourceTree = "<group>"; };
@@ -295,6 +298,8 @@
 				9A6AF9A91B31EC800040D5FF /* LabelsAndButtonsTableViewCell.m */,
 				9A6AF9AB1B31ED760040D5FF /* CommentTableViewCell.h */,
 				9A6AF9AC1B31ED760040D5FF /* CommentTableViewCell.m */,
+				9A2E7FD41B3590F700A372CE /* ProfileInfoTableViewCell.h */,
+				9A2E7FD51B3590F700A372CE /* ProfileInfoTableViewCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -416,6 +421,7 @@
 				9A1A03261B2E0889003243ED /* FeedViewController.m in Sources */,
 				9A1A037B1B2F54DB003243ED /* DiscoverViewController.m in Sources */,
 				9A1A031D1B2E0889003243ED /* main.m in Sources */,
+				9A2E7FD61B3590F700A372CE /* ProfileInfoTableViewCell.m in Sources */,
 				9A1A03511B2E08DC003243ED /* Message.m in Sources */,
 				9A2E7FD31B3585B500A372CE /* TabBarController.m in Sources */,
 				9A6AF9AA1B31EC800040D5FF /* LabelsAndButtonsTableViewCell.m in Sources */,

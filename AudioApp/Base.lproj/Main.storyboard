@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProfileCell" rowHeight="212" id="oIk-3N-Pk4">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ProfileCell" rowHeight="212" id="oIk-3N-Pk4" customClass="ProfileInfoTableViewCell">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oIk-3N-Pk4" id="jE1-0I-EDO">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -110,6 +110,25 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjg-dN-G6E">
+                                                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="46" id="IIr-aD-Z0N"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="IIr-aD-Z0N"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="IIr-aD-Z0N"/>
+                                                        </mask>
+                                                    </variation>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="dxb-18-lP5" firstAttribute="top" secondItem="4x8-gU-Z1g" secondAttribute="bottom" constant="5" id="3Ao-8Z-Hfy"/>
@@ -118,11 +137,14 @@
                                                 <constraint firstItem="dxb-18-lP5" firstAttribute="leading" secondItem="jE1-0I-EDO" secondAttribute="leadingMargin" id="Og3-2j-9qW"/>
                                                 <constraint firstItem="t07-CY-SgX" firstAttribute="top" secondItem="jE1-0I-EDO" secondAttribute="topMargin" id="Rb1-J4-GJD"/>
                                                 <constraint firstItem="HJr-6y-bWJ" firstAttribute="leading" secondItem="jE1-0I-EDO" secondAttribute="leadingMargin" id="XZN-ql-5Pv"/>
+                                                <constraint firstItem="bjg-dN-G6E" firstAttribute="trailing" secondItem="jE1-0I-EDO" secondAttribute="trailingMargin" id="Xxr-xS-3KY"/>
+                                                <constraint firstItem="bjg-dN-G6E" firstAttribute="top" secondItem="HJr-6y-bWJ" secondAttribute="bottom" constant="8" id="YV7-Zu-xlL"/>
                                                 <constraint firstAttribute="centerX" secondItem="t07-CY-SgX" secondAttribute="centerX" id="gGL-29-ctx"/>
                                                 <constraint firstItem="dxb-18-lP5" firstAttribute="trailing" secondItem="jE1-0I-EDO" secondAttribute="trailingMargin" id="jlm-tg-5oQ"/>
                                                 <constraint firstItem="HJr-6y-bWJ" firstAttribute="trailing" secondItem="jE1-0I-EDO" secondAttribute="trailingMargin" id="qhv-XV-svU"/>
                                                 <constraint firstItem="4x8-gU-Z1g" firstAttribute="top" secondItem="t07-CY-SgX" secondAttribute="bottom" constant="8" id="rqT-s2-FGj"/>
                                                 <constraint firstItem="4x8-gU-Z1g" firstAttribute="trailing" secondItem="jE1-0I-EDO" secondAttribute="trailingMargin" id="tqr-Nk-xkl"/>
+                                                <constraint firstItem="bjg-dN-G6E" firstAttribute="leading" secondItem="jE1-0I-EDO" secondAttribute="leadingMargin" id="vs9-j8-rFp"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="subviews">
@@ -130,17 +152,21 @@
                                                     <exclude reference="dxb-18-lP5"/>
                                                     <exclude reference="4x8-gU-Z1g"/>
                                                     <exclude reference="HJr-6y-bWJ"/>
+                                                    <exclude reference="bjg-dN-G6E"/>
                                                 </mask>
                                                 <mask key="constraints">
                                                     <exclude reference="42S-u8-AK2"/>
                                                     <exclude reference="rqT-s2-FGj"/>
                                                     <exclude reference="tqr-Nk-xkl"/>
-                                                    <exclude reference="OaS-rK-lD8"/>
-                                                    <exclude reference="XZN-ql-5Pv"/>
-                                                    <exclude reference="qhv-XV-svU"/>
                                                     <exclude reference="3Ao-8Z-Hfy"/>
                                                     <exclude reference="Og3-2j-9qW"/>
                                                     <exclude reference="jlm-tg-5oQ"/>
+                                                    <exclude reference="OaS-rK-lD8"/>
+                                                    <exclude reference="XZN-ql-5Pv"/>
+                                                    <exclude reference="qhv-XV-svU"/>
+                                                    <exclude reference="Xxr-xS-3KY"/>
+                                                    <exclude reference="YV7-Zu-xlL"/>
+                                                    <exclude reference="vs9-j8-rFp"/>
                                                     <exclude reference="Rb1-J4-GJD"/>
                                                     <exclude reference="gGL-29-ctx"/>
                                                 </mask>
@@ -151,22 +177,32 @@
                                                     <include reference="dxb-18-lP5"/>
                                                     <include reference="4x8-gU-Z1g"/>
                                                     <include reference="HJr-6y-bWJ"/>
+                                                    <include reference="bjg-dN-G6E"/>
                                                 </mask>
                                                 <mask key="constraints">
                                                     <include reference="42S-u8-AK2"/>
                                                     <include reference="rqT-s2-FGj"/>
                                                     <include reference="tqr-Nk-xkl"/>
-                                                    <include reference="OaS-rK-lD8"/>
-                                                    <include reference="XZN-ql-5Pv"/>
-                                                    <include reference="qhv-XV-svU"/>
                                                     <include reference="3Ao-8Z-Hfy"/>
                                                     <include reference="Og3-2j-9qW"/>
                                                     <include reference="jlm-tg-5oQ"/>
+                                                    <include reference="OaS-rK-lD8"/>
+                                                    <include reference="XZN-ql-5Pv"/>
+                                                    <include reference="qhv-XV-svU"/>
+                                                    <include reference="Xxr-xS-3KY"/>
+                                                    <include reference="YV7-Zu-xlL"/>
+                                                    <include reference="vs9-j8-rFp"/>
                                                     <include reference="Rb1-J4-GJD"/>
                                                     <include reference="gGL-29-ctx"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="aboutLabel" destination="bjg-dN-G6E" id="jOj-C0-eP2"/>
+                                            <outlet property="followingFollowersLabel" destination="dxb-18-lP5" id="tiq-Y6-jaL"/>
+                                            <outlet property="locationLabel" destination="HJr-6y-bWJ" id="8zR-jv-CHw"/>
+                                            <outlet property="usernameLabel" destination="4x8-gU-Z1g" id="5Hi-do-Rjw"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MiddleCell" rowHeight="85" id="rUr-RW-78E">
                                         <autoresizingMask key="autoresizingMask"/>
