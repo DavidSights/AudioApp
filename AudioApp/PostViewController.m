@@ -60,8 +60,8 @@
             [comment setObject:currentUser forKey:@"author"];
             [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (error) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
-                                                                        message:@"Please try sending your message again."
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error saving description."
+                                                                        message:[NSString stringWithFormat:@"Error: %@", error.localizedDescription]
                                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alertView show];
                 }
