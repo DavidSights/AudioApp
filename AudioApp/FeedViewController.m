@@ -17,19 +17,20 @@
 
 @interface FeedViewController () <UITableViewDelegate, UITableViewDataSource>
 
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSArray *posts;
 @property AVAudioPlayer *player;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinnerActivityIndicator;
 @property NSArray *likes;
 @property NSTimer *timer;
-
 @end
 
 @implementation FeedViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.postImageTableViewCell = [[PostImageTableViewCell alloc]init];
     self.posts = [[NSArray alloc]init];
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
     if (currentUser) {
@@ -90,15 +91,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        PostImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
+      PostImageTableViewCell* postImageTableViewCell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
 //        [cell.coloredView sizeToFit];
         CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
-        cell.coloredView.frame = cellRect;
-        cell.layoutMargins = UIEdgeInsetsZero;
-        cell.preservesSuperviewLayoutMargins = NO;
-        NSLog(@"%f, %f", cell.center.x, cell.center.y);
+       postImageTableViewCell.coloredView.frame = cellRect;
+       postImageTableViewCell.layoutMargins = UIEdgeInsetsZero;
+       postImageTableViewCell.preservesSuperviewLayoutMargins = NO;
+//        self.postImageTableViewCell.timerLabel.text = @"h";
+//        NSLog(@"%f, %f", self.postImageTableViewCell.center.x, cell.center.y);
 //        cell.backgroundColor = [UIColor yellowColor];
-        return cell;
+        return postImageTableViewCell;
     } else if (indexPath.row == 1) {
         LabelsAndButtonsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"labelsAndButtonsCell"];
         cell.likesButton.tag = indexPath.section;
@@ -117,25 +119,33 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (!self.player.playing) {
-        Post *post = self.posts[indexPath.section];
-        NSData *data = [post.audioFile getData];
-        AVAudioSession *session = [AVAudioSession sharedInstance];
 
-        NSError *setCategoryError = nil;
-        if (![session setCategory:AVAudioSessionCategoryPlayback
-                      withOptions:AVAudioSessionCategoryOptionMixWithOthers
-                            error:&setCategoryError]) {
+    if (indexPath.row == 0) {
 
-            NSLog(@"%@", setCategoryError);
-            // handle error
+        if (!self.player.playing) {
+
+
+            Post *post = self.posts[indexPath.section];
+            NSData *data = [post.audioFile getData];
+            AVAudioSession *session = [AVAudioSession sharedInstance];
+
+            NSError *setCategoryError = nil;
+            if (![session setCategory:AVAudioSessionCategoryPlayback
+                          withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                                error:&setCategoryError]) {
+
+                NSLog(@"%@", setCategoryError);
+                // handle error
+            }
+
+
+
+            self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
+
+            [self playRecordedAudio];
+        } else {
+            [self.player pause];
         }
-        self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
-//        self.player.numberOfLoops = -1;
-//        [self.player play];
-        [self playRecordedAudio];
-    } else {
-        [self.player pause];
     }
 }
 
@@ -148,11 +158,15 @@
                                                 selector:@selector(playingTime)
                                                 userInfo:nil
                                                  repeats:YES];
+
 }
 
 - (NSTimeInterval)playingTime {
-//    [self.timeButton setTitle:[NSString stringWithFormat:@"%.0f",self.player.currentTime] forState:UIControlStateNormal];
-    NSLog(@"%f========================",self.player.currentTime);
+
+
+    self.postImageTableViewCell = (PostImageTableViewCell *)[self.tableView cellForRowAtIndexPath:self.tableView.indexPathForSelectedRow];
+
+    self.postImageTableViewCell.timerLabel.text = [NSString stringWithFormat:@"%.0f",self.player.currentTime];
     return self.player.currentTime;
 }
 
