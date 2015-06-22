@@ -96,9 +96,14 @@
        postImageTableViewCell.coloredView.frame = cellRect;
        postImageTableViewCell.layoutMargins = UIEdgeInsetsZero;
        postImageTableViewCell.preservesSuperviewLayoutMargins = NO;
-//        self.postImageTableViewCell.timerLabel.text = @"h";
-//        NSLog(@"%f, %f", self.postImageTableViewCell.center.x, cell.center.y);
-//        cell.backgroundColor = [UIColor yellowColor];
+        Post *post = self.posts[indexPath.section];
+        if (post.colorHex !=nil) {
+            NSString *string = post.colorHex;
+            postImageTableViewCell.backgroundColor = [self colorWithHexString:string];
+        }else{
+            postImageTableViewCell.backgroundColor = [UIColor yellowColor];
+
+        }
         return postImageTableViewCell;
     } else if (indexPath.row == 1) {
         LabelsAndButtonsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"labelsAndButtonsCell"];
@@ -298,5 +303,32 @@
         }];
     }
 }
+
+
+#pragma mark convert nsstring to uicolor
+- (UIColor *) colorWithHexString: (NSString *) hexString
+{
+    NSString *colorString = [[hexString stringByReplacingOccurrencesOfString: @"#" withString: @""] uppercaseString];
+
+    NSLog(@"colorString :%@",colorString);
+    CGFloat alpha, red, blue, green;
+
+    // #RGB
+    alpha = 1.0f;
+    red   = [self colorComponentFrom: colorString start: 0 length: 2];
+    green = [self colorComponentFrom: colorString start: 2 length: 2];
+    blue  = [self colorComponentFrom: colorString start: 4 length: 2];
+
+    return [UIColor colorWithRed: red green: green blue: blue alpha: alpha];
+}
+
+- (CGFloat) colorComponentFrom: (NSString *) string start: (NSUInteger) start length: (NSUInteger) length {
+    NSString *substring = [string substringWithRange: NSMakeRange(start, length)];
+    NSString *fullHex = length == 2 ? substring : [NSString stringWithFormat: @"%@%@", substring, substring];
+    unsigned hexComponent;
+    [[NSScanner scannerWithString: fullHex] scanHexInt: &hexComponent];
+    return hexComponent / 255.0;
+}
+
 
 @end

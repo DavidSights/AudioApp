@@ -29,6 +29,7 @@
         self.audioFile = post[@"audio"];
         self.descriptionComment = post[@"descriptionComment"];
         self.postObject = post;
+        self.colorHex = post[@"colorHex"];
     }
 
     return self;

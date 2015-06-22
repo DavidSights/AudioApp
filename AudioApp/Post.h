@@ -19,7 +19,7 @@
 @property NSString *descriptionComment;
 @property NSArray *comments;
 @property NSArray *likes;
-
+@property NSString *colorHex;
 - (instancetype)initWithAudioFile:(PFFile *)audioFile andComment:(NSString *)comment;
 
 - (instancetype)initWithPFObject:(PFObject *)post;
