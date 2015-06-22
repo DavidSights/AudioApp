@@ -22,6 +22,7 @@
 @property AVAudioPlayer *player;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinnerActivityIndicator;
 @property NSArray *likes;
+@property NSTimer *timer;
 
 @end
 
@@ -130,10 +131,29 @@
             // handle error
         }
         self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
-        [self.player play];
+//        self.player.numberOfLoops = -1;
+//        [self.player play];
+        [self playRecordedAudio];
     } else {
         [self.player pause];
     }
+}
+
+
+- (void)playRecordedAudio {
+    self.player.numberOfLoops = -1;
+    [self.player play];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                  target:self
+                                                selector:@selector(playingTime)
+                                                userInfo:nil
+                                                 repeats:YES];
+}
+
+- (NSTimeInterval)playingTime {
+//    [self.timeButton setTitle:[NSString stringWithFormat:@"%.0f",self.player.currentTime] forState:UIControlStateNormal];
+    NSLog(@"%f========================",self.player.currentTime);
+    return self.player.currentTime;
 }
 
 #pragma mark - Parse
