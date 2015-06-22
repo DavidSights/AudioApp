@@ -17,6 +17,7 @@
 @interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSArray *userPosts;
 
@@ -35,6 +36,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // Set up profile details.
+    PFUser *user = [PFUser currentUser];
+    self.usernameLabel.text = user.username;
+    self.aboutLabel.text = user[@"about"];
+    
 //    self.userPosts =
 //    PFQuery *query = [[PFQuery alloc] initWithClassName:@"Post"];
 //    [query whereKey:@"author" equalTo:[PFUser currentUser]];

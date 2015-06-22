@@ -8,7 +8,9 @@
 
 #import "PostViewController.h"
 #import <Parse/Parse.h>
+
 @interface PostViewController ()
+
 @property (weak, nonatomic) IBOutlet UITextView *commentTextView;
 @property (weak, nonatomic) IBOutlet UIButton *postButton;
 
@@ -20,26 +22,21 @@
     [super viewDidLoad];
 }
 
-
 - (IBAction)onPostTapped:(UIButton *)sender {
-
-
     [self uploadPost];
 }
 
 - (void)uploadPost {
-
     PFUser *currentUser = [PFUser currentUser];
     NSData *fileData = [NSData dataWithContentsOfURL:self.recorder.url];
-    NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject:self.theColor];
+    NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject:self.postColor];
 
     PFFile *file = [PFFile fileWithName:@"audio.m4a" data:fileData];
     PFFile *fileColor = [PFFile fileWithData:colorData];
     [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (error) {
-            
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
-                                                                message:@"Please try sending your message again."
+                                                                message:[NSString stringWithFormat:@"Error: %@", error.localizedDescription]
                                                                delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alertView show];
         }
@@ -48,9 +45,6 @@
             [post setObject:file forKey:@"audio"];
             [post setObject:currentUser forKey:@"author"];
             [post setObject:fileColor forKey:@"color"];
-
-
-
             [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (error) {
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
@@ -58,22 +52,16 @@
                                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alertView show];
                 }
-                else {
-                    // Everything was successful!
-                    //                    [self reset];
-                }
             }];
-
 
             PFObject *comment = [PFObject objectWithClassName:@"Comment"];
             [comment setObject:self.commentTextView.text forKey:@"text"];
             [comment setObject:post forKey:@"post"];
             [comment setObject:currentUser forKey:@"author"];
-
             [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (error) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
-                                                                        message:@"Please try sending your message again."
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error saving description."
+                                                                        message:[NSString stringWithFormat:@"Error: %@", error.localizedDescription]
                                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alertView show];
                 }
@@ -84,16 +72,11 @@
             }];
        }
     }];
-
  
     [self.tabBarController setSelectedIndex:0];
     [self.navigationController popToRootViewControllerAnimated:true];
-
     [self.recorder stop];
     [self.recorder deleteRecording];
 }
-
-
-
 
 @end
