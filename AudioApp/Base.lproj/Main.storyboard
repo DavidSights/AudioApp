@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -1594,7 +1594,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="85" height="93"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -1801,7 +1801,7 @@
         <scene sceneID="Cse-Ts-6J1">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="PoG-S5-WRN" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" id="YoU-Yw-BOZ"/>
+                    <tabBarItem key="tabBarItem" title="" image="Feed" id="YoU-Yw-BOZ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="sA0-aU-7oR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1816,11 +1816,11 @@
             </objects>
             <point key="canvasLocation" x="-423" y="762"/>
         </scene>
-        <!--Discover-->
+        <!--Navigation Controller-->
         <scene sceneID="adv-QA-8OL">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="J4v-Nl-Pea" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Discover" id="eLJ-nB-rAK"/>
+                    <tabBarItem key="tabBarItem" title="" image="Discover" id="eLJ-nB-rAK"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ceh-Ir-lLt">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1835,11 +1835,11 @@
             </objects>
             <point key="canvasLocation" x="348" y="762"/>
         </scene>
-        <!--Record-->
+        <!--Navigation Controller-->
         <scene sceneID="tWp-xp-Qhc">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TC9-kp-S9I" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Record" id="bc4-hx-d06"/>
+                    <tabBarItem key="tabBarItem" title="" image="Record" id="bc4-hx-d06"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="eD0-pi-hEE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1854,11 +1854,13 @@
             </objects>
             <point key="canvasLocation" x="1209" y="762"/>
         </scene>
-        <!--Activity-->
+        <!--Navigation Controller-->
         <scene sceneID="3ja-kw-DWx">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gmv-lL-ou4" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Activity" id="1wi-Sa-3Ae"/>
+                    <tabBarItem key="tabBarItem" title="" image="Activity" id="1wi-Sa-3Ae">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JGU-9g-WxN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1873,11 +1875,11 @@
             </objects>
             <point key="canvasLocation" x="2077.5" y="762"/>
         </scene>
-        <!--Profile-->
+        <!--Navigation Controller-->
         <scene sceneID="Rfd-Ox-eXE">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ugg-SI-dfK" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" id="lzh-Ul-j3g"/>
+                    <tabBarItem key="tabBarItem" title="" image="Profile" id="lzh-Ul-j3g"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="j7R-4y-Sjg">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1893,4 +1895,11 @@
             <point key="canvasLocation" x="2884.5" y="762"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Activity" width="25" height="25"/>
+        <image name="Discover" width="25" height="25"/>
+        <image name="Feed" width="25" height="25"/>
+        <image name="Profile" width="25" height="25"/>
+        <image name="Record" width="25" height="25"/>
+    </resources>
 </document>
