@@ -30,7 +30,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.postImageTableViewCell = [[PostImageTableViewCell alloc]init];
     self.posts = [[NSArray alloc]init];
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
     if (currentUser) {
@@ -164,9 +163,9 @@
 - (NSTimeInterval)playingTime {
 
 
-    self.postImageTableViewCell = (PostImageTableViewCell *)[self.tableView cellForRowAtIndexPath:self.tableView.indexPathForSelectedRow];
+    PostImageTableViewCell* postImageTableViewCell = (PostImageTableViewCell *)[self.tableView cellForRowAtIndexPath:self.tableView.indexPathForSelectedRow];
 
-    self.postImageTableViewCell.timerLabel.text = [NSString stringWithFormat:@"%.0f",self.player.currentTime];
+    postImageTableViewCell.timerLabel.text = [NSString stringWithFormat:@"%.0f",self.player.currentTime];
     return self.player.currentTime;
 }
 
