@@ -31,6 +31,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    NSError *setCategoryError = nil;
+    if (![session setCategory:AVAudioSessionCategoryPlayback
+                  withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                        error:&setCategoryError]) {
+        NSLog(@"%@", setCategoryError);
+    }
 
     self.player = [[AVAudioPlayer alloc]initWithContentsOfURL:self.recorder.url error:nil];
     [self.player prepareToPlay];
@@ -47,6 +54,13 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    NSError *setCategoryError = nil;
+    if (![session setCategory:AVAudioSessionCategoryPlayback
+                  withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                        error:&setCategoryError]) {
+        NSLog(@"%@", setCategoryError);
+    }
     self.player = [[AVAudioPlayer alloc]initWithContentsOfURL:self.recorder.url error:nil];
     [self.player prepareToPlay];
     [self playRecordedAudio];
@@ -71,6 +85,7 @@
     if (self.player.playing) {
         [self.player pause];
     } else if (!self.player.playing){
+
         AVAudioSession *session = [AVAudioSession sharedInstance];
         NSError *setCategoryError = nil;
         if (![session setCategory:AVAudioSessionCategoryPlayback
