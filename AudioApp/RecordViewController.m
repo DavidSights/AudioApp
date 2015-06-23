@@ -139,7 +139,7 @@
 
     }
     else{
-        [self.recorder stop];
+        [self.recorder pause];
         [self.recordButton setTitle:@"Record" forState:UIControlStateNormal];
         [self.timer invalidate];
         self.navigationItem.rightBarButtonItem.enabled = true;

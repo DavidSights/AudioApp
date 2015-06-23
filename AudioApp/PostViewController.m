@@ -9,7 +9,7 @@
 #import "PostViewController.h"
 #import <Parse/Parse.h>
 
-@interface PostViewController ()
+@interface PostViewController ()<UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *commentTextView;
 @property (weak, nonatomic) IBOutlet UIButton *postButton;
@@ -20,6 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.commentTextView.delegate = self;
 }
 
 - (IBAction)onPostTapped:(UIButton *)sender {
@@ -92,5 +93,16 @@
             lroundf(g * 255),
             lroundf(b * 255)];
 }
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+
+    if([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+
+    return YES;
+}
+
 
 @end

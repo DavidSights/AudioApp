@@ -33,9 +33,8 @@
 
 - (void)viewDidLoad {
 
-    self.navigationItem.rightBarButtonItem.enabled = false;
     self.player.delegate = self;
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"x" style:UIBarButtonItemStylePlain target:self action:@selector(editButtonPressed:)];
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"Restart" style:UIBarButtonItemStylePlain target:self action:@selector(editButtonPressed:)];
 
     self.navigationItem.leftBarButtonItem = editButton;
 
@@ -45,7 +44,7 @@
     if (![session setCategory:AVAudioSessionCategoryPlayback
                   withOptions:AVAudioSessionCategoryOptionMixWithOthers
                         error:&setCategoryError]) {
-        NSLog(@"%@", setCategoryError);
+        NSLog(@"%@+++", setCategoryError);
     }
 
     self.player = [[AVAudioPlayer alloc]initWithContentsOfURL:self.recorder.url error:nil];
@@ -63,17 +62,20 @@
 }
 - (void)editButtonPressed:(id)sender
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Discard" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Restart" message:@"Are you sure you want to restart the recording?" preferredStyle:UIAlertControllerStyleAlert];
     //adding text field to alert controller
 
     //cancels alert controller
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
     //
     //saves what you wrote
-    UIAlertAction *discardAction =  [UIAlertAction actionWithTitle:@"Discard" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *restartAction =  [UIAlertAction actionWithTitle:@"Restart" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
         AVAudioSession *sessions = [AVAudioSession sharedInstance];
         [sessions setActive:NO error:nil];
+        [self.player stop];
+        [self.player prepareToPlay];
+        [self.player stop];
         [self.recorder stop];
         [self.recorder deleteRecording];
 
@@ -84,7 +86,7 @@
     [alertController addAction:cancelAction];
 
 
-    [alertController addAction:discardAction];
+    [alertController addAction:restartAction];
 
 
     //activates alertcontroler
@@ -99,7 +101,7 @@
     if (![session setCategory:AVAudioSessionCategoryPlayback
                   withOptions:AVAudioSessionCategoryOptionMixWithOthers
                         error:&setCategoryError]) {
-        NSLog(@"%@", setCategoryError);
+        NSLog(@"%@)))))))))", setCategoryError);
     }
     self.player = [[AVAudioPlayer alloc]initWithContentsOfURL:self.recorder.url error:nil];
     [self.player prepareToPlay];
@@ -131,7 +133,7 @@
         if (![session setCategory:AVAudioSessionCategoryPlayback
                       withOptions:AVAudioSessionCategoryOptionMixWithOthers
                             error:&setCategoryError]) {
-            NSLog(@"%@", setCategoryError);
+            NSLog(@"%@^^^^^^", setCategoryError);
         }
         [self.player play];
     }
@@ -166,7 +168,7 @@
                   withOptions:AVAudioSessionCategoryOptionMixWithOthers
                         error:&setCategoryError]) {
 
-        NSLog(@"%@", setCategoryError);
+        NSLog(@"%@***", setCategoryError);
         // handle error
     }
     self.player.currentTime = 0;
