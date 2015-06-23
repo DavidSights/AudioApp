@@ -591,10 +591,15 @@
                                 <exclude reference="JQH-l3-MzH"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="cvT-iQ-6md"/>
-                                <exclude reference="oQC-Tt-Of1"/>
+                                <exclude reference="M7v-zm-4fb"/>
+                                <exclude reference="QBn-Da-tKv"/>
+                                <exclude reference="QOW-Wr-M1O"/>
+                                <exclude reference="S1R-6u-uhs"/>
                                 <exclude reference="Chf-E1-sEd"/>
                                 <exclude reference="Zbs-wc-QUi"/>
+                                <exclude reference="SAb-It-1JH"/>
+                                <exclude reference="cvT-iQ-6md"/>
+                                <exclude reference="oQC-Tt-Of1"/>
                                 <exclude reference="0Uv-xP-NVg"/>
                                 <exclude reference="kAt-nf-oKq"/>
                                 <exclude reference="mCY-VO-hxd"/>
@@ -603,15 +608,10 @@
                                 <exclude reference="pTu-5V-P64"/>
                                 <exclude reference="fQr-04-b6A"/>
                                 <exclude reference="xnw-fW-kaO"/>
-                                <exclude reference="M7v-zm-4fb"/>
-                                <exclude reference="QBn-Da-tKv"/>
-                                <exclude reference="QOW-Wr-M1O"/>
-                                <exclude reference="S1R-6u-uhs"/>
                                 <exclude reference="AIf-mc-f5v"/>
                                 <exclude reference="B3G-cY-vsk"/>
                                 <exclude reference="Nx4-fd-jvO"/>
                                 <exclude reference="gF3-dV-umS"/>
-                                <exclude reference="SAb-It-1JH"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -626,10 +626,15 @@
                                 <include reference="JQH-l3-MzH"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="cvT-iQ-6md"/>
-                                <include reference="oQC-Tt-Of1"/>
+                                <include reference="M7v-zm-4fb"/>
+                                <include reference="QBn-Da-tKv"/>
+                                <include reference="QOW-Wr-M1O"/>
+                                <include reference="S1R-6u-uhs"/>
                                 <include reference="Chf-E1-sEd"/>
                                 <include reference="Zbs-wc-QUi"/>
+                                <include reference="SAb-It-1JH"/>
+                                <include reference="cvT-iQ-6md"/>
+                                <include reference="oQC-Tt-Of1"/>
                                 <include reference="0Uv-xP-NVg"/>
                                 <include reference="kAt-nf-oKq"/>
                                 <include reference="mCY-VO-hxd"/>
@@ -638,15 +643,10 @@
                                 <include reference="pTu-5V-P64"/>
                                 <include reference="fQr-04-b6A"/>
                                 <include reference="xnw-fW-kaO"/>
-                                <include reference="M7v-zm-4fb"/>
-                                <include reference="QBn-Da-tKv"/>
-                                <include reference="QOW-Wr-M1O"/>
-                                <include reference="S1R-6u-uhs"/>
                                 <include reference="AIf-mc-f5v"/>
                                 <include reference="B3G-cY-vsk"/>
                                 <include reference="Nx4-fd-jvO"/>
                                 <include reference="gF3-dV-umS"/>
-                                <include reference="SAb-It-1JH"/>
                             </mask>
                         </variation>
                     </view>
@@ -1188,7 +1188,7 @@
             </objects>
             <point key="canvasLocation" x="348" y="1500"/>
         </scene>
-        <!--Record View Controller-->
+        <!--Record-->
         <scene sceneID="pb8-ow-xHg">
             <objects>
                 <viewController id="fdQ-0F-1kk" customClass="RecordViewController" sceneMemberID="viewController">
@@ -1314,9 +1314,9 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="gnX-DG-dDM">
+                    <navigationItem key="navigationItem" title="Record" id="gnX-DG-dDM">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="VYX-nH-ZGr"/>
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="gBY-b2-5jk">
+                        <barButtonItem key="rightBarButtonItem" title="→" id="gBY-b2-5jk">
                             <connections>
                                 <segue destination="obR-pD-bym" kind="show" id="ax0-0m-tGv"/>
                             </connections>
@@ -1821,10 +1821,10 @@
             </objects>
             <point key="canvasLocation" x="1209" y="2956"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Custom Navigation Controller-->
         <scene sceneID="Cse-Ts-6J1">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="PoG-S5-WRN" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="PoG-S5-WRN" customClass="CustomNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="Feed" id="YoU-Yw-BOZ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="sA0-aU-7oR">
@@ -2391,6 +2391,6 @@
         <image name="Record" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="U97-1n-V2n"/>
+        <segue reference="SqJ-bz-WQL"/>
     </inferredMetricsTieBreakers>
 </document>

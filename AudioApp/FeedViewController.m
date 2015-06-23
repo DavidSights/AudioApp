@@ -26,15 +26,14 @@
 @property AudioPlayerWithTag *player;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinnerActivityIndicator;
 @property UIScrollView *scrollview;
+
 @end
 
 @implementation FeedViewController
--(void)viewDidDisappear:(BOOL)animated{
-    [self.player stop];
 
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     self.scrollview.delegate = self;
     self.posts = [[NSArray alloc]init];
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
@@ -44,6 +43,18 @@
     } else {
         [self performSegueWithIdentifier:@"login" sender:self];
     }
+
+    // Required to make sound play from speakers rather than ear piece. Otherwise will randomly choose to play from speakers or earpiece.
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    NSError *setCategoryError = nil;
+    if (![session setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&setCategoryError]) {
+        NSLog(@"%@", setCategoryError);
+        // handle error
+    }
+}
+
+- (void) viewDidDisappear:(BOOL)animated{
+    [self.player stop];
 }
 
 #pragma mark - TableView
@@ -134,21 +145,21 @@
         if (self.player.tag == indexPath.section) { // Check if user is trying to play the same audio again.
             if (self.player.playing) {
                 [self.player pause];
-            } else if (self.player.tag == 0) {
+            } else if (self.player.tag == 0) { // Audio tag is automatically set to 0, so the first post requires special attention.
                 if (self.player.playing) {
                     [self.player pause];
                 }
                 Post *post = self.posts[indexPath.section];
-                NSData *data = [post.audioFile getData]; // Get audio from specific post in Parse
+                NSData *data = [post.audioFile getData]; // Get audio from specific post in Parse - Can we avoid this query?
                 self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
                 [self playRecordedAudio];
-            } else if (!self.player.playing){
+            } else if (!self.player.playing) {
                 [self.player play];
             }
-        } else {
+        } else { // A new post was tapped - stop whatever audio the player is playing, load up the new audio, and play it.
             [self.player stop];
             Post *post = self.posts[indexPath.section];
-            NSData *data = [post.audioFile getData]; // Get audio from specific post in Parse
+            NSData *data = [post.audioFile getData]; // Get audio from specific post in Parse - Can we avoid this query?
             self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
             self.player.tag = (int)indexPath.section;
             [self playRecordedAudio];

@@ -20,7 +20,7 @@
 
     self.tabBar.tintColor = [UIColor blackColor];
     //    self.tabBar.barTintColor = [UIColor colorWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
-    //    [[UINavigationBar appearance] setTranslucent:YES];
+    [self.tabBar setTranslucent:YES];
     //
     //    NSArray *tabBarItemImages = [NSArray arrayWithObjects:[[UIImage imageNamed:@"HomeIcon02"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal],
     //                                 [[UIImage imageNamed:@"Discover"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal],

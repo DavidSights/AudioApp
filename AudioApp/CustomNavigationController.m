@@ -7,6 +7,7 @@
 //
 
 #import "CustomNavigationController.h"
+#import <UIKit/UIKit.h>
 
 @interface CustomNavigationController ()
 
@@ -17,6 +18,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+//    self.navigationBar.barTintColor = [UIColor whiteColor];
+//    [self.navigationBar setTranslucent:YES];
 }
 
 - (void)didReceiveMemoryWarning {

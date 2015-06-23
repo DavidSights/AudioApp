@@ -37,7 +37,7 @@
 
     self.navigationItem.rightBarButtonItem.enabled = false;
 
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"X" style:UIBarButtonItemStylePlain target:self action:@selector(editButtonPressed:)];
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"✕" style:UIBarButtonItemStylePlain target:self action:@selector(editButtonPressed:)];
 
     self.navigationItem.leftBarButtonItem = editButton;
 
