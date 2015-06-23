@@ -75,6 +75,7 @@
     [self.tabBarController setSelectedIndex:0];
     [self.navigationController popToRootViewControllerAnimated:true];
     [self.recorder stop];
+//    self.recorder = nil;
     [self.recorder deleteRecording];
 }
 

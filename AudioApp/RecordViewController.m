@@ -26,6 +26,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setUpRecording];
+}
+-(void)viewWillAppear:(BOOL)animated{
+
+    [self setUpRecording];
+
+}
+-(void)setUpRecording{
 
     self.navigationItem.rightBarButtonItem.enabled = false;
 
@@ -49,9 +57,9 @@
 
     self.recorder.meteringEnabled = YES;
     [self.recorder prepareToRecord];
+
+
 }
-
-
 //times the recording
 -(void)beginRecording {
     [self.recorder record];
