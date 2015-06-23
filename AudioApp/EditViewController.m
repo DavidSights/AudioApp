@@ -9,7 +9,7 @@
 #import "EditViewController.h"
 #import "PostViewController.h"
 
-@interface EditViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
+@interface EditViewController ()<UICollectionViewDataSource, UICollectionViewDelegate,AVAudioPlayerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *viewOne;
 @property AVAudioPlayer *player;
@@ -29,7 +29,16 @@
 
 @implementation EditViewController
 
+
+
 - (void)viewDidLoad {
+
+    self.navigationItem.rightBarButtonItem.enabled = false;
+    self.player.delegate = self;
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"x" style:UIBarButtonItemStylePlain target:self action:@selector(editButtonPressed:)];
+
+    self.navigationItem.leftBarButtonItem = editButton;
+
     [super viewDidLoad];
     AVAudioSession *session = [AVAudioSession sharedInstance];
     NSError *setCategoryError = nil;
@@ -52,8 +61,39 @@
     self.orangeColorButton.layer.cornerRadius = self.orangeColorButton.frame.size.width / 3;
     self.blueColorButton.layer.cornerRadius = self.blueColorButton.frame.size.width / 3;
 }
+- (void)editButtonPressed:(id)sender
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Discard" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    //adding text field to alert controller
+
+    //cancels alert controller
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    //
+    //saves what you wrote
+    UIAlertAction *discardAction =  [UIAlertAction actionWithTitle:@"Discard" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+
+        AVAudioSession *sessions = [AVAudioSession sharedInstance];
+        [sessions setActive:NO error:nil];
+        [self.recorder stop];
+        [self.recorder deleteRecording];
+
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }];
+
+    //add cancelAction variable to alertController
+    [alertController addAction:cancelAction];
+
+
+    [alertController addAction:discardAction];
+
+
+    //activates alertcontroler
+    [self presentViewController:alertController animated:true completion:nil];
+    
+}
 
 - (void)viewWillAppear:(BOOL)animated {
+
     AVAudioSession *session = [AVAudioSession sharedInstance];
     NSError *setCategoryError = nil;
     if (![session setCategory:AVAudioSessionCategoryPlayback
@@ -149,5 +189,8 @@
     dvc.recorder = self.recorder;
     dvc.postColor = self.viewOne.backgroundColor;
 }
-
+-(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    [player stop];
+    [player prepareToPlay];
+}
 @end
