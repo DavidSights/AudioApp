@@ -131,36 +131,26 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     if (indexPath.row == 0) { // Only respond to audio display cell.
-
         if (self.player.tag == indexPath.section) { // Check if user is trying to play the same audio again.
-            NSLog(@"Tapped same audio post.");
             if (self.player.playing) {
-                NSLog(@"Audio post paused.");
                 [self.player pause];
             } else if (self.player.tag == 0) {
                 if (self.player.playing) {
-                    NSLog(@"Player was playing but is now paused.");
                     [self.player pause];
                 }
-                NSLog(@"Playing the first post, index 0.");
                 Post *post = self.posts[indexPath.section];
                 NSData *data = [post.audioFile getData]; // Get audio from specific post in Parse
-
                 self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
                 [self playRecordedAudio];
             } else if (!self.player.playing){
-                NSLog(@"Audio not currently playing. Playing audio.");
                 [self.player play];
             }
         } else {
-            NSLog(@"Playing audio from a new post. self.player.tag = %i but current section is %ld",self.player.tag, (long)indexPath.section);
             [self.player stop];
             Post *post = self.posts[indexPath.section];
             NSData *data = [post.audioFile getData]; // Get audio from specific post in Parse
             self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
             self.player.tag = (int)indexPath.section;
-            NSLog(@"Setting player tag to %ld", (long)indexPath.section);
-            NSLog(@"self.player.tag = %i", self.player.tag);
             [self playRecordedAudio];
         }
     }
