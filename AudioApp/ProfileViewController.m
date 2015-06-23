@@ -52,7 +52,11 @@
 -(void)viewDidAppear:(BOOL)animated {
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser != nil) {
+        PFUser *currentUser = [PFUser currentUser];
+
         self.usernameLabel.text = currentUser.username;
+        self.aboutLabel.text = currentUser[@"about"];
+
 
     } else {
         [self.tabBarController setSelectedIndex:0];
