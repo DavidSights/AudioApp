@@ -1,12 +1,12 @@
 //
-//  ProfileViewController.m
+//  UserViewController.m
 //  AudioApp
 //
-//  Created by Alex Santorineos on 6/15/15.
+//  Created by Alex Santorineos on 6/23/15.
 //  Copyright (c) 2015 DavidSights. All rights reserved.
 //
 
-#import "ProfileViewController.h"
+#import "UserViewController.h"
 #import "PostImageTableViewCell.h"
 #import "LabelsAndButtonsTableViewCell.h"
 #import "CommentTableViewCell.h"
@@ -14,12 +14,12 @@
 #import <Parse/Parse.h>
 
 
-@interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+@interface UserViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSArray *userPosts;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property CGFloat lastOffsetY;
 
@@ -32,19 +32,19 @@
 //static const CGFloat kLabelFontSize = 12.0f;
 //static const CGFloat kAddressHeight = 24.0f;
 
-@implementation ProfileViewController
+@implementation UserViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     // Set up profile details.
     PFUser *user = [PFUser currentUser];
     self.usernameLabel.text = user.username;
     self.aboutLabel.text = user[@"about"];
-    
-//    self.userPosts =
-//    PFQuery *query = [[PFQuery alloc] initWithClassName:@"Post"];
-//    [query whereKey:@"author" equalTo:[PFUser currentUser]];
+
+    //    self.userPosts =
+    //    PFQuery *query = [[PFQuery alloc] initWithClassName:@"Post"];
+    //    [query whereKey:@"author" equalTo:[PFUser currentUser]];
 
     [self queryFromParse];
 }
@@ -52,11 +52,7 @@
 -(void)viewDidAppear:(BOOL)animated {
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser != nil) {
-        PFUser *currentUser = [PFUser currentUser];
-
         self.usernameLabel.text = currentUser.username;
-        self.aboutLabel.text = currentUser[@"about"];
-
 
     } else {
         [self.tabBarController setSelectedIndex:0];
@@ -143,7 +139,7 @@
 
         } else if (indexPath.row == 1) {
             cell = [tableView dequeueReusableCellWithIdentifier:@"MiddleCell"];
-            
+
         }
     } else {
 
@@ -151,8 +147,8 @@
 
             PostImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
             //        [cell.coloredView sizeToFit];
-//            CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
-//            cell.coloredView.frame = cellRect;
+            //            CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
+            //            cell.coloredView.frame = cellRect;
             cell.layoutMargins = UIEdgeInsetsZero;
             cell.preservesSuperviewLayoutMargins = NO;
             NSLog(@"%f, %f", cell.center.x, cell.center.y);
@@ -161,10 +157,10 @@
         } else if (indexPath.row == 1) {
 
             LabelsAndButtonsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeCell"];
-//            PFQuery *likesQuery = [PFQuery queryWithClassName:@"Like"];
-//            [likesQuery whereKey:@"Post" equalTo:self.userPosts[indexPath.section]];
-//            NSArray *likes = [likesQuery findObjects];
-//            cell.likesLabel.text = [NSString stringWithFormat:@"%lu Likes", (unsigned long)likes.count];
+            //            PFQuery *likesQuery = [PFQuery queryWithClassName:@"Like"];
+            //            [likesQuery whereKey:@"Post" equalTo:self.userPosts[indexPath.section]];
+            //            NSArray *likes = [likesQuery findObjects];
+            //            cell.likesLabel.text = [NSString stringWithFormat:@"%lu Likes", (unsigned long)likes.count];
             return cell;
         } else {
 
@@ -235,7 +231,7 @@
     }];
     self.navigationItem.titleView.alpha = alpha;
     self.navigationController.navigationBar.tintColor = [self.navigationController.navigationBar.tintColor colorWithAlphaComponent:alpha];
-//    self.urlTextField.alpha = alpha;
+    //    self.urlTextField.alpha = alpha;
 }
 
 - (void)animateNavBarTo:(CGFloat)y {
@@ -250,3 +246,5 @@
 }
 
 @end
+
+

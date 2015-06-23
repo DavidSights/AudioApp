@@ -16,7 +16,7 @@
 #import "Comment.h"
 #import "AudioPlayerWithTag.h"
 
-@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -25,12 +25,17 @@
 @property NSTimer *timer;
 @property AudioPlayerWithTag *player;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinnerActivityIndicator;
+@property UIScrollView *scrollview;
 @end
 
 @implementation FeedViewController
+-(void)viewDidDisappear:(BOOL)animated{
+    [self.player stop];
 
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.scrollview.delegate = self;
     self.posts = [[NSArray alloc]init];
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
     if (currentUser) {
@@ -326,6 +331,35 @@
     [[NSScanner scannerWithString: fullHex] scanHexInt: &hexComponent];
     return hexComponent / 255.0;
 }
+//keep method below!
+//-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+//
+//    for (NSIndexPath *path in [self.tableView indexPathsForVisibleRows]) {
+////        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:path];
+//
+//
+//        Post *post = self.posts[path.section];
+//        NSData *data = [post.audioFile getData];
+//        AVAudioSession *session = [AVAudioSession sharedInstance];
+//
+//        NSError *setCategoryError = nil;
+//        if (![session setCategory:AVAudioSessionCategoryPlayback
+//                      withOptions:AVAudioSessionCategoryOptionMixWithOthers
+//                            error:&setCategoryError]) {
+//
+//            NSLog(@"%@", setCategoryError);
+//            // handle error
+//        }
+//
+//
+//
+//        self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
+//
+//        [self.player play];
+//    }
+//}
+
+
 
 
 @end
