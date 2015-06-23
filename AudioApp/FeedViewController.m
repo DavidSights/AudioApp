@@ -332,7 +332,35 @@
     return hexComponent / 255.0;
 }
 
--(void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+
+    for (NSIndexPath *path in [self.tableView indexPathsForVisibleRows]) {
+//        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:path];
+
+
+        Post *post = self.posts[path.section];
+        NSData *data = [post.audioFile getData];
+        AVAudioSession *session = [AVAudioSession sharedInstance];
+
+        NSError *setCategoryError = nil;
+        if (![session setCategory:AVAudioSessionCategoryPlayback
+                      withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                            error:&setCategoryError]) {
+
+            NSLog(@"%@", setCategoryError);
+            // handle error
+        }
+
+
+
+        self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
+
+        [self.player play];
+    }
+}
+
+-(void)scrollViewDidScrollToTop:(UIScrollView *)scrollView{
+
 
 
 }
