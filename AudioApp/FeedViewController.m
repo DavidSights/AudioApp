@@ -28,7 +28,10 @@
 @end
 
 @implementation FeedViewController
+-(void)viewDidDisappear:(BOOL)animated{
+    [self.player stop];
 
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.scrollview.delegate = self;

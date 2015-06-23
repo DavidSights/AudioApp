@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		972AE7F71B39FCF0009B92F6 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 972AE7F61B39FCF0009B92F6 /* UserViewController.m */; };
+		972AE7FA1B39FDDE009B92F6 /* CommentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 972AE7F91B39FDDE009B92F6 /* CommentTableViewController.m */; };
 		975EF35A1B30A74E00A3E145 /* PostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 975EF3591B30A74E00A3E145 /* PostViewController.m */; };
 		9777D2D61B305E7700ED2B46 /* RecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9777D2D51B305E7700ED2B46 /* RecordViewController.m */; };
 		9777D2D81B30615200ED2B46 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9777D2D71B30615200ED2B46 /* AVFoundation.framework */; };
@@ -63,6 +65,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		972AE7F51B39FCF0009B92F6 /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserViewController.h; path = ../UserViewController.h; sourceTree = "<group>"; };
+		972AE7F61B39FCF0009B92F6 /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserViewController.m; path = ../UserViewController.m; sourceTree = "<group>"; };
+		972AE7F81B39FDDE009B92F6 /* CommentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableViewController.h; sourceTree = "<group>"; };
+		972AE7F91B39FDDE009B92F6 /* CommentTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewController.m; sourceTree = "<group>"; };
 		975EF3581B30A74E00A3E145 /* PostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostViewController.h; sourceTree = "<group>"; };
 		975EF3591B30A74E00A3E145 /* PostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostViewController.m; sourceTree = "<group>"; };
 		9777D2D41B305E7700ED2B46 /* RecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordViewController.h; sourceTree = "<group>"; };
@@ -189,12 +195,16 @@
 		9A1A03191B2E0889003243ED /* AudioApp */ = {
 			isa = PBXGroup;
 			children = (
+				972AE7F51B39FCF0009B92F6 /* UserViewController.h */,
+				972AE7F61B39FCF0009B92F6 /* UserViewController.m */,
 				9A1A031E1B2E0889003243ED /* AppDelegate.h */,
 				9A1A031F1B2E0889003243ED /* AppDelegate.m */,
 				9A2E7FD11B3585B500A372CE /* TabBarController.h */,
 				9A2E7FD21B3585B500A372CE /* TabBarController.m */,
 				9A1A03241B2E0889003243ED /* FeedViewController.h */,
 				9A1A03251B2E0889003243ED /* FeedViewController.m */,
+				972AE7F81B39FDDE009B92F6 /* CommentTableViewController.h */,
+				972AE7F91B39FDDE009B92F6 /* CommentTableViewController.m */,
 				9A1A03791B2F54DB003243ED /* DiscoverViewController.h */,
 				9A1A037A1B2F54DB003243ED /* DiscoverViewController.m */,
 				9777D2D41B305E7700ED2B46 /* RecordViewController.h */,
@@ -405,6 +415,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A1A037F1B2FA699003243ED /* ProfileViewController.m in Sources */,
+				972AE7FA1B39FDDE009B92F6 /* CommentTableViewController.m in Sources */,
 				9A1A03451B2E08A9003243ED /* User.m in Sources */,
 				9A1A034B1B2E08C9003243ED /* Like.m in Sources */,
 				9A6AF9AD1B31ED760040D5FF /* CommentTableViewCell.m in Sources */,
@@ -420,6 +431,7 @@
 				9A1A03201B2E0889003243ED /* AppDelegate.m in Sources */,
 				9A1A03261B2E0889003243ED /* FeedViewController.m in Sources */,
 				9A1A037B1B2F54DB003243ED /* DiscoverViewController.m in Sources */,
+				972AE7F71B39FCF0009B92F6 /* UserViewController.m in Sources */,
 				9A1A031D1B2E0889003243ED /* main.m in Sources */,
 				9A2E7FD61B3590F700A372CE /* ProfileInfoTableViewCell.m in Sources */,
 				9A1A03511B2E08DC003243ED /* Message.m in Sources */,
