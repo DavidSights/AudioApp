@@ -70,7 +70,7 @@
         } else {
             self.userPosts = objects;
 
-            NSLog(@"%d", self.userPosts.count);
+            NSLog(@"%lu", (unsigned long)self.userPosts.count);
             //            NSLog(@"%@", objects);
             //            NSLog(@"Retrieved %lu messages", (unsigned long)[self.posts count]);
             [self.tableView reloadData];

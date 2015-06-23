@@ -64,7 +64,6 @@
 }
 
 - (void)queryFromParse {
-    //    NSLog(@"QUERY BEGAN.");
     PFQuery* query = [PFQuery queryWithClassName:@"Post"];
     [query whereKey:@"author" equalTo:[PFUser currentUser]];
     [query orderByDescending:@"createdAt"];
@@ -73,14 +72,9 @@
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         } else {
             self.userPosts = objects;
-
-            NSLog(@"%d", self.userPosts.count);
-            //            NSLog(@"%@", objects);
-            //            NSLog(@"Retrieved %lu messages", (unsigned long)[self.posts count]);
+            NSLog(@"%lu", (unsigned long)self.userPosts.count);;
             [self.tableView reloadData];
-            //            NSLog(@"Reloaded tableview.");
         }
-        //        NSLog(@"QUERY ENDED.");
     }];
 }
 
