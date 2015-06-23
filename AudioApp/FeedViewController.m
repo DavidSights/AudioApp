@@ -14,16 +14,17 @@
 #import "PostImageTableViewCell.h"
 #import "Post.h"
 #import "Comment.h"
+#import "AudioPlayerWithTag.h"
 
 @interface FeedViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSArray *posts;
-@property AVAudioPlayer *player;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinnerActivityIndicator;
 @property NSArray *likes;
 @property NSTimer *timer;
+@property AudioPlayerWithTag *player;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinnerActivityIndicator;
 @end
 
 @implementation FeedViewController
@@ -34,7 +35,6 @@
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
     if (currentUser) {
         NSLog(@"Current user: %@", currentUser.username);
-        [self.player prepareToPlay];
         [self queryFromParse];
     } else {
         [self performSegueWithIdentifier:@"login" sender:self];
@@ -109,7 +109,6 @@
         LabelsAndButtonsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"labelsAndButtonsCell"];
         cell.likesButton.tag = indexPath.section;
         Post *post = self.posts[indexPath.section];
-        NSLog(@"Likes: %lu", (unsigned long)post.likes.count);
         cell.likesLabel.text = [NSString stringWithFormat:@"%lu Likes", (unsigned long)post.likes.count];
         return cell;
     } else {
@@ -122,54 +121,54 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+#pragma mark - Audio
 
-    if (indexPath.row == 0) {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-        if (!self.player.playing) {
+    if (indexPath.row == 0) { // Only respond to audio display cell.
 
+        if (self.player.tag == indexPath.section) { // Check if user is trying to play the same audio again.
+            NSLog(@"Tapped same audio post.");
+            if (self.player.playing) {
+                NSLog(@"Audio post paused.");
+                [self.player pause];
+            } else if (self.player.tag == 0) {
+                if (self.player.playing) {
+                    NSLog(@"Player was playing but is now paused.");
+                    [self.player pause];
+                }
+                NSLog(@"Playing the first post, index 0.");
+                Post *post = self.posts[indexPath.section];
+                NSData *data = [post.audioFile getData]; // Get audio from specific post in Parse
 
-            Post *post = self.posts[indexPath.section];
-            NSData *data = [post.audioFile getData];
-            AVAudioSession *session = [AVAudioSession sharedInstance];
-
-            NSError *setCategoryError = nil;
-            if (![session setCategory:AVAudioSessionCategoryPlayback
-                          withOptions:AVAudioSessionCategoryOptionMixWithOthers
-                                error:&setCategoryError]) {
-
-                NSLog(@"%@", setCategoryError);
-                // handle error
+                self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
+                [self playRecordedAudio];
+            } else if (!self.player.playing){
+                NSLog(@"Audio not currently playing. Playing audio.");
+                [self.player play];
             }
-
-
-
-            self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
-
-            [self playRecordedAudio];
         } else {
-            [self.player pause];
+            NSLog(@"Playing audio from a new post. self.player.tag = %i but current section is %ld",self.player.tag, (long)indexPath.section);
+            [self.player stop];
+            Post *post = self.posts[indexPath.section];
+            NSData *data = [post.audioFile getData]; // Get audio from specific post in Parse
+            self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
+            self.player.tag = (int)indexPath.section;
+            NSLog(@"Setting player tag to %ld", (long)indexPath.section);
+            NSLog(@"self.player.tag = %i", self.player.tag);
+            [self playRecordedAudio];
         }
     }
 }
 
-
 - (void)playRecordedAudio {
     self.player.numberOfLoops = -1;
     [self.player play];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0
-                                                  target:self
-                                                selector:@selector(playingTime)
-                                                userInfo:nil
-                                                 repeats:YES];
-
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(playingTime) userInfo:nil repeats:YES];
 }
 
 - (NSTimeInterval)playingTime {
-
-
     PostImageTableViewCell* postImageTableViewCell = (PostImageTableViewCell *)[self.tableView cellForRowAtIndexPath:self.tableView.indexPathForSelectedRow];
-
     postImageTableViewCell.timerLabel.text = [NSString stringWithFormat:@"%.0f",self.player.currentTime];
     return self.player.currentTime;
 }
@@ -305,12 +304,10 @@
 }
 
 
-#pragma mark convert nsstring to uicolor
-- (UIColor *) colorWithHexString: (NSString *) hexString
-{
-    NSString *colorString = [[hexString stringByReplacingOccurrencesOfString: @"#" withString: @""] uppercaseString];
+#pragma mark - NSString to UIColor
 
-    NSLog(@"colorString :%@",colorString);
+- (UIColor *) colorWithHexString: (NSString *) hexString {
+    NSString *colorString = [[hexString stringByReplacingOccurrencesOfString: @"#" withString: @""] uppercaseString];
     CGFloat alpha, red, blue, green;
 
     // #RGB

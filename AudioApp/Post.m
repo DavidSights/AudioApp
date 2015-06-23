@@ -40,7 +40,6 @@
     PFQuery *commentsQuery = [[PFQuery alloc] initWithClassName:@"Comment"];
     [commentsQuery whereKey:@"post" equalTo:post];
     [commentsQuery orderByDescending:@"createdAt"];
-
     [commentsQuery findObjectsInBackgroundWithBlock:^(NSArray *comments, NSError *error) {
 
         NSMutableArray *commentsMutable = [NSMutableArray new];
@@ -54,12 +53,8 @@
         [likesQuery whereKey:@"post" equalTo:post];
 
         [likesQuery findObjectsInBackgroundWithBlock:^(NSArray *likes, NSError *error) {
-
-            NSLog(@"Likes.count: %d", likes.count);
-
             NSMutableArray *likesMutable = [NSMutableArray new];
             for (PFObject *likeObject in likes) {
-
                 Like *like = [[Like alloc] initWithLikeObject:likeObject];
                 [likesMutable addObject:like];
             }
