@@ -49,6 +49,23 @@
     [self queryFromParse];
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        //if the notification is touched stop spinng. if is not touched start spinning
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveNotification:) name:@"Test2" object:nil];
+    }
+    return self;
+}
+
+- (void)receiveNotification:(NSNotification *)notification {
+    if ([notification.name isEqualToString:@"Test2"]) {
+        PFUser *user = [PFUser currentUser];
+        self.usernameLabel.text = user.username;
+        self.aboutLabel.text = user[@"about"];
+    }
+}
+
 -(void)viewDidAppear:(BOOL)animated {
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser != nil) {
