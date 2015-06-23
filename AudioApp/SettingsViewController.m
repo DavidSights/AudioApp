@@ -7,6 +7,7 @@
 //
 
 #import "SettingsViewController.h"
+#import "ProfileViewController.h"
 #import <Parse/Parse.h>
 @interface SettingsViewController ()<UITextFieldDelegate, UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *username;
@@ -20,6 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
 
     self.emailTextField.delegate = self;
     self.username.delegate = self;
@@ -35,16 +37,32 @@
 
 
 
-
 - (IBAction)onSaveTapped:(id)sender {
 
     [[PFUser currentUser] setUsername:self.username.text];
     [[PFUser currentUser]setEmail:self.emailTextField.text];
     [[PFUser currentUser]setValue:self.displaynameTextField.text forKey:@"displayName"];
       [[PFUser currentUser]setValue:self.aboutTextView.text forKey:@"about"];
-    [[PFUser currentUser] saveEventually];
+//    [[PFUser currentUser] saveEventually];
+//    [[PFUser currentUser] save];
+    [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (error) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error saving info."
+                                                                message:[NSString stringWithFormat:@"Error: %@", error.localizedDescription]
+                                                               delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        }
+        else {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"Test2" object:self];
 
-    [self dismissViewControllerAnimated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    }];
+
+
+
+
+
 
 }
 
