@@ -16,7 +16,9 @@
 #import "Comment.h"
 #import "AudioPlayerWithTag.h"
 
-@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
+
+
+@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, AVAudioPlayerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -26,14 +28,15 @@
 @property AudioPlayerWithTag *player;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinnerActivityIndicator;
 @property UIScrollView *scrollview;
-
+@property int integer;
+@property NSIndexPath *indexPath;
 @end
 
 @implementation FeedViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.integer = 0;
     self.scrollview.delegate = self;
     self.posts = [[NSArray alloc]init];
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
@@ -140,6 +143,7 @@
 #pragma mark - Audio
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    self.indexPath = indexPath;
 
     if (indexPath.row == 0) { // Only respond to audio display cell.
         if (self.player.tag == indexPath.section) { // Check if user is trying to play the same audio again.
@@ -162,14 +166,19 @@
             NSData *data = [post.audioFile getData]; // Get audio from specific post in Parse - Can we avoid this query?
             self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
             self.player.tag = (int)indexPath.section;
+            self.integer = 0;
+
             [self playRecordedAudio];
         }
     }
 }
 
 - (void)playRecordedAudio {
-    self.player.numberOfLoops = -1;
+//    self.player.numberOfLoops = -1;
+    self.player.delegate = self;
     [self.player play];
+
+
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(playingTime) userInfo:nil repeats:YES];
 }
 
@@ -178,6 +187,38 @@
     postImageTableViewCell.timerLabel.text = [NSString stringWithFormat:@"%.0f",self.player.currentTime];
     return self.player.currentTime;
 }
+
+-(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+
+
+   if (!self.player.playing) {
+
+        if (flag == YES) {
+
+//            Post *post = self.posts[self.indexPath.section];
+//            NSData *data = [post.audioFile getData]; // Get audio from specific post in Parse - Can we avoid this query?
+//            self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
+//            [self playRecordedAudio];
+
+            [self.player play];
+
+            self.integer = self.integer +1;
+
+            NSLog(@"%d_______",self.integer);
+            
+        }
+        
+        
+        
+        
+    }
+
+    }
+
+
+
+
+
 
 #pragma mark - Parse
 
@@ -362,5 +403,9 @@
 
 
 
+-(void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error{
+    NSLog(@"%@",error);
 
+
+}
 @end
