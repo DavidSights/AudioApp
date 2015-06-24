@@ -16,7 +16,8 @@
 #import "Comment.h"
 #import "AudioPlayerWithTag.h"
 
-@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
+
+@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, AVAudioPlayerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -26,7 +27,6 @@
 @property AudioPlayerWithTag *player;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinnerActivityIndicator;
 @property UIScrollView *scrollview;
-
 @end
 
 @implementation FeedViewController
@@ -169,6 +169,7 @@
 
 - (void)playRecordedAudio {
     self.player.numberOfLoops = -1;
+    self.player.delegate = self;
     [self.player play];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(playingTime) userInfo:nil repeats:YES];
 }
@@ -361,6 +362,12 @@
 //}
 
 
+-(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
 
+}
 
+-(void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error{
+    NSLog(@"%@",error);
+
+}
 @end
