@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CommentTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIButton *userButton;
-@property (weak, nonatomic) IBOutlet UILabel *commentLabel;
+@interface PostHeaderCell : UITableViewCell
+
 
 @end

@@ -9,7 +9,7 @@
 #import "UserViewController.h"
 #import "PostImageTableViewCell.h"
 #import "LabelsAndButtonsTableViewCell.h"
-#import "CommentTableViewCell.h"
+#import "PostHeaderCell.h"
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
@@ -164,7 +164,7 @@
             return cell;
         } else {
 
-            CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
+            PostHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
             return cell;
         }
     }

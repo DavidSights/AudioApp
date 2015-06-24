@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 DavidSights. All rights reserved.
 //
 
-#import "CommentTableViewCell.h"
+#import "PostHeaderCell.h"
 
-@implementation CommentTableViewCell
+@implementation PostHeaderCell
 
 - (void)awakeFromNib {
     // Initialization code

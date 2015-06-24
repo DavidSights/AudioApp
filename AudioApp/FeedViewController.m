@@ -10,7 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <Parse/Parse.h>
 #import "LabelsAndButtonsTableViewCell.h"
-#import "CommentTableViewCell.h"
+#import "PostHeaderCell.h"
 #import "PostImageTableViewCell.h"
 #import "Post.h"
 #import "Comment.h"
@@ -128,7 +128,7 @@
         cell.likesLabel.text = [NSString stringWithFormat:@"%lu Likes", (unsigned long)post.likes.count];
         return cell;
     } else {
-        CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentCell"];
+        PostHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentCell"];
         Post *post = self.posts[indexPath.section];
         Comment *comment = post.comments[0];
 //        NSLog(@"%@", comment.text);

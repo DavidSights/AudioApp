@@ -54,7 +54,7 @@
 		9A627E261B3A19C200D5A195 /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A627E251B3A19C200D5A195 /* CustomNavigationController.m */; };
 		9A6AF9A71B31E07A0040D5FF /* PostImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9A61B31E07A0040D5FF /* PostImageTableViewCell.m */; };
 		9A6AF9AA1B31EC800040D5FF /* LabelsAndButtonsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9A91B31EC800040D5FF /* LabelsAndButtonsTableViewCell.m */; };
-		9A6AF9AD1B31ED760040D5FF /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9AC1B31ED760040D5FF /* CommentTableViewCell.m */; };
+		9A6AF9AD1B31ED760040D5FF /* PostHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9AC1B31ED760040D5FF /* PostHeaderCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,8 +143,8 @@
 		9A6AF9A61B31E07A0040D5FF /* PostImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostImageTableViewCell.m; sourceTree = "<group>"; };
 		9A6AF9A81B31EC800040D5FF /* LabelsAndButtonsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelsAndButtonsTableViewCell.h; sourceTree = "<group>"; };
 		9A6AF9A91B31EC800040D5FF /* LabelsAndButtonsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelsAndButtonsTableViewCell.m; sourceTree = "<group>"; };
-		9A6AF9AB1B31ED760040D5FF /* CommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
-		9A6AF9AC1B31ED760040D5FF /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
+		9A6AF9AB1B31ED760040D5FF /* PostHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostHeaderCell.h; sourceTree = "<group>"; };
+		9A6AF9AC1B31ED760040D5FF /* PostHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostHeaderCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,8 +321,8 @@
 				9A6AF9A61B31E07A0040D5FF /* PostImageTableViewCell.m */,
 				9A6AF9A81B31EC800040D5FF /* LabelsAndButtonsTableViewCell.h */,
 				9A6AF9A91B31EC800040D5FF /* LabelsAndButtonsTableViewCell.m */,
-				9A6AF9AB1B31ED760040D5FF /* CommentTableViewCell.h */,
-				9A6AF9AC1B31ED760040D5FF /* CommentTableViewCell.m */,
+				9A6AF9AB1B31ED760040D5FF /* PostHeaderCell.h */,
+				9A6AF9AC1B31ED760040D5FF /* PostHeaderCell.m */,
 				9A2E7FD41B3590F700A372CE /* ProfileInfoTableViewCell.h */,
 				9A2E7FD51B3590F700A372CE /* ProfileInfoTableViewCell.m */,
 			);
@@ -433,7 +433,7 @@
 				972AE7FA1B39FDDE009B92F6 /* CommentTableViewController.m in Sources */,
 				9A1A03451B2E08A9003243ED /* User.m in Sources */,
 				9A1A034B1B2E08C9003243ED /* Like.m in Sources */,
-				9A6AF9AD1B31ED760040D5FF /* CommentTableViewCell.m in Sources */,
+				9A6AF9AD1B31ED760040D5FF /* PostHeaderCell.m in Sources */,
 				9A627E231B3A05C700D5A195 /* AudioPlayerWithTag.m in Sources */,
 				9A1A03481B2E08B7003243ED /* Post.m in Sources */,
 				975EF35A1B30A74E00A3E145 /* PostViewController.m in Sources */,

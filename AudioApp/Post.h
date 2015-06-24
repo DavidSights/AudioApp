@@ -20,11 +20,13 @@
 @property NSArray *comments;
 @property NSArray *likes;
 @property NSString *colorHex;
+
 - (instancetype)initWithAudioFile:(PFFile *)audioFile andComment:(NSString *)comment;
 
 - (instancetype)initWithPFObject:(PFObject *)post;
 
 + (void)queryCommentsAndLikesWithPost:(PFObject *)post andCompletion:(void(^)(NSArray *comments, NSArray *likes)) complete;
+
 - (void) save;
 
 @end
