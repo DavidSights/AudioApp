@@ -93,7 +93,7 @@
 //    } else {
 //        return 8;
 //    }
-    return 1;
+    return 2;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -106,31 +106,20 @@
     PostHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
 
     Post *post = self.posts[section];
-    PFUser *user = post[@"user"];
+    PFUser *user = post[@"author"];
+    NSLog(@"User: %@", user.username);
     NSString *displayNameText = user[@"displayName"];
-    NSLog(@"%@", displayNameText);
+    NSLog(@"Display Name: %@", displayNameText);
     cell.displayNameLabel.text = displayNameText;
     [cell.displayNameLabel sizeToFit];
+    cell.backgroundColor = [UIColor whiteColor];
 
-    return cell;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-
-    return 30.0;
-}
-
--(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-
-    PostFooterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FooterCell"];
-
-    cell.delegate = self;
-    cell.tag = section;
-    
     return cell;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if (indexPath.row == 0) {
 
         PostCell* postCell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
         CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
@@ -149,6 +138,18 @@
         }
 
         return postCell;
+    } else {
+
+        PostFooterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FooterCell"];
+
+        Post *post = self.posts[section];
+        cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
+        cell.commentsLabel = post[@"numOfComments"];
+
+        cell.delegate = self;
+        cell.tag = section;
+        cell.backgroundColor = [UIColor whiteColor];
+    }
 }
 
 #pragma mark - Audio
@@ -219,13 +220,9 @@
             NSLog(@"%d_______",self.integer);
             
         }
-        
-        
-        
-        
-    }
 
     }
+}
 
 
 
@@ -273,6 +270,98 @@
 
     NSLog(@"Tapped");
 
+    PostFooterCell *cell = (PostFooterCell *)button.superview.superview;
+
+    PFUser *currentUser = [PFUser currentUser];
+    Post *post = self.posts[cell.tag];
+    NSMutableArray *likes = [post[@"likes"] mutableCopy];
+
+    NSLog(@"Likes: %@", likes);
+
+    if ([likes containsObject:currentUser.objectId]) {
+
+        NSLog(@"User already liked this post");
+
+        button.enabled = NO;
+
+        PFQuery *likeQuery = [PFQuery queryWithClassName:@"Activity"];
+        [likeQuery whereKey:@"type" equalTo:@"Like"];
+        [likeQuery whereKey:@"fromUser" equalTo:currentUser];
+        [likeQuery whereKey:@"toUser" equalTo:post[@"author"]];
+
+        [likeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+
+            if (!error) {
+
+                for (PFObject *likeActivity in objects) {
+
+                    [likeActivity deleteEventually];
+                }
+            }
+        }];
+
+        [post removeObject:currentUser.objectId forKey:@"likes"];
+        [post incrementKey:@"numOfLikes" byAmount:[NSNumber numberWithInt:-1]];
+
+        [post saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+            if (completed && !error) {
+
+                NSLog(@"Likes uploaded successfully");
+//                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:cell.tag];
+                NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:cell.tag];
+                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+//                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+                button.enabled = YES;
+            }
+        }];
+
+    } else {
+
+        button.enabled = NO;
+
+        PFObject *activity = [PFObject objectWithClassName:@"Activity"];
+        activity[@"fromUser"] = currentUser;
+        activity[@"toUser"] = post[@"author"];
+        activity[@"post"] = post;
+        activity[@"type"] = @"Like";
+        activity[@"content"] = @"";
+
+        [post addObject:currentUser.objectId forKey:@"likes"];
+        [post incrementKey:@"numOfLikes"];
+
+//        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:cell.tag];
+//        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+        NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:cell.tag];
+        [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+
+        [activity saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+            if (completed && !error) {
+
+                NSLog(@"Activity Saved");
+
+                [post saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+                    if (completed && !error) {
+
+                        NSLog(@"Likes uploaded successfully");
+
+                        button.enabled = YES;
+                    } else {
+                        
+                        button.enabled = YES;
+                    }
+                }];
+            } else {
+                
+                button.enabled = YES;
+            }
+        }];
+    }
+
 }
 
 - (IBAction)onLikesButtonTapped:(UIButton *)button {
@@ -294,7 +383,7 @@
         PFQuery *likeQuery = [PFQuery queryWithClassName:@"Activity"];
         [likeQuery whereKey:@"type" equalTo:@"Like"];
         [likeQuery whereKey:@"fromUser" equalTo:currentUser];
-        [likeQuery whereKey:@"toUser" equalTo:post[@"user"]];
+        [likeQuery whereKey:@"toUser" equalTo:post[@"author"]];
 
         [likeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 
@@ -329,7 +418,7 @@
 
         PFObject *activity = [PFObject objectWithClassName:@"Activity"];
         activity[@"fromUser"] = currentUser;
-        activity[@"toUser"] = post[@"user"];
+        activity[@"toUser"] = post[@"author"];
         activity[@"post"] = post;
         activity[@"type"] = @"Like";
         activity[@"content"] = @"";

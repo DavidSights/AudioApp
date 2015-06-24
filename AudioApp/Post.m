@@ -27,7 +27,7 @@
 +(void)queryPostsForFeedWithCompletion:(void(^)(NSArray *posts))complete {
 
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Post"];
-    [postQuery includeKey:@"user"];
+    [postQuery includeKey:@"author"];
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
 
         if (!error) {
