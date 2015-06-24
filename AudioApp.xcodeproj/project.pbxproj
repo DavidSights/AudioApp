@@ -54,7 +54,7 @@
 		9A627E231B3A05C700D5A195 /* AudioPlayerWithTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A627E221B3A05C700D5A195 /* AudioPlayerWithTag.m */; };
 		9A627E261B3A19C200D5A195 /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A627E251B3A19C200D5A195 /* CustomNavigationController.m */; };
 		9A6AF9A71B31E07A0040D5FF /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9A61B31E07A0040D5FF /* PostCell.m */; };
-		9A6AF9AA1B31EC800040D5FF /* PostFooterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9A91B31EC800040D5FF /* PostFooterCell.m */; };
+		9A6AF9AA1B31EC800040D5FF /* LikesAndCommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9A91B31EC800040D5FF /* LikesAndCommentsCell.m */; };
 		9A6AF9AD1B31ED760040D5FF /* PostHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9AC1B31ED760040D5FF /* PostHeaderCell.m */; };
 /* End PBXBuildFile section */
 
@@ -144,8 +144,8 @@
 		9A627E251B3A19C200D5A195 /* CustomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationController.m; sourceTree = "<group>"; };
 		9A6AF9A51B31E07A0040D5FF /* PostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostCell.h; sourceTree = "<group>"; };
 		9A6AF9A61B31E07A0040D5FF /* PostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostCell.m; sourceTree = "<group>"; };
-		9A6AF9A81B31EC800040D5FF /* PostFooterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostFooterCell.h; sourceTree = "<group>"; };
-		9A6AF9A91B31EC800040D5FF /* PostFooterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostFooterCell.m; sourceTree = "<group>"; };
+		9A6AF9A81B31EC800040D5FF /* LikesAndCommentsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikesAndCommentsCell.h; sourceTree = "<group>"; };
+		9A6AF9A91B31EC800040D5FF /* LikesAndCommentsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikesAndCommentsCell.m; sourceTree = "<group>"; };
 		9A6AF9AB1B31ED760040D5FF /* PostHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostHeaderCell.h; sourceTree = "<group>"; };
 		9A6AF9AC1B31ED760040D5FF /* PostHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostHeaderCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -324,8 +324,8 @@
 			children = (
 				9A6AF9A51B31E07A0040D5FF /* PostCell.h */,
 				9A6AF9A61B31E07A0040D5FF /* PostCell.m */,
-				9A6AF9A81B31EC800040D5FF /* PostFooterCell.h */,
-				9A6AF9A91B31EC800040D5FF /* PostFooterCell.m */,
+				9A6AF9A81B31EC800040D5FF /* LikesAndCommentsCell.h */,
+				9A6AF9A91B31EC800040D5FF /* LikesAndCommentsCell.m */,
 				9A6AF9AB1B31ED760040D5FF /* PostHeaderCell.h */,
 				9A6AF9AC1B31ED760040D5FF /* PostHeaderCell.m */,
 				9A2E7FD41B3590F700A372CE /* ProfileInfoTableViewCell.h */,
@@ -460,7 +460,7 @@
 				9A2E7FD61B3590F700A372CE /* ProfileInfoTableViewCell.m in Sources */,
 				9A1A03511B2E08DC003243ED /* Message.m in Sources */,
 				9A2E7FD31B3585B500A372CE /* TabBarController.m in Sources */,
-				9A6AF9AA1B31EC800040D5FF /* PostFooterCell.m in Sources */,
+				9A6AF9AA1B31EC800040D5FF /* LikesAndCommentsCell.m in Sources */,
 				9A1A034E1B2E08D1003243ED /* Comment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

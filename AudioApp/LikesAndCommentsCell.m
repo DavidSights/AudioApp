@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 DavidSights. All rights reserved.
 //
 
-#import "PostFooterCell.h"
+#import "LikesAndCommentsCell.h"
 
-@implementation PostFooterCell
+@implementation LikesAndCommentsCell
 
 - (void)awakeFromNib {
     // Initialization code

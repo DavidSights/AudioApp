@@ -10,7 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <Parse/Parse.h>
 #import "PostHeaderCell.h"
-#import "PostFooterCell.h"
+#import "LikesAndCommentsCell.h"
 #import "PostCell.h"
 #import "Post.h"
 #import "Comment.h"
@@ -140,15 +140,17 @@
         return postCell;
     } else {
 
-        PostFooterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FooterCell"];
+        LikesAndCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikesAndCommentsCell"];
 
-        Post *post = self.posts[section];
+        Post *post = self.posts[indexPath.section];
         cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
         cell.commentsLabel = post[@"numOfComments"];
 
         cell.delegate = self;
-        cell.tag = section;
+        cell.tag = indexPath.section;
         cell.backgroundColor = [UIColor whiteColor];
+
+        return cell;
     }
 }
 
@@ -270,7 +272,7 @@
 
     NSLog(@"Tapped");
 
-    PostFooterCell *cell = (PostFooterCell *)button.superview.superview;
+    LikesAndCommentsCell *cell = (LikesAndCommentsCell *)button.superview.superview;
 
     PFUser *currentUser = [PFUser currentUser];
     Post *post = self.posts[cell.tag];
@@ -303,15 +305,16 @@
         [post removeObject:currentUser.objectId forKey:@"likes"];
         [post incrementKey:@"numOfLikes" byAmount:[NSNumber numberWithInt:-1]];
 
+        cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
+
         [post saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
 
             if (completed && !error) {
 
                 NSLog(@"Likes uploaded successfully");
-//                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:cell.tag];
-                NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:cell.tag];
-                [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
-//                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+                button.enabled = YES;
+            } else {
 
                 button.enabled = YES;
             }
@@ -331,11 +334,7 @@
         [post addObject:currentUser.objectId forKey:@"likes"];
         [post incrementKey:@"numOfLikes"];
 
-//        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:cell.tag];
-//        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-
-        NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:cell.tag];
-        [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+        cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
 
         [activity saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
 
@@ -366,7 +365,7 @@
 
 - (IBAction)onLikesButtonTapped:(UIButton *)button {
 
-    PostFooterCell *cell = (PostFooterCell *)button.superview.superview;
+    LikesAndCommentsCell *cell = (LikesAndCommentsCell *)button.superview.superview;
 
     PFUser *currentUser = [PFUser currentUser];
     Post *post = self.posts[cell.tag];

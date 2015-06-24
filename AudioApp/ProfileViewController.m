@@ -8,7 +8,7 @@
 
 #import "ProfileViewController.h"
 #import "PostCell.h"
-#import "PostFooterCell.h"
+#import "LikesAndCommentsCell.h"
 #import "PostHeaderCell.h"
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
@@ -180,7 +180,7 @@
             return cell;
         } else if (indexPath.row == 1) {
 
-            PostFooterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeCell"];
+            LikesAndCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeCell"];
 //            PFQuery *likesQuery = [PFQuery queryWithClassName:@"Like"];
 //            [likesQuery whereKey:@"Post" equalTo:self.userPosts[indexPath.section]];
 //            NSArray *likes = [likesQuery findObjects];

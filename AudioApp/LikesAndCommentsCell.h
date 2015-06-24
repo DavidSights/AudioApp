@@ -14,7 +14,7 @@
 
 @end
 
-@interface PostFooterCell : UITableViewCell
+@interface LikesAndCommentsCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *likesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentsLabel;
