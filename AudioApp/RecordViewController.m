@@ -26,14 +26,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpRecording];
-
-    self.recordButton.layer.cornerRadius = self.recordButton.frame.size.width;
 }
+
 -(void)viewWillAppear:(BOOL)animated{
-
     [self setUpRecording];
-
 }
+
+-(void)viewDidAppear:(BOOL)animated {
+    self.recordButton.layer.cornerRadius = self.recordButton.frame.size.width/2; // Called here instead of view did load because storyboard dimensions not set in view did load.
+}
+
 -(void)setUpRecording{
 
     self.navigationItem.rightBarButtonItem.enabled = false;
