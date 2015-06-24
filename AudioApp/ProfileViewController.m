@@ -60,13 +60,18 @@
 
 - (void)receiveNotification:(NSNotification *)notification {
     if ([notification.name isEqualToString:@"Test2"]) {
-        PFUser *user = [PFUser currentUser];
-        self.usernameLabel.text = user.username;
-        self.aboutLabel.text = user[@"about"];
+//        PFUser *user = [PFUser currentUser];
+//        self.usernameLabel.text = user.username;
+//        self.aboutLabel.text = user[@"about"];
+        [self.tableView reloadData];
     }
 }
 
 -(void)viewDidAppear:(BOOL)animated {
+
+    [self.tableView reloadData];
+
+    NSLog(@"%@--------------",[PFUser currentUser].username);
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser != nil) {
         PFUser *currentUser = [PFUser currentUser];
@@ -78,6 +83,10 @@
     } else {
         [self.tabBarController setSelectedIndex:0];
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [self.tableView reloadData];
 }
 
 - (void)queryFromParse {
