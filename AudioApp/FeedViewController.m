@@ -17,6 +17,7 @@
 #import "AudioPlayerWithTag.h"
 
 
+
 @interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, AVAudioPlayerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
@@ -27,13 +28,15 @@
 @property AudioPlayerWithTag *player;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinnerActivityIndicator;
 @property UIScrollView *scrollview;
+@property int integer;
+@property NSIndexPath *indexPath;
 @end
 
 @implementation FeedViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.integer = 0;
     self.scrollview.delegate = self;
     self.posts = [[NSArray alloc]init];
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
@@ -168,9 +171,11 @@
 }
 
 - (void)playRecordedAudio {
-    self.player.numberOfLoops = -1;
+//    self.player.numberOfLoops = -1;
     self.player.delegate = self;
     [self.player play];
+
+
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(playingTime) userInfo:nil repeats:YES];
 }
 
@@ -179,6 +184,29 @@
     postImageTableViewCell.timerLabel.text = [NSString stringWithFormat:@"%.0f",self.player.currentTime];
     return self.player.currentTime;
 }
+
+-(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    if (player) {
+        <#statements#>
+    }
+
+    int integer = 0;
+
+
+    if (flag == YES) {
+        [self.player play];
+
+        self.integer = self.integer +1;
+
+        NSLog(@"%d_______",self.integer);
+
+    }
+
+
+
+
+}
+
 
 #pragma mark - Parse
 
@@ -362,12 +390,10 @@
 //}
 
 
--(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
-
-}
 
 -(void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error{
     NSLog(@"%@",error);
+
 
 }
 @end

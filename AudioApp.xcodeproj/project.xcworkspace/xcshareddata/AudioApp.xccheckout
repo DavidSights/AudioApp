@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>A5874A82-842A-46D7-B2FA-3780EDE1FD56</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>AudioApp</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>A8D266B4BB93904906DEBE509199884B87B5CCBC</key>
 		<string>https://github.com/DavidSights/AudioApp.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>AudioApp.xcodeproj/project.xcworkspace</string>
+	<string>AudioApp.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>A8D266B4BB93904906DEBE509199884B87B5CCBC</key>
