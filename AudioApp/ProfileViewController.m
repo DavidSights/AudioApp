@@ -260,4 +260,13 @@
     }];
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0 && indexPath.section == 0) {
+        return 200;
+    } else if (indexPath.row == 1 && indexPath.section == 0) {
+        return 88;
+    }
+    return 50;
+}
+
 @end

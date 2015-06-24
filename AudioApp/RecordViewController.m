@@ -10,14 +10,13 @@
 #import <AVFoundation/AVFoundation.h>
 #import "EditViewController.h"
 
-@interface RecordViewController ()<AVAudioRecorderDelegate, AVAudioPlayerDelegate>
+@interface RecordViewController () <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
+
 @property (weak, nonatomic) IBOutlet UIButton *recordButton;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-
 @property AVAudioRecorder *recorder;
 @property AVAudioPlayer *player;
 @property int recordTimeInt;
-
 @property NSTimer *timer;
 
 @end
@@ -27,6 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpRecording];
+
+    self.recordButton.layer.cornerRadius = self.recordButton.frame.size.width;
 }
 -(void)viewWillAppear:(BOOL)animated{
 
@@ -151,7 +152,7 @@
 
 
 -(void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
-    [self.recordButton setTitle:@"record" forState:UIControlStateNormal];
+    [self.recordButton setTitle:@"Record" forState:UIControlStateNormal];
 }
 
 -(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
