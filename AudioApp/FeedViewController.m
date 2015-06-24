@@ -166,6 +166,8 @@
             NSData *data = [post.audioFile getData]; // Get audio from specific post in Parse - Can we avoid this query?
             self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
             self.player.tag = (int)indexPath.section;
+            self.integer = 0;
+
             [self playRecordedAudio];
         }
     }
@@ -198,7 +200,7 @@
 //            self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
 //            [self playRecordedAudio];
 
-//            [self.player play];
+            [self.player play];
 
             self.integer = self.integer +1;
 
