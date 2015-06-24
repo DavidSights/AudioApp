@@ -2200,20 +2200,20 @@
                                                     <exclude reference="Rz7-OZ-PId"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="zs1-Lv-Zno"/>
-                                                    <exclude reference="fkv-oa-Qc0"/>
-                                                    <exclude reference="hfN-RX-u2X"/>
-                                                    <exclude reference="Gvz-ru-ygW"/>
-                                                    <exclude reference="Foi-zk-chJ"/>
-                                                    <exclude reference="S7e-v3-bG6"/>
-                                                    <exclude reference="ktm-cX-BP0"/>
                                                     <exclude reference="Spq-bV-k6T"/>
                                                     <exclude reference="XDH-5j-tnO"/>
-                                                    <exclude reference="fsQ-AM-c1V"/>
-                                                    <exclude reference="H1u-QK-XpY"/>
+                                                    <exclude reference="ktm-cX-BP0"/>
+                                                    <exclude reference="Foi-zk-chJ"/>
+                                                    <exclude reference="Gvz-ru-ygW"/>
+                                                    <exclude reference="S7e-v3-bG6"/>
                                                     <exclude reference="7y2-cU-E5C"/>
-                                                    <exclude reference="uNt-Mz-bf2"/>
+                                                    <exclude reference="H1u-QK-XpY"/>
+                                                    <exclude reference="fsQ-AM-c1V"/>
+                                                    <exclude reference="fkv-oa-Qc0"/>
+                                                    <exclude reference="hfN-RX-u2X"/>
+                                                    <exclude reference="zs1-Lv-Zno"/>
                                                     <exclude reference="7fs-19-b5U"/>
+                                                    <exclude reference="uNt-Mz-bf2"/>
                                                 </mask>
                                             </variation>
                                             <variation key="widthClass=compact">
@@ -2225,20 +2225,20 @@
                                                     <include reference="Rz7-OZ-PId"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="zs1-Lv-Zno"/>
-                                                    <include reference="fkv-oa-Qc0"/>
-                                                    <include reference="hfN-RX-u2X"/>
-                                                    <include reference="Gvz-ru-ygW"/>
-                                                    <include reference="Foi-zk-chJ"/>
-                                                    <include reference="S7e-v3-bG6"/>
-                                                    <include reference="ktm-cX-BP0"/>
                                                     <include reference="Spq-bV-k6T"/>
                                                     <include reference="XDH-5j-tnO"/>
-                                                    <include reference="fsQ-AM-c1V"/>
-                                                    <include reference="H1u-QK-XpY"/>
+                                                    <include reference="ktm-cX-BP0"/>
+                                                    <include reference="Foi-zk-chJ"/>
+                                                    <include reference="Gvz-ru-ygW"/>
+                                                    <include reference="S7e-v3-bG6"/>
                                                     <include reference="7y2-cU-E5C"/>
-                                                    <include reference="uNt-Mz-bf2"/>
+                                                    <include reference="H1u-QK-XpY"/>
+                                                    <include reference="fsQ-AM-c1V"/>
+                                                    <include reference="fkv-oa-Qc0"/>
+                                                    <include reference="hfN-RX-u2X"/>
+                                                    <include reference="zs1-Lv-Zno"/>
                                                     <include reference="7fs-19-b5U"/>
+                                                    <include reference="uNt-Mz-bf2"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -2393,8 +2393,8 @@
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="0Sh-7O-K8A"/>
-                                <exclude reference="LiZ-so-gH0"/>
                                 <exclude reference="8sF-24-5Eu"/>
+                                <exclude reference="LiZ-so-gH0"/>
                                 <exclude reference="We1-bv-7Yv"/>
                             </mask>
                         </variation>
@@ -2404,8 +2404,8 @@
                             </mask>
                             <mask key="constraints">
                                 <include reference="0Sh-7O-K8A"/>
-                                <include reference="LiZ-so-gH0"/>
                                 <include reference="8sF-24-5Eu"/>
+                                <include reference="LiZ-so-gH0"/>
                                 <include reference="We1-bv-7Yv"/>
                             </mask>
                         </variation>
