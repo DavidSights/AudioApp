@@ -143,6 +143,7 @@
 #pragma mark - Audio
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    self.indexPath = indexPath;
 
     if (indexPath.row == 0) { // Only respond to audio display cell.
         if (self.player.tag == indexPath.section) { // Check if user is trying to play the same audio again.
@@ -186,26 +187,35 @@
 }
 
 -(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
-    if (player) {
-        <#statements#>
+
+
+   if (!self.player.playing) {
+
+        if (flag == YES) {
+
+//            Post *post = self.posts[self.indexPath.section];
+//            NSData *data = [post.audioFile getData]; // Get audio from specific post in Parse - Can we avoid this query?
+//            self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
+//            [self playRecordedAudio];
+
+//            [self.player play];
+
+            self.integer = self.integer +1;
+
+            NSLog(@"%d_______",self.integer);
+            
+        }
+        
+        
+        
+        
     }
 
-    int integer = 0;
-
-
-    if (flag == YES) {
-        [self.player play];
-
-        self.integer = self.integer +1;
-
-        NSLog(@"%d_______",self.integer);
-
     }
 
 
 
 
-}
 
 
 #pragma mark - Parse
