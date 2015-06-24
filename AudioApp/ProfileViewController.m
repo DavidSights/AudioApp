@@ -167,7 +167,7 @@
             cell.layoutMargins = UIEdgeInsetsZero;
             cell.preservesSuperviewLayoutMargins = NO;
             NSLog(@"%f, %f", cell.center.x, cell.center.y);
-            cell.backgroundColor = [UIColor yellowColor];
+//            cell.backgroundColor = [UIColor yellowColor];
             return cell;
         } else if (indexPath.row == 1) {
 
@@ -265,6 +265,8 @@
         return 200;
     } else if (indexPath.row == 1 && indexPath.section == 0) {
         return 88;
+    } else if (indexPath.row == 0 && indexPath.section != 0){
+        return self.view.frame.size.width;
     }
     return 50;
 }
