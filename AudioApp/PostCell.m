@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 DavidSights. All rights reserved.
 //
 
-#import "PostImageTableViewCell.h"
+#import "PostCell.h"
 
-@implementation PostImageTableViewCell
+@implementation PostCell
 
 - (void)awakeFromNib {
     // Initialization code

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PostImageTableViewCell : UITableViewCell
+@interface PostCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *timerLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;

@@ -11,22 +11,17 @@
 #import "Comment.h"
 #import "Like.h"
 
-@interface Post : NSObject
+@interface Post : PFObject<PFSubclassing>
 
-@property NSString *objectId;
-@property PFObject *postObject;
-@property PFFile *audioFile;
-@property NSString *descriptionComment;
-@property NSArray *comments;
-@property NSArray *likes;
-@property NSString *colorHex;
+//@property PFFile *audioFile;
+//@property NSString *descriptionComment;
 
-- (instancetype)initWithAudioFile:(PFFile *)audioFile andComment:(NSString *)comment;
++ (NSString *)parseClassName;
 
-- (instancetype)initWithPFObject:(PFObject *)post;
+//- (instancetype)initWithAudioFile:(PFFile *)audioFile andComment:(NSString *)comment;
 
-+ (void)queryCommentsAndLikesWithPost:(PFObject *)post andCompletion:(void(^)(NSArray *comments, NSArray *likes)) complete;
++ (void)queryPostsForFeedWithCompletion:(void(^)(NSArray *posts))complete;
 
-- (void) save;
+//- (void) save;
 
 @end

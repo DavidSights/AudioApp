@@ -7,8 +7,8 @@
 //
 
 #import "ProfileViewController.h"
-#import "PostImageTableViewCell.h"
-#import "LabelsAndButtonsTableViewCell.h"
+#import "PostCell.h"
+#import "PostFooterCell.h"
 #import "PostHeaderCell.h"
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
@@ -60,13 +60,18 @@
 
 - (void)receiveNotification:(NSNotification *)notification {
     if ([notification.name isEqualToString:@"Test2"]) {
-        PFUser *user = [PFUser currentUser];
-        self.usernameLabel.text = user.username;
-        self.aboutLabel.text = user[@"about"];
+//        PFUser *user = [PFUser currentUser];
+//        self.usernameLabel.text = user.username;
+//        self.aboutLabel.text = user[@"about"];
+        [self.tableView reloadData];
     }
 }
 
 -(void)viewDidAppear:(BOOL)animated {
+
+    [self.tableView reloadData];
+
+    NSLog(@"%@--------------",[PFUser currentUser].username);
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser != nil) {
         PFUser *currentUser = [PFUser currentUser];
@@ -78,6 +83,10 @@
     } else {
         [self.tabBarController setSelectedIndex:0];
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [self.tableView reloadData];
 }
 
 - (void)queryFromParse {
@@ -160,7 +169,7 @@
 
         if (indexPath.row == 0) {
 
-            PostImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
+            PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
             //        [cell.coloredView sizeToFit];
 //            CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
 //            cell.coloredView.frame = cellRect;
@@ -171,7 +180,7 @@
             return cell;
         } else if (indexPath.row == 1) {
 
-            LabelsAndButtonsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeCell"];
+            PostFooterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeCell"];
 //            PFQuery *likesQuery = [PFQuery queryWithClassName:@"Like"];
 //            [likesQuery whereKey:@"Post" equalTo:self.userPosts[indexPath.section]];
 //            NSArray *likes = [likesQuery findObjects];

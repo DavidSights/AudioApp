@@ -10,5 +10,9 @@
 
 @interface PostHeaderCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
+@property (weak, nonatomic) IBOutlet UILabel *displayNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *createdAtLabel;
+@property (weak, nonatomic) IBOutlet UILabel *loopsLabel;
 
 @end

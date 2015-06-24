@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "Post.h"
 #import <Parse/Parse.h>
 
 @interface AppDelegate ()
@@ -20,6 +21,7 @@
 
     // Parse setup
     [Parse enableLocalDatastore];
+    [Post registerSubclass];
     [Parse setApplicationId:@"dzkgtIQeql5oUvxGAuss1aUGHgtOAERBTgHHBbDY" clientKey:@"NarZion7wI5ANRfZBULdaWKnelQMiZ2tRsdoTuDX"];
 
     // Track statistics around application opens.

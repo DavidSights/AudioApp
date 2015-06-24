@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 DavidSights. All rights reserved.
 //
 
-#import "LabelsAndButtonsTableViewCell.h"
+#import "PostFooterCell.h"
 
-@implementation LabelsAndButtonsTableViewCell
+@implementation PostFooterCell
 
 - (void)awakeFromNib {
     // Initialization code
@@ -23,7 +23,9 @@
 - (IBAction)commentsButtonPressed:(id)sender {
 }
 
-- (IBAction)likeButtonPressed:(id)sender {
+- (IBAction)likeButtonPressed:(UIButton *)button {
+
+    [self.delegate didTapLikeButton:button];
 }
 
 @end

@@ -9,18 +9,17 @@
 #import "FeedViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import <Parse/Parse.h>
-#import "LabelsAndButtonsTableViewCell.h"
 #import "PostHeaderCell.h"
-#import "PostImageTableViewCell.h"
+#import "PostFooterCell.h"
+#import "PostCell.h"
 #import "Post.h"
 #import "Comment.h"
 #import "AudioPlayerWithTag.h"
 
-@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
+@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, PostFooterCellDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property NSArray *posts;
+@property (nonatomic)  NSArray *posts;
 @property NSArray *likes;
 @property NSTimer *timer;
 @property AudioPlayerWithTag *player;
@@ -39,7 +38,11 @@
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
     if (currentUser) {
         NSLog(@"Current user: %@", currentUser.username);
-        [self queryFromParse];
+//        [self queryFromParse];
+
+        [Post queryPostsForFeedWithCompletion:^(NSArray *posts) {
+            self.posts = posts;
+        }];
     } else {
         [self performSegueWithIdentifier:@"login" sender:self];
     }
@@ -57,6 +60,12 @@
     [self.player stop];
 }
 
+-(void)setPosts:(NSArray *)posts {
+
+    _posts = posts;
+    [self.tableView reloadData];
+}
+
 #pragma mark - TableView
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -72,69 +81,73 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    Post *post = self.posts[section];
-    NSInteger commentCount = post.comments.count;
-//    NSLog(@"Comment count: %d", commentCount);
-
-    if (commentCount < 5) {
-//        NSLog(@"Comment count less than 5");
-
-        return commentCount + 2;
-    } else {
-        return 8;
-    }
-    return 3;
+//    Post *post = self.posts[section];
+//    NSInteger commentCount = post.comments.count;
+////    NSLog(@"Comment count: %d", commentCount);
+//
+//    if (commentCount < 5) {
+////        NSLog(@"Comment count less than 5");
+//
+//        return commentCount + 2;
+//    } else {
+//        return 8;
+//    }
+    return 1;
 }
 
-//-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    // Remove seperator inset
-//    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-//        [cell setSeparatorInset:UIEdgeInsetsZero];
-//    }
-//
-//    // Prevent the cell from inheriting the Table View's margin settings
-//    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
-//        [cell setPreservesSuperviewLayoutMargins:NO];
-//    }
-//
-//    // Explictly set your cell's layout margins
-//    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-//        [cell setLayoutMargins:UIEdgeInsetsZero];
-//    }
-//}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+
+    return 50.0;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+
+    PostHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
+
+    Post *post = self.posts[section];
+    PFUser *user = post[@"user"];
+    NSString *displayNameText = user[@"displayName"];
+    NSLog(@"%@", displayNameText);
+    cell.displayNameLabel.text = displayNameText;
+    [cell.displayNameLabel sizeToFit];
+
+    return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+
+    return 30.0;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+
+    PostFooterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FooterCell"];
+
+    cell.delegate = self;
+    cell.tag = section;
+    
+    return cell;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-      PostImageTableViewCell* postImageTableViewCell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
-//        [cell.coloredView sizeToFit];
-        CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
-       postImageTableViewCell.coloredView.frame = cellRect;
-       postImageTableViewCell.layoutMargins = UIEdgeInsetsZero;
-       postImageTableViewCell.preservesSuperviewLayoutMargins = NO;
-        Post *post = self.posts[indexPath.section];
-        if (post.colorHex !=nil) {
-            NSString *string = post.colorHex;
-            postImageTableViewCell.backgroundColor = [self colorWithHexString:string];
-        }else{
-            postImageTableViewCell.backgroundColor = [UIColor yellowColor];
 
+        PostCell* postCell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
+        CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
+
+        postCell.coloredView.frame = cellRect;
+        postCell.layoutMargins = UIEdgeInsetsZero;
+        postCell.preservesSuperviewLayoutMargins = NO;
+
+        Post *post = self.posts[indexPath.section];
+
+        if (post[@"colorHex"] != nil) {
+            NSString *string = post[@"colorHex"];
+            postCell.backgroundColor = [self colorWithHexString:string];
+        }else{
+            postCell.backgroundColor = [UIColor yellowColor];
         }
-        return postImageTableViewCell;
-    } else if (indexPath.row == 1) {
-        LabelsAndButtonsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"labelsAndButtonsCell"];
-        cell.likesButton.tag = indexPath.section;
-        Post *post = self.posts[indexPath.section];
-        cell.likesLabel.text = [NSString stringWithFormat:@"%lu Likes", (unsigned long)post.likes.count];
-        return cell;
-    } else {
-        PostHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentCell"];
-        Post *post = self.posts[indexPath.section];
-        Comment *comment = post.comments[0];
-//        NSLog(@"%@", comment.text);
-        cell.commentLabel.text = comment.text;
-        return cell;
-    }
+
+        return postCell;
 }
 
 #pragma mark - Audio
@@ -142,6 +155,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     if (indexPath.row == 0) { // Only respond to audio display cell.
+
         if (self.player.tag == indexPath.section) { // Check if user is trying to play the same audio again.
             if (self.player.playing) {
                 [self.player pause];
@@ -150,7 +164,7 @@
                     [self.player pause];
                 }
                 Post *post = self.posts[indexPath.section];
-                NSData *data = [post.audioFile getData]; // Get audio from specific post in Parse - Can we avoid this query?
+                NSData *data = [post[@"audioFile"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
                 self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
                 [self playRecordedAudio];
             } else if (!self.player.playing) {
@@ -159,7 +173,7 @@
         } else { // A new post was tapped - stop whatever audio the player is playing, load up the new audio, and play it.
             [self.player stop];
             Post *post = self.posts[indexPath.section];
-            NSData *data = [post.audioFile getData]; // Get audio from specific post in Parse - Can we avoid this query?
+            NSData *data = [post[@"audioFile"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
             self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
             self.player.tag = (int)indexPath.section;
             [self playRecordedAudio];
@@ -174,7 +188,7 @@
 }
 
 - (NSTimeInterval)playingTime {
-    PostImageTableViewCell* postImageTableViewCell = (PostImageTableViewCell *)[self.tableView cellForRowAtIndexPath:self.tableView.indexPathForSelectedRow];
+    PostCell* postImageTableViewCell = (PostCell *)[self.tableView cellForRowAtIndexPath:self.tableView.indexPathForSelectedRow];
     postImageTableViewCell.timerLabel.text = [NSString stringWithFormat:@"%.0f",self.player.currentTime];
     return self.player.currentTime;
 }
@@ -182,26 +196,9 @@
 #pragma mark - Parse
 
 - (void)queryFromParse {
-    PFQuery *query = [PFQuery queryWithClassName:@"Post"];
-    [query orderByDescending:@"createdAt"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 
-        if (error) {
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
-        } else {
-            NSMutableArray *postsMutable = [NSMutableArray new];
-            for (PFObject *object in objects) {
-                Post *post = [[Post alloc] initWithPFObject:object];
-                [Post queryCommentsAndLikesWithPost:object andCompletion:^(NSArray *comments, NSArray *likes) {
-                    post.comments = comments;
-                    post.likes = likes;
-                    [self.tableView reloadData];
-                }];
-                [postsMutable addObject:post];
-            }
-            self.posts = postsMutable;
-            [self.tableView reloadData];
-        }
+    [Post queryPostsForFeedWithCompletion:^(NSArray *posts) {
+        self.posts = posts;
     }];
 }
 
@@ -210,7 +207,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
     if (currentUser) {
-        [self queryFromParse];
+//        [self queryFromParse];
     } else {
         [self performSegueWithIdentifier:@"login" sender:self];
     }
@@ -233,77 +230,98 @@
     }
 }
 
-- (IBAction)onLikesButtonTapped:(UIButton *)sender {
+-(void)didTapLikeButton:(UIButton *)button {
 
-//    PFQuery *query = [PFQuery queryWithClassName:@"Like"];
-//    [query whereKey:@"post" equalTo:[self.posts objectAtIndex:sender.tag]];
-//    [query findObjectsInBackgroundWithBlock:^(NSArray *likes, NSError *error) {
-//        if (likes.count != 0) {
-//            PFObject *like = [likes firstObject];
-//            if (like[@"user"] == [PFUser currentUser]) {
-//                [like deleteInBackgroundWithBlock:^(BOOL completed, NSError *error) {
-//                    if (completed) {
-//                        NSLog(@"Like deleted.");
-//                        [self.tableView reloadData];
-//                    } else {
-//                        NSLog(@"There was an error deleting the like: %@", error.localizedDescription);
-//                    }
-//                }];
-//            }
-//        } else {
-//            PFObject *like = [PFObject objectWithClassName:@"Like"];
-//            like[@"user"] = [PFUser currentUser];
-//            like[@"post"] = self.posts[sender.tag];
-//            [like saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
-//                if (succeeded) {
-//                    NSLog(@"Like saved.");
-//                    [self.tableView reloadData];
-//                } else {
-//                    NSLog(@"Error saving like: %@", error.localizedDescription);
-//                }
-//            }];
-//        }
-//    }];
+    NSLog(@"Tapped");
 
-    LabelsAndButtonsTableViewCell *cell = (LabelsAndButtonsTableViewCell *)sender.superview.superview;
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+}
 
-    Post *post = self.posts[sender.tag];
-    BOOL shouldCreateLikeObject = YES;
+- (IBAction)onLikesButtonTapped:(UIButton *)button {
 
-    for (Like *like in post.likes) {
+    PostFooterCell *cell = (PostFooterCell *)button.superview.superview;
 
-        PFUser *user = like.user;
+    PFUser *currentUser = [PFUser currentUser];
+    Post *post = self.posts[cell.tag];
+    NSMutableArray *likes = [post[@"likes"] mutableCopy];
 
-        if (user == [PFUser currentUser]) {
+    NSLog(@"Likes: %@", likes);
 
-            shouldCreateLikeObject = NO;
-            [like.likeObject deleteEventually];
-            NSMutableArray *tempArray = [post.likes mutableCopy];
-            [tempArray removeObject:like];
-            post.likes = tempArray;
+    if ([likes containsObject:currentUser.objectId]) {
 
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        }
-    }
-    if (shouldCreateLikeObject) {
+        NSLog(@"User already liked this post");
 
-        PFObject *likeObject = [PFObject objectWithClassName:@"Like"];
-        likeObject[@"user"] = [PFUser currentUser];
-        likeObject[@"post"] = post.postObject;
-        [likeObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        button.enabled = NO;
 
-            if (succeeded) {
-                NSLog(@"Like object saved");
-                Like *like = [[Like alloc] initWithLikeObject:likeObject];
-                NSMutableArray *tempArray = [post.likes mutableCopy];
-                [tempArray addObject:like];
-                post.likes = tempArray;
+        PFQuery *likeQuery = [PFQuery queryWithClassName:@"Activity"];
+        [likeQuery whereKey:@"type" equalTo:@"Like"];
+        [likeQuery whereKey:@"fromUser" equalTo:currentUser];
+        [likeQuery whereKey:@"toUser" equalTo:post[@"user"]];
 
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [likeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 
+            if (!error) {
+
+                for (PFObject *likeActivity in objects) {
+
+                    [likeActivity deleteEventually];
+                }
+            }
+
+        }];
+
+        [post removeObject:currentUser.objectId forKey:@"likes"];
+        [post incrementKey:@"numOfLikes" byAmount:[NSNumber numberWithInt:-1]];
+
+        [post saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+            if (completed && !error) {
+
+                NSLog(@"Likes uploaded successfully");
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:cell.tag];
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+                button.enabled = YES;
+            }
+        }];
+
+    } else {
+
+        button.enabled = NO;
+
+        PFObject *activity = [PFObject objectWithClassName:@"Activity"];
+        activity[@"fromUser"] = currentUser;
+        activity[@"toUser"] = post[@"user"];
+        activity[@"post"] = post;
+        activity[@"type"] = @"Like";
+        activity[@"content"] = @"";
+
+        [post addObject:currentUser.objectId forKey:@"likes"];
+        [post incrementKey:@"numOfLikes"];
+
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:cell.tag];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+        [activity saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+            if (completed && !error) {
+
+                NSLog(@"Activity Saved");
+
+                [post saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+                    if (completed && !error) {
+
+                        NSLog(@"Likes uploaded successfully");
+                        
+                        button.enabled = YES;
+                    } else {
+                        
+                        button.enabled = YES;
+                    }
+                }];
             } else {
-                NSLog(@"Error saving like: %@", error.localizedDescription);
+                
+                button.enabled = YES;
             }
         }];
     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		47B3B6391B3B0B7100AE286C /* LikesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47B3B6381B3B0B7100AE286C /* LikesTableViewController.m */; };
 		972AE7F71B39FCF0009B92F6 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 972AE7F61B39FCF0009B92F6 /* UserViewController.m */; };
 		972AE7FA1B39FDDE009B92F6 /* CommentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 972AE7F91B39FDDE009B92F6 /* CommentTableViewController.m */; };
 		972AE7FD1B3A0C0E009B92F6 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 972AE7FC1B3A0C0E009B92F6 /* PasswordViewController.m */; };
@@ -52,8 +53,8 @@
 		9A2E7FD61B3590F700A372CE /* ProfileInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A2E7FD51B3590F700A372CE /* ProfileInfoTableViewCell.m */; };
 		9A627E231B3A05C700D5A195 /* AudioPlayerWithTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A627E221B3A05C700D5A195 /* AudioPlayerWithTag.m */; };
 		9A627E261B3A19C200D5A195 /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A627E251B3A19C200D5A195 /* CustomNavigationController.m */; };
-		9A6AF9A71B31E07A0040D5FF /* PostImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9A61B31E07A0040D5FF /* PostImageTableViewCell.m */; };
-		9A6AF9AA1B31EC800040D5FF /* LabelsAndButtonsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9A91B31EC800040D5FF /* LabelsAndButtonsTableViewCell.m */; };
+		9A6AF9A71B31E07A0040D5FF /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9A61B31E07A0040D5FF /* PostCell.m */; };
+		9A6AF9AA1B31EC800040D5FF /* PostFooterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9A91B31EC800040D5FF /* PostFooterCell.m */; };
 		9A6AF9AD1B31ED760040D5FF /* PostHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9AC1B31ED760040D5FF /* PostHeaderCell.m */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +69,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		47B3B6371B3B0B7100AE286C /* LikesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikesTableViewController.h; sourceTree = "<group>"; };
+		47B3B6381B3B0B7100AE286C /* LikesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikesTableViewController.m; sourceTree = "<group>"; };
 		972AE7F51B39FCF0009B92F6 /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserViewController.h; path = ../UserViewController.h; sourceTree = "<group>"; };
 		972AE7F61B39FCF0009B92F6 /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserViewController.m; path = ../UserViewController.m; sourceTree = "<group>"; };
 		972AE7F81B39FDDE009B92F6 /* CommentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableViewController.h; sourceTree = "<group>"; };
@@ -139,10 +142,10 @@
 		9A627E221B3A05C700D5A195 /* AudioPlayerWithTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayerWithTag.m; sourceTree = "<group>"; };
 		9A627E241B3A19C200D5A195 /* CustomNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationController.h; sourceTree = "<group>"; };
 		9A627E251B3A19C200D5A195 /* CustomNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationController.m; sourceTree = "<group>"; };
-		9A6AF9A51B31E07A0040D5FF /* PostImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostImageTableViewCell.h; sourceTree = "<group>"; };
-		9A6AF9A61B31E07A0040D5FF /* PostImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostImageTableViewCell.m; sourceTree = "<group>"; };
-		9A6AF9A81B31EC800040D5FF /* LabelsAndButtonsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelsAndButtonsTableViewCell.h; sourceTree = "<group>"; };
-		9A6AF9A91B31EC800040D5FF /* LabelsAndButtonsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelsAndButtonsTableViewCell.m; sourceTree = "<group>"; };
+		9A6AF9A51B31E07A0040D5FF /* PostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostCell.h; sourceTree = "<group>"; };
+		9A6AF9A61B31E07A0040D5FF /* PostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostCell.m; sourceTree = "<group>"; };
+		9A6AF9A81B31EC800040D5FF /* PostFooterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostFooterCell.h; sourceTree = "<group>"; };
+		9A6AF9A91B31EC800040D5FF /* PostFooterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostFooterCell.m; sourceTree = "<group>"; };
 		9A6AF9AB1B31ED760040D5FF /* PostHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostHeaderCell.h; sourceTree = "<group>"; };
 		9A6AF9AC1B31ED760040D5FF /* PostHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostHeaderCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -216,6 +219,8 @@
 				9A1A03251B2E0889003243ED /* FeedViewController.m */,
 				972AE7F81B39FDDE009B92F6 /* CommentTableViewController.h */,
 				972AE7F91B39FDDE009B92F6 /* CommentTableViewController.m */,
+				47B3B6371B3B0B7100AE286C /* LikesTableViewController.h */,
+				47B3B6381B3B0B7100AE286C /* LikesTableViewController.m */,
 				9A1A03791B2F54DB003243ED /* DiscoverViewController.h */,
 				9A1A037A1B2F54DB003243ED /* DiscoverViewController.m */,
 				9777D2D41B305E7700ED2B46 /* RecordViewController.h */,
@@ -230,13 +235,13 @@
 				97DB9C511B2F67A7006C8FB5 /* ProfileViewController.m */,
 				9A1A03741B2F361C003243ED /* LoginViewController.h */,
 				9A1A03751B2F361C003243ED /* LoginViewController.m */,
-				9A1A03271B2E0889003243ED /* Main.storyboard */,
 				972AE7FB1B3A0C0E009B92F6 /* PasswordViewController.h */,
 				972AE7FC1B3A0C0E009B92F6 /* PasswordViewController.m */,
 				979E178E1B34C64C003E2227 /* SettingsViewController.h */,
 				979E178F1B34C64C003E2227 /* SettingsViewController.m */,
 				9A627E211B3A05C700D5A195 /* AudioPlayerWithTag.h */,
 				9A627E221B3A05C700D5A195 /* AudioPlayerWithTag.m */,
+				9A1A03271B2E0889003243ED /* Main.storyboard */,
 				9A6AF9A41B31E0510040D5FF /* Cells */,
 				9A1A03521B2E08E3003243ED /* Model */,
 				9A1A032A1B2E0889003243ED /* Images.xcassets */,
@@ -317,10 +322,10 @@
 		9A6AF9A41B31E0510040D5FF /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				9A6AF9A51B31E07A0040D5FF /* PostImageTableViewCell.h */,
-				9A6AF9A61B31E07A0040D5FF /* PostImageTableViewCell.m */,
-				9A6AF9A81B31EC800040D5FF /* LabelsAndButtonsTableViewCell.h */,
-				9A6AF9A91B31EC800040D5FF /* LabelsAndButtonsTableViewCell.m */,
+				9A6AF9A51B31E07A0040D5FF /* PostCell.h */,
+				9A6AF9A61B31E07A0040D5FF /* PostCell.m */,
+				9A6AF9A81B31EC800040D5FF /* PostFooterCell.h */,
+				9A6AF9A91B31EC800040D5FF /* PostFooterCell.m */,
 				9A6AF9AB1B31ED760040D5FF /* PostHeaderCell.h */,
 				9A6AF9AC1B31ED760040D5FF /* PostHeaderCell.m */,
 				9A2E7FD41B3590F700A372CE /* ProfileInfoTableViewCell.h */,
@@ -442,9 +447,10 @@
 				9A627E261B3A19C200D5A195 /* CustomNavigationController.m in Sources */,
 				972AE7FD1B3A0C0E009B92F6 /* PasswordViewController.m in Sources */,
 				9777D2DB1B3076F400ED2B46 /* EditViewController.m in Sources */,
-				9A6AF9A71B31E07A0040D5FF /* PostImageTableViewCell.m in Sources */,
+				9A6AF9A71B31E07A0040D5FF /* PostCell.m in Sources */,
 				9A1A03761B2F361C003243ED /* LoginViewController.m in Sources */,
 				9777D2D61B305E7700ED2B46 /* RecordViewController.m in Sources */,
+				47B3B6391B3B0B7100AE286C /* LikesTableViewController.m in Sources */,
 				9A1A037E1B2F57C1003243ED /* OptionsViewController.m in Sources */,
 				9A1A03201B2E0889003243ED /* AppDelegate.m in Sources */,
 				9A1A03261B2E0889003243ED /* FeedViewController.m in Sources */,
@@ -454,7 +460,7 @@
 				9A2E7FD61B3590F700A372CE /* ProfileInfoTableViewCell.m in Sources */,
 				9A1A03511B2E08DC003243ED /* Message.m in Sources */,
 				9A2E7FD31B3585B500A372CE /* TabBarController.m in Sources */,
-				9A6AF9AA1B31EC800040D5FF /* LabelsAndButtonsTableViewCell.m in Sources */,
+				9A6AF9AA1B31EC800040D5FF /* PostFooterCell.m in Sources */,
 				9A1A034E1B2E08D1003243ED /* Comment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

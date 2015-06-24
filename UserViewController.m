@@ -7,8 +7,8 @@
 //
 
 #import "UserViewController.h"
-#import "PostImageTableViewCell.h"
-#import "LabelsAndButtonsTableViewCell.h"
+#import "PostCell.h"
+#import "PostFooterCell.h"
 #import "PostHeaderCell.h"
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
@@ -145,7 +145,7 @@
 
         if (indexPath.row == 0) {
 
-            PostImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
+            PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
             //        [cell.coloredView sizeToFit];
             //            CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
             //            cell.coloredView.frame = cellRect;
@@ -156,7 +156,7 @@
             return cell;
         } else if (indexPath.row == 1) {
 
-            LabelsAndButtonsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeCell"];
+            PostFooterCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeCell"];
             //            PFQuery *likesQuery = [PFQuery queryWithClassName:@"Like"];
             //            [likesQuery whereKey:@"Post" equalTo:self.userPosts[indexPath.section]];
             //            NSArray *likes = [likesQuery findObjects];
