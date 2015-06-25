@@ -19,6 +19,7 @@
 @property int recordTimeInt;
 @property NSTimer *timer;
 @property UIColor *blue, *yellow, *red, *purple, *green, *darkBlue, *darkYellow, *darkRed, *darkPurple, *darkGreen;
+@property (weak, nonatomic) IBOutlet UIButton *resetButton;
 
 @end
 
@@ -87,6 +88,10 @@
 //            [self.recordButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
     }
+}
+
+- (IBAction)resetButtonPressed:(id)sender {
+
 }
 
 #pragma mark - Recording Audio
