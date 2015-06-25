@@ -207,6 +207,8 @@
                 }
                 Post *post = self.posts[indexPath.section];
                 NSData *data = [post[@"audio"] getData];// Get audio from specific post in Parse - Can we avoid this query?
+
+                //do NOT DELETE CODE BELOW;
                 AVAudioSession *session = [AVAudioSession sharedInstance];
                 NSError *setCategoryError = nil;
                 if (![session setCategory:AVAudioSessionCategoryPlayback
@@ -224,6 +226,8 @@
             [self.player stop];
             Post *post = self.posts[indexPath.section];
             NSData *data = [post[@"audio"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
+
+            //do NOT DELETE CODE BELOW;
             AVAudioSession *session = [AVAudioSession sharedInstance];
             NSError *setCategoryError = nil;
             if (![session setCategory:AVAudioSessionCategoryPlayback
