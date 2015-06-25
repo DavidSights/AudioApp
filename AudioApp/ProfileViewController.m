@@ -205,7 +205,7 @@
 
             PostHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
             return cell;
-        }
+        }   
     }
 
     return cell;

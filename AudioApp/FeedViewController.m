@@ -28,6 +28,7 @@
 @property UIScrollView *scrollview;
 @property int integer;
 @property NSIndexPath *indexPath;
+@property UIRefreshControl *refreshControl;
 @end
 
 @implementation FeedViewController
@@ -35,9 +36,26 @@
 
     [self queryFromParse];
 }
+-(void)getLatestPost:(UIRefreshControl *)sender{
 
+    [self queryFromParse];
+    PostCell* postImageTableViewCell = (PostCell *)[self.tableView cellForRowAtIndexPath:self.tableView.indexPathForSelectedRow];
+    postImageTableViewCell.timerLabel.text = @"0";
+
+
+    [sender endRefreshing];
+
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+   UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.backgroundColor = [UIColor purpleColor];
+    refreshControl.tintColor = [UIColor whiteColor];
+    [refreshControl addTarget:self
+                            action:@selector(getLatestPost:)
+                  forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
     self.integer = 0;
     self.scrollview.delegate = self;
     self.posts = [[NSArray alloc]init];
@@ -128,6 +146,7 @@
 
         PostCell* postCell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
         CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
+        postCell.timerLabel.text = @"0";
 
         postCell.coloredView.frame = cellRect;
         postCell.layoutMargins = UIEdgeInsetsZero;
@@ -243,11 +262,6 @@
 
     }
 }
-
-
-
-
-
 
 #pragma mark - Parse
 
