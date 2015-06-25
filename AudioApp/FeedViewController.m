@@ -13,7 +13,6 @@
 #import "LikesAndCommentsCell.h"
 #import "PostCell.h"
 #import "Post.h"
-#import "Comment.h"
 #import "AudioPlayerWithTag.h"
 #import "LikesTableViewController.h"
 #import "CommentTableViewController.h"
