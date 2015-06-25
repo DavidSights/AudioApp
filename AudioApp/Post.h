@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
-#import "Comment.h"
-#import "Like.h"
 
 @interface Post : PFObject<PFSubclassing>
 

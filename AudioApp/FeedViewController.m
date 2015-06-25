@@ -13,7 +13,6 @@
 #import "LikesAndCommentsCell.h"
 #import "PostCell.h"
 #import "Post.h"
-#import "Comment.h"
 #import "AudioPlayerWithTag.h"
 #import "LikesTableViewController.h"
 #import "CommentTableViewController.h"
@@ -293,8 +292,6 @@
     Post *post = self.posts[cell.tag];
     NSMutableArray *likes = [post[@"likes"] mutableCopy];
 
-    NSLog(@"Likes: %@", likes);
-
     if ([likes containsObject:currentUser.objectId]) {
 
         NSLog(@"User already liked this post");
@@ -375,7 +372,6 @@
             }
         }];
     }
-
 }
 
 -(void)likesLabelTapped:(UITapGestureRecognizer *)sender {

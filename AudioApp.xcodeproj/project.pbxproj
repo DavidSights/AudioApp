@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		47B3B6391B3B0B7100AE286C /* LikesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47B3B6381B3B0B7100AE286C /* LikesTableViewController.m */; };
+		47B3B63D1B3C7B4800AE286C /* LikeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47B3B63C1B3C7B4800AE286C /* LikeCell.m */; };
 		972AE7F71B39FCF0009B92F6 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 972AE7F61B39FCF0009B92F6 /* UserViewController.m */; };
 		972AE7FA1B39FDDE009B92F6 /* CommentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 972AE7F91B39FDDE009B92F6 /* CommentTableViewController.m */; };
 		972AE7FD1B3A0C0E009B92F6 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 972AE7FC1B3A0C0E009B92F6 /* PasswordViewController.m */; };
@@ -26,8 +27,6 @@
 		9A1A033A1B2E0889003243ED /* AudioAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A03391B2E0889003243ED /* AudioAppTests.m */; };
 		9A1A03451B2E08A9003243ED /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A03441B2E08A9003243ED /* User.m */; };
 		9A1A03481B2E08B7003243ED /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A03471B2E08B7003243ED /* Post.m */; };
-		9A1A034B1B2E08C9003243ED /* Like.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A034A1B2E08C9003243ED /* Like.m */; };
-		9A1A034E1B2E08D1003243ED /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A034D1B2E08D1003243ED /* Comment.m */; };
 		9A1A03511B2E08DC003243ED /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A03501B2E08DC003243ED /* Message.m */; };
 		9A1A03541B2E093D003243ED /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A1A03531B2E093D003243ED /* AudioToolbox.framework */; };
 		9A1A03561B2E0943003243ED /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A1A03551B2E0943003243ED /* CFNetwork.framework */; };
@@ -71,6 +70,8 @@
 /* Begin PBXFileReference section */
 		47B3B6371B3B0B7100AE286C /* LikesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikesTableViewController.h; sourceTree = "<group>"; };
 		47B3B6381B3B0B7100AE286C /* LikesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikesTableViewController.m; sourceTree = "<group>"; };
+		47B3B63B1B3C7B4800AE286C /* LikeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeCell.h; sourceTree = "<group>"; };
+		47B3B63C1B3C7B4800AE286C /* LikeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikeCell.m; sourceTree = "<group>"; };
 		972AE7F51B39FCF0009B92F6 /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserViewController.h; path = ../UserViewController.h; sourceTree = "<group>"; };
 		972AE7F61B39FCF0009B92F6 /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserViewController.m; path = ../UserViewController.m; sourceTree = "<group>"; };
 		972AE7F81B39FDDE009B92F6 /* CommentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableViewController.h; sourceTree = "<group>"; };
@@ -106,10 +107,6 @@
 		9A1A03441B2E08A9003243ED /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		9A1A03461B2E08B7003243ED /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
 		9A1A03471B2E08B7003243ED /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
-		9A1A03491B2E08C9003243ED /* Like.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Like.h; sourceTree = "<group>"; };
-		9A1A034A1B2E08C9003243ED /* Like.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Like.m; sourceTree = "<group>"; };
-		9A1A034C1B2E08D1003243ED /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
-		9A1A034D1B2E08D1003243ED /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		9A1A034F1B2E08DC003243ED /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		9A1A03501B2E08DC003243ED /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		9A1A03531B2E093D003243ED /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -185,6 +182,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		47B3B63A1B3C7B1200AE286C /* LikesTableView Cell */ = {
+			isa = PBXGroup;
+			children = (
+				47B3B63B1B3C7B4800AE286C /* LikeCell.h */,
+				47B3B63C1B3C7B4800AE286C /* LikeCell.m */,
+			);
+			name = "LikesTableView Cell";
+			sourceTree = "<group>";
+		};
 		9A1A030E1B2E0889003243ED = {
 			isa = PBXGroup;
 			children = (
@@ -285,10 +291,6 @@
 				9A1A03441B2E08A9003243ED /* User.m */,
 				9A1A03461B2E08B7003243ED /* Post.h */,
 				9A1A03471B2E08B7003243ED /* Post.m */,
-				9A1A03491B2E08C9003243ED /* Like.h */,
-				9A1A034A1B2E08C9003243ED /* Like.m */,
-				9A1A034C1B2E08D1003243ED /* Comment.h */,
-				9A1A034D1B2E08D1003243ED /* Comment.m */,
 				9A1A034F1B2E08DC003243ED /* Message.h */,
 				9A1A03501B2E08DC003243ED /* Message.m */,
 			);
@@ -322,6 +324,7 @@
 		9A6AF9A41B31E0510040D5FF /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				47B3B63A1B3C7B1200AE286C /* LikesTableView Cell */,
 				9A6AF9A51B31E07A0040D5FF /* PostCell.h */,
 				9A6AF9A61B31E07A0040D5FF /* PostCell.m */,
 				9A6AF9A81B31EC800040D5FF /* LikesAndCommentsCell.h */,
@@ -435,9 +438,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A1A037F1B2FA699003243ED /* ProfileViewController.m in Sources */,
+				47B3B63D1B3C7B4800AE286C /* LikeCell.m in Sources */,
 				972AE7FA1B39FDDE009B92F6 /* CommentTableViewController.m in Sources */,
 				9A1A03451B2E08A9003243ED /* User.m in Sources */,
-				9A1A034B1B2E08C9003243ED /* Like.m in Sources */,
 				9A6AF9AD1B31ED760040D5FF /* PostHeaderCell.m in Sources */,
 				9A627E231B3A05C700D5A195 /* AudioPlayerWithTag.m in Sources */,
 				9A1A03481B2E08B7003243ED /* Post.m in Sources */,
@@ -461,7 +464,6 @@
 				9A1A03511B2E08DC003243ED /* Message.m in Sources */,
 				9A2E7FD31B3585B500A372CE /* TabBarController.m in Sources */,
 				9A6AF9AA1B31EC800040D5FF /* LikesAndCommentsCell.m in Sources */,
-				9A1A034E1B2E08D1003243ED /* Comment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

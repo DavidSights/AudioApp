@@ -110,4 +110,6 @@
 }
 */
 
+- (IBAction)onFollowTapped:(UIButton *)sender {
+}
 @end
