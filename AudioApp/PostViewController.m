@@ -58,6 +58,7 @@
             [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (!error) {
                     [[NSNotificationCenter defaultCenter]postNotificationName:@"Test1" object:self];
+                    NSLog(@"post successful");
                 }
                 else{
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
