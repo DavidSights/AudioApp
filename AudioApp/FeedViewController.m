@@ -31,6 +31,10 @@
 @end
 
 @implementation FeedViewController
+- (IBAction)onRefreshBarButtonItemTapped:(id)sender {
+
+    [self queryFromParse];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

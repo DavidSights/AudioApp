@@ -17,6 +17,7 @@
 		9777D2D81B30615200ED2B46 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9777D2D71B30615200ED2B46 /* AVFoundation.framework */; };
 		9777D2DB1B3076F400ED2B46 /* EditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9777D2DA1B3076F400ED2B46 /* EditViewController.m */; };
 		979E17901B34C64C003E2227 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 979E178F1B34C64C003E2227 /* SettingsViewController.m */; };
+		97C642551B3C956700F3658D /* ActvityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97C642541B3C956700F3658D /* ActvityViewController.m */; };
 		9A1A031D1B2E0889003243ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A031C1B2E0889003243ED /* main.m */; };
 		9A1A03201B2E0889003243ED /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A031F1B2E0889003243ED /* AppDelegate.m */; };
 		9A1A03231B2E0889003243ED /* AudioApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9A1A03211B2E0889003243ED /* AudioApp.xcdatamodeld */; };
@@ -87,6 +88,8 @@
 		9777D2DA1B3076F400ED2B46 /* EditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditViewController.m; sourceTree = "<group>"; };
 		979E178E1B34C64C003E2227 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		979E178F1B34C64C003E2227 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		97C642531B3C956700F3658D /* ActvityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActvityViewController.h; sourceTree = "<group>"; };
+		97C642541B3C956700F3658D /* ActvityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActvityViewController.m; sourceTree = "<group>"; };
 		97DB9C501B2F67A7006C8FB5 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		97DB9C511B2F67A7006C8FB5 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		9A1A03171B2E0889003243ED /* AudioApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -248,6 +251,8 @@
 				9A627E211B3A05C700D5A195 /* AudioPlayerWithTag.h */,
 				9A627E221B3A05C700D5A195 /* AudioPlayerWithTag.m */,
 				9A1A03271B2E0889003243ED /* Main.storyboard */,
+				97C642531B3C956700F3658D /* ActvityViewController.h */,
+				97C642541B3C956700F3658D /* ActvityViewController.m */,
 				9A6AF9A41B31E0510040D5FF /* Cells */,
 				9A1A03521B2E08E3003243ED /* Model */,
 				9A1A032A1B2E0889003243ED /* Images.xcassets */,
@@ -450,6 +455,7 @@
 				9A627E261B3A19C200D5A195 /* CustomNavigationController.m in Sources */,
 				972AE7FD1B3A0C0E009B92F6 /* PasswordViewController.m in Sources */,
 				9777D2DB1B3076F400ED2B46 /* EditViewController.m in Sources */,
+				97C642551B3C956700F3658D /* ActvityViewController.m in Sources */,
 				9A6AF9A71B31E07A0040D5FF /* PostCell.m in Sources */,
 				9A1A03761B2F361C003243ED /* LoginViewController.m in Sources */,
 				9777D2D61B305E7700ED2B46 /* RecordViewController.m in Sources */,
