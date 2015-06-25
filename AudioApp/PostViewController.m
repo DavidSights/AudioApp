@@ -8,6 +8,7 @@
 
 #import "PostViewController.h"
 #import <Parse/Parse.h>
+#import "Post.h"
 
 @interface PostViewController ()<UITextViewDelegate>
 
@@ -42,40 +43,34 @@
         }
         else {
             PFObject *post = [PFObject objectWithClassName:@"Post"];
-            post[@"audio"] = file;
-            post[@"author"] = currentUser;
-            post[@"colorHex"] = colorString;
-            post[@"loops"] = [NSNumber numberWithInt:0];
-            post[@"numOfComments"] = [NSNumber numberWithInt:0];
-            post[@"numOfLikes"] = [NSNumber numberWithInt:0];
-            post[@"likes"] = [NSArray new];
-            post[@"descriptionComment"] = self.commentTextView.text;
+
+            [post setObject:file forKey:@"audio"];
+            [post setObject:currentUser forKey:@"author"];
+            [post setObject:colorString forKey:@"colorHex"];
+            if ([self.commentTextView.text isEqualToString:@""]) {
+                [post setObject:@"" forKey:@"descriptionComment"];
+            }
+            NSNumber *number = [[NSNumber alloc]initWithInteger:0];
+            [post setObject:self.commentTextView.text forKey:@"descriptionComment"];
+            [post setObject:@[] forKey:@"likes"];
+            [post setObject:number forKey:@"loops"];
+            [post setObject:number forKey:@"numOfComments"];
+            [post setObject:number forKey:@"numOfLikes"];
 
             [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (error) {
+                if (!error) {
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"Test1" object:self];
+                }
+                else{
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
                                                                         message:@"Please try posting again."
                                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alertView show];
+
+
                 }
             }];
 
-            PFObject *comment = [PFObject objectWithClassName:@"Comment"];
-            [comment setObject:self.commentTextView.text forKey:@"text"];
-            [comment setObject:post forKey:@"post"];
-            [comment setObject:currentUser forKey:@"author"];
-            [comment saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (error) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error saving description."
-                                                                        message:[NSString stringWithFormat:@"Error: %@", error.localizedDescription]
-                                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                    [alertView show];
-                }
-                else {
-//                    [self.tabBarController setSelectedIndex:0];
-                    [[NSNotificationCenter defaultCenter]postNotificationName:@"Test1" object:self];
-                }
-            }];
        }
     }];
  
