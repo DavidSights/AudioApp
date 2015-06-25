@@ -40,14 +40,13 @@
     self.darkRed = [UIColor colorWithRed:166/255.0 green:81/255.0 blue:92/255.0 alpha:1.0];
     self.darkPurple = [UIColor colorWithRed:121/255.0 green:192/255.0 blue:140/255.0 alpha:1.0];
     self.darkGreen = [UIColor colorWithRed:75/255.0 green:151/255.0 blue:142/255.0 alpha:1.0];
+    self.resetButton.alpha = 0;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [self setUpRecording];
     // Reset button, reset timer.
-    self.recordButton.backgroundColor = [UIColor colorWithRed:234/255.0 green:187/255.0 blue:194/255.0 alpha:1.0];
-    [self.recordButton setTitle:@"Record" forState:UIControlStateNormal];
-    [self.recordButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self resetButtonStyle];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -86,6 +85,7 @@
 //                [self.recordButton setTitle:@"Record" forState:UIControlStateNormal];
             }];
 //            [self.recordButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            self.resetButton.alpha = 1;
         }
     }
 }
@@ -103,6 +103,7 @@
     [UIView animateWithDuration:0.25 animations:^{
         self.recordButton.backgroundColor = [UIColor colorWithRed:234/255.0 green:187/255.0 blue:194/255.0 alpha:1.0];
     }];
+    self.resetButton.alpha = 0;
 }
 
 #pragma mark - Recording Audio
