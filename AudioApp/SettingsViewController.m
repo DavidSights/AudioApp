@@ -21,11 +21,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(bBPressed:)];
-
-    self.navigationItem.leftBarButtonItem = editButton;
-
-
     self.emailTextField.delegate = self;
     self.username.delegate = self;
     self.displaynameTextField.delegate = self;
