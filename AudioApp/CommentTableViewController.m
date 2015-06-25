@@ -19,6 +19,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.comments = [NSArray new];
+
     if (self.post) {
 
         PFQuery *commentsQuery = [PFQuery queryWithClassName:@"Activity"];
@@ -55,7 +57,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
 
     PFObject *comment = self.comments[indexPath.row];
     PFUser *user = comment[@"fromUser"];
@@ -85,7 +87,7 @@
             PFUser *currentUser = [PFUser currentUser];
             PFObject *comment = [PFObject objectWithClassName:@"Activity"];
             comment[@"fromUser"] = currentUser;
-            comment[@"toUser"] = self.post[@"user"];
+            comment[@"toUser"] = self.post[@"author"];
             comment[@"type"] = @"Comment";
             comment[@"post"] = self.post;
             comment[@"content"] = textField.text;
@@ -107,6 +109,7 @@
                             NSMutableArray *commentsMutable = [self.comments mutableCopy];
                             [commentsMutable addObject:comment];
                             self.comments = commentsMutable;
+                            self.commentsLabel.text = [NSString stringWithFormat:@"%lu Comments", (unsigned long)self.comments.count];
 
                             //update comments label for post in previous view controller
                         }

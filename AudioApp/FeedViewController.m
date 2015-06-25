@@ -193,7 +193,7 @@
         } else { // A new post was tapped - stop whatever audio the player is playing, load up the new audio, and play it.
             [self.player stop];
             Post *post = self.posts[indexPath.section];
-            NSData *data = [post[@"audioFile"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
+            NSData *data = [post[@"audio"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
             self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
             self.player.tag = (int)indexPath.section;
             self.integer = 0;

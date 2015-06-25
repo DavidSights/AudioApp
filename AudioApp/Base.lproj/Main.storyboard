@@ -2030,7 +2030,7 @@
             </objects>
             <point key="canvasLocation" x="2884.5" y="762"/>
         </scene>
-        <!--Comment Table View Controller-->
+        <!--Comments-->
         <scene sceneID="Fjc-dz-xVa">
             <objects>
                 <tableViewController id="FhN-7t-sUG" customClass="CommentTableViewController" sceneMemberID="viewController">
@@ -2039,10 +2039,30 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" id="FRo-ly-EG4">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" textLabel="rXM-Zf-63L" detailTextLabel="ycs-8s-fR4" style="IBUITableViewCellStyleSubtitle" id="FRo-ly-EG4">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FRo-ly-EG4" id="VTQ-Io-Fed">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rXM-Zf-63L">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="widthClass=compact">
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            </variation>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ycs-8s-fR4">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="widthClass=compact">
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            </variation>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -2051,6 +2071,13 @@
                             <outlet property="delegate" destination="FhN-7t-sUG" id="5N4-kX-yIn"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Comments" id="SOt-bQ-9Pe">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="1hd-tF-OLa">
+                            <connections>
+                                <action selector="onAddCommentTapped:" destination="FhN-7t-sUG" id="tOi-uU-FEu"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2xn-Jx-xLY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
