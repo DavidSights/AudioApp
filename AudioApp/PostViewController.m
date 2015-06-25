@@ -42,9 +42,15 @@
         }
         else {
             PFObject *post = [PFObject objectWithClassName:@"Post"];
-            [post setObject:file forKey:@"audio"];
-            [post setObject:currentUser forKey:@"author"];
-            [post setObject:colorString forKey:@"colorHex"];
+            post[@"audio"] = file;
+            post[@"author"] = currentUser;
+            post[@"colorHex"] = colorString;
+            post[@"loops"] = [NSNumber numberWithInt:0];
+            post[@"numOfComments"] = [NSNumber numberWithInt:0];
+            post[@"numOfLikes"] = [NSNumber numberWithInt:0];
+            post[@"likes"] = [NSArray new];
+            post[@"descriptionComment"] = self.commentTextView.text;
+
             [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (error) {
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
