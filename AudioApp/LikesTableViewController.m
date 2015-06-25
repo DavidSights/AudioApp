@@ -10,48 +10,61 @@
 
 @interface LikesTableViewController ()
 
+@property (nonatomic) NSArray *likes;
+
 @end
 
 @implementation LikesTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
+    if (self.post) {
+
+        PFQuery *likesQuery = [PFQuery queryWithClassName:@"Activity"];
+        [likesQuery whereKey:@"type" equalTo:@"Like"];
+        [likesQuery whereKey:@"post" equalTo:self.post];
+        [likesQuery includeKey:@"fromUser"];
+        [likesQuery orderByAscending:@"createdAt"];
+
+        [likesQuery findObjectsInBackgroundWithBlock:^(NSArray *likes, NSError *error) {
+
+            if (!error) {
+
+                self.likes = likes;
+                self.likesLabel.text = [NSString stringWithFormat:@"%lu Likes", (unsigned long)self.likes.count];
+            }
+        }];
+    }
+
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)setLikes:(NSArray *)likes {
+
+    _likes = likes;
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return self.likes.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeCell"];
+
+    PFObject *like = self.likes[indexPath.row];
+    PFUser *user = like[@"fromUser"];
+
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ liked this post!", user.username];
+
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
