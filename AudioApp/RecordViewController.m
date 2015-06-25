@@ -43,9 +43,18 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [self setUpRecording];
+    // Reset button, reset timer.
+    self.recordButton.backgroundColor = [UIColor colorWithRed:234/255.0 green:187/255.0 blue:194/255.0 alpha:1.0];
+    [self.recordButton setTitle:@"Record" forState:UIControlStateNormal];
+    [self.recordButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
+//    if (self.recorder != nil) {
+//        [self.recorder stop];
+//        [self.recorder deleteRecording];
+//    }
+    [self setUpRecording];
     self.recordButton.layer.cornerRadius = self.recordButton.frame.size.width/2; // Called here instead of view did load because storyboard dimensions not set in view did load.
 }
 
@@ -66,17 +75,16 @@
                 self.recordButton.backgroundColor = self.red;
                 [self.recordButton setTitle:[NSString stringWithFormat:@"%.0f",self.recorder.currentTime] forState:UIControlStateNormal];
             }];
-
-            [self.recordButton setTitleColor:self.darkRed forState:UIControlStateNormal];
+//            [self.recordButton setTitleColor:self.darkRed forState:UIControlStateNormal];
         } else { // Already recordng - pause recording.
             [self.recorder pause];
             [self.timer invalidate];
             self.navigationItem.rightBarButtonItem.enabled = true;
             [UIView animateWithDuration:0.25 animations:^{
                 self.recordButton.backgroundColor = [UIColor colorWithRed:234/255.0 green:187/255.0 blue:194/255.0 alpha:1.0];
-                [self.recordButton setTitle:@"Record" forState:UIControlStateNormal];
+//                [self.recordButton setTitle:@"Record" forState:UIControlStateNormal];
             }];
-            [self.recordButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//            [self.recordButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
     }
 }
