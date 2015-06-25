@@ -21,6 +21,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(bBPressed:)];
+
+    self.navigationItem.leftBarButtonItem = editButton;
 
 
     self.emailTextField.delegate = self;
@@ -35,16 +38,13 @@
     self.displaynameTextField.text = self.user[@"displayName"];
 }
 
-
-
-- (IBAction)onSaveTapped:(id)sender {
-
+-(void)bBPressed:(id)segue{
     [[PFUser currentUser] setUsername:self.username.text];
     [[PFUser currentUser]setEmail:self.emailTextField.text];
     [[PFUser currentUser]setValue:self.displaynameTextField.text forKey:@"displayName"];
-      [[PFUser currentUser]setValue:self.aboutTextView.text forKey:@"about"];
-//    [[PFUser currentUser] saveEventually];
-//    [[PFUser currentUser] save];
+    [[PFUser currentUser]setValue:self.aboutTextView.text forKey:@"about"];
+    //    [[PFUser currentUser] saveEventually];
+    //    [[PFUser currentUser] save];
     [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (error) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error saving info."
@@ -58,13 +58,17 @@
             [self dismissViewControllerAnimated:YES completion:nil];
         }
     }];
-
-
-
-
+    
+    
+    
+    
+    
+    
 
 
 }
+
+
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
  [self.emailTextField endEditing:YES];

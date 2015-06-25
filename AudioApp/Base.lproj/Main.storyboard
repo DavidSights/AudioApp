@@ -600,19 +600,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="WYe-fS-ZDw">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="K6K-ss-gCM">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sUv-is-vfn">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleColor" red="0.13440393518518523" green="0.03390298567760236" blue="0.10182291091306334" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="onSaveTapped:" destination="smJ-77-apm" eventType="touchUpInside" id="WLb-dl-s8u"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="ryl-St-wPY"/>
                     </navigationItem>
                     <connections>
                         <outlet property="aboutTextView" destination="JQH-l3-MzH" id="6cQ-PG-Q9H"/>
