@@ -293,8 +293,6 @@
     Post *post = self.posts[cell.tag];
     NSMutableArray *likes = [post[@"likes"] mutableCopy];
 
-    NSLog(@"Likes: %@", likes);
-
     if ([likes containsObject:currentUser.objectId]) {
 
         NSLog(@"User already liked this post");
@@ -375,7 +373,6 @@
             }
         }];
     }
-
 }
 
 -(void)likesLabelTapped:(UITapGestureRecognizer *)sender {

@@ -43,6 +43,7 @@
         }
         else {
             PFObject *post = [PFObject objectWithClassName:@"Post"];
+
             [post setObject:file forKey:@"audio"];
             [post setObject:currentUser forKey:@"author"];
             [post setObject:colorString forKey:@"colorHex"];
@@ -55,6 +56,7 @@
             [post setObject:number forKey:@"loops"];
             [post setObject:number forKey:@"numOfComments"];
             [post setObject:number forKey:@"numOfLikes"];
+
             [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (!error) {
                     [[NSNotificationCenter defaultCenter]postNotificationName:@"Test1" object:self];
