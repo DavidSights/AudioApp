@@ -21,7 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(bBPressed:)];
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(bBPressed:)];
 
     self.navigationItem.leftBarButtonItem = editButton;
 
@@ -58,27 +58,22 @@
             [self dismissViewControllerAnimated:YES completion:nil];
         }
     }];
-    
-    
-    
-    
-    
-    
-
-
 }
 
 
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
- [self.emailTextField endEditing:YES];
+
+[self.emailTextField endEditing:YES];
  [self.displaynameTextField endEditing:YES];
  [self.aboutTextView endEditing:YES];
  [self.username endEditing:YES];
-//dsg
 
-    return YES;
+ return YES;
 }
+
+
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
 
     if([text isEqualToString:@"\n"]) {
