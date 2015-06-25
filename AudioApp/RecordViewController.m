@@ -52,33 +52,42 @@
 #pragma mark - Record Button
 
 - (IBAction)onRecordPauseTapped:(id)sender {
-    if (self.player.playing) {
+    if (self.player.playing) { // Stop audio from playing.
         [self.player stop];
     }
-    if (!self.recorder.recording) {
+    if (!self.recorder.recording) { // Set up a new recording.
         AVAudioSession *sessions = [AVAudioSession sharedInstance];
         [sessions setActive:YES error:nil];
         [self beginRecording];
-        [self.recordButton setTitle:@"Pause" forState:UIControlStateNormal];
+        [self.recordButton setTitle:[NSString stringWithFormat:@"%.0f",self.recorder.currentTime] forState:UIControlStateNormal];
         self.navigationItem.rightBarButtonItem.enabled = false;
-    } else {
+        [UIView animateWithDuration:0.25 animations:^{
+            self.recordButton.backgroundColor = self.red;
+        }];
+
+        [self.recordButton setTitleColor:self.darkRed forState:UIControlStateNormal];
+    } else { // Already recordng - pause recording.
         [self.recorder pause];
         [self.recordButton setTitle:@"Record" forState:UIControlStateNormal];
         [self.timer invalidate];
         self.navigationItem.rightBarButtonItem.enabled = true;
+        [UIView animateWithDuration:0.25 animations:^{
+            self.recordButton.backgroundColor = [UIColor colorWithRed:234/255.0 green:187/255.0 blue:194/255.0 alpha:1.0];
+        }];
+        [self.recordButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     }
 }
 
 #pragma mark - Recording Audio
 
-- (void)setUpRecording {
+- (void) setUpRecording {
     self.navigationItem.rightBarButtonItem.enabled = false;
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"✕" style:UIBarButtonItemStylePlain target:self action:@selector(editButtonPressed:)];
     self.navigationItem.leftBarButtonItem = editButton;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentPath = paths.lastObject;
     NSString *pathToSave = [documentPath stringByAppendingPathComponent:@".m4a"];
-    NSURL *url = [NSURL fileURLWithPath:pathToSave];//FILEPATH];
+    NSURL *url = [NSURL fileURLWithPath:pathToSave];
     AVAudioSession *sessions = [AVAudioSession sharedInstance];
     [sessions setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
     NSMutableDictionary *recordDictionary = [[NSMutableDictionary alloc]init];
@@ -88,32 +97,37 @@
     [self.recorder prepareToRecord];
 }
 
-- (void)beginRecording {
+- (void) beginRecording {
     [self.recorder record];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(recordingTime) userInfo:nil repeats:YES];
 }
 
-- (NSTimeInterval)recordingTime {
+- (void) audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"done" message:@"Finished playing" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+- (void) audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag {
+    [UIView animateWithDuration:0.25 animations:^{
+            self.recordButton.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:244/255.0 alpha:1.0];
+    }];
+    [self.recordButton setTitle:@"Done!" forState:UIControlStateNormal];
+    [self.recordButton setTitleColor:self.green forState:UIControlStateNormal];
+}
+
+- (NSTimeInterval) recordingTime {
     if (self.recorder.currentTime >= 9) {
         [self.recorder stop];
         [self.timer invalidate];
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"done" message:@"too long" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Limit Reached" message:@"Your recording has reached its 9 second limit." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
         self.navigationItem.rightBarButtonItem.enabled = true;
         [alert show];
     }
-    self.timeLabel.text = [NSString stringWithFormat:@"%.0f",self.recorder.currentTime];
+    [self.recordButton setTitle:[NSString stringWithFormat:@"%.0f",self.recorder.currentTime] forState:UIControlStateNormal];
     return self.recorder.currentTime;
 }
 
-- (void) audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
-    [self.recordButton setTitle:@"Record" forState:UIControlStateNormal];
-}
 
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"done" message:@"Finished playing" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles:nil, nil];
-
-    [alert show];
-}
 
 #pragma mark - Segue
 
