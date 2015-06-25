@@ -10,91 +10,121 @@
 
 @interface CommentTableViewController ()
 
+@property (nonatomic)  NSArray *comments;
+
 @end
 
 @implementation CommentTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
+    self.comments = [NSArray new];
+
+    if (self.post) {
+
+        PFQuery *commentsQuery = [PFQuery queryWithClassName:@"Activity"];
+        [commentsQuery whereKey:@"type" equalTo:@"Comment"];
+        [commentsQuery whereKey:@"post" equalTo:self.post];
+        [commentsQuery includeKey:@"fromUser"];
+        [commentsQuery orderByAscending:@"createdAt"];
+
+        [commentsQuery findObjectsInBackgroundWithBlock:^(NSArray *comments, NSError *error) {
+
+            if (!error) {
+
+                self.comments = comments;
+                self.commentsLabel.text = [NSString stringWithFormat:@"%lu Comments", (unsigned long)self.comments.count];
+            }
+        }];
+    }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)setComments:(NSArray *)comments {
+
+    _comments = comments;
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-    // Return the number of sections.
-    return 0;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
     // Return the number of rows in the section.
-    return 0;
+    return self.comments.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
+
+    PFObject *comment = self.comments[indexPath.row];
+    PFUser *user = comment[@"fromUser"];
+
+    cell.textLabel.text = user.username;
+    cell.detailTextLabel.text = comment[@"content"];
+
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (IBAction)onAddCommentTapped:(UIBarButtonItem *)sender {
+
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Add Comment" message:@"Add your comment" preferredStyle:UIAlertControllerStyleAlert];
+
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"Comment Text";
+    }];
+
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+
+        UITextField *textField = alert.textFields[0];
+
+        if (![textField.text isEqualToString:@""]) {
+
+            PFUser *currentUser = [PFUser currentUser];
+            PFObject *comment = [PFObject objectWithClassName:@"Activity"];
+            comment[@"fromUser"] = currentUser;
+            comment[@"toUser"] = self.post[@"author"];
+            comment[@"type"] = @"Comment";
+            comment[@"post"] = self.post;
+            comment[@"content"] = textField.text;
+
+            [self.post incrementKey:@"numOfComments"];
+
+            [comment saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+                if (completed && !error) {
+
+                    NSLog(@"Comment Saved");
+
+                    [self.post saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+                        if (completed && !error) {
+
+                            NSLog(@"Post saved with comment increment");
+
+                            NSMutableArray *commentsMutable = [self.comments mutableCopy];
+                            [commentsMutable addObject:comment];
+                            self.comments = commentsMutable;
+                            self.commentsLabel.text = [NSString stringWithFormat:@"%lu Comments", (unsigned long)self.comments.count];
+
+                            //update comments label for post in previous view controller
+                        }
+                    }];
+                }
+                
+            }];
+            
+        }
+    }];
+    
+    [alert addAction:cancelAction];
+    [alert addAction:confirmAction];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+    
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

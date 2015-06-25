@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
+#import "Post.h"
 
 @interface CommentTableViewController : UITableViewController
+
+@property Post *post;
+@property UILabel *commentsLabel;
 
 @end

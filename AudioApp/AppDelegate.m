@@ -23,7 +23,8 @@
     [Parse enableLocalDatastore];
     [Post registerSubclass];
     [Parse setApplicationId:@"dzkgtIQeql5oUvxGAuss1aUGHgtOAERBTgHHBbDY" clientKey:@"NarZion7wI5ANRfZBULdaWKnelQMiZ2tRsdoTuDX"];
-
+    //do NOT touch line of code below!!!!!!!! Ask alex why if you want to know!!!!!!!!!!!!!
+    [PFUser enableRevocableSessionInBackground];
     // Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 
