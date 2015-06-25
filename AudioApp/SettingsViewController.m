@@ -21,6 +21,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(bBPressed:)];
+    self.navigationItem.leftBarButtonItem = cancelButton;
+
+
     self.emailTextField.delegate = self;
     self.username.delegate = self;
     self.displaynameTextField.delegate = self;
@@ -31,6 +35,10 @@
     self.emailTextField.text = _user.email;
     self.aboutTextView.text = [self.user objectForKey:@"about"];
     self.displaynameTextField.text = self.user[@"displayName"];
+}
+- (IBAction)logOut:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [PFUser logOut];
 }
 
 -(void)bBPressed:(id)segue{
@@ -45,6 +53,8 @@
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error saving info."
                                                                 message:[NSString stringWithFormat:@"Error: %@", error.localizedDescription]
                                                                delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+
+            NSLog(@"%@----------------------------",error.localizedDescription);
             [alertView show];
         }
         else {
