@@ -1347,7 +1347,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <action selector="onRecordPauseTapped:" destination="fdQ-0F-1kk" eventType="touchUpInside" id="aS2-yA-ViJ"/>
+                                    <action selector="recordButtonPressed:" destination="fdQ-0F-1kk" eventType="touchUpInside" id="mzt-sT-8b7"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZMR-Ca-TBN">
@@ -1390,11 +1390,11 @@
                                 <exclude reference="ZMR-Ca-TBN"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="6dl-6K-fbA"/>
+                                <exclude reference="oUz-24-pHm"/>
                                 <exclude reference="G4p-xA-Saj"/>
                                 <exclude reference="K2B-a8-T5D"/>
                                 <exclude reference="y8E-T2-2Tc"/>
-                                <exclude reference="6dl-6K-fbA"/>
-                                <exclude reference="oUz-24-pHm"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -1403,11 +1403,11 @@
                                 <include reference="ZMR-Ca-TBN"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="6dl-6K-fbA"/>
+                                <include reference="oUz-24-pHm"/>
                                 <include reference="G4p-xA-Saj"/>
                                 <include reference="K2B-a8-T5D"/>
                                 <include reference="y8E-T2-2Tc"/>
-                                <include reference="6dl-6K-fbA"/>
-                                <include reference="oUz-24-pHm"/>
                             </mask>
                         </variation>
                     </view>
@@ -2552,7 +2552,7 @@
                                                 <constraint firstAttribute="height" constant="27" id="jbs-Tb-aVe"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="default">
                                                 <mask key="constraints">

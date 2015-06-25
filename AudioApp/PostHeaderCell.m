@@ -14,6 +14,7 @@
     // Initialization code
     self.displayNameLabel.textColor = [UIColor grayColor];
     self.loopsLabel.textColor = [UIColor grayColor];
+    self.createdAtLabel.textColor = [UIColor grayColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
