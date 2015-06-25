@@ -206,7 +206,15 @@
                     [self.player pause];
                 }
                 Post *post = self.posts[indexPath.section];
-                NSData *data = [post[@"audio"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
+                NSData *data = [post[@"audio"] getData];// Get audio from specific post in Parse - Can we avoid this query?
+                AVAudioSession *session = [AVAudioSession sharedInstance];
+                NSError *setCategoryError = nil;
+                if (![session setCategory:AVAudioSessionCategoryPlayback
+                              withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                                    error:&setCategoryError]) {
+                    NSLog(@"%@)))))))))", setCategoryError);
+                }
+
                 self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
                 [self playRecordedAudio];
             } else if (!self.player.playing) {
@@ -216,6 +224,14 @@
             [self.player stop];
             Post *post = self.posts[indexPath.section];
             NSData *data = [post[@"audio"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
+            AVAudioSession *session = [AVAudioSession sharedInstance];
+            NSError *setCategoryError = nil;
+            if (![session setCategory:AVAudioSessionCategoryPlayback
+                          withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                                error:&setCategoryError]) {
+                NSLog(@"%@)))))))))", setCategoryError);
+            }
+
             self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
             self.player.tag = (int)indexPath.section;
             self.integer = 0;
