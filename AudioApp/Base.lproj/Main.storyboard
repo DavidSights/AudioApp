@@ -220,7 +220,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="QK8-Q5-8Q1"/>
                                                     </constraints>
-                                                    <state key="normal" title="Settings">
+                                                    <state key="normal" title="Edit Profile">
                                                         <color key="titleColor" red="0.1960784314" green="0.1960784314" blue="0.1960784314" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -344,7 +344,8 @@
                                                             <exclude reference="5TL-ck-wA8"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="283" y="8" width="29" height="11"/>
                                                         <mask key="constraints">
                                                             <include reference="55P-Qn-QZ2"/>
                                                             <include reference="5TL-ck-wA8"/>
@@ -366,7 +367,8 @@
                                                             <exclude reference="SAw-1E-z6I"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="275" y="31" width="37" height="11"/>
                                                         <mask key="constraints">
                                                             <include reference="Oo5-dg-bjz"/>
                                                             <include reference="SAw-1E-z6I"/>
@@ -549,6 +551,7 @@
                                                     </variation>
                                                     <connections>
                                                         <action selector="commentsButtonPressed:" destination="Kfm-Ao-e5A" eventType="touchUpInside" id="Ab8-1l-MGa"/>
+                                                        <segue destination="FhN-7t-sUG" kind="show" identifier="CommentSegue" id="kaF-WK-wBN"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OK6-K8-vy2">
@@ -624,7 +627,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="YHp-lv-hRP">
-                        <barButtonItem key="rightBarButtonItem" title="Settings" id="DvV-Mg-KA4">
+                        <barButtonItem key="rightBarButtonItem" id="DvV-Mg-KA4">
                             <connections>
                                 <segue destination="FcA-i7-x2K" kind="presentation" id="2F9-fW-vvX"/>
                             </connections>
@@ -633,7 +636,9 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="400" height="1000"/>
                     <connections>
+                        <outlet property="settingsButton" destination="DvV-Mg-KA4" id="CNY-n1-0IJ"/>
                         <outlet property="tableView" destination="IJ4-d0-Sqq" id="9NG-ch-qrO"/>
+                        <segue destination="560-kE-GQz" kind="show" identifier="LikeSegue" id="bH0-wl-Tib"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QIU-CT-gho" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2114,7 +2119,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="85" height="93"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -2248,7 +2253,7 @@
                         <outlet property="blueColorButton" destination="hLe-fi-D31" id="1Lk-mg-Nkg"/>
                         <outlet property="collectionView" destination="NtK-Qa-gwX" id="e5A-5t-P0z"/>
                         <outlet property="greenColorButton" destination="ihV-8S-6OX" id="odO-Sd-47u"/>
-                        <outlet property="orangeColorButton" destination="r2Q-zT-pKa" id="ED7-IO-uDP"/>
+                        <outlet property="pinkColorButton" destination="r2Q-zT-pKa" id="LE6-JK-Sxn"/>
                         <outlet property="purpleColorButton" destination="mwV-Ck-5A8" id="dal-Om-Qhl"/>
                         <outlet property="redColorButton" destination="cvT-ER-FhO" id="EKs-PU-e17"/>
                         <outlet property="timeButton" destination="CYO-KB-wyV" id="p0m-cO-jgl"/>
@@ -3033,4 +3038,8 @@
         <image name="Profile" width="25" height="25"/>
         <image name="Record" width="25" height="25"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="bH0-wl-Tib"/>
+        <segue reference="kaF-WK-wBN"/>
+    </inferredMetricsTieBreakers>
 </document>
