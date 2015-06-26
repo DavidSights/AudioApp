@@ -7,6 +7,7 @@
 //
 
 #import "LikesTableViewController.h"
+#import "ProfileViewController.h"
 
 @interface LikesTableViewController ()
 
@@ -111,5 +112,18 @@
 */
 
 - (IBAction)onFollowTapped:(UIButton *)sender {
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+
+    if ([segue.identifier isEqualToString:@"ProfileSegue"]) {
+
+        ProfileViewController *profileVC = segue.destinationViewController;
+        UITableViewCell *cell = sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        PFObject *like = self.likes[indexPath.row];
+        PFUser *user = like[@"fromUser"];
+        profileVC.user = user;
+    }
 }
 @end

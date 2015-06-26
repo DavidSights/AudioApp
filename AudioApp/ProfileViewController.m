@@ -16,7 +16,6 @@
 #import "PostHeaderCell.h"
 #import "Post.h"
 #import <UIKit/UIKit.h>
-#import <Parse/Parse.h>
 #import "Post.h"
 #import "AudioPlayerWithTag.h"
 //#import <AVFoundation/AVFoundation.h>
@@ -32,7 +31,6 @@
 
 @property CGFloat lastOffsetY;
 @property UISegmentedControl *userPostsOrLikes;
-@property PFUser *user;
 
 @property NSTimer *timer;
 @property AudioPlayerWithTag *player;
@@ -55,30 +53,26 @@ static const CGFloat kAddressHeight = 24.0f;
     self.settingsButton.title = @"\u2699";
 
     // Set up profile details.
-    self.user = [PFUser currentUser];
-//    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-//    refreshControl.backgroundColor = [UIColor purpleColor];
-//    refreshControl.tintColor = [UIColor whiteColor];
-//
-//    if (self.userPostsOrLikes ==0) {
-//        [refreshControl addTarget:self
-//                           action:@selector(queryUserPost:)
-//                 forControlEvents:UIControlEventValueChanged];
-//        [self.tableView addSubview:refreshControl];
-//
-//    }else{
-//
-//        [refreshControl addTarget:self
-//                           action:@selector(queryLike:)
-//                 forControlEvents:UIControlEventValueChanged];
-//        [self.tableView addSubview:refreshControl];
-//
-//
-//    }
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+
+    if (![PFUser currentUser]) {
+
+        [self.tabBarController setSelectedIndex:0];
+    }
+
+    if (self.user == nil) {
+
+        self.user = [PFUser currentUser];
+    }
 
     [self queryUserPosts];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+
+    //    [self.tableView reloadData];
 //UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
 //refreshControl.backgroundColor = [UIColor purpleColor];
 //refreshControl.tintColor = [UIColor whiteColor];
@@ -87,24 +81,25 @@ static const CGFloat kAddressHeight = 24.0f;
 //                   action:@selector(queryUserPost:)
 //         forControlEvents:UIControlEventValueChanged];
 //[self.tableView addSubview:refreshControl];
-
-
--(void)queryUserPost:(UIRefreshControl *)refresher {
-    [self queryUserPosts];
-//    [self.tableView reloadData];
-
-    [refresher endRefreshing];
-    NSLog(@"queryuserpost%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 }
 
--(void)queryLike:(UIRefreshControl *)refresher {
 
-    [self queryLikedPosts];
-//    [self.tableView reloadData];
-    [refresher endRefreshing];
-    NSLog(@"querylikepost*************************************");
-
-}
+//-(void)queryUserPost:(UIRefreshControl *)refresher {
+//    [self queryUserPosts];
+////    [self.tableView reloadData];
+//
+//    [refresher endRefreshing];
+//    NSLog(@"queryuserpost%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+//}
+//
+//-(void)queryLike:(UIRefreshControl *)refresher {
+//
+//    [self queryLikedPosts];
+////    [self.tableView reloadData];
+//    [refresher endRefreshing];
+//    NSLog(@"querylikepost*************************************");
+//
+//}
 
 -(void)queryUserPosts {
 
@@ -162,46 +157,6 @@ static const CGFloat kAddressHeight = 24.0f;
 //        self.aboutLabel.text = user[@"about"];
 //        [self.tableView reloadData];
     }
-}
-
--(void)viewDidAppear:(BOOL)animated {
-
-//    [self.tableView reloadData];
-
-    NSLog(@"%@--------------",[PFUser currentUser].username);
-    PFUser *currentUser = [PFUser currentUser];
-    if (currentUser != nil) {
-
-
-    } else {
-        [self.tabBarController setSelectedIndex:0];
-    }
-}
-
--(void)viewWillAppear:(BOOL)animated{
-
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    refreshControl.backgroundColor = [UIColor purpleColor];
-    refreshControl.tintColor = [UIColor whiteColor];
-
-    if (self.userPostsOrLikes ==0) {
-        [refreshControl addTarget:self
-                           action:@selector(queryUserPost:)
-                 forControlEvents:UIControlEventValueChanged];
-        [self.tableView addSubview:refreshControl];
-
-    }else{
-
-        [refreshControl addTarget:self
-                           action:@selector(queryLike:)
-                 forControlEvents:UIControlEventValueChanged];
-        [self.tableView addSubview:refreshControl];
-        
-        
-    }
-
-
-//    [self.tableView reloadData];
 }
 
 -(void)didTapLikeButton:(UIButton *)button {
@@ -424,6 +379,7 @@ static const CGFloat kAddressHeight = 24.0f;
         if (indexPath.row == 0) {
 
             ProfileInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileCell"];
+            cell.usernameLabel.text = self.user.username;
 
             return cell;
         } else if (indexPath.row == 1) {
@@ -517,15 +473,44 @@ static const CGFloat kAddressHeight = 24.0f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.indexPath = indexPath;
 
-    if (indexPath.row == 0) { // Only respond to audio display cell.
+    if (indexPath.section != 0) {
 
-        if (self.player.tag == indexPath.section - 1) { // Check if user is trying to play the same audio again.
-            if (self.player.playing) {
-                [self.player pause];
-            } else if (self.player.tag == 0) { // Audio tag is automatically set to 0, so the first post requires special attention.
+        if (indexPath.row == 0) { // Only respond to audio display cell.
+
+            if (self.player.tag == indexPath.section - 1) { // Check if user is trying to play the same audio again.
                 if (self.player.playing) {
                     [self.player pause];
+                } else if (self.player.tag == 0) { // Audio tag is automatically set to 0, so the first post requires special attention.
+                    if (self.player.playing) {
+                        [self.player pause];
+                    }
+                    Post *post;
+                    if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+
+                        post = self.userPosts[indexPath.section - 1];
+                    } else {
+
+                        post = self.likedPosts[indexPath.section - 1];
+                    }
+                    NSData *data = [post[@"audio"] getData];// Get audio from specific post in Parse - Can we avoid this query?
+
+                    //do NOT DELETE CODE BELOW;
+                    AVAudioSession *session = [AVAudioSession sharedInstance];
+                    NSError *setCategoryError = nil;
+                    if (![session setCategory:AVAudioSessionCategoryPlayback
+                                  withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                                        error:&setCategoryError]) {
+                        NSLog(@"%@)))))))))", setCategoryError);
+                    }
+
+                    self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
+                    [self playRecordedAudio];
+
+                } else if (!self.player.playing) {
+                    [self.player play];
                 }
+            } else { // A new post was tapped - stop whatever audio the player is playing, load up the new audio, and play it.
+                [self.player stop];
                 Post *post;
                 if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
 
@@ -534,7 +519,7 @@ static const CGFloat kAddressHeight = 24.0f;
 
                     post = self.likedPosts[indexPath.section - 1];
                 }
-                NSData *data = [post[@"audio"] getData];// Get audio from specific post in Parse - Can we avoid this query?
+                NSData *data = [post[@"audio"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
 
                 //do NOT DELETE CODE BELOW;
                 AVAudioSession *session = [AVAudioSession sharedInstance];
@@ -546,37 +531,11 @@ static const CGFloat kAddressHeight = 24.0f;
                 }
 
                 self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
+                self.player.tag = (int)indexPath.section - 1;
+                self.integer = 0;
+                
                 [self playRecordedAudio];
-
-            } else if (!self.player.playing) {
-                [self.player play];
             }
-        } else { // A new post was tapped - stop whatever audio the player is playing, load up the new audio, and play it.
-            [self.player stop];
-            Post *post;
-            if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
-
-                post = self.userPosts[indexPath.section - 1];
-            } else {
-
-                post = self.likedPosts[indexPath.section - 1];
-            }
-            NSData *data = [post[@"audio"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
-
-            //do NOT DELETE CODE BELOW;
-            AVAudioSession *session = [AVAudioSession sharedInstance];
-            NSError *setCategoryError = nil;
-            if (![session setCategory:AVAudioSessionCategoryPlayback
-                          withOptions:AVAudioSessionCategoryOptionMixWithOthers
-                                error:&setCategoryError]) {
-                NSLog(@"%@)))))))))", setCategoryError);
-            }
-
-            self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
-            self.player.tag = (int)indexPath.section - 1;
-            self.integer = 0;
-            
-            [self playRecordedAudio];
         }
     }
 }
