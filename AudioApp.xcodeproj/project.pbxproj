@@ -57,6 +57,8 @@
 		9A6AF9A71B31E07A0040D5FF /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9A61B31E07A0040D5FF /* PostCell.m */; };
 		9A6AF9AA1B31EC800040D5FF /* LikesAndCommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9A91B31EC800040D5FF /* LikesAndCommentsCell.m */; };
 		9A6AF9AD1B31ED760040D5FF /* PostHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9AC1B31ED760040D5FF /* PostHeaderCell.m */; };
+		9AB2659C1B3DE461009E8638 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB2659A1B3DE460009E8638 /* Fabric.framework */; };
+		9AB2659D1B3DE461009E8638 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB2659B1B3DE461009E8638 /* Crashlytics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +153,8 @@
 		9A6AF9A91B31EC800040D5FF /* LikesAndCommentsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikesAndCommentsCell.m; sourceTree = "<group>"; };
 		9A6AF9AB1B31ED760040D5FF /* PostHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostHeaderCell.h; sourceTree = "<group>"; };
 		9A6AF9AC1B31ED760040D5FF /* PostHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostHeaderCell.m; sourceTree = "<group>"; };
+		9AB2659A1B3DE460009E8638 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		9AB2659B1B3DE461009E8638 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,9 +164,11 @@
 			files = (
 				9777D2D81B30615200ED2B46 /* AVFoundation.framework in Frameworks */,
 				9A1A036C1B2E0991003243ED /* Social.framework in Frameworks */,
+				9AB2659D1B3DE461009E8638 /* Crashlytics.framework in Frameworks */,
 				9A1A036A1B2E098A003243ED /* Accounts.framework in Frameworks */,
 				9A1A03681B2E0983003243ED /* libsqlite3.dylib in Frameworks */,
 				9A1A03661B2E097A003243ED /* libz.dylib in Frameworks */,
+				9AB2659C1B3DE461009E8638 /* Fabric.framework in Frameworks */,
 				9A1A03721B2E0A8E003243ED /* Parse.framework in Frameworks */,
 				9A1A03641B2E0974003243ED /* SystemConfiguration.framework in Frameworks */,
 				9A1A03731B2E0A8E003243ED /* ParseUI.framework in Frameworks */,
@@ -308,6 +314,8 @@
 		9A1A036D1B2E099C003243ED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9AB2659A1B3DE460009E8638 /* Fabric.framework */,
+				9AB2659B1B3DE461009E8638 /* Crashlytics.framework */,
 				9777D2D71B30615200ED2B46 /* AVFoundation.framework */,
 				9A1A036E1B2E0A8E003243ED /* Bolts.framework */,
 				9A1A036F1B2E0A8E003243ED /* Parse.framework */,
@@ -357,6 +365,7 @@
 				9A1A03131B2E0889003243ED /* Sources */,
 				9A1A03141B2E0889003243ED /* Frameworks */,
 				9A1A03151B2E0889003243ED /* Resources */,
+				9AB265991B3DE406009E8638 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -441,6 +450,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9AB265991B3DE406009E8638 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 47228e446fe55467914d61b74b0adbc9a842ada1 adc633944187483c5f5b95a248b198f3bb4e1a0a88dc7f15204a834a08878d11";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9A1A03131B2E0889003243ED /* Sources */ = {
