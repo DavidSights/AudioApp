@@ -18,21 +18,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     self.comments = [NSArray new];
-
     if (self.post) {
-
         PFQuery *commentsQuery = [PFQuery queryWithClassName:@"Activity"];
         [commentsQuery whereKey:@"type" equalTo:@"Comment"];
         [commentsQuery whereKey:@"post" equalTo:self.post];
         [commentsQuery includeKey:@"fromUser"];
         [commentsQuery orderByAscending:@"createdAt"];
-
         [commentsQuery findObjectsInBackgroundWithBlock:^(NSArray *comments, NSError *error) {
-
             if (!error) {
-
                 self.comments = comments;
                 self.commentsLabel.text = [NSString stringWithFormat:@"%lu Comments", (unsigned long)self.comments.count];
             }
@@ -41,7 +35,6 @@
 }
 
 -(void)setComments:(NSArray *)comments {
-
     _comments = comments;
     [self.tableView reloadData];
 }
