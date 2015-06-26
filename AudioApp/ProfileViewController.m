@@ -7,6 +7,8 @@
 //
 
 #import "ProfileViewController.h"
+#import "LikesTableViewController.h"
+#import "CommentTableViewController.h"
 #import "ProfileInfoTableViewCell.h"
 #import "ProfileMiddleTableViewCell.h"
 #import "PostCell.h"
@@ -23,6 +25,7 @@
 @interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ProfileMiddleTableViewCellDelegate, LikesAndCommentsCellDelegate, AVAudioPlayerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsButton;
 
 @property (nonatomic)  NSArray *userPosts;
 @property (nonatomic)  NSArray *likedPosts;
@@ -48,7 +51,9 @@ static const CGFloat kAddressHeight = 24.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    self.settingsButton.title = @"\u2699";
+
     // Set up profile details.
     self.user = [PFUser currentUser];
 
@@ -134,7 +139,102 @@ static const CGFloat kAddressHeight = 24.0f;
 
 -(void)didTapLikeButton:(UIButton *)button {
 
+    NSLog(@"Tapped");
 
+    LikesAndCommentsCell *cell = (LikesAndCommentsCell *)button.superview.superview;
+
+    PFUser *currentUser = [PFUser currentUser];
+    Post *post;
+    if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+
+        post = self.userPosts[cell.tag];
+    } else {
+
+        post = self.likedPosts[cell.tag];
+    }
+    NSMutableArray *likes = [post[@"likes"] mutableCopy];
+
+    if ([likes containsObject:currentUser.objectId]) {
+
+        NSLog(@"User already liked this post");
+
+        button.enabled = NO;
+
+        PFQuery *likeQuery = [PFQuery queryWithClassName:@"Activity"];
+        [likeQuery whereKey:@"type" equalTo:@"Like"];
+        [likeQuery whereKey:@"fromUser" equalTo:currentUser];
+        [likeQuery whereKey:@"toUser" equalTo:post[@"author"]];
+
+        [likeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+
+            if (!error) {
+
+                for (PFObject *likeActivity in objects) {
+
+                    [likeActivity deleteEventually];
+                }
+            }
+        }];
+
+        [post removeObject:currentUser.objectId forKey:@"likes"];
+        [post incrementKey:@"numOfLikes" byAmount:[NSNumber numberWithInt:-1]];
+
+        cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
+
+        [post saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+            if (completed && !error) {
+
+                NSLog(@"Likes uploaded successfully");
+
+                button.enabled = YES;
+            } else {
+
+                button.enabled = YES;
+            }
+        }];
+
+    } else {
+
+        button.enabled = NO;
+
+        PFObject *activity = [PFObject objectWithClassName:@"Activity"];
+        activity[@"fromUser"] = currentUser;
+        activity[@"toUser"] = post[@"author"];
+        activity[@"post"] = post;
+        activity[@"type"] = @"Like";
+        activity[@"content"] = @"";
+
+        [post addObject:currentUser.objectId forKey:@"likes"];
+        [post incrementKey:@"numOfLikes"];
+
+        cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
+
+        [activity saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+            if (completed && !error) {
+
+                NSLog(@"Activity Saved");
+
+                [post saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+                    if (completed && !error) {
+
+                        NSLog(@"Likes uploaded successfully");
+
+                        button.enabled = YES;
+                    } else {
+                        
+                        button.enabled = YES;
+                    }
+                }];
+            } else {
+                NSLog(@"button enabled");
+                
+                button.enabled = YES;
+            }
+        }];
+    }
 }
 
 -(void)segmentedControlChanged:(UISegmentedControl *)segmentedControl {
@@ -319,49 +419,15 @@ static const CGFloat kAddressHeight = 24.0f;
 
     NSLog(@"Likes label tapped");
 
-//    [self performSegueWithIdentifier:@"LikeSegue" sender:sender];
+    [self performSegueWithIdentifier:@"LikeSegue" sender:sender];
 }
 
 -(void)commentsLabelTapped:(UITapGestureRecognizer *)sender {
 
     NSLog(@"Comments label tapped");
 
-//    [self performSegueWithIdentifier:@"CommentSegue" sender:sender];
+    [self performSegueWithIdentifier:@"CommentSegue" sender:sender];
 }
-
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    self.indexPath = indexPath;
-//
-//    if (indexPath.row == 0) { // Only respond to audio display cell.
-//
-//        NSLog(@"TAP");
-//
-//        if (self.player.tag == indexPath.section) { // Check if user is trying to play the same audio again.
-//            if (self.player.playing) {
-//                [self.player pause];
-//            } else if (self.player.tag == 0) { // Audio tag is automatically set to 0, so the first post requires special attention.
-//                if (self.player.playing) {
-//                    [self.player pause];
-//                }
-//                Post *post = self.userPosts[indexPath.section];
-//                NSData *data = [post[@"audio"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
-//                self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
-//                [self playRecordedAudio];
-//            } else if (!self.player.playing) {
-//                [self.player play];
-//            }
-//        } else { // A new post was tapped - stop whatever audio the player is playing, load up the new audio, and play it.
-//            [self.player stop];
-//            Post *post = self.userPosts[indexPath.section];
-//            NSData *data = [post[@"audio"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
-//            self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
-//            self.player.tag = (int)indexPath.section;
-//            self.integer = 0;
-//
-//            [self playRecordedAudio];
-//        }
-//    }
-//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.indexPath = indexPath;
@@ -568,5 +634,61 @@ static const CGFloat kAddressHeight = 24.0f;
     unsigned hexComponent;
     [[NSScanner scannerWithString: fullHex] scanHexInt: &hexComponent];
     return hexComponent / 255.0;
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+
+    if ([segue.identifier isEqualToString:@"LikeSegue"]) {
+
+        LikesTableViewController *likesVC = segue.destinationViewController;
+        Post *post;
+        if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+
+            post = self.userPosts[((UITapGestureRecognizer *)sender).view.tag];
+        } else {
+
+            post = self.likedPosts[((UITapGestureRecognizer *)sender).view.tag];
+        }
+        likesVC.post = post;
+//        likesVC.post = self.posts[((UITapGestureRecognizer *)sender).view.tag];
+        likesVC.likesLabel = (UILabel *)((UITapGestureRecognizer *)sender).view;
+
+    } else if ([segue.identifier isEqualToString:@"CommentSegue"]) {
+
+        NSLog(@"Comments VC Segue");
+
+        if ([sender isKindOfClass:[UITapGestureRecognizer class]]) {
+
+            CommentTableViewController *commentsVC = segue.destinationViewController;
+            Post *post;
+            if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+
+                post = self.userPosts[((UITapGestureRecognizer *)sender).view.tag];
+            } else {
+
+                post = self.likedPosts[((UITapGestureRecognizer *)sender).view.tag];
+            }
+//            commentsVC.post = self.posts[((UITapGestureRecognizer *)sender).view.tag];
+            commentsVC.post = post;
+            commentsVC.commentsLabel = (UILabel *)((UITapGestureRecognizer *)sender).view;
+        } else {
+
+            CommentTableViewController *commentsVC = segue.destinationViewController;
+            //            NSLog(@"add comment segue tag: %ld", (long)((UIButton *)sender).superview.superview.tag);
+            LikesAndCommentsCell *cell = (LikesAndCommentsCell *)((UIButton *)sender).superview.superview;
+            Post *post;
+            NSLog(@"Cell tag: %d", cell.tag);
+            if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+
+                post = self.userPosts[cell.tag];
+            } else {
+
+                post = self.likedPosts[cell.tag];
+            }
+//            commentsVC.post = self.posts[cell.tag];
+            commentsVC.post = post;
+            commentsVC.commentsLabel = cell.commentsLabel;
+        }
+    }
 }
 @end
