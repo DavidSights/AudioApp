@@ -63,7 +63,7 @@
 
 //    Color theme to be used throughout the entire app.
     UIColor *blue =     [UIColor colorWithRed:160/255.0 green:215/255.0 blue:231/255.0 alpha:1.0];
-    UIColor *yellow =   [UIColor colorWithRed:249/255.0 green:217/255.0 blue:119/255.0 alpha:1.0];
+    UIColor *yellow =   [UIColor colorWithRed:255/255.0 green:248/255.0 blue:196/255.0 alpha:1.0];
     UIColor *red =      [UIColor colorWithRed:205/255.0 green:124/255.0 blue:135/255.0 alpha:1.0];
     UIColor *purple =   [UIColor colorWithRed:176/255.0 green:150/255.0 blue:193/255.0 alpha:1.0];
     UIColor *green =    [UIColor colorWithRed:124/255.0 green:191/255.0 blue:183/255.0 alpha:1.0];
@@ -78,26 +78,26 @@
 //    CGFloat bottom =  self.tabBar.frame.size.height-stroke;
     CGFloat y = top;
 
-    UIView *blueView = [[UIView alloc] initWithFrame:CGRectMake(0.0, y, self.view.frame.size.width/5.0, stroke)];
-    blueView.backgroundColor = blue;
+    UIView *homeButton = [[UIView alloc] initWithFrame:CGRectMake(0.0, y, self.view.frame.size.width/5.0, stroke)];
+    homeButton.backgroundColor = purple;
 
-    UIView *yellowView = [[UIView alloc] initWithFrame:CGRectMake((self.tabBar.frame.size.width/5), y, self.view.frame.size.width/5.0, stroke)];
-    yellowView.backgroundColor = yellow;
+    UIView *searchButton = [[UIView alloc] initWithFrame:CGRectMake((self.tabBar.frame.size.width/5), y, self.view.frame.size.width/5.0, stroke)];
+    searchButton.backgroundColor = blue;
 
-    UIView *redView = [[UIView alloc] initWithFrame:CGRectMake(((self.tabBar.frame.size.width/5)*2), y, self.view.frame.size.width/5.0, stroke)];
-    redView.backgroundColor = red;
+    UIView *recordButton = [[UIView alloc] initWithFrame:CGRectMake(((self.tabBar.frame.size.width/5)*2), y, self.view.frame.size.width/5.0, stroke)];
+    recordButton.backgroundColor = red;
 
-    UIView *purpleView = [[UIView alloc] initWithFrame:CGRectMake(((self.tabBar.frame.size.width/5)*3), y, self.view.frame.size.width/5.0, stroke)];
-    purpleView.backgroundColor = purple;
+    UIView *activityButton = [[UIView alloc] initWithFrame:CGRectMake(((self.tabBar.frame.size.width/5)*3), y, self.view.frame.size.width/5.0, stroke)];
+    activityButton.backgroundColor = yellow;
 
-    UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(((self.tabBar.frame.size.width/5)*4), y, self.view.frame.size.width/5.0, stroke)];
-    greenView.backgroundColor = green;
+    UIView *profileButton = [[UIView alloc] initWithFrame:CGRectMake(((self.tabBar.frame.size.width/5)*4), y, self.view.frame.size.width/5.0, stroke)];
+    profileButton.backgroundColor = green;
 
-    [backgroundView addSubview:blueView];
-    [backgroundView addSubview:yellowView];
-    [backgroundView addSubview:redView];
-    [backgroundView addSubview:purpleView];
-    [backgroundView addSubview:greenView];
+    [backgroundView addSubview:homeButton];
+    [backgroundView addSubview:searchButton];
+    [backgroundView addSubview:recordButton];
+    [backgroundView addSubview:activityButton];
+    [backgroundView addSubview:profileButton];
     [self.view addSubview:backgroundView];
 }
 

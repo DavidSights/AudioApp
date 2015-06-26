@@ -215,6 +215,11 @@
         [cell.commentsLabel setUserInteractionEnabled:YES];
         [cell.commentsLabel addGestureRecognizer:commentsGestureRecognizer];
 
+        if (self.currentUser.userObject == post[@"author"]) {
+            cell.deleteButton.alpha = 1;
+        } else {
+            cell.deleteButton.alpha = 0;
+        }
         return cell;
     }
 }

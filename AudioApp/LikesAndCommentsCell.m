@@ -28,4 +28,8 @@
     [self.delegate didTapLikeButton:button];
 }
 
+- (IBAction)deleteButtonPressed:(id)sender {
+    
+}
+
 @end

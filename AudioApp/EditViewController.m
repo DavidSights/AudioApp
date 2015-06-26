@@ -55,6 +55,7 @@
     self.pinkColorButton.layer.cornerRadius = self.pinkColorButton.frame.size.width / 3;
     self.blueColorButton.layer.cornerRadius = self.blueColorButton.frame.size.width / 3;
 
+    self.yellowColorButton.backgroundColor = [UIColor colorWithRed:255/255.0 green:248/255.0 blue:196/255.0 alpha:1.0];
     self.pink = [UIColor colorWithRed:255/255.0 green:187/255.0 blue:208/255.0 alpha:1.0];
     self.pinkColorButton.backgroundColor = self.pink;
 }

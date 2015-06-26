@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *commentsLabel;
 @property (weak, nonatomic) IBOutlet UIButton *likesButton;
 @property (weak, nonatomic) IBOutlet UIButton *commentsButton;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 
 @property (nonatomic,assign) id<LikesAndCommentsCellDelegate> delegate;
 
