@@ -25,6 +25,7 @@
 @interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ProfileMiddleTableViewCellDelegate, LikesAndCommentsCellDelegate, AVAudioPlayerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsButton;
 
 @property (nonatomic)  NSArray *userPosts;
 @property (nonatomic)  NSArray *likedPosts;
@@ -50,7 +51,9 @@ static const CGFloat kAddressHeight = 24.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    self.settingsButton.title = @"\u2699";
+
     // Set up profile details.
     self.user = [PFUser currentUser];
 
