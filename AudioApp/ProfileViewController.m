@@ -56,8 +56,54 @@ static const CGFloat kAddressHeight = 24.0f;
 
     // Set up profile details.
     self.user = [PFUser currentUser];
+//    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+//    refreshControl.backgroundColor = [UIColor purpleColor];
+//    refreshControl.tintColor = [UIColor whiteColor];
+//
+//    if (self.userPostsOrLikes ==0) {
+//        [refreshControl addTarget:self
+//                           action:@selector(queryUserPost:)
+//                 forControlEvents:UIControlEventValueChanged];
+//        [self.tableView addSubview:refreshControl];
+//
+//    }else{
+//
+//        [refreshControl addTarget:self
+//                           action:@selector(queryLike:)
+//                 forControlEvents:UIControlEventValueChanged];
+//        [self.tableView addSubview:refreshControl];
+//
+//
+//    }
 
     [self queryUserPosts];
+}
+
+//UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+//refreshControl.backgroundColor = [UIColor purpleColor];
+//refreshControl.tintColor = [UIColor whiteColor];
+//
+//[refreshControl addTarget:self
+//                   action:@selector(queryUserPost:)
+//         forControlEvents:UIControlEventValueChanged];
+//[self.tableView addSubview:refreshControl];
+
+
+-(void)queryUserPost:(UIRefreshControl *)refresher {
+    [self queryUserPosts];
+//    [self.tableView reloadData];
+
+    [refresher endRefreshing];
+    NSLog(@"queryuserpost%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+}
+
+-(void)queryLike:(UIRefreshControl *)refresher {
+
+    [self queryLikedPosts];
+//    [self.tableView reloadData];
+    [refresher endRefreshing];
+    NSLog(@"querylikepost*************************************");
+
 }
 
 -(void)queryUserPosts {
@@ -133,6 +179,27 @@ static const CGFloat kAddressHeight = 24.0f;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.backgroundColor = [UIColor purpleColor];
+    refreshControl.tintColor = [UIColor whiteColor];
+
+    if (self.userPostsOrLikes ==0) {
+        [refreshControl addTarget:self
+                           action:@selector(queryUserPost:)
+                 forControlEvents:UIControlEventValueChanged];
+        [self.tableView addSubview:refreshControl];
+
+    }else{
+
+        [refreshControl addTarget:self
+                           action:@selector(queryLike:)
+                 forControlEvents:UIControlEventValueChanged];
+        [self.tableView addSubview:refreshControl];
+        
+        
+    }
+
 
 //    [self.tableView reloadData];
 }
@@ -249,6 +316,15 @@ static const CGFloat kAddressHeight = 24.0f;
         } else {
 
             self.player = nil;
+            UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+            refreshControl.backgroundColor = [UIColor purpleColor];
+            refreshControl.tintColor = [UIColor whiteColor];
+            
+            [refreshControl addTarget:self
+                               action:@selector(queryUserPost:)
+                     forControlEvents:UIControlEventValueChanged];
+            [self.tableView addSubview:refreshControl];
+
             [self.tableView reloadData];
         }
     } else {
@@ -259,6 +335,15 @@ static const CGFloat kAddressHeight = 24.0f;
         } else {
 
             self.player = nil;
+            UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+            refreshControl.backgroundColor = [UIColor purpleColor];
+            refreshControl.tintColor = [UIColor whiteColor];
+            
+            [refreshControl addTarget:self
+                               action:@selector(queryLikedPosts:)
+                     forControlEvents:UIControlEventValueChanged];
+            [self.tableView addSubview:refreshControl];
+
             [self.tableView reloadData];
         }
     }
