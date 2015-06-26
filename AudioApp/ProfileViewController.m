@@ -51,6 +51,11 @@ static const CGFloat kAddressHeight = 24.0f;
     // Set up profile details.
     self.user = [PFUser currentUser];
 
+    [self queryUserPosts];
+}
+
+-(void)queryUserPosts {
+
     [Post queryPostsWithUser:self.user withCompletion:^(NSArray *posts, NSError *error) {
 
         if (!error) {
@@ -58,6 +63,19 @@ static const CGFloat kAddressHeight = 24.0f;
             self.userPosts = posts;
 
             NSLog(@"Posts: %@", posts);
+        }
+    }];
+}
+
+-(void)queryLikedPosts {
+
+    NSLog(@"Liked posts empty");
+    [Post queryActivityWithUser:self.user forLikedPostsWithCompletion:^(NSArray *posts, NSError *error) {
+
+        if (!error) {
+
+            NSLog(@"Liked Posts: %@", posts);
+            self.likedPosts = posts;
         }
     }];
 }
@@ -126,13 +144,7 @@ static const CGFloat kAddressHeight = 24.0f;
 
         if (self.userPosts == nil) {
 
-            [Post queryPostsWithUser:self.user withCompletion:^(NSArray *posts, NSError *error) {
-
-                if (!error) {
-
-                    self.userPosts = posts;
-                }
-            }];
+            [self queryUserPosts];
         } else {
 
             [self.tableView reloadData];
@@ -141,15 +153,7 @@ static const CGFloat kAddressHeight = 24.0f;
 
         if (self.likedPosts == nil) {
 
-            NSLog(@"Liked posts empty");
-            [Post queryActivityWithUser:self.user forLikedPostsWithCompletion:^(NSArray *posts, NSError *error) {
-
-                if (!error) {
-
-                    NSLog(@"Liked Posts: %@", posts);
-                    self.likedPosts = posts;
-                }
-            }];
+            [self queryLikedPosts];
         } else {
 
             [self.tableView reloadData];
@@ -185,15 +189,20 @@ static const CGFloat kAddressHeight = 24.0f;
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
 
+    if (section == 0) {
+        return 0;
+    }
     return 50.0;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 
     PostHeaderCell *cell = nil;
+    cell.alpha = 0;
 
     if (section != 0) {
 
+        cell.alpha = 1;
         cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
 
         Post *post;

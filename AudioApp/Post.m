@@ -29,9 +29,12 @@
     NSMutableArray *searchArray = [friends mutableCopy];
     [searchArray addObject:user];
 
+    NSLog(@"search array: %@", searchArray);
+
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Post"];
     [postQuery whereKey:@"author" containedIn:searchArray];
     [postQuery includeKey:@"author"];
+    [postQuery orderByDescending:@"createdAt"];
     postQuery.limit = 5;
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
 

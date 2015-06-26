@@ -35,21 +35,21 @@
 @end
 
 @implementation FeedViewController
+
 - (IBAction)onRefreshBarButtonItemTapped:(id)sender {
 
     [self queryFromParse];
 }
+
 -(void)getLatestPost:(UIRefreshControl *)sender{
 
     [self queryFromParse];
     PostCell* postImageTableViewCell = (PostCell *)[self.tableView cellForRowAtIndexPath:self.tableView.indexPathForSelectedRow];
     postImageTableViewCell.timerLabel.text = @"0";
 
-
     [sender endRefreshing];
-
-
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -66,6 +66,7 @@
     self.posts = [[NSArray alloc]init];
     self.currentUser = [User new];
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
+    
     if (currentUser) {
         NSLog(@"Current user: %@", currentUser.username);
 //        [self queryFromParse];
@@ -78,10 +79,7 @@
 
                 self.currentUser.friends = friends;
 
-                [Post queryPostsWithFriends:self.currentUser.friends andUser:self.currentUser.userObject withCompletion:^(NSArray *posts) {
-
-                    self.posts = posts;
-                }];
+                [self queryFromParse];
 
             } else {
 
@@ -308,7 +306,8 @@
 
 - (void)queryFromParse {
 
-    [Post queryPostsForFeedWithCompletion:^(NSArray *posts) {
+    [Post queryPostsWithFriends:self.currentUser.friends andUser:self.currentUser.userObject withCompletion:^(NSArray *posts) {
+
         self.posts = posts;
     }];
 }
@@ -426,6 +425,7 @@
                     }
                 }];
             } else {
+                NSLog(@"button enabled");
                 
                 button.enabled = YES;
             }
