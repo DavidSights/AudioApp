@@ -20,7 +20,7 @@
 //#import <AVFoundation/AVFoundation.h>
 
 
-@interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ProfileMiddleTableViewCellDelegate, LikesAndCommentsCellDelegate>
+@interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ProfileMiddleTableViewCellDelegate, LikesAndCommentsCellDelegate, AVAudioPlayerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -31,6 +31,7 @@
 @property UISegmentedControl *userPostsOrLikes;
 @property PFUser *user;
 
+@property NSTimer *timer;
 @property AudioPlayerWithTag *player;
 @property int integer;
 @property NSIndexPath *indexPath;
@@ -147,6 +148,7 @@ static const CGFloat kAddressHeight = 24.0f;
             [self queryUserPosts];
         } else {
 
+            self.player = nil;
             [self.tableView reloadData];
         }
     } else {
@@ -156,6 +158,7 @@ static const CGFloat kAddressHeight = 24.0f;
             [self queryLikedPosts];
         } else {
 
+            self.player = nil;
             [self.tableView reloadData];
         }
     }
@@ -255,6 +258,7 @@ static const CGFloat kAddressHeight = 24.0f;
             postCell.coloredView.frame = cellRect;
             postCell.layoutMargins = UIEdgeInsetsZero;
             postCell.preservesSuperviewLayoutMargins = NO;
+            postCell.timerLabel.text = @"0";
 
             Post *post;
             if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
@@ -359,13 +363,106 @@ static const CGFloat kAddressHeight = 24.0f;
 //    }
 //}
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    self.indexPath = indexPath;
+
+    if (indexPath.row == 0) { // Only respond to audio display cell.
+
+        if (self.player.tag == indexPath.section - 1) { // Check if user is trying to play the same audio again.
+            if (self.player.playing) {
+                [self.player pause];
+            } else if (self.player.tag == 0) { // Audio tag is automatically set to 0, so the first post requires special attention.
+                if (self.player.playing) {
+                    [self.player pause];
+                }
+                Post *post;
+                if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+
+                    post = self.userPosts[indexPath.section - 1];
+                } else {
+
+                    post = self.likedPosts[indexPath.section - 1];
+                }
+                NSData *data = [post[@"audio"] getData];// Get audio from specific post in Parse - Can we avoid this query?
+
+                //do NOT DELETE CODE BELOW;
+                AVAudioSession *session = [AVAudioSession sharedInstance];
+                NSError *setCategoryError = nil;
+                if (![session setCategory:AVAudioSessionCategoryPlayback
+                              withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                                    error:&setCategoryError]) {
+                    NSLog(@"%@)))))))))", setCategoryError);
+                }
+
+                self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
+                [self playRecordedAudio];
+
+            } else if (!self.player.playing) {
+                [self.player play];
+            }
+        } else { // A new post was tapped - stop whatever audio the player is playing, load up the new audio, and play it.
+            [self.player stop];
+            Post *post;
+            if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+
+                post = self.userPosts[indexPath.section - 1];
+            } else {
+
+                post = self.likedPosts[indexPath.section - 1];
+            }
+            NSData *data = [post[@"audio"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
+
+            //do NOT DELETE CODE BELOW;
+            AVAudioSession *session = [AVAudioSession sharedInstance];
+            NSError *setCategoryError = nil;
+            if (![session setCategory:AVAudioSessionCategoryPlayback
+                          withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                                error:&setCategoryError]) {
+                NSLog(@"%@)))))))))", setCategoryError);
+            }
+
+            self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
+            self.player.tag = (int)indexPath.section - 1;
+            self.integer = 0;
+            
+            [self playRecordedAudio];
+        }
+    }
+}
+
 - (void)playRecordedAudio {
     //    self.player.numberOfLoops = -1;
-//    self.player.delegate = self;
+    self.player.delegate = self;
     [self.player play];
 
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(playingTime) userInfo:nil repeats:YES];
+}
 
-//    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(playingTime) userInfo:nil repeats:YES];
+- (NSTimeInterval)playingTime {
+    PostCell* postImageTableViewCell = (PostCell *)[self.tableView cellForRowAtIndexPath:self.tableView.indexPathForSelectedRow];
+    postImageTableViewCell.timerLabel.text = [NSString stringWithFormat:@"%.0f",self.player.currentTime];
+    return self.player.currentTime;
+}
+
+-(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+
+    if (!self.player.playing) {
+
+        if (flag == YES) {
+
+            //            Post *post = self.posts[self.indexPath.section];
+            //            NSData *data = [post.audioFile getData]; // Get audio from specific post in Parse - Can we avoid this query?
+            //            self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
+            //            [self playRecordedAudio];
+
+            [self.player play];
+
+            self.integer = self.integer +1;
+            
+            NSLog(@"%d_______",self.integer);
+            
+        }
+    }
 }
 
 //- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
