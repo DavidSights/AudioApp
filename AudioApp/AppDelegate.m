@@ -9,13 +9,13 @@
 #import "AppDelegate.h"
 #import "Post.h"
 #import <Parse/Parse.h>
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 @interface AppDelegate ()
-
 @end
 
 @implementation AppDelegate
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
@@ -23,10 +23,15 @@
     [Parse enableLocalDatastore];
     [Post registerSubclass];
     [Parse setApplicationId:@"dzkgtIQeql5oUvxGAuss1aUGHgtOAERBTgHHBbDY" clientKey:@"NarZion7wI5ANRfZBULdaWKnelQMiZ2tRsdoTuDX"];
+
     //do NOT touch line of code below!!!!!!!! Ask alex why if you want to know!!!!!!!!!!!!!
     [PFUser enableRevocableSessionInBackground];
+
     // Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+
+    // Public Beta with Fabric.
+    [Fabric with:@[CrashlyticsKit]];
 
     return YES;
 }
