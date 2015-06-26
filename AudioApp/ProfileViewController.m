@@ -7,30 +7,34 @@
 //
 
 #import "ProfileViewController.h"
+#import "ProfileInfoTableViewCell.h"
+#import "ProfileMiddleTableViewCell.h"
 #import "PostCell.h"
 #import "LikesAndCommentsCell.h"
 #import "PostHeaderCell.h"
+#import "Post.h"
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
 
-@interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+@interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ProfileMiddleTableViewCellDelegate, LikesAndCommentsCellDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property NSArray *userPosts;
+@property (nonatomic)  NSArray *userPosts;
+@property (nonatomic)  NSArray *likedPosts;
 
 @property CGFloat lastOffsetY;
+@property UISegmentedControl *userPostsOrLikes;
+@property PFUser *user;
 
 @end
 
-//static const CGFloat kNavBarHeight = 52.0f;
-//static const CGFloat kLabelHeight = 14.0f;
-//static const CGFloat kMargin = 10.0f;
-//static const CGFloat kSpacer = 2.0f;
-//static const CGFloat kLabelFontSize = 12.0f;
-//static const CGFloat kAddressHeight = 24.0f;
+static const CGFloat kNavBarHeight = 52.0f;
+static const CGFloat kLabelHeight = 14.0f;
+static const CGFloat kMargin = 10.0f;
+static const CGFloat kSpacer = 2.0f;
+static const CGFloat kLabelFontSize = 12.0f;
+static const CGFloat kAddressHeight = 24.0f;
 
 @implementation ProfileViewController
 
@@ -38,15 +42,17 @@
     [super viewDidLoad];
     
     // Set up profile details.
-    PFUser *user = [PFUser currentUser];
-    self.usernameLabel.text = user.username;
-    self.aboutLabel.text = user[@"about"];
-    
-//    self.userPosts =
-//    PFQuery *query = [[PFQuery alloc] initWithClassName:@"Post"];
-//    [query whereKey:@"author" equalTo:[PFUser currentUser]];
+    self.user = [PFUser currentUser];
 
-    [self queryFromParse];
+    [Post queryPostsWithUser:self.user withCompletion:^(NSArray *posts, NSError *error) {
+
+        if (!error) {
+
+            self.userPosts = posts;
+
+            NSLog(@"Posts: %@", posts);
+        }
+    }];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -58,26 +64,36 @@
     return self;
 }
 
+-(void)setUserPosts:(NSArray *)userPosts {
+
+    _userPosts = userPosts;
+    [self.tableView reloadData];
+}
+
+-(void)setLikedPosts:(NSArray *)likedPosts {
+
+    NSLog(@"liked posts changed");
+
+    _likedPosts = likedPosts;
+    [self.tableView reloadData];
+}
+
 - (void)receiveNotification:(NSNotification *)notification {
     if ([notification.name isEqualToString:@"Test2"]) {
 //        PFUser *user = [PFUser currentUser];
 //        self.usernameLabel.text = user.username;
 //        self.aboutLabel.text = user[@"about"];
-        [self.tableView reloadData];
+//        [self.tableView reloadData];
     }
 }
 
 -(void)viewDidAppear:(BOOL)animated {
 
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 
     NSLog(@"%@--------------",[PFUser currentUser].username);
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser != nil) {
-        PFUser *currentUser = [PFUser currentUser];
-
-        self.usernameLabel.text = currentUser.username;
-        self.aboutLabel.text = currentUser[@"about"];
 
 
     } else {
@@ -86,114 +102,211 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    [self.tableView reloadData];
+
+//    [self.tableView reloadData];
 }
 
-- (void)queryFromParse {
-    PFQuery* query = [PFQuery queryWithClassName:@"Post"];
-    [query whereKey:@"author" equalTo:[PFUser currentUser]];
-    [query orderByDescending:@"createdAt"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (error) {
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
+-(void)didTapLikeButton:(UIButton *)button {
+
+
+}
+
+-(void)segmentedControlChanged:(UISegmentedControl *)segmentedControl {
+
+    NSLog(@"Segmented control changed");
+
+    if (segmentedControl.selectedSegmentIndex == 0) {
+
+        if (self.userPosts == nil) {
+
+            [Post queryPostsWithUser:self.user withCompletion:^(NSArray *posts, NSError *error) {
+
+                if (!error) {
+
+                    self.userPosts = posts;
+                }
+            }];
         } else {
-            self.userPosts = objects;
-            NSLog(@"%lu", (unsigned long)self.userPosts.count);;
+
             [self.tableView reloadData];
         }
-    }];
-}
+    } else {
 
-//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
-//    /* Create custom view to display section header... */
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, tableView.frame.size.width, 18)];
-//    [label setFont:[UIFont boldSystemFontOfSize:12]];
-////    NSString *string =[list objectAtIndex:section];
-//    /* Section header is in 0th index... */
-////    [label setText:string];
-//    [view addSubview:label];
-//    [view setBackgroundColor:[UIColor colorWithRed:166/255.0 green:177/255.0 blue:186/255.0 alpha:1.0]]; //your background color...
-//    return view;
-//}
+        if (self.likedPosts == nil) {
+
+            NSLog(@"Liked posts empty");
+            [Post queryActivityWithUser:self.user forLikedPostsWithCompletion:^(NSArray *posts, NSError *error) {
+
+                if (!error) {
+
+                    NSLog(@"Liked Posts: %@", posts);
+                    self.likedPosts = posts;
+                }
+            }];
+        } else {
+
+            [self.tableView reloadData];
+        }
+    }
+}
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    return self.userPosts.count + 1;
+    if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+
+        NSLog(@"Segmented index is 0. Returning %d + 1", self.userPosts.count);
+        return self.userPosts.count + 1;
+    } else {
+
+        NSLog(@"Segmented index is 1. Returning %d + 1", self.likedPosts.count);
+        return self.likedPosts.count + 1;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
     if (section == 0) {
+
         return 2;
     } else {
 
-        PFObject *post = [self.userPosts objectAtIndex:section - 1]; //Grab a specific post - each post is its own section
-        PFQuery *commentsQuery = [PFQuery queryWithClassName:@"Comment"];
-        [commentsQuery whereKey:@"post" equalTo:post];
-        //    [commentsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        //        NSArray *comments = objects;
-        //        if (!comments.count == 0) {
-        //           numberOfComments = (int)comments.count;
-        //        }
-        //    }];
-
-        NSArray *comments = [commentsQuery findObjects];
-
-        if (comments) {
-            if (comments.count < 5) {
-                return 2 + comments.count;
-            } else {
-                return 8;
-            }
-        }
+        return 2;
     }
 
-    return 3;
+    return 2;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+
+    return 50.0;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+
+    PostHeaderCell *cell = nil;
+
+    if (section != 0) {
+
+        cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
+
+        Post *post;
+        if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+
+            post = self.userPosts[section - 1];
+        } else {
+
+            post = self.likedPosts[section - 1];
+        }
+
+        PFUser *user = post[@"author"];
+//        NSLog(@"User: %@", user.username);
+        NSString *displayNameText;
+        displayNameText = user[@"displayName"];
+//        NSLog(@"Display Name: %@", displayNameText);
+
+        displayNameText = user.username;
+        cell.displayNameLabel.text = displayNameText;
+        [cell.displayNameLabel sizeToFit];
+        cell.backgroundColor = [UIColor whiteColor];
+    }
+
+    return cell;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    UITableViewCell *cell;
-
     if (indexPath.section == 0) {
 
         if (indexPath.row == 0) {
-            cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileCell"];
 
+            ProfileInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileCell"];
+
+            return cell;
         } else if (indexPath.row == 1) {
-            cell = [tableView dequeueReusableCellWithIdentifier:@"MiddleCell"];
-            
+            ProfileMiddleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MiddleCell"];
+            cell.delegate = self;
+            self.userPostsOrLikes = cell.profileSegmentedControl;
+
+            return cell;
         }
     } else {
 
         if (indexPath.row == 0) {
 
-            PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
-            //        [cell.coloredView sizeToFit];
-//            CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
-//            cell.coloredView.frame = cellRect;
-            cell.layoutMargins = UIEdgeInsetsZero;
-            cell.preservesSuperviewLayoutMargins = NO;
-            NSLog(@"%f, %f", cell.center.x, cell.center.y);
-//            cell.backgroundColor = [UIColor yellowColor];
-            return cell;
-        } else if (indexPath.row == 1) {
+            PostCell* postCell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
+            CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
 
-            LikesAndCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeCell"];
-//            PFQuery *likesQuery = [PFQuery queryWithClassName:@"Like"];
-//            [likesQuery whereKey:@"Post" equalTo:self.userPosts[indexPath.section]];
-//            NSArray *likes = [likesQuery findObjects];
-//            cell.likesLabel.text = [NSString stringWithFormat:@"%lu Likes", (unsigned long)likes.count];
-            return cell;
+            postCell.coloredView.frame = cellRect;
+            postCell.layoutMargins = UIEdgeInsetsZero;
+            postCell.preservesSuperviewLayoutMargins = NO;
+
+            Post *post;
+            if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+
+                post = self.userPosts[indexPath.section - 1];
+            } else {
+
+                post = self.likedPosts[indexPath.section - 1];
+            }
+
+            if (post[@"colorHex"] != nil) {
+                NSString *string = post[@"colorHex"];
+                postCell.backgroundColor = [self colorWithHexString:string];
+            }else{
+                postCell.backgroundColor = [UIColor yellowColor];
+            }
+
+            return postCell;
+
         } else {
 
-            PostHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
+            LikesAndCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikesAndCommentsCell"];
+
+            Post *post;
+            if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+
+                post = self.userPosts[indexPath.section - 1];
+            } else {
+
+                post = self.likedPosts[indexPath.section - 1];
+            }
+            cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
+            cell.commentsLabel.text = [NSString stringWithFormat:@"%@ Comments", post[@"numOfComments"]];
+
+            cell.delegate = self;
+            cell.tag = indexPath.section - 1;
+            cell.backgroundColor = [UIColor whiteColor];
+
+            cell.likesLabel.tag = indexPath.section - 1;
+            cell.commentsLabel.tag = indexPath.section - 1;
+
+            UITapGestureRecognizer *likesGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(likesLabelTapped:)];
+            UITapGestureRecognizer *commentsGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentsLabelTapped:)];
+
+            [cell.likesLabel setUserInteractionEnabled:YES];
+            [cell.likesLabel addGestureRecognizer:likesGestureRecognizer];
+            [cell.commentsLabel setUserInteractionEnabled:YES];
+            [cell.commentsLabel addGestureRecognizer:commentsGestureRecognizer];
+            
             return cell;
         }
     }
 
-    return cell;
+    return nil;
+}
+
+-(void)likesLabelTapped:(UITapGestureRecognizer *)sender {
+
+    NSLog(@"Likes label tapped");
+
+//    [self performSegueWithIdentifier:@"LikeSegue" sender:sender];
+}
+
+-(void)commentsLabelTapped:(UITapGestureRecognizer *)sender {
+
+    NSLog(@"Comments label tapped");
+
+//    [self performSegueWithIdentifier:@"CommentSegue" sender:sender];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -280,4 +393,24 @@
     return 50;
 }
 
+- (UIColor *) colorWithHexString: (NSString *) hexString {
+    NSString *colorString = [[hexString stringByReplacingOccurrencesOfString: @"#" withString: @""] uppercaseString];
+    CGFloat alpha, red, blue, green;
+
+    // #RGB
+    alpha = 1.0f;
+    red   = [self colorComponentFrom: colorString start: 0 length: 2];
+    green = [self colorComponentFrom: colorString start: 2 length: 2];
+    blue  = [self colorComponentFrom: colorString start: 4 length: 2];
+
+    return [UIColor colorWithRed: red green: green blue: blue alpha: alpha];
+}
+
+- (CGFloat) colorComponentFrom: (NSString *) string start: (NSUInteger) start length: (NSUInteger) length {
+    NSString *substring = [string substringWithRange: NSMakeRange(start, length)];
+    NSString *fullHex = length == 2 ? substring : [NSString stringWithFormat: @"%@%@", substring, substring];
+    unsigned hexComponent;
+    [[NSScanner scannerWithString: fullHex] scanHexInt: &hexComponent];
+    return hexComponent / 255.0;
+}
 @end

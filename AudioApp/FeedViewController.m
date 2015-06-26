@@ -13,12 +13,12 @@
 #import "LikesAndCommentsCell.h"
 #import "PostCell.h"
 #import "Post.h"
-#import "Comment.h"
+#import "User.h"
 #import "AudioPlayerWithTag.h"
 #import "LikesTableViewController.h"
 #import "CommentTableViewController.h"
 
-@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, AVAudioPlayerDelegate, PostFooterCellDelegate>
+@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, AVAudioPlayerDelegate, LikesAndCommentsCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic)  NSArray *posts;
@@ -29,22 +29,41 @@
 @property UIScrollView *scrollview;
 @property int integer;
 @property NSIndexPath *indexPath;
+
+@property User *currentUser;
 @end
 
 @implementation FeedViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     self.integer = 0;
     self.scrollview.delegate = self;
     self.posts = [[NSArray alloc]init];
+    self.currentUser = [User new];
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
     if (currentUser) {
         NSLog(@"Current user: %@", currentUser.username);
 //        [self queryFromParse];
 
-        [Post queryPostsForFeedWithCompletion:^(NSArray *posts) {
-            self.posts = posts;
+        self.currentUser.userObject = currentUser;
+
+        [User queryFriendsWithUser:self.currentUser.userObject withCompletion:^(NSArray *friends, NSError *error) {
+
+            if (!error) {
+
+                self.currentUser.friends = friends;
+
+                [Post queryPostsWithFriends:self.currentUser.friends andUser:self.currentUser.userObject withCompletion:^(NSArray *posts) {
+
+                    self.posts = posts;
+                }];
+
+            } else {
+
+                NSLog(@"Error: %@", error);
+            }
         }];
     } else {
         [self performSegueWithIdentifier:@"login" sender:self];

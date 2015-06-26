@@ -11,11 +11,9 @@
 
 @interface User : NSObject
 
-@property NSString *objectId;
-@property NSString *email, *password, *username;
+@property PFUser *userObject;
+@property NSArray *friends;
 
-- (instancetype)initWithEmail:(NSString *)email Password:(NSString *)password andUsername:(NSString *)username;
-
-- (void) save;
++(void)queryFriendsWithUser:(PFUser *)user withCompletion:(void(^)(NSArray *friends, NSError *error))complete;
 
 @end

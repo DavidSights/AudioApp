@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol PostFooterCellDelegate <NSObject>
+@protocol LikesAndCommentsCellDelegate <NSObject>
 
 - (void)didTapLikeButton:(UIButton *)button;
 
@@ -21,6 +21,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *likesButton;
 @property (weak, nonatomic) IBOutlet UIButton *commentsButton;
 
-@property (nonatomic,assign) id<PostFooterCellDelegate> delegate;
+@property (nonatomic,assign) id<LikesAndCommentsCellDelegate> delegate;
 
 @end

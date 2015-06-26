@@ -24,10 +24,104 @@
 //    return self;
 //}
 
++(void)queryPostsWithFriends:(NSArray *)friends andUser:(PFUser *)user withCompletion:(void(^)(NSArray *posts))complete {
+
+    NSMutableArray *searchArray = [friends mutableCopy];
+    [searchArray addObject:user];
+
+    PFQuery *postQuery = [PFQuery queryWithClassName:@"Post"];
+    [postQuery whereKey:@"author" containedIn:searchArray];
+    [postQuery includeKey:@"author"];
+    postQuery.limit = 5;
+    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
+
+        if (!error) {
+
+            NSLog(@"No error");
+
+            complete(posts);
+        }
+    }];
+}
+
+
+
++(void)queryPostsWithFriends:(NSArray *)friends withCompletion:(void(^)(NSArray *posts))complete {
+
+    PFQuery *postQuery = [PFQuery queryWithClassName:@"Post"];
+    [postQuery whereKey:@"author" containedIn:friends];
+    [postQuery includeKey:@"author"];
+    postQuery.limit = 5;
+    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
+
+        if (!error) {
+
+            NSLog(@"No error");
+
+            complete(posts);
+        }
+    }];
+}
+
++(void)queryPostsWithUser:(PFUser *)user withCompletion:(void(^)(NSArray *posts, NSError *error))complete {
+
+    PFQuery *postQuery = [PFQuery queryWithClassName:@"Post"];
+    [postQuery whereKey:@"author" equalTo:user];
+//    [postQuery includeKey:@"author"];
+    postQuery.limit = 5;
+    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
+
+        if (!error) {
+
+//            NSLog(@"No error");
+
+//            NSLog(@"Posts: %@", posts);
+
+            complete(posts, nil);
+        } else {
+
+            complete(nil, error);
+        }
+    }];
+}
+
++(void)queryActivityWithUser:(PFUser *)user forLikedPostsWithCompletion:(void(^)(NSArray *posts, NSError *error))complete {
+
+    PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
+    [activityQuery whereKey:@"fromUser" equalTo:user];
+    [activityQuery whereKey:@"type" equalTo:@"Like"];
+    [activityQuery includeKey:@"post"];
+    [activityQuery includeKey:@"toUser"];
+    activityQuery.limit = 5;
+    [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *likeActivities, NSError *error) {
+
+        if (!error) {
+
+            NSMutableArray *posts = [NSMutableArray new];
+
+            for (PFObject *activity in likeActivities) {
+
+                if (activity[@"post"]) {
+
+                    Post *post = activity[@"post"];
+                    post[@"author"] = activity[@"toUser"];
+                    [posts addObject: post];
+                }
+            }
+
+            complete(posts, nil);
+        } else {
+
+            complete(nil, error);
+        }
+    }];
+}
+
 +(void)queryPostsForFeedWithCompletion:(void(^)(NSArray *posts))complete {
 
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Post"];
     [postQuery includeKey:@"author"];
+    postQuery.limit = 5;
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
 
         if (!error) {

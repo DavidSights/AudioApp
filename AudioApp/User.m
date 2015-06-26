@@ -10,31 +10,34 @@
 
 @implementation User
 
-- (instancetype)initWithEmail:(NSString *)email Password:(NSString *)password andUsername:(NSString *)username {
-    self = [super init];
++(void)queryFriendsWithUser:(PFUser *)user withCompletion:(void(^)(NSArray *friends, NSError *error))complete {
 
-    self.email = email;
-    self.password = password;
-    self.username = username;
+    PFQuery *postQuery = [PFQuery queryWithClassName:@"Activity"];
+    [postQuery whereKey:@"fromUser" equalTo:user];
+    [postQuery whereKey:@"type" equalTo:@"Follow"];
+    [postQuery includeKey:@"toUser"];
+    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *activities, NSError *error) {
 
-    return self;
-}
+        if (!error) {
 
+            NSLog(@"No error");
 
-- (void) save {
-    if (self) {
-        PFUser *newUser = [PFUser user];
-        newUser.email = self.email;
-        newUser.password = self.password;
-        newUser.username = self.username;
+            NSMutableArray *friends = [NSMutableArray new];
 
-        [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (!succeeded) {
-                NSString *errorString = [error userInfo][@"error"];   // Show the errorString somewhere and let the user try again.
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Whoops, there was an error." message:errorString delegate:self cancelButtonTitle:@"Okay" otherButtonTitles: nil];
-                [alert show];
+            for (PFObject *activity in activities) {
+
+//                PFUser *user = activity[@"toUser"];
+//                [friends addObject:user.objectId];
+
+                [friends addObject:activity[@"toUser"]];
             }
-        }];
-    }
+
+            complete(friends, nil);
+        } else {
+
+            complete(nil, error);
+        }
+    }];
 }
+
 @end

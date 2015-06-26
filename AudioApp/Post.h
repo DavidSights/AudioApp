@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
-#import "Comment.h"
-#import "Like.h"
 
 @interface Post : PFObject<PFSubclassing>
 
@@ -19,6 +17,14 @@
 + (NSString *)parseClassName;
 
 //- (instancetype)initWithAudioFile:(PFFile *)audioFile andComment:(NSString *)comment;
+
++(void)queryPostsWithFriends:(NSArray *)friends andUser:(PFUser *)user withCompletion:(void(^)(NSArray *posts))complete;
+
++(void)queryPostsWithFriends:(NSArray *)friends withCompletion:(void(^)(NSArray *posts))complete;
+
++(void)queryPostsWithUser:(PFUser *)user withCompletion:(void(^)(NSArray *posts, NSError *error))complete;
+
++(void)queryActivityWithUser:(PFUser *)user forLikedPostsWithCompletion:(void(^)(NSArray *posts, NSError *error))complete;
 
 + (void)queryPostsForFeedWithCompletion:(void(^)(NSArray *posts))complete;
 
