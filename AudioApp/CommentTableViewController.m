@@ -21,6 +21,8 @@
 
     self.comments = [NSArray new];
 
+    NSLog(@"Post: %@", self.post);
+
     if (self.post) {
 
         PFQuery *commentsQuery = [PFQuery queryWithClassName:@"Activity"];
