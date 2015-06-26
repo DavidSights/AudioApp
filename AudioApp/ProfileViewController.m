@@ -180,28 +180,28 @@ static const CGFloat kAddressHeight = 24.0f;
 
 -(void)viewWillAppear:(BOOL)animated{
 
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    refreshControl.backgroundColor = [UIColor purpleColor];
-    refreshControl.tintColor = [UIColor whiteColor];
-
-    if (self.userPostsOrLikes ==0) {
-        [refreshControl addTarget:self
-                           action:@selector(queryUserPost:)
-                 forControlEvents:UIControlEventValueChanged];
-        [self.tableView addSubview:refreshControl];
-
-    }else{
-
-        [refreshControl addTarget:self
-                           action:@selector(queryLike:)
-                 forControlEvents:UIControlEventValueChanged];
-        [self.tableView addSubview:refreshControl];
-        
-        
-    }
-
-
-//    [self.tableView reloadData];
+//    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+//    refreshControl.backgroundColor = [UIColor purpleColor];
+//    refreshControl.tintColor = [UIColor whiteColor];
+//
+//    if (self.userPostsOrLikes ==0) {
+//        [refreshControl addTarget:self
+//                           action:@selector(queryUserPost:)
+//                 forControlEvents:UIControlEventValueChanged];
+//        [self.tableView addSubview:refreshControl];
+//
+//    }else{
+//
+//        [refreshControl addTarget:self
+//                           action:@selector(queryLike:)
+//                 forControlEvents:UIControlEventValueChanged];
+//        [self.tableView addSubview:refreshControl];
+//        
+//        
+//    }
+//
+    [self queryLikedPosts];
+    [self.tableView reloadData];
 }
 
 -(void)didTapLikeButton:(UIButton *)button {

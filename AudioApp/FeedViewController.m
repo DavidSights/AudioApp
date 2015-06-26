@@ -99,17 +99,6 @@
     }
 }
 
-- (IBAction)onRefreshBarButtonItemTapped:(id)sender {
-    [self queryFromParse];
-}
-
--(void)getLatestPost:(UIRefreshControl *)sender{
-    [self queryFromParse];
-    PostCell* postImageTableViewCell = (PostCell *)[self.tableView cellForRowAtIndexPath:self.tableView.indexPathForSelectedRow];
-    postImageTableViewCell.timerLabel.text = @"0";
-    [sender endRefreshing];
-}
-
 - (void) viewDidDisappear:(BOOL)animated{
     [self.player stop];
 }
@@ -340,21 +329,21 @@
 }
 
 #pragma mark - Notification Center
-
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        //if the notification is touched stop spinng. if is not touched start spinning
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveNotification:) name:@"Test1" object:nil];
-    }
-    return self;
-}
-
-- (void)receiveNotification:(NSNotification *)notification {
-    if ([notification.name isEqualToString:@"Test1"]) {
-        [self queryFromParse];
-    }
-}
+//
+//- (id)initWithCoder:(NSCoder *)aDecoder {
+//    self = [super initWithCoder:aDecoder];
+//    if (self) {
+//        //if the notification is touched stop spinng. if is not touched start spinning
+//        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveNotification:) name:@"Test1" object:nil];
+//    }
+//    return self;
+//}
+//
+//- (void)receiveNotification:(NSNotification *)notification {
+//    if ([notification.name isEqualToString:@"Test1"]) {
+//        [self queryFromParse];
+//    }
+//}
 
 -(void)didTapLikeButton:(UIButton *)button {
 
