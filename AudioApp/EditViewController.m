@@ -18,12 +18,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *greenColorButton;
 @property (weak, nonatomic) IBOutlet UIButton *blackColorButton;
 @property (weak, nonatomic) IBOutlet UIButton *blueColorButton;
-@property (weak, nonatomic) IBOutlet UIButton *orangeColorButton;
+@property (weak, nonatomic) IBOutlet UIButton *pinkColorButton;
 @property (weak, nonatomic) IBOutlet UIButton *purpleColorButton;
 @property (weak, nonatomic) IBOutlet UIView *viewOne;
 @property AVAudioPlayer *player;
 @property int recordTimeInt;
 @property NSTimer *timer;
+@property UIColor *pink;
 
 @end
 
@@ -51,8 +52,12 @@
     self.redColorButton.layer.cornerRadius = self.redColorButton.frame.size.width / 3;
     self.greenColorButton.layer.cornerRadius = self.greenColorButton.frame.size.width / 3;
     self.purpleColorButton.layer.cornerRadius = self.greenColorButton.frame.size.width / 3;
-    self.orangeColorButton.layer.cornerRadius = self.orangeColorButton.frame.size.width / 3;
+    self.pinkColorButton.layer.cornerRadius = self.pinkColorButton.frame.size.width / 3;
     self.blueColorButton.layer.cornerRadius = self.blueColorButton.frame.size.width / 3;
+
+    self.yellowColorButton.backgroundColor = [UIColor colorWithRed:255/255.0 green:248/255.0 blue:196/255.0 alpha:1.0];
+    self.pink = [UIColor colorWithRed:255/255.0 green:187/255.0 blue:208/255.0 alpha:1.0];
+    self.pinkColorButton.backgroundColor = self.pink;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

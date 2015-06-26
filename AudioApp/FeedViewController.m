@@ -29,32 +29,32 @@
 @property UIScrollView *scrollview;
 @property int integer;
 @property NSIndexPath *indexPath;
-
 @property User *currentUser;
 @property UIRefreshControl *refreshControl;
+@property UIColor *blue, *yellow, *red, *purple, *green, *darkBlue, *darkYellow, *darkRed, *darkPurple, *darkGreen, *pink;
+
 @end
 
 @implementation FeedViewController
 
-- (IBAction)onRefreshBarButtonItemTapped:(id)sender {
-
-    [self queryFromParse];
-}
-
--(void)getLatestPost:(UIRefreshControl *)sender{
-
-    [self queryFromParse];
-    PostCell* postImageTableViewCell = (PostCell *)[self.tableView cellForRowAtIndexPath:self.tableView.indexPathForSelectedRow];
-    postImageTableViewCell.timerLabel.text = @"0";
-
-    [sender endRefreshing];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    // App color theme.
+    self.blue = [UIColor colorWithRed:160/255.0 green:215/255.0 blue:231/255.0 alpha:1.0];
+    self.yellow = [UIColor colorWithRed:249/255.0 green:217/255.0 blue:119/255.0 alpha:1.0];
+    self.red = [UIColor colorWithRed:205/255.0 green:124/255.0 blue:135/255.0 alpha:1.0];
+    self.purple = [UIColor colorWithRed:176/255.0 green:150/255.0 blue:193/255.0 alpha:1.0];
+    self.green = [UIColor colorWithRed:124/255.0 green:191/255.0 blue:183/255.0 alpha:1.0];
+    self.darkBlue = [UIColor colorWithRed:83/255.0 green:153/255.0 blue:174/255.0 alpha:1.0];
+    self.darkYellow = [UIColor colorWithRed:204/255.0 green:164/255.0 blue:42/255.0 alpha:1.0];
+    self.darkRed = [UIColor colorWithRed:166/255.0 green:81/255.0 blue:92/255.0 alpha:1.0];
+    self.darkPurple = [UIColor colorWithRed:121/255.0 green:192/255.0 blue:140/255.0 alpha:1.0];
+    self.darkGreen = [UIColor colorWithRed:75/255.0 green:151/255.0 blue:142/255.0 alpha:1.0];
+    self.pink = [UIColor colorWithRed:255/255.0 green:187/255.0 blue:208/255.0 alpha:1.0];
+
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    refreshControl.backgroundColor = [UIColor purpleColor];
+    refreshControl.backgroundColor = self.pink;
     refreshControl.tintColor = [UIColor whiteColor];
     [refreshControl addTarget:self
                             action:@selector(getLatestPost:)
@@ -97,6 +97,17 @@
         NSLog(@"%@", setCategoryError);
         // handle error
     }
+}
+
+- (IBAction)onRefreshBarButtonItemTapped:(id)sender {
+    [self queryFromParse];
+}
+
+-(void)getLatestPost:(UIRefreshControl *)sender{
+    [self queryFromParse];
+    PostCell* postImageTableViewCell = (PostCell *)[self.tableView cellForRowAtIndexPath:self.tableView.indexPathForSelectedRow];
+    postImageTableViewCell.timerLabel.text = @"0";
+    [sender endRefreshing];
 }
 
 - (void) viewDidDisappear:(BOOL)animated{
@@ -204,6 +215,11 @@
         [cell.commentsLabel setUserInteractionEnabled:YES];
         [cell.commentsLabel addGestureRecognizer:commentsGestureRecognizer];
 
+        if (self.currentUser.userObject == post[@"author"]) {
+            cell.deleteButton.alpha = 1;
+        } else {
+            cell.deleteButton.alpha = 0;
+        }
         return cell;
     }
 }
