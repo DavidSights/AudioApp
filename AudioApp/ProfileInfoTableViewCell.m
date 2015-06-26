@@ -13,14 +13,12 @@
 
 - (void)awakeFromNib {
     // Setup Profile Cell Details
-    PFUser *user = [PFUser currentUser];
-    self.usernameLabel.text = user.username;
-    self.aboutLabel.text = user[@"about"];
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
 
+    [super setSelected:selected animated:animated];
     // Configure the view for the selected state
 }
 

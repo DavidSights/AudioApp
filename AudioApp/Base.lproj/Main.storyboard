@@ -209,7 +209,7 @@
                                             <outlet property="usernameLabel" destination="4x8-gU-Z1g" id="5Hi-do-Rjw"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MiddleCell" rowHeight="85" id="rUr-RW-78E" customClass="ProfileMiddleTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MiddleCell" rowHeight="85" id="rUr-RW-78E" customClass="ProfileMiddleTableViewCell">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rUr-RW-78E" id="0GY-OI-lPN">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -633,6 +633,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="400" height="1000"/>
                     <connections>
@@ -2496,10 +2497,14 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <segue destination="bB1-qa-1hX" kind="show" identifier="ProfileSegue" id="A2y-wD-0Io"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2xn-Jx-xLY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1660.5" y="3410"/>
+            <point key="canvasLocation" x="-1684.5" y="3410"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="yT3-dy-Ji9">
@@ -3016,6 +3021,7 @@
                                     <outlet property="followButton" destination="vvJ-rP-ssX" id="5af-Az-ZQ3"/>
                                     <outlet property="profileImageView" destination="oyT-8B-mB6" id="jpZ-2s-iY9"/>
                                     <outlet property="usernameLabel" destination="6SX-Cb-fSh" id="5dY-lw-9D3"/>
+                                    <segue destination="bB1-qa-1hX" kind="show" identifier="ProfileSegue" id="Ix1-uV-Ket"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -3025,10 +3031,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Likes" id="q7l-hc-dvs"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iih-Ae-HB7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-841.5" y="3410"/>
+            <point key="canvasLocation" x="-775.5" y="3410"/>
         </scene>
     </scenes>
     <resources>
@@ -3039,6 +3046,7 @@
         <image name="Record" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Ix1-uV-Ket"/>
         <segue reference="bH0-wl-Tib"/>
         <segue reference="kaF-WK-wBN"/>
     </inferredMetricsTieBreakers>
