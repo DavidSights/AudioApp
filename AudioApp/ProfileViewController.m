@@ -15,11 +15,15 @@
 #import "Post.h"
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "Post.h"
+#import "AudioPlayerWithTag.h"
+//#import <AVFoundation/AVFoundation.h>
 
 
 @interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ProfileMiddleTableViewCellDelegate, LikesAndCommentsCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 @property (nonatomic)  NSArray *userPosts;
 @property (nonatomic)  NSArray *likedPosts;
 
@@ -27,6 +31,9 @@
 @property UISegmentedControl *userPostsOrLikes;
 @property PFUser *user;
 
+@property AudioPlayerWithTag *player;
+@property int integer;
+@property NSIndexPath *indexPath;
 @end
 
 static const CGFloat kNavBarHeight = 52.0f;
@@ -289,7 +296,7 @@ static const CGFloat kAddressHeight = 24.0f;
             [cell.commentsLabel addGestureRecognizer:commentsGestureRecognizer];
             
             return cell;
-        }
+        }   
     }
 
     return nil;
@@ -309,54 +316,97 @@ static const CGFloat kAddressHeight = 24.0f;
 //    [self performSegueWithIdentifier:@"CommentSegue" sender:sender];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGRect frame = self.navigationController.navigationBar.frame;
-    CGFloat size = frame.size.height - 21;
-    CGFloat framePercentageHidden = ((20 - frame.origin.y) / (frame.size.height - 1));
-    CGFloat scrollOffset = scrollView.contentOffset.y;
-    CGFloat scrollDiff = scrollOffset - self.lastOffsetY;
-    CGFloat scrollHeight = scrollView.frame.size.height;
-    CGFloat scrollContentSizeHeight = scrollView.contentSize.height + scrollView.contentInset.bottom;
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    self.indexPath = indexPath;
+//
+//    if (indexPath.row == 0) { // Only respond to audio display cell.
+//
+//        NSLog(@"TAP");
+//
+//        if (self.player.tag == indexPath.section) { // Check if user is trying to play the same audio again.
+//            if (self.player.playing) {
+//                [self.player pause];
+//            } else if (self.player.tag == 0) { // Audio tag is automatically set to 0, so the first post requires special attention.
+//                if (self.player.playing) {
+//                    [self.player pause];
+//                }
+//                Post *post = self.userPosts[indexPath.section];
+//                NSData *data = [post[@"audio"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
+//                self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
+//                [self playRecordedAudio];
+//            } else if (!self.player.playing) {
+//                [self.player play];
+//            }
+//        } else { // A new post was tapped - stop whatever audio the player is playing, load up the new audio, and play it.
+//            [self.player stop];
+//            Post *post = self.userPosts[indexPath.section];
+//            NSData *data = [post[@"audio"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
+//            self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
+//            self.player.tag = (int)indexPath.section;
+//            self.integer = 0;
+//
+//            [self playRecordedAudio];
+//        }
+//    }
+//}
 
-    if (scrollOffset <= -scrollView.contentInset.top) {
-        frame.origin.y = 20;
-    } else if ((scrollOffset + scrollHeight) >= scrollContentSizeHeight) {
-        frame.origin.y = -size;
-    } else {
-        frame.origin.y = MIN(20, MAX(-size, frame.origin.y - scrollDiff));
+- (void)playRecordedAudio {
+    //    self.player.numberOfLoops = -1;
+//    self.player.delegate = self;
+    [self.player play];
 
-    }
 
-    [self.navigationController.navigationBar setFrame:frame];
-    [self updateBarButtonItems:(1 - framePercentageHidden)];
-    self.lastOffsetY = scrollOffset;
+//    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(playingTime) userInfo:nil repeats:YES];
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-
-    [self stoppedScrolling];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
-                  willDecelerate:(BOOL)decelerate {
-
-    if (!decelerate) {
-        [self stoppedScrolling];
-    }
-}
-
-- (void)stoppedScrolling {
-
-    CGRect frame = self.navigationController.navigationBar.frame;
-    if (frame.origin.y < -5) {
-        [self animateNavBarTo:-(frame.size.height - 21)];
-        //        [self animateWebView:-(frame.size.height - 21)];
-    } else {
-        [self animateNavBarTo:(frame.size.height - 21)];
-        //                [self animateWebView:(frame.size.height - 21)];
-
-    }
-}
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    CGRect frame = self.navigationController.navigationBar.frame;
+//    CGFloat size = frame.size.height - 21;
+//    CGFloat framePercentageHidden = ((20 - frame.origin.y) / (frame.size.height - 1));
+//    CGFloat scrollOffset = scrollView.contentOffset.y;
+//    CGFloat scrollDiff = scrollOffset - self.lastOffsetY;
+//    CGFloat scrollHeight = scrollView.frame.size.height;
+//    CGFloat scrollContentSizeHeight = scrollView.contentSize.height + scrollView.contentInset.bottom;
+//
+//    if (scrollOffset <= -scrollView.contentInset.top) {
+//        frame.origin.y = 20;
+//    } else if ((scrollOffset + scrollHeight) >= scrollContentSizeHeight) {
+//        frame.origin.y = -size;
+//    } else {
+//        frame.origin.y = MIN(20, MAX(-size, frame.origin.y - scrollDiff));
+//
+//    }
+//
+//    [self.navigationController.navigationBar setFrame:frame];
+//    [self updateBarButtonItems:(1 - framePercentageHidden)];
+//    self.lastOffsetY = scrollOffset;
+//}
+//
+//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+//
+//    [self stoppedScrolling];
+//}
+//
+//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView
+//                  willDecelerate:(BOOL)decelerate {
+//
+//    if (!decelerate) {
+//        [self stoppedScrolling];
+//    }
+//}
+//
+//- (void)stoppedScrolling {
+//
+//    CGRect frame = self.navigationController.navigationBar.frame;
+//    if (frame.origin.y < -5) {
+//        [self animateNavBarTo:-(frame.size.height - 21)];
+//        //        [self animateWebView:-(frame.size.height - 21)];
+//    } else {
+//        [self animateNavBarTo:(frame.size.height - 21)];
+//        //                [self animateWebView:(frame.size.height - 21)];
+//
+//    }
+//}
 
 - (void)updateBarButtonItems:(CGFloat)alpha {
 

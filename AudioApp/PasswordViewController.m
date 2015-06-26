@@ -53,11 +53,16 @@
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [self.nPasswordTextField endEditing:YES];
-    [self.oldPasswordTextField endEditing:YES];
-    [self.repeatNewPasswordTextField endEditing:YES];
-
-    return YES;
+    NSInteger nextTag = textField.tag + 1;
+    // Try to find next responder
+    UIResponder* nextResponder = [textField.superview viewWithTag:nextTag];
+    if (nextResponder) {
+        // Found next responder, so set it.
+        [nextResponder becomeFirstResponder];
+    } else {
+        // Not found, so remove keyboard.
+        [textField resignFirstResponder];
+    }
+    return NO; // We do not want UITextField to insert line-breaks.}
 }
-
 @end

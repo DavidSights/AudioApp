@@ -12,11 +12,12 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.likesLabel.textColor = [UIColor grayColor];
+    self.commentsLabel.textColor = [UIColor grayColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 
@@ -24,7 +25,6 @@
 }
 
 - (IBAction)likeButtonPressed:(UIButton *)button {
-
     [self.delegate didTapLikeButton:button];
 }
 

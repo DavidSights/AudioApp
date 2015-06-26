@@ -11,12 +11,8 @@
 
 @interface EditViewController ()<UICollectionViewDataSource, UICollectionViewDelegate,AVAudioPlayerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *viewOne;
-@property AVAudioPlayer *player;
-@property (weak, nonatomic) IBOutlet UIButton *timeButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property int recordTimeInt;
-@property NSTimer *timer;
+@property (weak, nonatomic) IBOutlet UIButton *timeButton;
 @property (weak, nonatomic) IBOutlet UIButton *yellowColorButton;
 @property (weak, nonatomic) IBOutlet UIButton *redColorButton;
 @property (weak, nonatomic) IBOutlet UIButton *greenColorButton;
@@ -24,21 +20,20 @@
 @property (weak, nonatomic) IBOutlet UIButton *blueColorButton;
 @property (weak, nonatomic) IBOutlet UIButton *orangeColorButton;
 @property (weak, nonatomic) IBOutlet UIButton *purpleColorButton;
+@property (weak, nonatomic) IBOutlet UIView *viewOne;
+@property AVAudioPlayer *player;
+@property int recordTimeInt;
+@property NSTimer *timer;
 
 @end
 
 @implementation EditViewController
 
-
-
 - (void)viewDidLoad {
-
+    [super viewDidLoad];
     self.player.delegate = self;
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"Restart" style:UIBarButtonItemStylePlain target:self action:@selector(editButtonPressed:)];
-
     self.navigationItem.leftBarButtonItem = editButton;
-
-    [super viewDidLoad];
     AVAudioSession *session = [AVAudioSession sharedInstance];
     NSError *setCategoryError = nil;
     if (![session setCategory:AVAudioSessionCategoryPlayback
@@ -46,7 +41,6 @@
                         error:&setCategoryError]) {
         NSLog(@"%@+++", setCategoryError);
     }
-
     self.player = [[AVAudioPlayer alloc]initWithContentsOfURL:self.recorder.url error:nil];
     [self.player prepareToPlay];
     [self playRecordedAudio];
@@ -60,42 +54,8 @@
     self.orangeColorButton.layer.cornerRadius = self.orangeColorButton.frame.size.width / 3;
     self.blueColorButton.layer.cornerRadius = self.blueColorButton.frame.size.width / 3;
 }
-- (void)editButtonPressed:(id)sender
-{
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Restart" message:@"Are you sure you want to restart the recording?" preferredStyle:UIAlertControllerStyleAlert];
-    //adding text field to alert controller
-
-    //cancels alert controller
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-    //
-    //saves what you wrote
-    UIAlertAction *restartAction =  [UIAlertAction actionWithTitle:@"Restart" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-
-        AVAudioSession *sessions = [AVAudioSession sharedInstance];
-        [sessions setActive:NO error:nil];
-        [self.player stop];
-        [self.player prepareToPlay];
-        [self.player stop];
-        [self.recorder stop];
-        [self.recorder deleteRecording];
-
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }];
-
-    //add cancelAction variable to alertController
-    [alertController addAction:cancelAction];
-
-
-    [alertController addAction:restartAction];
-
-
-    //activates alertcontroler
-    [self presentViewController:alertController animated:true completion:nil];
-    
-}
 
 - (void)viewWillAppear:(BOOL)animated {
-
     AVAudioSession *session = [AVAudioSession sharedInstance];
     NSError *setCategoryError = nil;
     if (![session setCategory:AVAudioSessionCategoryPlayback
@@ -108,31 +68,31 @@
     [self playRecordedAudio];
 }
 
-- (void)playRecordedAudio {
-    self.player.numberOfLoops = -1;
-    [self.player play];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0
-                                                  target:self
-                                                selector:@selector(playingTime)
-                                                userInfo:nil
-                                                 repeats:YES];
-}
-
-- (NSTimeInterval)playingTime {
-    [self.timeButton setTitle:[NSString stringWithFormat:@"%.0f",self.player.currentTime] forState:UIControlStateNormal];
-    return self.player.currentTime;
+- (void)editButtonPressed:(id)sender {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Restart" message:@"Are you sure you want to restart the recording? Your current recording will be lost." preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *restartAction =  [UIAlertAction actionWithTitle:@"Restart" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        // User decided to go back and start a new recording.
+        AVAudioSession *sessions = [AVAudioSession sharedInstance];
+        [sessions setActive:NO error:nil];
+        [self.player stop];
+        [self.player prepareToPlay];
+        [self.recorder stop];
+        [self.recorder deleteRecording];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }];
+    [alertController addAction:cancelAction];
+    [alertController addAction:restartAction];
+    [self presentViewController:alertController animated:true completion:nil];
 }
 
 - (IBAction)onTimeButtonTapped:(id)sender {
     if (self.player.playing) {
         [self.player pause];
     } else if (!self.player.playing){
-
         AVAudioSession *session = [AVAudioSession sharedInstance];
         NSError *setCategoryError = nil;
-        if (![session setCategory:AVAudioSessionCategoryPlayback
-                      withOptions:AVAudioSessionCategoryOptionMixWithOthers
-                            error:&setCategoryError]) {
+        if (![session setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&setCategoryError]) {
             NSLog(@"%@^^^^^^", setCategoryError);
         }
         [self.player play];
@@ -143,7 +103,25 @@
     self.viewOne.backgroundColor = sender.backgroundColor;
 }
 
-#pragma mark - TableView
+#pragma mark - Audio
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+    [player stop];
+    [player prepareToPlay];
+}
+
+- (void)playRecordedAudio {
+    self.player.numberOfLoops = -1;
+    [self.player play];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(playingTime) userInfo:nil repeats:YES];
+}
+
+- (NSTimeInterval)playingTime {
+    [self.timeButton setTitle:[NSString stringWithFormat:@"%.0f",self.player.currentTime] forState:UIControlStateNormal];
+    return self.player.currentTime;
+}
+
+#pragma mark - TableView Customization
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return 6;
@@ -155,8 +133,6 @@
     cell.layer.cornerRadius = cell.frame.size.width/2;
     return cell;
 }
-
-#pragma marks delegateMethod
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
@@ -182,17 +158,16 @@
     [self.player play];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [self.player stop];
-}
+#pragma mark - Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     PostViewController *dvc = segue.destinationViewController;
     dvc.recorder = self.recorder;
     dvc.postColor = self.viewOne.backgroundColor;
 }
--(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
-    [player stop];
-    [player prepareToPlay];
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.player stop];
 }
+
 @end

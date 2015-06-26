@@ -31,12 +31,35 @@
 @property NSIndexPath *indexPath;
 
 @property User *currentUser;
+@property UIRefreshControl *refreshControl;
 @end
 
 @implementation FeedViewController
+- (IBAction)onRefreshBarButtonItemTapped:(id)sender {
 
+    [self queryFromParse];
+}
+-(void)getLatestPost:(UIRefreshControl *)sender{
+
+    [self queryFromParse];
+    PostCell* postImageTableViewCell = (PostCell *)[self.tableView cellForRowAtIndexPath:self.tableView.indexPathForSelectedRow];
+    postImageTableViewCell.timerLabel.text = @"0";
+
+
+    [sender endRefreshing];
+
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.backgroundColor = [UIColor purpleColor];
+    refreshControl.tintColor = [UIColor whiteColor];
+    [refreshControl addTarget:self
+                            action:@selector(getLatestPost:)
+                  forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
 
     self.integer = 0;
     self.scrollview.delegate = self;
@@ -144,6 +167,7 @@
 
         PostCell* postCell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
         CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
+        postCell.timerLabel.text = @"0";
 
         postCell.coloredView.frame = cellRect;
         postCell.layoutMargins = UIEdgeInsetsZero;
@@ -203,7 +227,17 @@
                     [self.player pause];
                 }
                 Post *post = self.posts[indexPath.section];
-                NSData *data = [post[@"audio"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
+                NSData *data = [post[@"audio"] getData];// Get audio from specific post in Parse - Can we avoid this query?
+
+                //do NOT DELETE CODE BELOW;
+                AVAudioSession *session = [AVAudioSession sharedInstance];
+                NSError *setCategoryError = nil;
+                if (![session setCategory:AVAudioSessionCategoryPlayback
+                              withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                                    error:&setCategoryError]) {
+                    NSLog(@"%@)))))))))", setCategoryError);
+                }
+
                 self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
                 [self playRecordedAudio];
             } else if (!self.player.playing) {
@@ -213,6 +247,16 @@
             [self.player stop];
             Post *post = self.posts[indexPath.section];
             NSData *data = [post[@"audio"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
+
+            //do NOT DELETE CODE BELOW;
+            AVAudioSession *session = [AVAudioSession sharedInstance];
+            NSError *setCategoryError = nil;
+            if (![session setCategory:AVAudioSessionCategoryPlayback
+                          withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                                error:&setCategoryError]) {
+                NSLog(@"%@)))))))))", setCategoryError);
+            }
+
             self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
             self.player.tag = (int)indexPath.section;
             self.integer = 0;
@@ -259,11 +303,6 @@
 
     }
 }
-
-
-
-
-
 
 #pragma mark - Parse
 

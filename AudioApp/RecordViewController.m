@@ -19,6 +19,7 @@
 @property int recordTimeInt;
 @property NSTimer *timer;
 @property UIColor *blue, *yellow, *red, *purple, *green, *darkBlue, *darkYellow, *darkRed, *darkPurple, *darkGreen;
+@property (weak, nonatomic) IBOutlet UIButton *resetButton;
 
 @end
 
@@ -39,19 +40,27 @@
     self.darkRed = [UIColor colorWithRed:166/255.0 green:81/255.0 blue:92/255.0 alpha:1.0];
     self.darkPurple = [UIColor colorWithRed:121/255.0 green:192/255.0 blue:140/255.0 alpha:1.0];
     self.darkGreen = [UIColor colorWithRed:75/255.0 green:151/255.0 blue:142/255.0 alpha:1.0];
+    self.resetButton.alpha = 0;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [self setUpRecording];
+    // Reset button, reset timer.
+    [self resetButtonStyle];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
+//    if (self.recorder != nil) {
+//        [self.recorder stop];
+//        [self.recorder deleteRecording];
+//    }
+    [self setUpRecording];
     self.recordButton.layer.cornerRadius = self.recordButton.frame.size.width/2; // Called here instead of view did load because storyboard dimensions not set in view did load.
 }
 
-#pragma mark - Record Button
+#pragma mark - Buttons
 
-- (IBAction)onRecordPauseTapped:(id)sender {
+- (IBAction)recordButtonPressed:(id)sender {
     if (![self.recordButton.titleLabel.text  isEqual: @"Done!"]) {
         NSLog(@"Button pressed. Timer at %f seconds, so began recording again.", self.recorder.currentTime);
         if (self.player.playing) { // Stop audio from playing.
@@ -66,19 +75,35 @@
                 self.recordButton.backgroundColor = self.red;
                 [self.recordButton setTitle:[NSString stringWithFormat:@"%.0f",self.recorder.currentTime] forState:UIControlStateNormal];
             }];
-
-            [self.recordButton setTitleColor:self.darkRed forState:UIControlStateNormal];
+//            [self.recordButton setTitleColor:self.darkRed forState:UIControlStateNormal];
         } else { // Already recordng - pause recording.
             [self.recorder pause];
             [self.timer invalidate];
             self.navigationItem.rightBarButtonItem.enabled = true;
             [UIView animateWithDuration:0.25 animations:^{
                 self.recordButton.backgroundColor = [UIColor colorWithRed:234/255.0 green:187/255.0 blue:194/255.0 alpha:1.0];
-                [self.recordButton setTitle:@"Record" forState:UIControlStateNormal];
+//                [self.recordButton setTitle:@"Record" forState:UIControlStateNormal];
             }];
-            [self.recordButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//            [self.recordButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            self.resetButton.alpha = 1;
         }
     }
+}
+
+- (IBAction)resetButtonPressed:(id)sender {
+    [self.recorder stop];
+    [self.recorder deleteRecording];
+    [self.recorder prepareToRecord];
+    [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(resetButtonStyle) userInfo:nil repeats:NO];
+}
+
+-(void) resetButtonStyle {
+    [self.recordButton setTitle:@"Record" forState:UIControlStateNormal];
+    [self.recordButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [UIView animateWithDuration:0.25 animations:^{
+        self.recordButton.backgroundColor = [UIColor colorWithRed:234/255.0 green:187/255.0 blue:194/255.0 alpha:1.0];
+    }];
+    self.resetButton.alpha = 0;
 }
 
 #pragma mark - Recording Audio
