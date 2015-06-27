@@ -44,7 +44,7 @@
     NSString *repeatNewPass=[self.repeatNewPasswordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
 
-    if ([oldPass isEqualToString:currentUser.password]) {
+    if ([oldPass isEqualToString:[PFUser currentUser].password]) {
         if ([newPass isEqualToString:repeatNewPass]) {
             currentUser.password = repeatNewPass;
             [currentUser saveInBackground];
