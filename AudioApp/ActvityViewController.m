@@ -21,7 +21,6 @@
     [super viewDidLoad];
     PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
     [activityQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
-//    [commentsQuery includeKey:@"fromUser"];
 
     [activityQuery orderByAscending:@"createdAt"];
     [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *activities, NSError *error) {
@@ -38,7 +37,6 @@
 
     PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
     [activityQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
-    //    [commentsQuery includeKey:@"fromUser"];
 
     [activityQuery orderByAscending:@"createdAt"];
     [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *activities, NSError *error) {
