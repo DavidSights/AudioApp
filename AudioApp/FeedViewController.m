@@ -57,7 +57,7 @@
     refreshControl.backgroundColor = self.pink;
     refreshControl.tintColor = [UIColor whiteColor];
     [refreshControl addTarget:self
-                            action:@selector(getLatestPost:)
+                            action:@selector(getLastPost:)
                   forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
 
@@ -97,6 +97,13 @@
         NSLog(@"%@", setCategoryError);
         // handle error
     }
+}
+//DO NOT TOUCH METHOD BELOW. please:)
+-(void)getLastPost:(UIRefreshControl *)refresh{
+
+    [self queryFromParse];
+    [refresh endRefreshing];
+
 }
 
 - (void) viewDidDisappear:(BOOL)animated{
@@ -328,22 +335,26 @@
     }
 }
 
+
+//DO NOT TOUCH NOTIFCATION CENTER!!!!!!!!!!!!
+
 #pragma mark - Notification Center
-//
-//- (id)initWithCoder:(NSCoder *)aDecoder {
-//    self = [super initWithCoder:aDecoder];
-//    if (self) {
-//        //if the notification is touched stop spinng. if is not touched start spinning
-//        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveNotification:) name:@"Test1" object:nil];
-//    }
-//    return self;
-//}
-//
-//- (void)receiveNotification:(NSNotification *)notification {
-//    if ([notification.name isEqualToString:@"Test1"]) {
-//        [self queryFromParse];
-//    }
-//}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        //if the notification is touched stop spinng. if is not touched start spinning
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveNotification1:) name:@"Test1" object:nil];
+    }
+    return self;
+}
+//DO NOT TOUCH METHOD BELOW!!!!!!!!!!!!
+
+- (void)receiveNotification1:(NSNotification *)notification {
+    if ([notification.name isEqualToString:@"Test1"]) {
+        [self queryFromParse];
+    }
+}
 
 -(void)didTapLikeButton:(UIButton *)button {
 

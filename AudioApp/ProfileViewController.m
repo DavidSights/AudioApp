@@ -53,10 +53,62 @@
 
     self.settingsButton.title = @"\u2699";
 
+
+    if (self.userPostsOrLikes == 0) {
+
+        UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+        refreshControl.backgroundColor = [UIColor purpleColor];
+        refreshControl.tintColor = [UIColor whiteColor];
+
+        [refreshControl addTarget:self
+                           action:@selector(queryUserPost:)
+                 forControlEvents:UIControlEventValueChanged];
+        [self.tableView addSubview:refreshControl];
+
+    }else{
+        UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+        refreshControl.backgroundColor = [UIColor purpleColor];
+        refreshControl.tintColor = [UIColor whiteColor];
+
+        [refreshControl addTarget:self
+                           action:@selector(queryLike:)
+                 forControlEvents:UIControlEventValueChanged];
+        [self.tableView addSubview:refreshControl];
+        
+        
+    }
+
+
     // Set up profile details.
 }
 
 -(void)viewDidAppear:(BOOL)animated {
+
+
+    if (self.userPostsOrLikes == 0) {
+
+        UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+        refreshControl.backgroundColor = [UIColor purpleColor];
+        refreshControl.tintColor = [UIColor whiteColor];
+
+        [refreshControl addTarget:self
+                           action:@selector(queryUserPost:)
+                 forControlEvents:UIControlEventValueChanged];
+        [self.tableView addSubview:refreshControl];
+
+    }else{
+        UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+        refreshControl.backgroundColor = [UIColor purpleColor];
+        refreshControl.tintColor = [UIColor whiteColor];
+
+        [refreshControl addTarget:self
+                           action:@selector(queryLike:)
+                 forControlEvents:UIControlEventValueChanged];
+        [self.tableView addSubview:refreshControl];
+        
+        
+    }
+
 
     if (![PFUser currentUser]) {
 
@@ -73,34 +125,49 @@
 
 -(void)viewWillAppear:(BOOL)animated{
 
-    //    [self.tableView reloadData];
-//UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-//refreshControl.backgroundColor = [UIColor purpleColor];
-//refreshControl.tintColor = [UIColor whiteColor];
-//
-//[refreshControl addTarget:self
-//                   action:@selector(queryUserPost:)
-//         forControlEvents:UIControlEventValueChanged];
-//[self.tableView addSubview:refreshControl];
+    if (self.userPostsOrLikes == 0) {
+
+        UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+        refreshControl.backgroundColor = [UIColor purpleColor];
+        refreshControl.tintColor = [UIColor whiteColor];
+
+        [refreshControl addTarget:self
+                           action:@selector(queryUserPost:)
+                 forControlEvents:UIControlEventValueChanged];
+        [self.tableView addSubview:refreshControl];
+
+    }else{
+        UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+        refreshControl.backgroundColor = [UIColor purpleColor];
+        refreshControl.tintColor = [UIColor whiteColor];
+
+        [refreshControl addTarget:self
+                           action:@selector(queryLike:)
+                 forControlEvents:UIControlEventValueChanged];
+        [self.tableView addSubview:refreshControl];
+
+
+    }
+
+
+
 }
 
 
-//-(void)queryUserPost:(UIRefreshControl *)refresher {
-//    [self queryUserPosts];
-////    [self.tableView reloadData];
-//
-//    [refresher endRefreshing];
-//    NSLog(@"queryuserpost%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-//}
-//
-//-(void)queryLike:(UIRefreshControl *)refresher {
-//
-//    [self queryLikedPosts];
-////    [self.tableView reloadData];
-//    [refresher endRefreshing];
-//    NSLog(@"querylikepost*************************************");
-//
-//}
+-(void)queryUserPost:(UIRefreshControl *)refresher {
+    [self queryUserPosts];
+
+    [refresher endRefreshing];
+    NSLog(@"queryuserpost%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+}
+
+-(void)queryLike:(UIRefreshControl *)refresher {
+
+    [self queryLikedPosts];
+    [refresher endRefreshing];
+    NSLog(@"querylikepost*************************************");
+
+}
 
 -(void)queryUserPosts {
 
@@ -296,7 +363,7 @@
             refreshControl.tintColor = [UIColor whiteColor];
             
             [refreshControl addTarget:self
-                               action:@selector(queryLikedPosts:)
+                               action:@selector(queryLike:)
                      forControlEvents:UIControlEventValueChanged];
             [self.tableView addSubview:refreshControl];
 
