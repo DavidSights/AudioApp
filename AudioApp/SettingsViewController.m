@@ -25,9 +25,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(bBPressed:)];
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(bBPressed:)];
+    self.navigationItem.rightBarButtonItem = saveButton;
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButton:)];
     self.navigationItem.leftBarButtonItem = cancelButton;
-
 
     self.emailTextField.delegate = self;
     self.username.delegate = self;
@@ -44,7 +45,10 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     [PFUser logOut];
 }
+-(void)cancelButton:(id)segue{
+    [self dismissViewControllerAnimated:YES completion:nil];
 
+}
 -(void)bBPressed:(id)segue{
     [[PFUser currentUser] setUsername:self.username.text];
     [[PFUser currentUser]setEmail:self.emailTextField.text];

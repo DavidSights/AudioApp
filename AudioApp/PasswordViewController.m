@@ -28,7 +28,6 @@
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(leftButtonPressed:)];
     self.navigationItem.leftBarButtonItem = cancelButton;
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(saveButtonPressed:)];
-    self.navigationItem.leftBarButtonItem = cancelButton;
     self.navigationItem.rightBarButtonItem = saveButton;
 }
 
@@ -43,8 +42,7 @@
     NSString *newPass =[self.nPasswordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString *repeatNewPass=[self.repeatNewPasswordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
-
-    if ([oldPass isEqualToString:[PFUser currentUser].password]) {
+    if ([oldPass isEqualToString:currentUser.password]) {
         if ([newPass isEqualToString:repeatNewPass]) {
             currentUser.password = repeatNewPass;
             [currentUser saveInBackground];
@@ -58,9 +56,9 @@
     }
 
 
-    if (![self.nPasswordTextField.text isEqualToString:self.repeatNewPasswordTextField.text] && [self.oldPasswordTextField.text isEqualToString:currentUser.password] ) {
+    if (![self.nPasswordTextField.text isEqualToString:self.repeatNewPasswordTextField.text] && ![self.oldPasswordTextField.text isEqualToString:currentUser.password] ) {
 
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Wrong" message:@"Not your current password and new passwords don't match" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Wrong" message:@"Your current password and new passwords don't match" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles:nil, nil];
         [alert show];
         
     }
@@ -69,7 +67,7 @@
         [alert show];
         
     }
-    else if ([self.nPasswordTextField.text isEqualToString:self.repeatNewPasswordTextField.text]) {
+    else if (![self.nPasswordTextField.text isEqualToString:self.repeatNewPasswordTextField.text]) {
 
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Wrong" message:@"New passwords don't match" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles:nil, nil];
         [alert show];
