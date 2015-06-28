@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -1950,9 +1950,6 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="25" y="25" width="150" height="150"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onTimeButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="nsi-Lu-rZg"/>
                                         </connections>
@@ -1966,8 +1963,7 @@
                                     <constraint firstAttribute="bottom" secondItem="9HI-1y-bM2" secondAttribute="bottom" constant="8" id="k2L-2c-7vs"/>
                                     <constraint firstItem="9HI-1y-bM2" firstAttribute="top" secondItem="KFE-8F-k84" secondAttribute="top" constant="8" id="wJJ-X1-xqM"/>
                                 </constraints>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="100" y="72" width="200" height="200"/>
+                                <variation key="widthClass=compact">
                                     <mask key="subviews">
                                         <include reference="9HI-1y-bM2"/>
                                     </mask>
@@ -1986,9 +1982,6 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="45" y="317" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="KXl-1q-sS6"/>
                                         </connections>
@@ -2003,9 +1996,6 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="135" y="317" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="uww-Ep-cMh"/>
                                         </connections>
@@ -2020,9 +2010,6 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="235" y="317" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="s74-ft-JzU"/>
                                         </connections>
@@ -2037,9 +2024,6 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="325" y="317" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="xBQ-UP-r67"/>
                                         </connections>
@@ -2054,9 +2038,6 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="90" y="357" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="acJ-XW-G9e"/>
                                         </connections>
@@ -2071,9 +2052,6 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="185" y="357" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="IGC-1c-ZZc"/>
                                         </connections>
@@ -2087,9 +2065,6 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="185" y="317" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="mgq-7s-pyf"/>
                                         </connections>
@@ -2103,9 +2078,6 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="185" y="317" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="YMw-i9-uq0"/>
                                         </connections>
@@ -2120,9 +2092,6 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="280" y="357" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="udk-gx-pgQ"/>
                                         </connections>
@@ -2397,10 +2366,30 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" rowHeight="44" id="FRo-ly-EG4">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" textLabel="WyS-Qv-Umx" detailTextLabel="BU5-5t-LyX" rowHeight="44" style="IBUITableViewCellStyleSubtitle" id="FRo-ly-EG4">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FRo-ly-EG4" id="VTQ-Io-Fed">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WyS-Qv-Umx">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="widthClass=compact">
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            </variation>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BU5-5t-LyX">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="widthClass=compact">
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            </variation>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
