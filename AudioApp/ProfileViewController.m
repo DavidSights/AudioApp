@@ -24,19 +24,17 @@
 
 @interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ProfileMiddleTableViewCellDelegate, LikesAndCommentsCellDelegate, AVAudioPlayerDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsButton;
-
-@property (nonatomic)  NSArray *userPosts;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property UISegmentedControl *postLikesController;
 @property (nonatomic)  NSArray *likedPosts;
-
-@property CGFloat lastOffsetY;
-@property UISegmentedControl *userPostsOrLikes;
-
-@property NSTimer *timer;
+@property (nonatomic)  NSArray *userPosts;
 @property AudioPlayerWithTag *player;
-@property int integer;
 @property NSIndexPath *indexPath;
+@property CGFloat lastOffsetY;
+@property NSTimer *timer;
+@property int integer;
+
 @end
 
 //static const CGFloat kNavBarHeight = 52.0f;
@@ -51,145 +49,88 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.settingsButton.title = @"\u2699";
-
-
-    if (self.userPostsOrLikes == 0) {
-
+    if (self.postLikesController == 0) {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
         refreshControl.backgroundColor = [UIColor purpleColor];
         refreshControl.tintColor = [UIColor whiteColor];
 
-        [refreshControl addTarget:self
-                           action:@selector(queryUserPost:)
-                 forControlEvents:UIControlEventValueChanged];
+        [refreshControl addTarget:self action:@selector(queryUserPost:) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:refreshControl];
-
-    }else{
+    } else {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
         refreshControl.backgroundColor = [UIColor purpleColor];
         refreshControl.tintColor = [UIColor whiteColor];
-
-        [refreshControl addTarget:self
-                           action:@selector(queryLike:)
-                 forControlEvents:UIControlEventValueChanged];
+        [refreshControl addTarget:self action:@selector(queryLike:) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:refreshControl];
-        
-        
     }
-
-
-    // Set up profile details.
+    self.settingsButton.title = @"Settings";
 }
 
--(void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
 
-
-    if (self.userPostsOrLikes == 0) {
-
+    if (self.postLikesController == 0) {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
         refreshControl.backgroundColor = [UIColor purpleColor];
         refreshControl.tintColor = [UIColor whiteColor];
-
-        [refreshControl addTarget:self
-                           action:@selector(queryUserPost:)
-                 forControlEvents:UIControlEventValueChanged];
+        [refreshControl addTarget:self action:@selector(queryUserPost:) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:refreshControl];
-
-    }else{
+    } else {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
         refreshControl.backgroundColor = [UIColor purpleColor];
         refreshControl.tintColor = [UIColor whiteColor];
-
-        [refreshControl addTarget:self
-                           action:@selector(queryLike:)
-                 forControlEvents:UIControlEventValueChanged];
+        [refreshControl addTarget:self action:@selector(queryLike:) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:refreshControl];
-        
-        
     }
 
-
     if (![PFUser currentUser]) {
-
         [self.tabBarController setSelectedIndex:0];
     }
 
     if (self.user == nil) {
-
         self.user = [PFUser currentUser];
     }
 
     [self queryUserPosts];
 }
 
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated{
 
-    if (self.userPostsOrLikes == 0) {
-
+    if (self.postLikesController == 0) {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
         refreshControl.backgroundColor = [UIColor purpleColor];
         refreshControl.tintColor = [UIColor whiteColor];
-
-        [refreshControl addTarget:self
-                           action:@selector(queryUserPost:)
-                 forControlEvents:UIControlEventValueChanged];
+        [refreshControl addTarget:self action:@selector(queryUserPost:) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:refreshControl];
-
-    }else{
+    } else {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
         refreshControl.backgroundColor = [UIColor purpleColor];
         refreshControl.tintColor = [UIColor whiteColor];
-
-        [refreshControl addTarget:self
-                           action:@selector(queryLike:)
-                 forControlEvents:UIControlEventValueChanged];
+        [refreshControl addTarget:self action:@selector(queryLike:) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:refreshControl];
-
-
     }
-
-
-
 }
 
-
--(void)queryUserPost:(UIRefreshControl *)refresher {
+- (void)queryUserPost:(UIRefreshControl *)refresher {
     [self queryUserPosts];
-
     [refresher endRefreshing];
-    NSLog(@"queryuserpost%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 }
 
--(void)queryLike:(UIRefreshControl *)refresher {
-
+- (void)queryLike:(UIRefreshControl *)refresher {
     [self queryLikedPosts];
     [refresher endRefreshing];
-    NSLog(@"querylikepost*************************************");
-
 }
 
--(void)queryUserPosts {
-
+- (void)queryUserPosts {
     [Post queryPostsWithUser:self.user withCompletion:^(NSArray *posts, NSError *error) {
-
         if (!error) {
-
             self.userPosts = posts;
-
-            NSLog(@"Posts: %@", posts);
         }
     }];
 }
 
--(void)queryLikedPosts {
-
-    NSLog(@"Liked posts empty");
+- (void)queryLikedPosts {
     [Post queryActivityWithUser:self.user forLikedPostsWithCompletion:^(NSArray *posts, NSError *error) {
-
         if (!error) {
-
-            NSLog(@"Liked Posts: %@", posts);
             self.likedPosts = posts;
         }
     }];
@@ -198,24 +139,21 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        //if the notification is touched stop spinng. if is not touched start spinning
+        // If the notification is touched stop spinning. If is not touched start spinning.
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveNotification:) name:@"Test2" object:nil];
     }
     return self;
 }
 
--(void)setUserPosts:(NSArray *)userPosts {
-
+- (void)setUserPosts:(NSArray *)userPosts {
     _userPosts = userPosts;
     [self.tableView reloadData];
 }
 
--(void)setLikedPosts:(NSArray *)likedPosts {
-
-    NSLog(@"liked posts changed");
-
+- (void)setLikedPosts:(NSArray *)likedPosts {
     _likedPosts = likedPosts;
     [self.tableView reloadData];
+    NSLog(@"Updated likedPosts.");
 }
 
 - (void)receiveNotification:(NSNotification *)notification {
@@ -228,93 +166,60 @@
 }
 
 -(void)didTapLikeButton:(UIButton *)button {
-
-    NSLog(@"Tapped");
-
     LikesAndCommentsCell *cell = (LikesAndCommentsCell *)button.superview.superview;
-
     PFUser *currentUser = [PFUser currentUser];
     Post *post;
-    if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
-
+    if (self.postLikesController.selectedSegmentIndex == 0) {
         post = self.userPosts[cell.tag];
     } else {
-
         post = self.likedPosts[cell.tag];
     }
     NSMutableArray *likes = [post[@"likes"] mutableCopy];
-
     if ([likes containsObject:currentUser.objectId]) {
-
         NSLog(@"User already liked this post");
-
         button.enabled = NO;
-
         PFQuery *likeQuery = [PFQuery queryWithClassName:@"Activity"];
         [likeQuery whereKey:@"type" equalTo:@"Like"];
         [likeQuery whereKey:@"fromUser" equalTo:currentUser];
         [likeQuery whereKey:@"toUser" equalTo:post[@"author"]];
-
         [likeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 
             if (!error) {
-
                 for (PFObject *likeActivity in objects) {
-
                     [likeActivity deleteEventually];
                 }
             }
         }];
-
         [post removeObject:currentUser.objectId forKey:@"likes"];
         [post incrementKey:@"numOfLikes" byAmount:[NSNumber numberWithInt:-1]];
-
         cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
-
         [post saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
-
             if (completed && !error) {
-
                 NSLog(@"Likes uploaded successfully");
-
                 button.enabled = YES;
             } else {
-
                 button.enabled = YES;
             }
         }];
-
     } else {
-
         button.enabled = NO;
-
         PFObject *activity = [PFObject objectWithClassName:@"Activity"];
         activity[@"fromUser"] = currentUser;
         activity[@"toUser"] = post[@"author"];
         activity[@"post"] = post;
         activity[@"type"] = @"Like";
         activity[@"content"] = @"";
-
         [post addObject:currentUser.objectId forKey:@"likes"];
         [post incrementKey:@"numOfLikes"];
-
         cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
-
         [activity saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
-
             if (completed && !error) {
-
                 NSLog(@"Activity Saved");
-
                 [post saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
-
                     if (completed && !error) {
-
                         NSLog(@"Likes uploaded successfully");
-
                         button.enabled = YES;
                     } else {
-                        
                         button.enabled = YES;
                     }
                 }];
@@ -374,7 +279,7 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+    if (self.postLikesController.selectedSegmentIndex == 0) {
 
         NSLog(@"Segmented index is 0. Returning %lu + 1", (unsigned long)self.userPosts.count);
         return self.userPosts.count + 1;
@@ -417,7 +322,7 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
 
         Post *post;
-        if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+        if (self.postLikesController.selectedSegmentIndex == 0) {
 
             post = self.userPosts[section - 1];
         } else {
@@ -453,7 +358,7 @@
         } else if (indexPath.row == 1) {
             ProfileMiddleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MiddleCell"];
             cell.delegate = self;
-            self.userPostsOrLikes = cell.profileSegmentedControl;
+            self.postLikesController = cell.profileSegmentedControl;
 
             return cell;
         }
@@ -470,7 +375,7 @@
             postCell.timerLabel.text = @"0";
 
             Post *post;
-            if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+            if (self.postLikesController.selectedSegmentIndex == 0) {
 
                 post = self.userPosts[indexPath.section - 1];
             } else {
@@ -492,7 +397,7 @@
             LikesAndCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikesAndCommentsCell"];
 
             Post *post;
-            if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+            if (self.postLikesController.selectedSegmentIndex == 0) {
 
                 post = self.userPosts[indexPath.section - 1];
             } else {
@@ -553,7 +458,7 @@
                         [self.player pause];
                     }
                     Post *post;
-                    if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+                    if (self.postLikesController.selectedSegmentIndex == 0) {
 
                         post = self.userPosts[indexPath.section - 1];
                     } else {
@@ -580,7 +485,7 @@
             } else { // A new post was tapped - stop whatever audio the player is playing, load up the new audio, and play it.
                 [self.player stop];
                 Post *post;
-                if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+                if (self.postLikesController.selectedSegmentIndex == 0) {
 
                     post = self.userPosts[indexPath.section - 1];
                 } else {
@@ -754,7 +659,7 @@
 
         LikesTableViewController *likesVC = segue.destinationViewController;
         Post *post;
-        if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+        if (self.postLikesController.selectedSegmentIndex == 0) {
 
             post = self.userPosts[((UITapGestureRecognizer *)sender).view.tag];
         } else {
@@ -773,7 +678,7 @@
 
             CommentTableViewController *commentsVC = segue.destinationViewController;
             Post *post;
-            if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+            if (self.postLikesController.selectedSegmentIndex == 0) {
 
                 post = self.userPosts[((UITapGestureRecognizer *)sender).view.tag];
             } else {
@@ -790,7 +695,7 @@
             LikesAndCommentsCell *cell = (LikesAndCommentsCell *)((UIButton *)sender).superview.superview;
             Post *post;
             NSLog(@"Cell tag: %ld", (long)cell.tag);
-            if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
+            if (self.postLikesController.selectedSegmentIndex == 0) {
 
                 post = self.userPosts[cell.tag];
             } else {
