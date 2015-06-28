@@ -20,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *blueColorButton;
 @property (weak, nonatomic) IBOutlet UIButton *pinkColorButton;
 @property (weak, nonatomic) IBOutlet UIButton *purpleColorButton;
-@property (weak, nonatomic) IBOutlet UIView *viewOne;
+@property (weak, nonatomic) IBOutlet UIView *audioView;
 @property AVAudioPlayer *player;
 @property int recordTimeInt;
 @property NSTimer *timer;
@@ -45,16 +45,6 @@
     self.player = [[AVAudioPlayer alloc]initWithContentsOfURL:self.recorder.url error:nil];
     [self.player prepareToPlay];
     [self playRecordedAudio];
-
-    // Make color buttons circles.
-    self.yellowColorButton.layer.cornerRadius = self.yellowColorButton.frame.size.width / 3;
-    self.blackColorButton.layer.cornerRadius = self.blackColorButton.frame.size.width / 3;
-    self.redColorButton.layer.cornerRadius = self.redColorButton.frame.size.width / 3;
-    self.greenColorButton.layer.cornerRadius = self.greenColorButton.frame.size.width / 3;
-    self.purpleColorButton.layer.cornerRadius = self.greenColorButton.frame.size.width / 3;
-    self.pinkColorButton.layer.cornerRadius = self.pinkColorButton.frame.size.width / 3;
-    self.blueColorButton.layer.cornerRadius = self.blueColorButton.frame.size.width / 3;
-
     self.yellowColorButton.backgroundColor = [UIColor colorWithRed:255/255.0 green:248/255.0 blue:196/255.0 alpha:1.0];
     self.pink = [UIColor colorWithRed:255/255.0 green:187/255.0 blue:208/255.0 alpha:1.0];
     self.pinkColorButton.backgroundColor = self.pink;
@@ -71,6 +61,18 @@
     self.player = [[AVAudioPlayer alloc]initWithContentsOfURL:self.recorder.url error:nil];
     [self.player prepareToPlay];
     [self playRecordedAudio];
+
+    // Make color buttons circles.
+    self.yellowColorButton.layer.cornerRadius = self.yellowColorButton.frame.size.width / 2;
+    self.blackColorButton.layer.cornerRadius = self.blackColorButton.frame.size.width / 2;
+    self.redColorButton.layer.cornerRadius = self.redColorButton.frame.size.width / 2;
+    self.greenColorButton.layer.cornerRadius = self.greenColorButton.frame.size.width / 2;
+    self.purpleColorButton.layer.cornerRadius = self.greenColorButton.frame.size.width / 2;
+    self.pinkColorButton.layer.cornerRadius = self.pinkColorButton.frame.size.width / 2;
+    self.blueColorButton.layer.cornerRadius = self.blueColorButton.frame.size.width / 2;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
 }
 
 - (void)editButtonPressed:(id)sender {
@@ -105,7 +107,7 @@
 }
 
 - (IBAction)onColorButtonTapped:(UIButton *)sender {
-    self.viewOne.backgroundColor = sender.backgroundColor;
+    self.audioView.backgroundColor = sender.backgroundColor;
 }
 
 #pragma mark - Audio
@@ -168,7 +170,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     PostViewController *dvc = segue.destinationViewController;
     dvc.recorder = self.recorder;
-    dvc.postColor = self.viewOne.backgroundColor;
+    dvc.postColor = self.audioView.backgroundColor;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
