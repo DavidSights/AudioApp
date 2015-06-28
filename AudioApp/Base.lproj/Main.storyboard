@@ -46,7 +46,8 @@
                                                             <exclude reference="CHL-SM-6Rf"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="130" y="8" width="60" height="60"/>
                                                         <mask key="constraints">
                                                             <include reference="BPe-0B-Uzo"/>
                                                             <include reference="CHL-SM-6Rf"/>
@@ -66,7 +67,8 @@
                                                             <exclude reference="w3d-a6-cxe"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="8" y="98" width="304" height="16"/>
                                                         <mask key="constraints">
                                                             <include reference="w3d-a6-cxe"/>
                                                         </mask>
@@ -85,7 +87,8 @@
                                                             <exclude reference="1nK-Vd-mKI"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="8" y="76" width="304" height="17"/>
                                                         <mask key="constraints">
                                                             <include reference="1nK-Vd-mKI"/>
                                                         </mask>
@@ -104,7 +107,8 @@
                                                             <exclude reference="Vra-yG-IDT"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="8" y="119" width="304" height="15"/>
                                                         <mask key="constraints">
                                                             <include reference="Vra-yG-IDT"/>
                                                         </mask>
@@ -123,7 +127,8 @@
                                                             <exclude reference="IIr-aD-Z0N"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="8" y="142" width="304" height="46"/>
                                                         <mask key="constraints">
                                                             <include reference="IIr-aD-Z0N"/>
                                                         </mask>
@@ -337,7 +342,8 @@
                                                             <exclude reference="5TL-ck-wA8"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="283" y="8" width="29" height="11"/>
                                                         <mask key="constraints">
                                                             <include reference="55P-Qn-QZ2"/>
                                                             <include reference="5TL-ck-wA8"/>
@@ -359,7 +365,8 @@
                                                             <exclude reference="SAw-1E-z6I"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="275" y="31" width="37" height="11"/>
                                                         <mask key="constraints">
                                                             <include reference="Oo5-dg-bjz"/>
                                                             <include reference="SAw-1E-z6I"/>
@@ -1600,7 +1607,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to the BETA" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k54-fH-RKa">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="49"/>
-                                <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="textColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="16" y="300" width="360" height="155"/>
@@ -1950,9 +1957,6 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="25" y="25" width="150" height="150"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onTimeButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="nsi-Lu-rZg"/>
                                         </connections>
@@ -1966,8 +1970,7 @@
                                     <constraint firstAttribute="bottom" secondItem="9HI-1y-bM2" secondAttribute="bottom" constant="8" id="k2L-2c-7vs"/>
                                     <constraint firstItem="9HI-1y-bM2" firstAttribute="top" secondItem="KFE-8F-k84" secondAttribute="top" constant="8" id="wJJ-X1-xqM"/>
                                 </constraints>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="100" y="72" width="200" height="200"/>
+                                <variation key="widthClass=compact">
                                     <mask key="subviews">
                                         <include reference="9HI-1y-bM2"/>
                                     </mask>
@@ -1977,24 +1980,21 @@
                                 <rect key="frame" x="0.0" y="284" width="600" height="267"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j8k-ra-b8B" userLabel="yellowColorButton">
-                                        <rect key="frame" x="205" y="79" width="30" height="30"/>
+                                        <rect key="frame" x="215" y="84" width="30" height="30"/>
                                         <color key="backgroundColor" red="0.97647058819999999" green="0.85098039219999999" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="4Yx-X0-DT5"/>
-                                            <constraint firstAttribute="width" constant="30" id="Lc2-33-bjx"/>
+                                            <constraint firstAttribute="height" constant="30" id="3iB-P7-pXn"/>
+                                            <constraint firstAttribute="width" constant="30" id="7wb-O1-QIz"/>
                                         </constraints>
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="45" y="317" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="KXl-1q-sS6"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IsU-eS-cGa" userLabel="redColorButton">
-                                        <rect key="frame" x="285" y="39" width="30" height="30"/>
+                                        <rect key="frame" x="285" y="49" width="30" height="30"/>
                                         <color key="backgroundColor" red="0.80392156859999997" green="0.48627450979999998" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="LoT-S7-4Mn"/>
@@ -2003,26 +2003,20 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="135" y="317" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="uww-Ep-cMh"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZMn-jo-osA" userLabel="greenColorButton">
-                                        <rect key="frame" x="365" y="79" width="30" height="30"/>
+                                        <rect key="frame" x="355" y="84" width="30" height="30"/>
                                         <color key="backgroundColor" red="0.69411764705882351" green="0.84313725490196079" blue="0.6470588235294118" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="Aub-0g-adk"/>
-                                            <constraint firstAttribute="height" constant="30" id="Yy2-s4-y03"/>
+                                            <constraint firstAttribute="height" constant="30" id="6lG-tL-nOX"/>
+                                            <constraint firstAttribute="width" constant="30" id="xKp-df-lS1"/>
                                         </constraints>
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="235" y="317" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="s74-ft-JzU"/>
                                         </connections>
@@ -2037,32 +2031,26 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="325" y="317" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="xBQ-UP-r67"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evu-U0-SPi" userLabel="purpleColorButton">
-                                        <rect key="frame" x="205" y="159" width="30" height="30"/>
+                                        <rect key="frame" x="215" y="154" width="30" height="30"/>
                                         <color key="backgroundColor" red="0.69019607839999997" green="0.58823529409999997" blue="0.75686274509999996" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="Prd-fS-Z8X"/>
-                                            <constraint firstAttribute="height" constant="30" id="ZTW-e4-hL3"/>
+                                            <constraint firstAttribute="width" constant="30" id="guA-FV-IGK"/>
+                                            <constraint firstAttribute="height" constant="30" id="iX4-xI-2ir"/>
                                         </constraints>
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="90" y="357" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="acJ-XW-G9e"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p1i-1c-m74" userLabel="orangeColorButton">
-                                        <rect key="frame" x="285" y="199" width="30" height="30"/>
+                                        <rect key="frame" x="285" y="189" width="30" height="30"/>
                                         <color key="backgroundColor" red="0.89411764709999997" green="0.6588235294" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="4BR-CG-cZp"/>
@@ -2071,83 +2059,83 @@
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="185" y="357" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="IGC-1c-ZZc"/>
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gbo-cm-zI9" userLabel="placeHolderButton1">
-                                        <rect key="frame" x="285" y="79" width="30" height="30"/>
+                                        <rect key="frame" x="285" y="84" width="30" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="gXF-ON-oed"/>
-                                            <constraint firstAttribute="height" constant="30" id="lcH-GJ-Yyq"/>
+                                            <constraint firstAttribute="height" constant="30" id="4l7-7t-4Fc"/>
+                                            <constraint firstAttribute="width" constant="30" id="s3t-gV-q4u"/>
                                         </constraints>
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="185" y="317" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="mgq-7s-pyf"/>
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QW9-75-ohC" userLabel="placeHolderButton2">
-                                        <rect key="frame" x="285" y="159" width="30" height="30"/>
+                                        <rect key="frame" x="285" y="154" width="30" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="BB8-Tw-lHE"/>
-                                            <constraint firstAttribute="width" constant="30" id="uTm-ag-FFS"/>
+                                            <constraint firstAttribute="height" constant="30" id="L39-Kr-CDH"/>
+                                            <constraint firstAttribute="width" constant="30" id="XlN-Ka-enh"/>
                                         </constraints>
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="185" y="317" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="YMw-i9-uq0"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wmf-c3-utM" userLabel="blueColorButton">
-                                        <rect key="frame" x="365" y="159" width="30" height="30"/>
+                                        <rect key="frame" x="355" y="154" width="30" height="30"/>
                                         <color key="backgroundColor" red="0.62745098040000002" green="0.84313725490000002" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="JSC-d2-NKs"/>
-                                            <constraint firstAttribute="width" constant="30" id="oQO-qN-gQw"/>
+                                            <constraint firstAttribute="height" constant="30" id="4Ay-zb-cw0"/>
+                                            <constraint firstAttribute="width" constant="30" id="eaJ-F0-ePE"/>
                                         </constraints>
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="280" y="357" width="30" height="30"/>
-                                        </variation>
                                         <connections>
                                             <action selector="onColorButtonTapped:" destination="obR-pD-bym" eventType="touchUpInside" id="udk-gx-pgQ"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pick a color below" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TKt-bn-wwH">
+                                        <rect key="frame" x="230" y="8" width="141" height="10"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="141" id="104-tG-6QN"/>
+                                            <constraint firstAttribute="height" constant="10" id="CEM-3d-7bj"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <color key="textColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="ZMn-jo-osA" firstAttribute="leading" secondItem="gbo-cm-zI9" secondAttribute="trailing" constant="50" id="6tY-tt-l9E"/>
-                                    <constraint firstItem="j8k-ra-b8B" firstAttribute="centerY" secondItem="gbo-cm-zI9" secondAttribute="centerY" id="7e2-6a-Zqg"/>
-                                    <constraint firstItem="QW9-75-ohC" firstAttribute="leading" secondItem="evu-U0-SPi" secondAttribute="trailing" constant="50" id="80g-LI-936"/>
-                                    <constraint firstItem="gbo-cm-zI9" firstAttribute="leading" secondItem="j8k-ra-b8B" secondAttribute="trailing" constant="50" id="9uC-5t-hTf"/>
-                                    <constraint firstItem="R2P-I3-MtG" firstAttribute="top" secondItem="IsU-eS-cGa" secondAttribute="bottom" constant="50" id="B2u-6y-gqe"/>
-                                    <constraint firstItem="p1i-1c-m74" firstAttribute="top" secondItem="R2P-I3-MtG" secondAttribute="bottom" constant="50" id="FGQ-pi-Wvl"/>
-                                    <constraint firstAttribute="centerX" secondItem="QW9-75-ohC" secondAttribute="centerX" id="FV7-Qf-VMt"/>
+                                    <constraint firstItem="j8k-ra-b8B" firstAttribute="centerY" secondItem="ZMn-jo-osA" secondAttribute="centerY" id="6Z9-TK-tOZ"/>
+                                    <constraint firstItem="QW9-75-ohC" firstAttribute="leading" secondItem="evu-U0-SPi" secondAttribute="trailing" constant="40" id="9pS-lE-q5o"/>
+                                    <constraint firstAttribute="centerX" secondItem="gbo-cm-zI9" secondAttribute="centerX" id="Aon-LW-Vhu"/>
+                                    <constraint firstItem="R2P-I3-MtG" firstAttribute="top" secondItem="IsU-eS-cGa" secondAttribute="bottom" constant="40" id="B2u-6y-gqe"/>
+                                    <constraint firstItem="j8k-ra-b8B" firstAttribute="centerY" secondItem="gbo-cm-zI9" secondAttribute="centerY" id="Bud-Yz-lOn"/>
+                                    <constraint firstItem="p1i-1c-m74" firstAttribute="top" secondItem="R2P-I3-MtG" secondAttribute="bottom" constant="40" id="FGQ-pi-Wvl"/>
                                     <constraint firstAttribute="centerX" secondItem="IsU-eS-cGa" secondAttribute="centerX" id="KOA-eZ-jsY"/>
-                                    <constraint firstItem="ZMn-jo-osA" firstAttribute="centerY" secondItem="gbo-cm-zI9" secondAttribute="centerY" id="NKx-6c-hct"/>
-                                    <constraint firstAttribute="centerX" secondItem="gbo-cm-zI9" secondAttribute="centerX" id="S7t-by-KjA"/>
-                                    <constraint firstItem="evu-U0-SPi" firstAttribute="centerY" secondItem="Wmf-c3-utM" secondAttribute="centerY" id="SuT-6N-mii"/>
+                                    <constraint firstAttribute="centerX" secondItem="TKt-bn-wwH" secondAttribute="centerX" id="M1o-Pg-1MK"/>
                                     <constraint firstAttribute="centerY" secondItem="R2P-I3-MtG" secondAttribute="centerY" id="ZB4-8s-Irl"/>
+                                    <constraint firstItem="ZMn-jo-osA" firstAttribute="leading" secondItem="gbo-cm-zI9" secondAttribute="trailing" constant="40" id="dBp-BM-0FA"/>
+                                    <constraint firstItem="Wmf-c3-utM" firstAttribute="leading" secondItem="QW9-75-ohC" secondAttribute="trailing" constant="40" id="dxf-Mb-VcQ"/>
                                     <constraint firstAttribute="centerX" secondItem="p1i-1c-m74" secondAttribute="centerX" id="exO-a5-Hf8"/>
-                                    <constraint firstItem="QW9-75-ohC" firstAttribute="top" secondItem="R2P-I3-MtG" secondAttribute="bottom" constant="10" id="g2v-QB-OgM"/>
-                                    <constraint firstItem="evu-U0-SPi" firstAttribute="centerY" secondItem="QW9-75-ohC" secondAttribute="centerY" id="gqy-GI-qs2"/>
+                                    <constraint firstItem="evu-U0-SPi" firstAttribute="centerY" secondItem="Wmf-c3-utM" secondAttribute="centerY" id="hAe-Yw-R8T"/>
                                     <constraint firstAttribute="centerX" secondItem="R2P-I3-MtG" secondAttribute="centerX" id="i2u-fk-Q9V"/>
-                                    <constraint firstItem="R2P-I3-MtG" firstAttribute="top" secondItem="gbo-cm-zI9" secondAttribute="bottom" constant="10" id="qrW-UI-4cA"/>
-                                    <constraint firstItem="Wmf-c3-utM" firstAttribute="leading" secondItem="QW9-75-ohC" secondAttribute="trailing" constant="50" id="rf9-Vj-EEJ"/>
+                                    <constraint firstItem="evu-U0-SPi" firstAttribute="centerY" secondItem="QW9-75-ohC" secondAttribute="centerY" id="jVt-c1-eDa"/>
+                                    <constraint firstItem="TKt-bn-wwH" firstAttribute="top" secondItem="qvB-wy-aYR" secondAttribute="top" constant="8" id="nm5-DB-8lq"/>
+                                    <constraint firstAttribute="centerX" secondItem="QW9-75-ohC" secondAttribute="centerX" id="oZb-XP-ctt"/>
+                                    <constraint firstItem="gbo-cm-zI9" firstAttribute="leading" secondItem="j8k-ra-b8B" secondAttribute="trailing" constant="40" id="pSa-h8-kBt"/>
+                                    <constraint firstItem="QW9-75-ohC" firstAttribute="top" secondItem="R2P-I3-MtG" secondAttribute="bottom" constant="5" id="x0F-4C-55F"/>
+                                    <constraint firstItem="R2P-I3-MtG" firstAttribute="top" secondItem="gbo-cm-zI9" secondAttribute="bottom" constant="5" id="yes-c5-1g9"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -2173,6 +2161,7 @@
                         <outlet property="audioView" destination="KFE-8F-k84" id="e8J-XT-1s7"/>
                         <outlet property="blackColorButton" destination="R2P-I3-MtG" id="hge-RK-yE7"/>
                         <outlet property="blueColorButton" destination="Wmf-c3-utM" id="UGg-Zq-rbS"/>
+                        <outlet property="colorSelectionView" destination="qvB-wy-aYR" id="PlB-IP-rnO"/>
                         <outlet property="greenColorButton" destination="ZMn-jo-osA" id="7zg-Pv-wZM"/>
                         <outlet property="pinkColorButton" destination="p1i-1c-m74" id="W0U-z1-3HY"/>
                         <outlet property="purpleColorButton" destination="evu-U0-SPi" id="u9r-Wj-WZ5"/>
@@ -2482,7 +2471,8 @@
                                                             <exclude reference="aGd-HC-j6x"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="130" y="8" width="60" height="60"/>
                                                         <mask key="constraints">
                                                             <include reference="UUv-Qv-j4F"/>
                                                             <include reference="aGd-HC-j6x"/>
@@ -2502,7 +2492,8 @@
                                                             <exclude reference="VaH-EE-ve0"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="8" y="98" width="304" height="16"/>
                                                         <mask key="constraints">
                                                             <include reference="VaH-EE-ve0"/>
                                                         </mask>
@@ -2521,7 +2512,8 @@
                                                             <exclude reference="0qR-yh-gIh"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="8" y="76" width="304" height="17"/>
                                                         <mask key="constraints">
                                                             <include reference="0qR-yh-gIh"/>
                                                         </mask>
@@ -2540,7 +2532,8 @@
                                                             <exclude reference="eOo-io-Goz"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="8" y="119" width="304" height="15"/>
                                                         <mask key="constraints">
                                                             <include reference="eOo-io-Goz"/>
                                                         </mask>
@@ -2559,7 +2552,8 @@
                                                             <exclude reference="Iwv-ak-JHe"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="8" y="142" width="304" height="46"/>
                                                         <mask key="constraints">
                                                             <include reference="Iwv-ak-JHe"/>
                                                         </mask>

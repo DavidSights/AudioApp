@@ -8,10 +8,10 @@
 
 #import "EditViewController.h"
 #import "PostViewController.h"
+#import "ColorSelectionView.h"
 
 @interface EditViewController ()<UICollectionViewDataSource, UICollectionViewDelegate,AVAudioPlayerDelegate>
 
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIButton *timeButton;
 @property (weak, nonatomic) IBOutlet UIButton *yellowColorButton;
 @property (weak, nonatomic) IBOutlet UIButton *redColorButton;
@@ -25,6 +25,8 @@
 @property int recordTimeInt;
 @property NSTimer *timer;
 @property UIColor *pink;
+@property UIDynamicAnimator *animator;
+@property (weak, nonatomic) IBOutlet UIView *colorSelectionView;
 
 @end
 
@@ -48,6 +50,8 @@
     self.yellowColorButton.backgroundColor = [UIColor colorWithRed:255/255.0 green:248/255.0 blue:196/255.0 alpha:1.0];
     self.pink = [UIColor colorWithRed:255/255.0 green:187/255.0 blue:208/255.0 alpha:1.0];
     self.pinkColorButton.backgroundColor = self.pink;
+
+    self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.colorSelectionView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -70,9 +74,6 @@
     self.purpleColorButton.layer.cornerRadius = self.greenColorButton.frame.size.width / 2;
     self.pinkColorButton.layer.cornerRadius = self.pinkColorButton.frame.size.width / 2;
     self.blueColorButton.layer.cornerRadius = self.blueColorButton.frame.size.width / 2;
-}
-
-- (void)viewDidAppear:(BOOL)animated {
 }
 
 - (void)editButtonPressed:(id)sender {

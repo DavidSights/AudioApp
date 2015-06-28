@@ -63,7 +63,7 @@
 
 - (IBAction)recordButtonPressed:(id)sender {
     if (![self.recordButton.titleLabel.text  isEqual: @"Done!"]) {
-        NSLog(@"Button pressed. Timer at %f seconds, so began recording again.", self.recorder.currentTime);
+//        NSLog(@"Button pressed. Timer at %f seconds, so began recording again.", self.recorder.currentTime);
         if (self.player.playing) { // Stop audio from playing.
             [self.player stop];
         }
@@ -146,7 +146,7 @@
         [alert show];
     } else {
         [self.recordButton setTitle:[NSString stringWithFormat:@"%.0f",self.recorder.currentTime] forState:UIControlStateNormal];
-        NSLog(@"Updated timer button to: %f", self.recorder.currentTime);
+//        NSLog(@"Updated timer button to: %f", self.recorder.currentTime);
     }
     return self.recorder.currentTime;
 }
@@ -157,6 +157,9 @@
     }];
     [self.recordButton setTitle:@"Done!" forState:UIControlStateNormal];
     [self.recordButton setTitleColor:[UIColor colorWithRed:156/255.0 green:234/255.0 blue:135/255.0 alpha:1.0] forState:UIControlStateNormal];
+    if (self.resetButton.alpha == 0) {
+        self.resetButton.alpha == 1;
+    }
 }
 
 #pragma mark - Segue
