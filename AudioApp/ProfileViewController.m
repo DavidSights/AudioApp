@@ -39,12 +39,12 @@
 @property NSIndexPath *indexPath;
 @end
 
-static const CGFloat kNavBarHeight = 52.0f;
-static const CGFloat kLabelHeight = 14.0f;
-static const CGFloat kMargin = 10.0f;
-static const CGFloat kSpacer = 2.0f;
-static const CGFloat kLabelFontSize = 12.0f;
-static const CGFloat kAddressHeight = 24.0f;
+//static const CGFloat kNavBarHeight = 52.0f;
+//static const CGFloat kLabelHeight = 14.0f;
+//static const CGFloat kMargin = 10.0f;
+//static const CGFloat kSpacer = 2.0f;
+//static const CGFloat kLabelFontSize = 12.0f;
+//static const CGFloat kAddressHeight = 24.0f;
 
 @implementation ProfileViewController
 
@@ -309,11 +309,11 @@ static const CGFloat kAddressHeight = 24.0f;
 
     if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
 
-        NSLog(@"Segmented index is 0. Returning %d + 1", self.userPosts.count);
+        NSLog(@"Segmented index is 0. Returning %lu + 1", (unsigned long)self.userPosts.count);
         return self.userPosts.count + 1;
     } else {
 
-        NSLog(@"Segmented index is 1. Returning %d + 1", self.likedPosts.count);
+        NSLog(@"Segmented index is 1. Returning %lu + 1", (unsigned long)self.likedPosts.count);
         return self.likedPosts.count + 1;
     }
 }
@@ -722,7 +722,7 @@ static const CGFloat kAddressHeight = 24.0f;
             //            NSLog(@"add comment segue tag: %ld", (long)((UIButton *)sender).superview.superview.tag);
             LikesAndCommentsCell *cell = (LikesAndCommentsCell *)((UIButton *)sender).superview.superview;
             Post *post;
-            NSLog(@"Cell tag: %d", cell.tag);
+            NSLog(@"Cell tag: %ld", (long)cell.tag);
             if (self.userPostsOrLikes.selectedSegmentIndex == 0) {
 
                 post = self.userPosts[cell.tag];
