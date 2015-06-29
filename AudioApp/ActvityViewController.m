@@ -5,38 +5,40 @@
 //  Created by Alex Santorineos on 6/25/15.
 //  Copyright (c) 2015 DavidSights. All rights reserved.
 //
+
 #import <Parse/Parse.h>
 #import "ActvityViewController.h"
 #import "ActivityTableViewCell.h"
 
 @interface ActvityViewController ()<UITableViewDataSource, UITableViewDelegate>
-@property (weak, nonatomic) IBOutlet UIImageView *userImageView;
-@property (weak, nonatomic) IBOutlet UITextView *textView;
-@property (nonatomic)  NSArray* activities;
-@property (weak, nonatomic) IBOutlet UILabel *likesLabel;
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property NSMutableArray *activities;
+
 @end
 
 @implementation ActvityViewController
 
-
 - (void)viewDidLoad {
-    self.activities = [[NSArray alloc]init];
+    self.activities = [NSMutableArray new];
     [super viewDidLoad];
+    [self getLikes];
+}
+
+- (void) getLikes {
     PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
     [activityQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
     [activityQuery whereKey:@"type" containsString:@"Like"];
     [activityQuery orderByAscending:@"createdAt"];
-    [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *activities, NSError *error) {
+    [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *result, NSError *error) {
         if (!error) {
-            self.activities = activities;
-            NSLog(@"%lu****************************", (unsigned long)self.activities.count);
-            NSLog(@"%@",self.activities.lastObject);
+            NSArray *likesArray = result;
+            [self.activities addObject:likesArray];
         }
     }];
 }
 
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
     [activityQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
     [activityQuery whereKey:@"type" containsString:@"Like"];
