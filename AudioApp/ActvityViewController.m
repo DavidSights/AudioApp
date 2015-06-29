@@ -25,6 +25,7 @@
     [super viewDidLoad];
     PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
     [activityQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
+    [activityQuery whereKey:@"type" containsString:@"Like"];
 
     [activityQuery orderByAscending:@"createdAt"];
     [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *activities, NSError *error) {
