@@ -393,6 +393,19 @@
     return cell;
 }
 
+-(void)tappedImageView{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Profile Picture" message:@"Do you want to take a picture or upload a picture?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Upload", @"Take Picture", nil];
+
+    [alert show];
+
+}
+
+-(void)tappedImageView:(UITapGestureRecognizer *)sender{
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Profile Picture" message:@"Do you want to take a picture or upload a picture?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Upload", @"Take Picture", nil];
+    //
+        [alert show];
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     if (indexPath.section == 0) {
@@ -409,6 +422,11 @@
 //            cell.imageView.image = image;
 
             cell.profileImagevIEW.image = image;
+
+
+            UITapGestureRecognizer *imageview = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedImageView:)];
+            [cell.profileImagevIEW addGestureRecognizer:imageview];
+
 
 //            [self.profilePicButton setBackgroundImage:image forState:UIControlStateNormal];
 
@@ -672,9 +690,9 @@
 
 - (IBAction)onProfilePicButtonTapped:(UIButton *)sender {
 
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Profile Picture" message:@"Do you want to take a picture or upload a picture?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Upload", @"Take Picture", nil];
-
-    [alert show];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Profile Picture" message:@"Do you want to take a picture or upload a picture?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Upload", @"Take Picture", nil];
+//
+//    [alert show];
 }
 
 
