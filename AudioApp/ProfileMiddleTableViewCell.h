@@ -12,9 +12,13 @@
 
 -(void) segmentedControlChanged:(UISegmentedControl *)segmentedControl;
 
+-(void) middleCellButtonTapped:(UIButton *)button;
+
 @end
 
 @interface ProfileMiddleTableViewCell : UITableViewCell
+
+@property (weak, nonatomic) IBOutlet UIButton *cellButton;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *profileSegmentedControl;
 

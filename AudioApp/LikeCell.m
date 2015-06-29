@@ -21,5 +21,7 @@
 }
 
 - (IBAction)onFollowTapped:(UIButton *)sender {
+
+    [self.delegate didTapFollowButton:sender];
 }
 @end

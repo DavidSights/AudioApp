@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -28,7 +28,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oIk-3N-Pk4" id="jE1-0I-EDO">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t07-CY-SgX">
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t07-CY-SgX">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                                     <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -58,16 +58,6 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="w3d-a6-cxe"/>
-                                                        </mask>
-                                                    </variation>
-                                                    <variation key="widthClass=compact">
-                                                        <mask key="constraints">
-                                                            <include reference="w3d-a6-cxe"/>
-                                                        </mask>
-                                                    </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4x8-gU-Z1g">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
@@ -278,6 +268,9 @@
                                                             <include reference="QK8-Q5-8Q1"/>
                                                         </mask>
                                                     </variation>
+                                                    <connections>
+                                                        <action selector="onButtonTapped:" destination="rUr-RW-78E" eventType="touchUpInside" id="eh8-3q-PnK"/>
+                                                    </connections>
                                                 </button>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="oL6-JY-jhh">
                                                     <rect key="frame" x="-61" y="-14" width="123" height="29"/>
@@ -343,6 +336,7 @@
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="cellButton" destination="jLY-sZ-rWw" id="Mob-fe-CY7"/>
                                             <outlet property="profileSegmentedControl" destination="oL6-JY-jhh" id="dPK-fd-FPj"/>
                                         </connections>
                                     </tableViewCell>
@@ -382,7 +376,8 @@
                                                             <exclude reference="5TL-ck-wA8"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="283" y="8" width="29" height="11"/>
                                                         <mask key="constraints">
                                                             <include reference="55P-Qn-QZ2"/>
                                                             <include reference="5TL-ck-wA8"/>
@@ -404,7 +399,8 @@
                                                             <exclude reference="SAw-1E-z6I"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="275" y="31" width="37" height="11"/>
                                                         <mask key="constraints">
                                                             <include reference="Oo5-dg-bjz"/>
                                                             <include reference="SAw-1E-z6I"/>
@@ -584,6 +580,9 @@
                                                     <state key="normal" title="Comment">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="190" y="5" width="68" height="30"/>
+                                                    </variation>
                                                     <connections>
                                                         <action selector="commentsButtonPressed:" destination="Kfm-Ao-e5A" eventType="touchUpInside" id="Ab8-1l-MGa"/>
                                                         <segue destination="FhN-7t-sUG" kind="show" identifier="CommentSegue" id="kaF-WK-wBN"/>
@@ -598,6 +597,9 @@
                                                     <state key="normal" title="Like">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="282" y="5" width="30" height="30"/>
+                                                    </variation>
                                                     <connections>
                                                         <action selector="likeButtonPressed:" destination="Kfm-Ao-e5A" eventType="touchUpInside" id="Gpa-HE-9CS"/>
                                                     </connections>
@@ -2871,7 +2873,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EAw-rH-UsS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="337.5" y="2434"/>
+            <point key="canvasLocation" x="331.5" y="2504"/>
         </scene>
         <!--Likes-->
         <scene sceneID="nb7-Lq-Ir4">
@@ -2909,19 +2911,19 @@
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vvJ-rP-ssX">
                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="30" id="Qf5-bV-wnc"/>
+                                                <constraint firstAttribute="height" constant="30" id="YYv-BQ-qJU"/>
                                             </constraints>
                                             <state key="normal" title="Follow">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="Qf5-bV-wnc"/>
+                                                    <exclude reference="YYv-BQ-qJU"/>
                                                 </mask>
                                             </variation>
                                             <variation key="widthClass=compact">
                                                 <mask key="constraints">
-                                                    <include reference="Qf5-bV-wnc"/>
+                                                    <include reference="YYv-BQ-qJU"/>
                                                 </mask>
                                             </variation>
                                             <connections>
@@ -2952,10 +2954,9 @@
                                         <constraint firstItem="oyT-8B-mB6" firstAttribute="leading" secondItem="Ya0-aY-DFv" secondAttribute="leadingMargin" id="A53-yH-1VV"/>
                                         <constraint firstItem="oyT-8B-mB6" firstAttribute="top" secondItem="Ya0-aY-DFv" secondAttribute="topMargin" constant="-4" id="DF1-7v-T8p"/>
                                         <constraint firstItem="6SX-Cb-fSh" firstAttribute="leading" secondItem="oyT-8B-mB6" secondAttribute="trailing" constant="8" id="EV8-Tf-O8u"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="vvJ-rP-ssX" secondAttribute="trailing" constant="1" id="P7f-b3-530"/>
-                                        <constraint firstItem="vvJ-rP-ssX" firstAttribute="leading" secondItem="6SX-Cb-fSh" secondAttribute="trailing" constant="253" id="RBt-Wz-f6D"/>
                                         <constraint firstItem="6SX-Cb-fSh" firstAttribute="top" secondItem="Ya0-aY-DFv" secondAttribute="topMargin" id="RWq-4Z-7Cf"/>
-                                        <constraint firstItem="vvJ-rP-ssX" firstAttribute="top" secondItem="Ya0-aY-DFv" secondAttribute="topMargin" constant="-1" id="S7b-0B-HUX"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="vvJ-rP-ssX" secondAttribute="trailing" constant="1" id="kfo-bF-Qtr"/>
+                                        <constraint firstItem="vvJ-rP-ssX" firstAttribute="top" secondItem="Ya0-aY-DFv" secondAttribute="topMargin" constant="-1" id="yvv-yf-lTT"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="subviews">
@@ -2964,13 +2965,12 @@
                                             <exclude reference="6SX-Cb-fSh"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <exclude reference="EV8-Tf-O8u"/>
-                                            <exclude reference="RWq-4Z-7Cf"/>
-                                            <exclude reference="P7f-b3-530"/>
-                                            <exclude reference="RBt-Wz-f6D"/>
-                                            <exclude reference="S7b-0B-HUX"/>
                                             <exclude reference="A53-yH-1VV"/>
                                             <exclude reference="DF1-7v-T8p"/>
+                                            <exclude reference="EV8-Tf-O8u"/>
+                                            <exclude reference="RWq-4Z-7Cf"/>
+                                            <exclude reference="kfo-bF-Qtr"/>
+                                            <exclude reference="yvv-yf-lTT"/>
                                         </mask>
                                     </variation>
                                     <variation key="widthClass=compact">
@@ -2980,13 +2980,12 @@
                                             <include reference="6SX-Cb-fSh"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <include reference="EV8-Tf-O8u"/>
-                                            <include reference="RWq-4Z-7Cf"/>
-                                            <include reference="P7f-b3-530"/>
-                                            <include reference="RBt-Wz-f6D"/>
-                                            <include reference="S7b-0B-HUX"/>
                                             <include reference="A53-yH-1VV"/>
                                             <include reference="DF1-7v-T8p"/>
+                                            <include reference="EV8-Tf-O8u"/>
+                                            <include reference="RWq-4Z-7Cf"/>
+                                            <include reference="kfo-bF-Qtr"/>
+                                            <include reference="yvv-yf-lTT"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
@@ -3019,8 +3018,8 @@
         <image name="Record" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="A2y-wD-0Io"/>
         <segue reference="kaF-WK-wBN"/>
+        <segue reference="Ix1-uV-Ket"/>
         <segue reference="bH0-wl-Tib"/>
     </inferredMetricsTieBreakers>
 </document>

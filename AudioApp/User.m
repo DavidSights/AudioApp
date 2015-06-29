@@ -9,6 +9,7 @@
 #import "User.h"
 
 NSArray *currentUserFriends;
+NSDictionary *currentUserFollowDictionary;
 
 @implementation User
 
@@ -24,15 +25,21 @@ NSArray *currentUserFriends;
 
             NSLog(@"No error");
 
+            NSMutableDictionary *followDictionaryMutable = [NSMutableDictionary new];
+
             NSMutableArray *friends = [NSMutableArray new];
 
             for (PFObject *activity in activities) {
+
+                [followDictionaryMutable setObject:activity forKey:[activity[@"toUser"] objectId]];
 
 //                PFUser *user = activity[@"toUser"];
 //                [friends addObject:user.objectId];
 
                 [friends addObject:activity[@"toUser"]];
             }
+
+            currentUserFollowDictionary = followDictionaryMutable;
 
             complete(friends, nil);
         } else {

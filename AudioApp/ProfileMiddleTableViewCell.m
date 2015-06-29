@@ -19,6 +19,10 @@
 
     // Configure the view for the selected state
 }
+- (IBAction)onButtonTapped:(UIButton *)sender {
+
+    [self.delegate middleCellButtonTapped:sender];
+}
 
 - (IBAction)onProfileSegmentedControlChange:(UISegmentedControl *)sender {
 

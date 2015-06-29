@@ -15,9 +15,9 @@
 #import "LikesAndCommentsCell.h"
 #import "PostHeaderCell.h"
 #import "Post.h"
+#import "User.h"
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
-#import "Post.h"
 #import "AudioPlayerWithTag.h"
 //#import <AVFoundation/AVFoundation.h>
 
@@ -240,6 +240,41 @@
     }
 }
 
+-(void)middleCellButtonTapped:(UIButton *)button {
+
+    button.enabled = NO;
+
+    if ([button.titleLabel.text isEqualToString:@"Unfollow"]) {
+
+        PFObject *followActivity = currentUserFollowDictionary[self.user.objectId];
+
+        NSLog(@"Follow activity to unfollow: %@", followActivity);
+
+        button.enabled = YES;
+    } else if ([button.titleLabel.text isEqualToString:@"Follow"]) {
+
+        PFObject *newFollowActivity = [PFObject objectWithClassName:@"Activity"];
+        newFollowActivity[@"type"] = @"Follow";
+        newFollowActivity[@"fromUser"] = [PFUser currentUser];
+        newFollowActivity[@"toUser"] = self.user;
+
+        [newFollowActivity saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+            if (completed && !error) {
+
+                NSMutableDictionary *followDictionaryMutable = [currentUserFollowDictionary mutableCopy];
+                [followDictionaryMutable setObject:newFollowActivity forKey:[newFollowActivity[@"toUser"] objectId]];
+                currentUserFollowDictionary = followDictionaryMutable;
+                [button setTitle:@"Unfollow" forState:UIControlStateNormal];
+                button.enabled = YES;
+            } else {
+
+                button.enabled = YES;
+            }
+        }];
+    }
+}
+
 -(void)segmentedControlChanged:(UISegmentedControl *)segmentedControl {
 
     NSLog(@"Segmented control changed");
@@ -378,6 +413,20 @@
             ProfileMiddleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MiddleCell"];
             cell.delegate = self;
             self.postLikesController = cell.profileSegmentedControl;
+
+            if ([self.user isEqual:[PFUser currentUser]]) {
+
+                [cell.cellButton setTitle:@"Edit Profile" forState:UIControlStateNormal];
+            } else {
+
+                if (currentUserFollowDictionary[self.user.objectId]) {
+
+                    [cell.cellButton setTitle:@"Unfollow" forState:UIControlStateNormal];
+                } else {
+
+                    [cell.cellButton setTitle:@"Follow" forState:UIControlStateNormal];
+                }
+            }
 
             return cell;
         }

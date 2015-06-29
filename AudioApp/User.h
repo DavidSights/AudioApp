@@ -13,6 +13,7 @@
 
 @property PFUser *userObject;
 extern NSArray *currentUserFriends;
+extern NSDictionary *currentUserFollowDictionary;
 
 +(void)queryFriendsWithUser:(PFUser *)user withCompletion:(void(^)(NSArray *friends, NSError *error))complete;
 

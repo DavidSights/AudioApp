@@ -8,8 +8,10 @@
 
 #import "LikesTableViewController.h"
 #import "ProfileViewController.h"
+#import "LikeCell.h"
+#import "User.h"
 
-@interface LikesTableViewController ()
+@interface LikesTableViewController () <LikeCellDelegate>
 
 @property (nonatomic) NSArray *likes;
 
@@ -56,62 +58,67 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeCell"];
+    LikeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikeCell"];
 
     PFObject *like = self.likes[indexPath.row];
     PFUser *user = like[@"fromUser"];
 
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ liked this post!", user.username];
+    if ([user isEqual:[PFUser currentUser]]) {
+
+        cell.followButton.hidden = YES;
+    } else if (currentUserFollowDictionary[user.objectId]) {
+
+        NSLog(@"user: %@ is in currentUserFriends array", user);
+        [cell.followButton setTitle:@"Unfollow" forState:UIControlStateNormal];
+        [cell.followButton sizeToFit];
+    } else {
+
+        cell.followButton.titleLabel.text = @"Follow";
+    }
+
+    cell.usernameLabel.text = [NSString stringWithFormat:@"%@ liked this post!", user.username];
+    cell.delegate = self;
 
     return cell;
 }
 
+-(void)didTapFollowButton:(UIButton *)button {
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)button.superview.superview];
+    PFObject *likeActivity = self.likes[indexPath.row];
+    PFObject *user = likeActivity[@"fromUser"];
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+    button.enabled = NO;
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
+    if ([button.titleLabel.text isEqualToString:@"Unfollow"]) {
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+        PFObject *followActivity = currentUserFollowDictionary[user.objectId];
 
-/*
-#pragma mark - Navigation
+        NSLog(@"Follow activity to unfollow: %@", followActivity);
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+        button.enabled = YES;
+    } else {
 
-- (IBAction)onFollowTapped:(UIButton *)sender {
+        PFObject *newFollowActivity = [PFObject objectWithClassName:@"Activity"];
+        newFollowActivity[@"type"] = @"Follow";
+        newFollowActivity[@"fromUser"] = [PFUser currentUser];
+        newFollowActivity[@"toUser"] = user;
+
+        [newFollowActivity saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+            if (completed && !error) {
+
+                NSMutableDictionary *followDictionaryMutable = [currentUserFollowDictionary mutableCopy];
+                [followDictionaryMutable setObject:newFollowActivity forKey:[newFollowActivity[@"toUser"] objectId]];
+                currentUserFollowDictionary = followDictionaryMutable;
+                [button setTitle:@"Unfollow" forState:UIControlStateNormal];
+                button.enabled = YES;
+            } else {
+
+                button.enabled = YES;
+            }
+        }];
+    }
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
