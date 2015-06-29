@@ -155,8 +155,6 @@
                                                     <exclude reference="UsS-mR-FwF"/>
                                                     <exclude reference="Y9E-hZ-qqp"/>
                                                     <exclude reference="snY-9I-44M"/>
-                                                    <exclude reference="1IV-S5-ZDc"/>
-                                                    <exclude reference="lC3-12-mO4"/>
                                                     <exclude reference="0eR-ct-1xC"/>
                                                     <exclude reference="QFU-wV-3xv"/>
                                                     <exclude reference="ydw-WY-rj6"/>
@@ -164,12 +162,14 @@
                                                     <exclude reference="Dyx-QL-QwF"/>
                                                     <exclude reference="H5H-d1-qVU"/>
                                                     <exclude reference="NH6-Hi-xs1"/>
-                                                    <exclude reference="I93-lD-yHJ"/>
-                                                    <exclude reference="ceD-KB-Pbn"/>
+                                                    <exclude reference="1IV-S5-ZDc"/>
+                                                    <exclude reference="lC3-12-mO4"/>
                                                     <exclude reference="Bgn-kf-krV"/>
                                                     <exclude reference="cjS-iN-7Gk"/>
                                                     <exclude reference="jeE-II-6Im"/>
                                                     <exclude reference="lVe-aZ-7HG"/>
+                                                    <exclude reference="I93-lD-yHJ"/>
+                                                    <exclude reference="ceD-KB-Pbn"/>
                                                 </mask>
                                             </variation>
                                             <variation key="widthClass=compact">
@@ -185,8 +185,6 @@
                                                     <include reference="UsS-mR-FwF"/>
                                                     <include reference="Y9E-hZ-qqp"/>
                                                     <include reference="snY-9I-44M"/>
-                                                    <include reference="1IV-S5-ZDc"/>
-                                                    <include reference="lC3-12-mO4"/>
                                                     <include reference="0eR-ct-1xC"/>
                                                     <include reference="QFU-wV-3xv"/>
                                                     <include reference="ydw-WY-rj6"/>
@@ -194,12 +192,14 @@
                                                     <include reference="Dyx-QL-QwF"/>
                                                     <include reference="H5H-d1-qVU"/>
                                                     <include reference="NH6-Hi-xs1"/>
-                                                    <include reference="I93-lD-yHJ"/>
-                                                    <include reference="ceD-KB-Pbn"/>
+                                                    <include reference="1IV-S5-ZDc"/>
+                                                    <include reference="lC3-12-mO4"/>
                                                     <include reference="Bgn-kf-krV"/>
                                                     <include reference="cjS-iN-7Gk"/>
                                                     <include reference="jeE-II-6Im"/>
                                                     <include reference="lVe-aZ-7HG"/>
+                                                    <include reference="I93-lD-yHJ"/>
+                                                    <include reference="ceD-KB-Pbn"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
