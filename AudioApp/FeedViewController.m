@@ -331,7 +331,24 @@
 - (void)viewWillAppear:(BOOL)animated {
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
     if (currentUser) {
-//        [self queryFromParse];
+        NSLog(@"Current user: %@", currentUser.username);
+        //        [self queryFromParse];
+
+        self.currentUser.userObject = currentUser;
+
+        [User queryFriendsWithUser:self.currentUser.userObject withCompletion:^(NSArray *friends, NSError *error) {
+
+            if (!error) {
+
+                currentUserFriends = friends;
+
+                [self queryFromParse];
+
+            } else {
+
+                NSLog(@"Error: %@", error);
+            }
+        }];
     } else {
         [self performSegueWithIdentifier:@"login" sender:self];
     }
