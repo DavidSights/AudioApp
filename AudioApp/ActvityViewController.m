@@ -26,6 +26,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.backgroundColor = [UIColor purpleColor];
+    refreshControl.tintColor = [UIColor whiteColor];
+    [refreshControl addTarget:self
+                       action:@selector(queryAll:)
+             forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
+
+
     self.likesActivities = [NSArray new];
     self.followsActivities = [NSArray new];
     self.commentActivities = [NSArray new];
@@ -40,7 +50,13 @@
     [self commentsQuery];
     [self followsQuery];
 }
+-(void)queryAll:(UIRefreshControl *)sender{
+    [self likesQuery];
+    [self commentsQuery];
+    [self followsActivities];
+    [sender endRefreshing];
 
+}
 -(void)likesQuery {
     PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
     [activityQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
