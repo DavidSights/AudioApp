@@ -621,20 +621,14 @@
 -(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
 
     if (!self.player.playing) {
-
         if (flag == YES) {
-
             //            Post *post = self.posts[self.indexPath.section];
             //            NSData *data = [post.audioFile getData]; // Get audio from specific post in Parse - Can we avoid this query?
             //            self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
             //            [self playRecordedAudio];
-
             [self.player play];
-
             self.integer = self.integer +1;
-            
             NSLog(@"%d_______",self.integer);
-            
         }
     }
 }

@@ -14,122 +14,111 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
-@property (nonatomic)  NSArray* likesActivities;
-@property (nonatomic)  NSArray* followsActivities;
-@property (nonatomic) NSArray *commentActivities;
 @property (weak, nonatomic) IBOutlet UILabel *likesLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property NSMutableArray *activities;
+@property NSArray *likesActivities;
+@property NSArray *followsActivities;
+@property NSArray *commentActivities;
 
 @end
 
 @implementation ActvityViewController
 
 - (void)viewDidLoad {
-    self.activities = [NSMutableArray new];
     [super viewDidLoad];
-    [self getLikes];
 }
 
-- (void) getLikes {
-//    self.activities = [[NSArray alloc]init];
-    [super viewDidLoad];
-    self.followsActivities = [[NSArray alloc]init];
-    self.likesActivities = [[NSArray alloc]init];
-    [self activityLikesQuery];
-    [self activityFollowQuery];
-    [self activityCommentQueries];
+- (void)viewWillAppear:(BOOL)animated{
+    [self getUserActivity];
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [self activityLikesQuery];
+- (void) getUserActivity {
+    [self likesQuery];
+    [self commentsQuery];
+    [self followsQuery];
 }
 
--(void)activityLikesQuery {
+-(void)likesQuery {
     PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
     [activityQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
     [activityQuery whereKey:@"type" containsString:@"Like"];
     [activityQuery orderByAscending:@"createdAt"];
     [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *result, NSError *error) {
         if (!error) {
-            NSArray *likesArray = result;
-            [self.activities addObject:likesArray];
-//            self.likesActivities = activities;
-            NSLog(@"%lu", (unsigned long)self.likesActivities.count);
+            self.likesActivities = result;
+        } else {
+            NSLog(@"Error querying likes in Activity: %@", error.localizedDescription);
         }
     }];
 }
 
-- (void)activityCommentQueries {
+- (void)commentsQuery {
     PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
     [activityQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
     [activityQuery whereKey:@"type" containsString:@"Comment"];
     [activityQuery orderByAscending:@"createdAt"];
-    [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *activities, NSError *error) {
+    [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *result, NSError *error) {
         if (!error) {
-//            self.activities = activities;
-//            self.likesLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.activities.count];
-//            NSLog(@"%@-------------",self.activities.lastObject);
-            self.commentActivities = activities;
-            NSLog(@"%lu", (unsigned long)self.likesActivities.count);
+            self.commentActivities = result;
+        } else {
+            NSLog(@"Error querying comments in Activity: %@", error.localizedDescription);
         }
     }];
 }
 
--(void)activityFollowQuery {
+-(void)followsQuery {
     PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
     [activityQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
     [activityQuery whereKey:@"type" containsString:@"Follow"];
     [activityQuery orderByAscending:@"createdAt"];
-    [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *activities, NSError *error) {
+    [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *result, NSError *error) {
         if (!error) {
-            self.followsActivities = activities;
-            NSLog(@"%lu", (unsigned long)self.followsActivities.count);
+            self.followsActivities = result;
+        } else {
+            NSLog(@"Error querying follows in Activity: %@", error.localizedDescription);
         }
     }];
 }
 
--(void)setCommentActivities:(NSArray *)commentActivities{
-    _commentActivities = commentActivities;
-    [self.tableView reloadData];
-}
-
--(void)setLikesActivities:(NSArray *)likesActivities{
-    _likesActivities = likesActivities;
-    [self.tableView reloadData];
-}
-
-- (void)setFollowsActivities:(NSArray *)followsActivities{
-    _followsActivities = followsActivities;
-    [self.tableView reloadData];
-}
+#pragma mark - TableView Datasource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 9;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    ActivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     if (indexPath.row == 0) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"followersID"];
-//        cell.textLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.activities.count];
-//        NSLog(@"%lu😲", (unsigned long)self.activities.count);
-        cell.textLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.likesActivities.count];
-        cell.detailTextLabel.text = @"number of likes";
+        // Total number of likes count.
+        cell.statLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.likesActivities.count];
+        cell.titleLabel.text = @"number of likes";
         return cell;
     } else if (indexPath.row == 1) {
+        // Total number of followers count.
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"postsID"];
 //        cell.textLabel.text = @"friend";
         cell.textLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.followsActivities.count];
        cell.detailTextLabel.text = @"number of followers";
-
         return cell;
-   } else {
+   } else if (indexPath.row == 2){
        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentID"];
        cell.textLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.commentActivities.count];
        cell.detailTextLabel.text = @"number of comments";
-
        return cell;
+   } else if (indexPath.row == 3) {
+
+   } else if (indexPath.row == 4) {
+
+   } else if (indexPath.row == 5) {
+
+   } else if (indexPath.row == 6) {
+
+   } else if (indexPath.row == 7) {
+
+   } else if (indexPath.row == 8) {
+
    }
+    return cell;
 }
 
 @end
