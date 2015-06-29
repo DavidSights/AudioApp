@@ -8,7 +8,6 @@
 
 #import "EditViewController.h"
 #import "PostViewController.h"
-#import "ColorSelectionView.h"
 
 @interface EditViewController ()<UICollectionViewDataSource, UICollectionViewDelegate,AVAudioPlayerDelegate>
 

@@ -26,11 +26,10 @@
     [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *activities, NSError *error) {
         if (!error) {
             self.activities = activities;
-            NSLog(@"%i", self.activities.count);
+            NSLog(@"%lu", (unsigned long)self.activities.count);
             NSLog(@"%@",self.activities.lastObject);
         }
     }];
-
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -42,7 +41,7 @@
     [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *activities, NSError *error) {
         if (!error) {
             self.activities = activities;
-            NSLog(@"%i", self.activities.count);
+            NSLog(@"%lu", (unsigned long)self.activities.count);
             NSLog(@"%@-------------",self.activities.lastObject);
         }
     }];
