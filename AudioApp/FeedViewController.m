@@ -18,7 +18,7 @@
 #import "LikesTableViewController.h"
 #import "CommentTableViewController.h"
 
-@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, AVAudioPlayerDelegate, LikesAndCommentsCellDelegate>
+@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, AVAudioPlayerDelegate, LikesAndCommentsCellDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic)  NSArray *posts;
@@ -32,7 +32,7 @@
 @property User *currentUser;
 @property UIRefreshControl *refreshControl;
 @property UIColor *blue, *yellow, *red, *purple, *green, *darkBlue, *darkYellow, *darkRed, *darkPurple, *darkGreen, *pink;
-
+@property NSMutableArray postsMutable;
 @end
 
 @implementation FeedViewController
@@ -564,5 +564,26 @@
         }
     }
 
+}
+
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView.contentOffset.y + scrollView.bounds.size.height > scrollView.contentSize.height * 0.9) {
+        PFQuery *postQuery = [PFQuery queryWithClassName:@"Post"];
+        [postQuery whereKey:@"author" equalTo:[PFUser currentUser]];
+        //    [postQuery includeKey:@"author"];
+        NSMutableArray *mutArrPagingResponce = [[postQuery findObjects] mutableCopy];
+        [postQuery setSkip:[mutArrPagingResponce count]];
+        postQuery.limit = 5;
+        [postQuery findObjectsInBackgroundWithBlock:^(NSMutableArray *posts, NSError *error) {
+
+            if (!error) {
+                self.postsMutable = posts;
+
+            }
+        }];
+
+
+    }
 }
 @end
