@@ -19,6 +19,7 @@
 @property NSArray *likesActivities;
 @property NSArray *followsActivities;
 @property NSArray *commentActivities;
+@property UIColor *blue, *yellow, *red, *purple, *green, *darkBlue, *darkYellow, *darkRed, *darkPurple, *darkGreen, *pink;
 
 @end
 
@@ -29,6 +30,19 @@
     self.likesActivities = [NSArray new];
     self.followsActivities = [NSArray new];
     self.commentActivities = [NSArray new];
+
+    // App color theme.
+    self.blue = [UIColor colorWithRed:160/255.0 green:215/255.0 blue:231/255.0 alpha:1.0];
+    self.yellow = [UIColor colorWithRed:249/255.0 green:217/255.0 blue:119/255.0 alpha:1.0];
+    self.red = [UIColor colorWithRed:205/255.0 green:124/255.0 blue:135/255.0 alpha:1.0];
+    self.purple = [UIColor colorWithRed:176/255.0 green:150/255.0 blue:193/255.0 alpha:1.0];
+    self.green = [UIColor colorWithRed:177/255.0 green:215/255.0 blue:165/255.0 alpha:1.0];
+    self.darkBlue = [UIColor colorWithRed:83/255.0 green:153/255.0 blue:174/255.0 alpha:1.0];
+    self.darkYellow = [UIColor colorWithRed:204/255.0 green:164/255.0 blue:42/255.0 alpha:1.0];
+    self.darkRed = [UIColor colorWithRed:166/255.0 green:81/255.0 blue:92/255.0 alpha:1.0];
+    self.darkPurple = [UIColor colorWithRed:121/255.0 green:192/255.0 blue:140/255.0 alpha:1.0];
+    self.darkGreen = [UIColor colorWithRed:75/255.0 green:151/255.0 blue:142/255.0 alpha:1.0];
+    self.pink = [UIColor colorWithRed:255/255.0 green:187/255.0 blue:208/255.0 alpha:1.0];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -101,15 +115,18 @@
         return cell;
     } else if (indexPath.row == 1) {
         // Total number of followers count.
-       cell.titleLabel.text = @"Total Number of Followers";
+        cell.titleLabel.text = @"Total Number of Followers";
         cell.statLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
+        cell.contentView.backgroundColor = self.purple;
         return cell;
    } else if (indexPath.row == 2){
        cell.titleLabel.text = @"Total Number of Comments";
        cell.statLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
+       cell.backgroundColor = self.yellow;
        return cell;
    } else if (indexPath.row == 3) {
        cell.titleLabel.text = @"Total Number of Followers";
+       cell.backgroundColor = self.red;
        return cell;
    } else if (indexPath.row == 4) {
        cell.titleLabel.text = @"Number of Likes This Week";
