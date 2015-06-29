@@ -56,6 +56,7 @@
             [post setObject:number forKey:@"numOfLikes"];
             [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (!error) {
+                    //do not touch nsnotificaton!!!
                     [[NSNotificationCenter defaultCenter]postNotificationName:@"Test1" object:self];
                 } else {
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Uh oh, there was an error." message:@"Sorry, we couldn't publish your post. We'll work to fix this error ASAP. Please try posting again later." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
