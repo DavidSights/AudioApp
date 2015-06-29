@@ -12,7 +12,7 @@
 @interface User : NSObject
 
 @property PFUser *userObject;
-@property NSArray *friends;
+extern NSArray *currentUserFriends;
 
 +(void)queryFriendsWithUser:(PFUser *)user withCompletion:(void(^)(NSArray *friends, NSError *error))complete;
 

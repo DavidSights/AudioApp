@@ -8,6 +8,8 @@
 
 #import "User.h"
 
+NSArray *currentUserFriends;
+
 @implementation User
 
 +(void)queryFriendsWithUser:(PFUser *)user withCompletion:(void(^)(NSArray *friends, NSError *error))complete {

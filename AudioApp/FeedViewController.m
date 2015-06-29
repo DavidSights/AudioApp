@@ -77,7 +77,7 @@
 
             if (!error) {
 
-                self.currentUser.friends = friends;
+                currentUserFriends = friends;
 
                 [self queryFromParse];
 
@@ -318,7 +318,7 @@
 
 - (void)queryFromParse {
 
-    [Post queryPostsWithFriends:self.currentUser.friends andUser:self.currentUser.userObject withCompletion:^(NSArray *posts) {
+    [Post queryPostsWithFriends:currentUserFriends andUser:self.currentUser.userObject withCompletion:^(NSArray *posts) {
 
         self.posts = posts;
     }];
