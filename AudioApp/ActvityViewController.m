@@ -7,6 +7,7 @@
 //
 #import <Parse/Parse.h>
 #import "ActvityViewController.h"
+#import "ActivityTableViewCell.h"
 
 @interface ActvityViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
@@ -20,13 +21,11 @@
 
 
 - (void)viewDidLoad {
-
     self.activities = [[NSArray alloc]init];
     [super viewDidLoad];
     PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
     [activityQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
     [activityQuery whereKey:@"type" containsString:@"Like"];
-
     [activityQuery orderByAscending:@"createdAt"];
     [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *activities, NSError *error) {
         if (!error) {
@@ -37,8 +36,7 @@
     }];
 }
 
--(void)viewWillAppear:(BOOL)animated{
-
+-(void)viewWillAppear:(BOOL)animated {
     PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
     [activityQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
     [activityQuery whereKey:@"type" containsString:@"Like"];
@@ -47,56 +45,38 @@
         if (!error) {
             self.activities = activities;
             NSLog(@"%lu", (unsigned long)self.activities.count);
-
 //            self.likesLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.activities.count];
 //            NSLog(@"%@-------------",self.activities.lastObject);
         }
     }];
 }
 
--(void)setActivities:(NSArray *)activities {
-
+- (void)setActivities:(NSArray *)activities {
     _activities = activities;
     [self.tableView reloadData];
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
     return 3;
 }
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
-
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"followersID"];
-
         cell.textLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.activities.count];
-
         NSLog(@"%lu😲", (unsigned long)self.activities.count);
         cell.detailTextLabel.text = @"number of likes";
         return cell;
-
-    }
-
-   else if (indexPath.row == 1) {
+    } else if (indexPath.row == 1) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"postsID"];
-
         cell.textLabel.text = @"friend";
-
         return cell;
-
-   }else{
+   } else {
        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentID"];
-
        cell.textLabel.text = @"hellooperator";
-
        return cell;
-
-
    }
-
-
 }
-
 
 @end
