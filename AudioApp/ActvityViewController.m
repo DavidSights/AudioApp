@@ -26,6 +26,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.likesActivities = [NSArray new];
+    self.followsActivities = [NSArray new];
+    self.commentActivities = [NSArray new];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -49,6 +52,7 @@
         } else {
             NSLog(@"Error querying likes in Activity: %@", error.localizedDescription);
         }
+        [self.tableView reloadData];
     }];
 }
 
@@ -63,6 +67,7 @@
         } else {
             NSLog(@"Error querying comments in Activity: %@", error.localizedDescription);
         }
+        [self.tableView reloadData];
     }];
 }
 
@@ -77,6 +82,7 @@
         } else {
             NSLog(@"Error querying follows in Activity: %@", error.localizedDescription);
         }
+        [self.tableView reloadData];
     }];
 }
 
@@ -86,38 +92,42 @@
     return 9;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ActivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+- (ActivityTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    ActivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
     if (indexPath.row == 0) {
         // Total number of likes count.
+        cell.titleLabel.text = @"Total Number of Likes";
         cell.statLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.likesActivities.count];
-        cell.titleLabel.text = @"number of likes";
         return cell;
     } else if (indexPath.row == 1) {
         // Total number of followers count.
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"postsID"];
-//        cell.textLabel.text = @"friend";
-        cell.textLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.followsActivities.count];
-       cell.detailTextLabel.text = @"number of followers";
+       cell.titleLabel.text = @"Total Number of Followers";
+        cell.statLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
         return cell;
    } else if (indexPath.row == 2){
-       UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentID"];
-       cell.textLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.commentActivities.count];
-       cell.detailTextLabel.text = @"number of comments";
+       cell.titleLabel.text = @"Total Number of Comments";
+       cell.statLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
        return cell;
    } else if (indexPath.row == 3) {
-
+       cell.titleLabel.text = @"Total Number of Followers";
+       return cell;
    } else if (indexPath.row == 4) {
-
+       cell.titleLabel.text = @"Number of Likes This Week";
+       return cell;
    } else if (indexPath.row == 5) {
-
+       cell.titleLabel.text = @"Number of Posts This Week";
+       return cell;
    } else if (indexPath.row == 6) {
-
+       cell.titleLabel.text = @"Number of Comments This Week";
+       return cell;
    } else if (indexPath.row == 7) {
-
+       cell.titleLabel.text = @"Number of Followers This Week";
+       return cell;
    } else if (indexPath.row == 8) {
-
+       cell.titleLabel.text = @"Account Age";
+       return cell;
    }
+    
     return cell;
 }
 
