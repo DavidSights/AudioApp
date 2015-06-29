@@ -111,6 +111,11 @@
                 NSMutableDictionary *followDictionaryMutable = [currentUserFollowDictionary mutableCopy];
                 [followDictionaryMutable setObject:newFollowActivity forKey:[newFollowActivity[@"toUser"] objectId]];
                 currentUserFollowDictionary = followDictionaryMutable;
+
+                NSMutableArray *friendsMutable = [currentUserFriends mutableCopy];
+                [friendsMutable addObject:newFollowActivity[@"toUser"]];
+                currentUserFriends = friendsMutable;
+
                 [button setTitle:@"Unfollow" forState:UIControlStateNormal];
                 button.enabled = YES;
             } else {

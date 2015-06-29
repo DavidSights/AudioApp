@@ -318,6 +318,8 @@
 
 - (void)queryFromParse {
 
+    NSLog(@"Querying from parse");
+
     [Post queryPostsWithFriends:currentUserFriends andUser:self.currentUser.userObject withCompletion:^(NSArray *posts) {
 
         self.posts = posts;
