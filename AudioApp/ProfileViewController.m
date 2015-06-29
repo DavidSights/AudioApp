@@ -671,64 +671,46 @@
 //}
 
 - (IBAction)onProfilePicButtonTapped:(UIButton *)sender {
-
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Profile Picture" message:@"Do you want to take a picture or upload a picture?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Upload", @"Take Picture", nil];
-
     [alert show];
 }
 
-
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        NSLog(@"Upload tapped");
-
         [self uploadFromPhotoAlbum];
     } else if (buttonIndex == 2) {
-
         [self uploadFromCamera];
     }
-    
 }
--(void)uploadFromPhotoAlbum {
 
+- (void)uploadFromPhotoAlbum {
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.delegate = self;
-
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-
     [self presentViewController:imagePicker animated:YES completion:nil];
-
 }
 
--(void)uploadFromCamera {
-
+- (void)uploadFromCamera {
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.delegate = self;
-
     imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-
     [self presentViewController:imagePicker animated:YES completion:nil];
-
 }
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     self.image = [info objectForKey:UIImagePickerControllerOriginalImage];
-
     [self uploadToParse];
-
     [self dismissViewControllerAnimated:YES completion:nil];
-    
 }
+
 - (void)uploadToParse {
     NSData *fileData;
     NSString *fileName;
 
     if (self.image != nil) {
-        //                       UIImage *newImage =self.image;
-
-        //        self.nImage = [SettingsViewController imageWithImage:self.image scaledToSize:CGSizeMake(15, 15)];
+        // UIImage *newImage =self.image;
+        // self.nImage = [SettingsViewController imageWithImage:self.image scaledToSize:CGSizeMake(15, 15)];
         fileData = UIImageJPEGRepresentation(self.image, 0.5);
         fileName = @"profileImage.jpg";
     }
@@ -736,9 +718,7 @@
     PFFile *file = [PFFile fileWithName:fileName data:fileData];
     [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (error) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
-                                                                message:@"Please try again."
-                                                               delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!" message:@"Please try again." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alertView show];
         }
         else {
