@@ -38,11 +38,9 @@
 - (void) saveButtonPressed:(id)sender {
     PFUser *currentUser = [PFUser currentUser];
 
-    NSString *oldPass=[self.oldPasswordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString *newPass =[self.nPasswordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString *repeatNewPass=[self.repeatNewPasswordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
-    if ([oldPass isEqualToString:currentUser.password]) {
         if ([newPass isEqualToString:repeatNewPass]) {
             currentUser.password = repeatNewPass;
             [currentUser saveInBackground];
@@ -51,23 +49,9 @@
         } else {
             NSLog(@"new passwords dont match");
         }
-    } else {
-        NSLog(@"not old password");
-    }
 
 
-    if (![self.nPasswordTextField.text isEqualToString:self.repeatNewPasswordTextField.text] && ![self.oldPasswordTextField.text isEqualToString:currentUser.password] ) {
-
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Wrong" message:@"Your current password and new passwords don't match" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles:nil, nil];
-        [alert show];
-        
-    }
-   else if (![self.oldPasswordTextField.text isEqualToString:currentUser.password]) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Wrong" message:@"Not your current password" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles:nil, nil];
-        [alert show];
-        
-    }
-    else if (![self.nPasswordTextField.text isEqualToString:self.repeatNewPasswordTextField.text]) {
+    if (![self.nPasswordTextField.text isEqualToString:self.repeatNewPasswordTextField.text]) {
 
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Wrong" message:@"New passwords don't match" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles:nil, nil];
         [alert show];
