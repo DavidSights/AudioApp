@@ -189,6 +189,10 @@
                 }
             }];
         }
+
+
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"TestProfilePic" object:self];
+
     }];
 }
 

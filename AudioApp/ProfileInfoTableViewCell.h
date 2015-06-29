@@ -13,5 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
 @property (weak, nonatomic) IBOutlet UILabel *followingFollowersLabel;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
+@property (weak, nonatomic) IBOutlet UIButton *profilePicButton;
+@property (weak, nonatomic) IBOutlet UIImageView *profileImagevIEW;
 
 @end

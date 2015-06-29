@@ -22,8 +22,9 @@
 //#import <AVFoundation/AVFoundation.h>
 
 
-@interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ProfileMiddleTableViewCellDelegate, LikesAndCommentsCellDelegate, AVAudioPlayerDelegate>
-
+@interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ProfileMiddleTableViewCellDelegate, LikesAndCommentsCellDelegate, AVAudioPlayerDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate>
+@property UIImage *image;
+@property UIImagePickerController *imagePicker;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property UISegmentedControl *postLikesController;
@@ -34,6 +35,8 @@
 @property CGFloat lastOffsetY;
 @property NSTimer *timer;
 @property int integer;
+@property (weak, nonatomic) IBOutlet UIButton *profilePicButton;
+@property NSIndexPath *indexPath2;
 
 @end
 
@@ -140,7 +143,7 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         // If the notification is touched stop spinning. If is not touched start spinning.
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveNotification:) name:@"Test2" object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveNotification:) name:@"TestProfilePic" object:nil];
     }
     return self;
 }
@@ -157,12 +160,17 @@
 }
 
 - (void)receiveNotification:(NSNotification *)notification {
-    if ([notification.name isEqualToString:@"Test2"]) {
-//        PFUser *user = [PFUser currentUser];
-//        self.usernameLabel.text = user.username;
-//        self.aboutLabel.text = user[@"about"];
-//        [self.tableView reloadData];
+    if ([notification.name isEqualToString:@"TestProfilePic"]) {
+        [self queryUserProfilePic];
     }
+}
+-(void)queryUserProfilePic{
+    ProfileInfoTableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.indexPath2];
+    PFFile *file = self.user[@"profileImage"];
+    NSData *data = [file getData];
+    UIImage *image = [UIImage imageWithData:data];
+    //cell.imageView.image = image;
+    cell.profileImagevIEW.image = image;
 }
 
 -(void)didTapLikeButton:(UIButton *)button {
@@ -350,9 +358,20 @@
     if (indexPath.section == 0) {
 
         if (indexPath.row == 0) {
+            self.indexPath2 = indexPath;
 
             ProfileInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileCell"];
             cell.usernameLabel.text = self.user.username;
+            PFUser *currentUser = [PFUser currentUser];
+            PFFile *file = self.user[@"profileImage"];
+            NSData *data = [file getData];
+            UIImage *image = [UIImage imageWithData:data];
+//            cell.imageView.image = image;
+
+            cell.profileImagevIEW.image = image;
+
+//            [self.profilePicButton setBackgroundImage:image forState:UIControlStateNormal];
+
 
             return cell;
         } else if (indexPath.row == 1) {
@@ -596,6 +615,106 @@
 //
 //    }
 //}
+
+- (IBAction)onProfilePicButtonTapped:(UIButton *)sender {
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Profile Picture" message:@"Do you want to take a picture or upload a picture?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Upload", @"Take Picture", nil];
+
+    [alert show];
+}
+
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+
+    if (buttonIndex == 1) {
+        NSLog(@"Upload tapped");
+
+        [self uploadFromPhotoAlbum];
+    } else if (buttonIndex == 2) {
+
+        [self uploadFromCamera];
+    }
+    
+}
+-(void)uploadFromPhotoAlbum {
+
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.delegate = self;
+
+    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+
+    [self presentViewController:imagePicker animated:YES completion:nil];
+
+}
+
+-(void)uploadFromCamera {
+
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.delegate = self;
+
+    imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+    imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+
+    [self presentViewController:imagePicker animated:YES completion:nil];
+
+}
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+
+    self.image = [info objectForKey:UIImagePickerControllerOriginalImage];
+
+    [self uploadToParse];
+
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
+- (void)uploadToParse {
+    NSData *fileData;
+    NSString *fileName;
+
+    if (self.image != nil) {
+        //                       UIImage *newImage =self.image;
+
+        //        self.nImage = [SettingsViewController imageWithImage:self.image scaledToSize:CGSizeMake(15, 15)];
+        fileData = UIImageJPEGRepresentation(self.image, 0.5);
+        fileName = @"profileImage.jpg";
+    }
+
+    PFFile *file = [PFFile fileWithName:fileName data:fileData];
+    [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (error) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
+                                                                message:@"Please try again."
+                                                               delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        }
+        else {
+            PFUser *user = [PFUser currentUser];
+
+            [user setObject:file forKey:@"profileImage"];
+
+            [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (error) {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
+                                                                        message:@"Please try again."
+                                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    [alertView show];
+                }
+                else {
+                    // Everything was successful!
+                    [self reset];
+                }
+            }];
+        }
+        //don't touch!!!!
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"TestProfilePic" object:self];
+    }];
+}
+
+- (void)reset {
+    self.imagePicker = nil;
+    
+}
+
 
 - (void)updateBarButtonItems:(CGFloat)alpha {
 

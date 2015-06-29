@@ -157,7 +157,7 @@
     Post *post = self.posts[section];
     PFUser *user = post[@"author"];
     NSLog(@"User: %@", user.username);
-    NSString *displayNameText = user[@"displayName"];
+    NSString *displayNameText = user[@"username"];
     NSLog(@"Display Name: %@", displayNameText);
     cell.displayNameLabel.text = displayNameText;
     [cell.displayNameLabel sizeToFit];

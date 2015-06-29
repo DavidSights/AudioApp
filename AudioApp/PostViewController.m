@@ -59,6 +59,7 @@
 
             [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (!error) {
+                    //do not touch nsnotificaton!!!
                     [[NSNotificationCenter defaultCenter]postNotificationName:@"Test1" object:self];
                     NSLog(@"post successful");
                 }
