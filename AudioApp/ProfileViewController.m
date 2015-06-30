@@ -69,6 +69,11 @@
     self.settingsButton.title = @"Settings";
 }
 
+- (void) viewDidDisappear:(BOOL)animated{
+    [self.player stop];
+}
+
+
 - (void)viewDidAppear:(BOOL)animated {
 
     if (self.postLikesController == 0) {
