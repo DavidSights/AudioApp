@@ -613,13 +613,37 @@
         Post *post = self.posts[indexPath.section];
 
 
+        PFObject *activity = [PFObject objectWithClassName:@"Activity"];
+        activity = self.posts[indexPath.section];
+        [activity deleteInBackground];
+
+        
+        PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
+        [activityQuery whereKey:@"post" equalTo:post];
+
+        [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+
+            if (!error) {
+
+                for (PFObject *object in objects) {
+                    [object deleteInBackground];
+                }
+
+            }
+        }];
+//
+
+        //wherekyepost == Post *post = self.posts[indexPath.section];
+
+        
+
         [post deleteInBackgroundWithBlock:^(BOOL completed, NSError *error) {
 
             if (completed && !error) {
 
-                NSMutableArray *userPostsMutable = [self.posts mutableCopy];
-                [userPostsMutable removeObjectAtIndex:indexPath.section];
-                self.posts = userPostsMutable;
+                NSMutableArray *postsMutable = [self.posts mutableCopy];
+                [postsMutable removeObjectAtIndex:indexPath.section];
+                self.posts = postsMutable;
             }
         }];
     }];

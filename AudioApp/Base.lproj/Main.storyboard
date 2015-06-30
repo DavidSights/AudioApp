@@ -114,7 +114,7 @@
                                             <outlet property="aboutLabel" destination="bjg-dN-G6E" id="jOj-C0-eP2"/>
                                             <outlet property="followingFollowersLabel" destination="dxb-18-lP5" id="tiq-Y6-jaL"/>
                                             <outlet property="locationLabel" destination="HJr-6y-bWJ" id="8zR-jv-CHw"/>
-                                            <outlet property="profileImagevIEW" destination="E6x-7h-cSS" id="vlU-Si-crd"/>
+                                            <outlet property="profileImageView" destination="E6x-7h-cSS" id="L0f-p7-zkh"/>
                                             <outlet property="usernameLabel" destination="4x8-gU-Z1g" id="5Hi-do-Rjw"/>
                                         </connections>
                                     </tableViewCell>
@@ -210,9 +210,6 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="41" y="16" width="200" height="20"/>
-                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -1134,9 +1131,9 @@
                                                     </variation>
                                                     <variation key="widthClass=compact">
                                                         <mask key="constraints">
-                                                            <exclude reference="Rva-ek-xpV"/>
-                                                            <exclude reference="M2o-5k-FFd"/>
                                                             <include reference="CjE-7u-nVO"/>
+                                                            <exclude reference="M2o-5k-FFd"/>
+                                                            <exclude reference="Rva-ek-xpV"/>
                                                             <include reference="Yp3-8D-52O"/>
                                                         </mask>
                                                     </variation>
@@ -1157,16 +1154,16 @@
                                                     </state>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="yMW-64-7fA"/>
                                                             <exclude reference="U3j-be-SRL"/>
+                                                            <exclude reference="yMW-64-7fA"/>
                                                         </mask>
                                                     </variation>
                                                     <variation key="widthClass=compact">
                                                         <mask key="constraints">
-                                                            <include reference="yMW-64-7fA"/>
-                                                            <include reference="U3j-be-SRL"/>
                                                             <exclude reference="3wq-Qh-2JB"/>
+                                                            <include reference="U3j-be-SRL"/>
                                                             <exclude reference="h28-IM-M6k"/>
+                                                            <include reference="yMW-64-7fA"/>
                                                         </mask>
                                                     </variation>
                                                     <connections>
@@ -1968,8 +1965,8 @@
                                                     </state>
                                                     <variation key="widthClass=compact">
                                                         <mask key="constraints">
-                                                            <include reference="ir5-K3-mfx"/>
                                                             <include reference="gfx-mq-8sE"/>
+                                                            <include reference="ir5-K3-mfx"/>
                                                         </mask>
                                                     </variation>
                                                     <connections>
