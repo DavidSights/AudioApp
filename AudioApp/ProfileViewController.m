@@ -118,6 +118,30 @@
     }
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // If the notification is touched stop spinning. If is not touched start spinning.
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveNotification:) name:@"TestProfilePic" object:nil];
+    }
+    return self;
+}
+
+#pragma mark - Setters
+
+- (void)setUserPosts:(NSArray *)userPosts {
+    _userPosts = userPosts;
+    [self.tableView reloadData];
+}
+
+- (void)setLikedPosts:(NSArray *)likedPosts {
+    _likedPosts = likedPosts;
+    [self.tableView reloadData];
+    NSLog(@"Updated likedPosts.");
+}
+
+#pragma mark - Queries
+
 - (void)queryUserPost:(UIRefreshControl *)refresher {
     [self queryUserPosts];
     [refresher endRefreshing];
@@ -144,32 +168,7 @@
     }];
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        // If the notification is touched stop spinning. If is not touched start spinning.
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveNotification:) name:@"TestProfilePic" object:nil];
-    }
-    return self;
-}
-
-- (void)setUserPosts:(NSArray *)userPosts {
-    _userPosts = userPosts;
-    [self.tableView reloadData];
-}
-
-- (void)setLikedPosts:(NSArray *)likedPosts {
-    _likedPosts = likedPosts;
-    [self.tableView reloadData];
-    NSLog(@"Updated likedPosts.");
-}
-
-- (void)receiveNotification:(NSNotification *)notification {
-    if ([notification.name isEqualToString:@"TestProfilePic"]) {
-        [self queryUserProfilePic];
-    }
-}
--(void)queryUserProfilePic{
+- (void)queryUserProfilePic{
     ProfileInfoTableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.indexPath2];
     PFFile *file = self.user[@"profileImage"];
     NSData *data = [file getData];
@@ -177,6 +176,16 @@
     //cell.imageView.image = image;
     cell.profileImagevIEW.image = image;
 }
+
+#pragma mark - NSNotification
+
+- (void)receiveNotification:(NSNotification *)notification {
+    if ([notification.name isEqualToString:@"TestProfilePic"]) {
+        [self queryUserProfilePic];
+    }
+}
+
+#pragma mark - User Interaction
 
 -(void)didTapLikeButton:(UIButton *)button {
     LikesAndCommentsCell *cell = (LikesAndCommentsCell *)button.superview.superview;
@@ -243,6 +252,13 @@
             }
         }];
     }
+}
+
+-(void)didTapAddCommentButton:(UIButton *)button {
+
+    NSLog(@"Comment button tapped");
+
+    [self performSegueWithIdentifier:@"CommentSegue" sender:button];
 }
 
 -(void)middleCellButtonTapped:(UIButton *)button {
@@ -330,6 +346,64 @@
     }
 }
 
+- (void)tappedImageView{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Profile Picture" message:@"Do you want to take a picture or upload a picture?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Upload", @"Take Picture", nil];
+
+    [alert show];
+
+}
+
+- (void)tappedImageView:(UITapGestureRecognizer *)sender{
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Profile Picture" message:@"Do you want to take a picture or upload a picture?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Upload", @"Take Picture", nil];
+    //
+    [alert show];
+}
+
+- (IBAction)onDeleteTapped:(id)sender {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"delete" message:nil preferredStyle:UIAlertControllerStyleAlert];
+
+    //cancels alert controller
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    //
+    //saves what you wrote
+    UIAlertAction *deleteAction =  [UIAlertAction actionWithTitle:@"DELETE FOREVER!!!" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+
+        //        self.uploadPhoto = [[UploadPhoto alloc]init];
+
+        //        [self.selectedPhotos deleteInBackground];
+
+        NSIndexPath *indexPath = self.tableView.indexPathsForSelectedRows[0];
+        Post *post = self.userPosts[indexPath.section - 1];
+        [post deleteInBackground];
+        [self queryUserPosts];
+
+    }];
+
+    // add cancelAction variable to alertController
+    [alertController addAction:cancelAction];
+    [alertController addAction:deleteAction];
+
+    // activates alertcontroler
+    [self presentViewController:alertController animated:true completion:nil];
+}
+
+- (IBAction)onProfilePicButtonTapped:(UIButton *)sender {
+    //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Profile Picture" message:@"Do you want to take a picture or upload a picture?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Upload", @"Take Picture", nil];
+    //
+    //    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        [self uploadFromPhotoAlbum];
+    } else if (buttonIndex == 2) {
+        [self uploadFromCamera];
+    }
+}
+
+#pragma mark - TableView Data Source
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
     if (self.postLikesController.selectedSegmentIndex == 0) {
@@ -398,19 +472,6 @@
     return cell;
 }
 
--(void)tappedImageView{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Profile Picture" message:@"Do you want to take a picture or upload a picture?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Upload", @"Take Picture", nil];
-
-    [alert show];
-
-}
-
--(void)tappedImageView:(UITapGestureRecognizer *)sender{
-
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Profile Picture" message:@"Do you want to take a picture or upload a picture?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Upload", @"Take Picture", nil];
-    //
-        [alert show];
-}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     if (indexPath.section == 0) {
@@ -609,6 +670,8 @@
     }
 }
 
+#pragma mark - Manage Audio
+
 - (void)playRecordedAudio {
     //    self.player.numberOfLoops = -1;
     self.player.delegate = self;
@@ -760,6 +823,8 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+
+
 - (void)uploadToParse {
     NSData *fileData;
     NSString *fileName;
@@ -776,35 +841,25 @@
         if (error) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!" message:@"Please try again." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alertView show];
-        }
-        else {
+        } else {
             PFUser *user = [PFUser currentUser];
-
             [user setObject:file forKey:@"profileImage"];
-
             [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (error) {
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
                                                                         message:@"Please try again."
                                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alertView show];
-                }
-                else {
+                } else {
                     // Everything was successful!
-                    [self reset];
+                    self.imagePicker = nil;
                 }
             }];
         }
-        //don't touch!!!!
+        // don't touch!!!! - please let us know why
         [[NSNotificationCenter defaultCenter]postNotificationName:@"TestProfilePic" object:self];
     }];
 }
-
-- (void)reset {
-    self.imagePicker = nil;
-    
-}
-
 
 - (void)updateBarButtonItems:(CGFloat)alpha {
 
@@ -820,7 +875,6 @@
 }
 
 - (void)animateNavBarTo:(CGFloat)y {
-
     [UIView animateWithDuration:0.2 animations:^{
         CGRect frame = self.navigationController.navigationBar.frame;
         CGFloat alpha = (frame.origin.y >= y ? 0 : 1);
@@ -861,6 +915,8 @@
     [[NSScanner scannerWithString: fullHex] scanHexInt: &hexComponent];
     return hexComponent / 255.0;
 }
+
+#pragma mark - Segue
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 

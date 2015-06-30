@@ -21,15 +21,18 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)commentsButtonPressed:(id)sender {
+- (IBAction)commentsButtonPressed:(UIButton *)button {
+
+    NSLog(@"CommentsButtonPRessed");
+    [self.delegate didTapAddCommentButton:button];
 }
 
 - (IBAction)likeButtonPressed:(UIButton *)button {
     [self.delegate didTapLikeButton:button];
 }
 
-- (IBAction)deleteButtonPressed:(id)sender {
-    
+- (IBAction)deleteButtonPressed:(UIButton *)button {
+    [self.delegate didTapDeleteButton:button];
 }
 
 @end
