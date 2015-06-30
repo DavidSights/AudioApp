@@ -50,10 +50,9 @@
             } else if ([self.commentTextView.text  isEqual: @"Tap here to enter a description, or just tap below to publish your post!"]) {
                 [post setObject:@"" forKey:@"descriptionComment"];
             } else {
-
+                [post setObject:self.commentTextView.text forKey:@"descriptionComment"];
             }
             NSNumber *number = [[NSNumber alloc]initWithInteger:0];
-            [post setObject:self.commentTextView.text forKey:@"descriptionComment"];
             [post setObject:@[] forKey:@"likes"];
             [post setObject:number forKey:@"loops"];
             [post setObject:number forKey:@"numOfComments"];
