@@ -12,16 +12,15 @@
 
 @interface ActvityViewController ()<UITableViewDataSource, UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIImageView *userImageView;
-@property (weak, nonatomic) IBOutlet UITextView *textView;
-@property (weak, nonatomic) IBOutlet UILabel *likesLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSArray *likesActivities;
 @property NSArray *followsActivities;
 @property NSArray *commentActivities;
+@property NSArray *posts;
 @property UIColor *blue, *yellow, *red, *purple, *green, *darkBlue, *darkYellow, *darkRed, *darkPurple, *darkGreen, *pink;
 
 @end
+
 
 @implementation ActvityViewController
 
@@ -31,9 +30,7 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     refreshControl.backgroundColor = [UIColor purpleColor];
     refreshControl.tintColor = [UIColor whiteColor];
-    [refreshControl addTarget:self
-                       action:@selector(queryAll:)
-             forControlEvents:UIControlEventValueChanged];
+    [refreshControl addTarget:self action:@selector(queryAll:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
     self.likesActivities = [NSArray new];
     self.followsActivities = [NSArray new];
@@ -62,14 +59,16 @@
     [self commentsQuery];
     [self followsQuery];
 }
--(void)queryAll:(UIRefreshControl *)sender{
+
+- (void)queryAll:(UIRefreshControl *)sender{
     [self likesQuery];
     [self commentsQuery];
     [self followsActivities];
+    [self postsQuery];
     [sender endRefreshing];
-
 }
--(void)likesQuery {
+
+- (void)likesQuery {
     PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
     [activityQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
     [activityQuery whereKey:@"type" containsString:@"Like"];
@@ -92,6 +91,7 @@
     [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *result, NSError *error) {
         if (!error) {
             self.commentActivities = result;
+            // Code to get comments this week
         } else {
             NSLog(@"Error querying comments in Activity: %@", error.localizedDescription);
         }
@@ -107,6 +107,7 @@
     [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *result, NSError *error) {
         if (!error) {
             self.followsActivities = result;
+            // Code to get follows this week
         } else {
             NSLog(@"Error querying follows in Activity: %@", error.localizedDescription);
         }
@@ -114,58 +115,52 @@
     }];
 }
 
+- (void) postsQuery {
+    PFQuery *postsQuery = [PFQuery queryWithClassName:@"Post"];
+    [postsQuery whereKey:@"author" equalTo:[PFUser currentUser].objectId];
+    [postsQuery findObjectsInBackgroundWithBlock:^(NSArray *result, NSError *error) {
+        if (!error) {
+        self.posts = result;
+        NSLog(@"Posts retireved: %lu", (unsigned long)self.posts.count);
+        } else {
+            NSLog(@"Error querying posts in Activity feed. Error: %@", error.localizedDescription);
+        }
+    }];
+}
+
 #pragma mark - TableView Datasource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 9;
+    return 5;
 }
 
 - (ActivityTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ActivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
     if (indexPath.row == 0) {
         // Total number of likes.
-        cell.titleLabel.text = @"Total Number of Likes";
+        cell.titleLabel.text = @"People Have Liked Your Posts";
         cell.statLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.likesActivities.count];
+        cell.contentView.backgroundColor = self.green;
         return cell;
     } else if (indexPath.row == 1) {
         // Total number of followers.
-        cell.titleLabel.text = @"Total Number of Followers";
-        cell.statLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
+        cell.titleLabel.text = @"People Follow You";
+        cell.statLabel.text = [NSString stringWithFormat:@"%ld", self.followsActivities.count];
         cell.contentView.backgroundColor = self.purple;
         return cell;
-   } else if (indexPath.row == 2){
+   } else if (indexPath.row == 2) {
        // Total number of posts.
-       cell.titleLabel.text = @"Total Number of Comments";
-       cell.statLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
-       cell.backgroundColor = self.yellow;
+       cell.titleLabel.text = @"Posts From You";
+       cell.statLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row]; // <------- Get number of posts
+       cell.contentView.backgroundColor = self.yellow;
        return cell;
    } else if (indexPath.row == 3) {
        // Total number of comments recieved.
-       cell.titleLabel.text = @"Total Number of Followers";
-       cell.backgroundColor = self.red;
-       return cell;
-   } else if (indexPath.row == 4) {
-       // Number of likes this week.
-       cell.titleLabel.text = @"Number of Likes This Week";
-       return cell;
-   } else if (indexPath.row == 5) {
-       // Number of followers this week.
-       cell.titleLabel.text = @"Number of Posts This Week";
-       return cell;
-   } else if (indexPath.row == 6) {
-       // Number of posts this week.
-       cell.titleLabel.text = @"Number of Comments This Week";
-       return cell;
-   } else if (indexPath.row == 7) {
-       // Number of comments recieved this week.
-       cell.titleLabel.text = @"Number of Followers This Week";
-       return cell;
-   } else if (indexPath.row == 8) {
-       // Age of account
-       cell.titleLabel.text = @"Account Age";
+       cell.titleLabel.text = @"Comments on Your Posts";
+       cell.contentView.backgroundColor = self.red;
+       cell.statLabel.text = [NSString stringWithFormat:@"%ld", self.commentActivities.count];
        return cell;
    }
-    
     return cell;
 }
 
