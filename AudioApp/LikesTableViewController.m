@@ -94,6 +94,27 @@
 
         PFObject *followActivity = currentUserFollowDictionary[user.objectId];
 
+        [followActivity deleteInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+
+            if (completed && !error) {
+
+                NSMutableDictionary *followDictionaryMutable = [currentUserFollowDictionary mutableCopy];
+                [followDictionaryMutable removeObjectForKey:user.objectId];
+                currentUserFollowDictionary = followDictionaryMutable;
+
+                NSMutableArray *friendsMutable = [currentUserFriends mutableCopy];
+                [friendsMutable removeObject:guser];
+                currentUserFriends = friendsMutable;
+
+                [button setTitle:@"Follow" forState:UIControlStateNormal];
+                button.enabled = YES;
+            } else {
+                
+                button.enabled = YES;
+            }
+        }];
+
         NSLog(@"Follow activity to unfollow: %@", followActivity);
 
         button.enabled = YES;
