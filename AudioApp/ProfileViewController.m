@@ -686,7 +686,7 @@
 //
 //    }
 //}
-- (IBAction)onDeleteTapped:(id)sender {
+- (IBAction)onDeleteTapped:(UIButton *)sender {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"delete" message:nil preferredStyle:UIAlertControllerStyleAlert];
 
     //cancels alert controller
@@ -698,11 +698,18 @@
         //        self.uploadPhoto = [[UploadPhoto alloc]init];
 
 //        [self.selectedPhotos deleteInBackground];
-
-        NSIndexPath *indexPath = self.tableView.indexPathsForSelectedRows[0];
+        LikesAndCommentsCell *cell = (LikesAndCommentsCell *)sender.superview.superview;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         Post *post = self.userPosts[indexPath.section - 1];
-        [post deleteInBackground];
-        [self queryUserPosts];
+        [post deleteInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+            if (completed && !error) {
+
+                NSMutableArray *userPostsMutable = [self.userPosts mutableCopy];
+                [userPostsMutable removeObjectAtIndex:indexPath.section-1];
+                self.userPosts = userPostsMutable;
+            }
+        }];
 
     }];
 

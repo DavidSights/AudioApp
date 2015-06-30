@@ -470,9 +470,6 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="0.0" width="400" height="1000"/>
-                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="bB1-qa-1hX" id="6yh-q9-WYv"/>
                                     <outlet property="delegate" destination="bB1-qa-1hX" id="wtW-ZP-Wye"/>
@@ -2790,7 +2787,7 @@
         <image name="Record" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="98c-iR-cXf"/>
         <segue reference="Ix1-uV-Ket"/>
+        <segue reference="bH0-wl-Tib"/>
     </inferredMetricsTieBreakers>
 </document>
