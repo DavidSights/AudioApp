@@ -422,6 +422,22 @@
         NSIndexPath *indexPath =[self.tableView indexPathForCell:cell];
         Post *post = self.searchResults[indexPath.section];
 
+        PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
+        [activityQuery whereKey:@"post" equalTo:post];
+
+        [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+
+            if (!error) {
+
+                for (PFObject *object in objects) {
+                    [object deleteInBackground];
+                }
+                
+            }
+        }];
+        //
+        
+
 
         [post deleteInBackgroundWithBlock:^(BOOL completed, NSError *error) {
 
