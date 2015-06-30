@@ -236,6 +236,7 @@
                 if (self.player.playing) {
                     [self.player pause];
                 }
+
                 Post *post = self.posts[indexPath.section];
                 NSData *data = [post[@"audio"] getData];// Get audio from specific post in Parse - Can we avoid this query?
 
@@ -564,5 +565,39 @@
         }
     }
 
+}
+- (IBAction)onDeleteButtonTapped:(id)sender {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"delete" message:nil preferredStyle:UIAlertControllerStyleAlert];
+
+    //cancels alert controller
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    //
+    //saves what you wrote
+    UIAlertAction *deleteAction =  [UIAlertAction actionWithTitle:@"DELETE FOREVER!!!" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+
+        //        self.uploadPhoto = [[UploadPhoto alloc]init];
+
+        //        [self.selectedPhotos deleteInBackground];
+
+        NSIndexPath *indexPath = self.tableView.indexPathsForSelectedRows[0];
+        Post *post = self.posts[indexPath.section];
+        [post deleteInBackground];
+        [self queryFromParse];
+
+    }];
+
+    //add cancelAction variable to alertController
+    [alertController addAction:cancelAction];
+
+
+    [alertController addAction:deleteAction];
+
+
+    //activates alertcontroler
+    [self presentViewController:alertController animated:true completion:nil];
+    
+    
+
+    
 }
 @end

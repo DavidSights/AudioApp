@@ -470,6 +470,9 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="1000"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="bB1-qa-1hX" id="6yh-q9-WYv"/>
                                     <outlet property="delegate" destination="bB1-qa-1hX" id="wtW-ZP-Wye"/>
@@ -1213,6 +1216,7 @@
                                                     <connections>
                                                         <action selector="deleteButtonPressed:" destination="G5L-hD-9aF" eventType="touchUpInside" id="WQw-WS-60u"/>
                                                         <action selector="likeButtonPressed:" destination="G5L-hD-9aF" eventType="touchUpInside" id="dkf-W0-k0v"/>
+                                                        <action selector="onDeleteButtonTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="1pT-zh-TJQ"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Likes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DUV-LO-4Dg">
@@ -2786,7 +2790,7 @@
         <image name="Record" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="98c-iR-cXf"/>
         <segue reference="Ix1-uV-Ket"/>
-        <segue reference="bH0-wl-Tib"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -693,7 +693,9 @@
         //        self.uploadPhoto = [[UploadPhoto alloc]init];
 
 //        [self.selectedPhotos deleteInBackground];
-        Post *post = self.userPosts[self.indexPath.section];
+
+        NSIndexPath *indexPath = self.tableView.indexPathsForSelectedRows[0];
+        Post *post = self.userPosts[indexPath.section - 1];
         [post deleteInBackground];
         [self queryUserPosts];
 
