@@ -11,6 +11,7 @@
 #import "LikesAndCommentsCell.h"
 #import "LikesTableViewController.h"
 #import "CommentTableViewController.h"
+#import "ProfileViewController.h"
 
 @interface DiscoverViewController () <UISearchControllerDelegate, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, SearchResultsViewControllerDelegate>
 
@@ -19,6 +20,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property PFUser *searchResultsUser;
 @property Post *searchResultsVCPost;
 @property UILabel *searchResultsVCLabel;
 
@@ -118,6 +120,8 @@
 
 -(void)onHeaderCellTapped:(PFUser *)user {
 
+    self.searchResultsUser = user;
+    [self performSegueWithIdentifier:@"ProfileSegue" sender:self];
 }
 
 -(void)onLikesLabelTapped:(UILabel *)label andPost:(Post *)post {
@@ -157,8 +161,13 @@
         CommentTableViewController *commentVC = segue.destinationViewController;
         commentVC.post = self.searchResultsVCPost;
         commentVC.commentsLabel = self.searchResultsVCLabel;
-    }
+    }else if ([segue.identifier isEqualToString:@"ProfileSegue"]) {
 
+        ProfileViewController *profileVC = segue.destinationViewController;
+
+        profileVC.user = self.searchResultsUser;
+        
+    }
 }
 
 @end

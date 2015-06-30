@@ -17,6 +17,7 @@
 #import "AudioPlayerWithTag.h"
 #import "LikesTableViewController.h"
 #import "CommentTableViewController.h"
+#import "ProfileViewController.h"
 
 @interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, AVAudioPlayerDelegate, LikesAndCommentsCellDelegate>
 
@@ -154,6 +155,11 @@
 
     PostHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
 
+    UITapGestureRecognizer *headerGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTapped:)];
+
+    cell.userInteractionEnabled = YES;
+    [cell addGestureRecognizer:headerGestureRecognizer];
+
     Post *post = self.posts[section];
     PFUser *user = post[@"author"];
     NSLog(@"User: %@", user.username);
@@ -162,6 +168,8 @@
     cell.displayNameLabel.text = displayNameText;
     [cell.displayNameLabel sizeToFit];
     cell.backgroundColor = [UIColor whiteColor];
+
+    cell.tag = section;
 
     return cell;
 }
@@ -474,6 +482,13 @@
     [self performSegueWithIdentifier:@"CommentSegue" sender:button];
 }
 
+-(void)sectionHeaderTapped:(UITapGestureRecognizer *)sender {
+
+    NSLog(@"Header tapped");
+
+    [self performSegueWithIdentifier:@"ProfileSegue" sender:sender];
+}
+
 -(void)likesLabelTapped:(UITapGestureRecognizer *)sender {
 
     [self performSegueWithIdentifier:@"LikeSegue" sender:sender];
@@ -568,10 +583,19 @@
             commentsVC.post = self.posts[cell.tag];
             commentsVC.commentsLabel = cell.commentsLabel;
         }
+    } else if ([segue.identifier isEqualToString:@"ProfileSegue"]) {
+
+        ProfileViewController *profileVC = segue.destinationViewController;
+        PostHeaderCell *cell = (PostHeaderCell *)((UITapGestureRecognizer *)sender).view;
+        Post *post = self.posts[cell.tag];
+
+        profileVC.user = post[@"author"];
+        
     }
 
 }
-- (IBAction)onDeleteButtonTapped:(id)sender {
+
+-(void)didTapDeleteButton:(UIButton *)button{
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"delete" message:nil preferredStyle:UIAlertControllerStyleAlert];
 
     //cancels alert controller
@@ -584,25 +608,30 @@
 
         //        [self.selectedPhotos deleteInBackground];
 
-        NSIndexPath *indexPath = self.tableView.indexPathsForSelectedRows[0];
+        LikesAndCommentsCell *cell = (LikesAndCommentsCell *)button.superview.superview;
+        NSIndexPath *indexPath =[self.tableView indexPathForCell:cell];
         Post *post = self.posts[indexPath.section];
-        [post deleteInBackground];
-        [self queryFromParse];
 
+
+        [post deleteInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+            if (completed && !error) {
+
+                NSMutableArray *userPostsMutable = [self.posts mutableCopy];
+                [userPostsMutable removeObjectAtIndex:indexPath.section];
+                self.posts = userPostsMutable;
+            }
+        }];
     }];
 
     //add cancelAction variable to alertController
     [alertController addAction:cancelAction];
 
-
     [alertController addAction:deleteAction];
-
 
     //activates alertcontroler
     [self presentViewController:alertController animated:true completion:nil];
-    
-    
 
-    
 }
+
 @end
