@@ -360,6 +360,28 @@
     [alert show];
 }
 
+-(void)didTapDeleteButton:(UIButton *)button{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"delete" message:nil preferredStyle:UIAlertControllerStyleAlert];
+
+    //cancels alert controller
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    //
+    //saves what you wrote
+    UIAlertAction *deleteAction =  [UIAlertAction actionWithTitle:@"DELETE FOREVER!!!" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+
+        //        self.uploadPhoto = [[UploadPhoto alloc]init];
+
+        //        [self.selectedPhotos deleteInBackground];
+
+        NSIndexPath *indexPath = self.tableView.indexPathsForSelectedRows[0];
+        Post *post = self.userPosts[indexPath.section - 1];
+        [post deleteInBackground];
+        [self queryUserPosts];
+        
+    }];
+
+
+}
 - (IBAction)onDeleteTapped:(id)sender {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"delete" message:nil preferredStyle:UIAlertControllerStyleAlert];
 
