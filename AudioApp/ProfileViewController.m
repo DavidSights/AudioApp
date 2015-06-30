@@ -140,7 +140,7 @@
     NSLog(@"Updated likedPosts.");
 }
 
-#pragma mark - Queries
+#pragma mark - Parse
 
 - (void)queryUserPost:(UIRefreshControl *)refresher {
     [self queryUserPosts];
@@ -175,6 +175,42 @@
     UIImage *image = [UIImage imageWithData:data];
     //cell.imageView.image = image;
     cell.profileImagevIEW.image = image;
+}
+
+- (void)uploadToParse {
+    NSData *fileData;
+    NSString *fileName;
+
+    if (self.image != nil) {
+        // UIImage *newImage =self.image;
+        // self.nImage = [SettingsViewController imageWithImage:self.image scaledToSize:CGSizeMake(15, 15)];
+        fileData = UIImageJPEGRepresentation(self.image, 0.5);
+        fileName = @"profileImage.jpg";
+    }
+
+    PFFile *file = [PFFile fileWithName:fileName data:fileData];
+    [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (error) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!" message:@"Please try again." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        } else {
+            PFUser *user = [PFUser currentUser];
+            [user setObject:file forKey:@"profileImage"];
+            [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (error) {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
+                                                                        message:@"Please try again."
+                                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    [alertView show];
+                } else {
+                    // Everything was successful!
+                    self.imagePicker = nil;
+                }
+            }];
+        }
+        // don't touch!!!! - please let us know why
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"TestProfilePic" object:self];
+    }];
 }
 
 #pragma mark - NSNotification
@@ -402,190 +438,6 @@
     }
 }
 
-#pragma mark - TableView Data Source
-
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-    if (self.postLikesController.selectedSegmentIndex == 0) {
-
-        NSLog(@"Segmented index is 0. Returning %lu + 1", (unsigned long)self.userPosts.count);
-        return self.userPosts.count + 1;
-    } else {
-
-        NSLog(@"Segmented index is 1. Returning %lu + 1", (unsigned long)self.likedPosts.count);
-        return self.likedPosts.count + 1;
-    }
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    if (section == 0) {
-
-        return 2;
-    } else {
-
-        return 2;
-    }
-
-    return 2;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-
-    if (section == 0) {
-        return 0;
-    }
-    return 50.0;
-}
-
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-
-    PostHeaderCell *cell = nil;
-    cell.alpha = 0;
-
-    if (section != 0) {
-
-        cell.alpha = 1;
-        cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
-
-        Post *post;
-        if (self.postLikesController.selectedSegmentIndex == 0) {
-
-            post = self.userPosts[section - 1];
-        } else {
-
-            post = self.likedPosts[section - 1];
-        }
-
-        PFUser *user = post[@"author"];
-//        NSLog(@"User: %@", user.username);
-        NSString *displayNameText;
-        displayNameText = user[@"displayName"];
-//        NSLog(@"Display Name: %@", displayNameText);
-
-        displayNameText = user.username;
-        cell.displayNameLabel.text = displayNameText;
-        [cell.displayNameLabel sizeToFit];
-        cell.backgroundColor = [UIColor whiteColor];
-    }
-
-    return cell;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    if (indexPath.section == 0) {
-
-        if (indexPath.row == 0) {
-            self.indexPath2 = indexPath;
-
-            ProfileInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileCell"];
-            cell.usernameLabel.text = self.user.username;
-            PFUser *currentUser = [PFUser currentUser];
-            PFFile *file = self.user[@"profileImage"];
-            NSData *data = [file getData];
-            UIImage *image = [UIImage imageWithData:data];
-//            cell.imageView.image = image;
-
-            cell.profileImagevIEW.image = image;
-
-
-            UITapGestureRecognizer *imageview = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedImageView:)];
-            [cell.profileImagevIEW addGestureRecognizer:imageview];
-
-
-//            [self.profilePicButton setBackgroundImage:image forState:UIControlStateNormal];
-
-
-            return cell;
-        } else if (indexPath.row == 1) {
-            ProfileMiddleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MiddleCell"];
-            cell.delegate = self;
-            self.postLikesController = cell.profileSegmentedControl;
-
-            if ([self.user isEqual:[PFUser currentUser]]) {
-
-                [cell.cellButton setTitle:@"Edit Profile" forState:UIControlStateNormal];
-            } else {
-
-                if (currentUserFollowDictionary[self.user.objectId]) {
-
-                    [cell.cellButton setTitle:@"Unfollow" forState:UIControlStateNormal];
-                } else {
-
-                    [cell.cellButton setTitle:@"Follow" forState:UIControlStateNormal];
-                }
-            }
-
-            return cell;
-        }
-    } else {
-
-        if (indexPath.row == 0) {
-
-            PostCell* postCell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
-            CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
-
-            postCell.coloredView.frame = cellRect;
-            postCell.layoutMargins = UIEdgeInsetsZero;
-            postCell.preservesSuperviewLayoutMargins = NO;
-            postCell.timerLabel.text = @"0";
-
-            Post *post;
-            if (self.postLikesController.selectedSegmentIndex == 0) {
-
-                post = self.userPosts[indexPath.section - 1];
-            } else {
-
-                post = self.likedPosts[indexPath.section - 1];
-            }
-
-            if (post[@"colorHex"] != nil) {
-                NSString *string = post[@"colorHex"];
-                postCell.backgroundColor = [self colorWithHexString:string];
-            }else{
-                postCell.backgroundColor = [UIColor yellowColor];
-            }
-
-            return postCell;
-
-        } else {
-
-            LikesAndCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikesAndCommentsCell"];
-
-            Post *post;
-            if (self.postLikesController.selectedSegmentIndex == 0) {
-
-                post = self.userPosts[indexPath.section - 1];
-            } else {
-
-                post = self.likedPosts[indexPath.section - 1];
-            }
-            cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
-            cell.commentsLabel.text = [NSString stringWithFormat:@"%@ Comments", post[@"numOfComments"]];
-
-            cell.delegate = self;
-            cell.tag = indexPath.section - 1;
-            cell.backgroundColor = [UIColor whiteColor];
-
-            cell.likesLabel.tag = indexPath.section - 1;
-            cell.commentsLabel.tag = indexPath.section - 1;
-
-            UITapGestureRecognizer *likesGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(likesLabelTapped:)];
-            UITapGestureRecognizer *commentsGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentsLabelTapped:)];
-
-            [cell.likesLabel setUserInteractionEnabled:YES];
-            [cell.likesLabel addGestureRecognizer:likesGestureRecognizer];
-            [cell.commentsLabel setUserInteractionEnabled:YES];
-            [cell.commentsLabel addGestureRecognizer:commentsGestureRecognizer];
-            
-            return cell;
-        }   
-    }
-
-    return nil;
-}
-
 -(void)likesLabelTapped:(UITapGestureRecognizer *)sender {
 
     NSLog(@"Likes label tapped");
@@ -668,6 +520,216 @@
             }
         }
     }
+}
+
+#pragma mark - TableView Data Source
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0 && indexPath.section == 0) {
+        return 200;
+    } else if (indexPath.row == 1 && indexPath.section == 0) {
+        return 88;
+    } else if (indexPath.row == 0 && indexPath.section != 0){
+        return self.view.frame.size.width;
+    }
+    return 50;
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+    if (self.postLikesController.selectedSegmentIndex == 0) {
+
+        NSLog(@"Segmented index is 0. Returning %lu + 1", (unsigned long)self.userPosts.count);
+        return self.userPosts.count + 1;
+    } else {
+
+        NSLog(@"Segmented index is 1. Returning %lu + 1", (unsigned long)self.likedPosts.count);
+        return self.likedPosts.count + 1;
+    }
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
+    if (section == 0) {
+
+        return 2;
+    } else {
+
+        return 2;
+    }
+
+    return 2;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+
+    if (section == 0) {
+        return 0;
+    }
+    return 50.0;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+
+    PostHeaderCell *cell = nil;
+    cell.alpha = 0;
+
+    if (section != 0) {
+
+        cell.alpha = 1;
+        cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
+
+        Post *post;
+        if (self.postLikesController.selectedSegmentIndex == 0) {
+
+            post = self.userPosts[section - 1];
+        } else {
+
+            post = self.likedPosts[section - 1];
+        }
+
+        PFUser *user = post[@"author"];
+//        NSLog(@"User: %@", user.username);
+        NSString *displayNameText;
+        displayNameText = user[@"displayName"];
+//        NSLog(@"Display Name: %@", displayNameText);
+
+        displayNameText = user.username;
+        cell.displayNameLabel.text = displayNameText;
+        [cell.displayNameLabel sizeToFit];
+        cell.backgroundColor = [UIColor whiteColor];
+    }
+
+    return cell;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if (indexPath.section == 0) {
+
+        if (indexPath.row == 0) {
+            self.indexPath2 = indexPath;
+
+            ProfileInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileCell"];
+            cell.usernameLabel.text = self.user.username;
+            PFUser *currentUser = [PFUser currentUser];
+            PFFile *file = self.user[@"profileImage"];
+            NSData *data = [file getData];
+            UIImage *image = [UIImage imageWithData:data];
+
+            cell.profileImagevIEW.image = image;
+
+            UITapGestureRecognizer *imageview = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedImageView:)];
+            [cell.profileImagevIEW addGestureRecognizer:imageview];
+
+            return cell;
+        } else if (indexPath.row == 1) {
+            ProfileMiddleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MiddleCell"];
+            cell.delegate = self;
+            self.postLikesController = cell.profileSegmentedControl;
+
+            if ([self.user isEqual:[PFUser currentUser]]) {
+
+                [cell.cellButton setTitle:@"Edit Profile" forState:UIControlStateNormal];
+            } else {
+
+                if (currentUserFollowDictionary[self.user.objectId]) {
+
+                    [cell.cellButton setTitle:@"Unfollow" forState:UIControlStateNormal];
+                } else {
+
+                    [cell.cellButton setTitle:@"Follow" forState:UIControlStateNormal];
+                }
+            }
+            return cell;
+        }
+    } else {
+        if (indexPath.row == 0) {
+
+            PostCell* postCell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
+            CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
+
+            postCell.coloredView.frame = cellRect;
+            postCell.layoutMargins = UIEdgeInsetsZero;
+            postCell.preservesSuperviewLayoutMargins = NO;
+            postCell.timerLabel.text = @"0";
+
+            Post *post;
+            if (self.postLikesController.selectedSegmentIndex == 0) {
+
+                post = self.userPosts[indexPath.section - 1];
+            } else {
+
+                post = self.likedPosts[indexPath.section - 1];
+            }
+
+            if (post[@"colorHex"] != nil) {
+                NSString *string = post[@"colorHex"];
+                postCell.backgroundColor = [self colorWithHexString:string];
+            }else{
+                postCell.backgroundColor = [UIColor yellowColor];
+            }
+
+            return postCell;
+
+        } else {
+
+            LikesAndCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikesAndCommentsCell"];
+
+            Post *post;
+            if (self.postLikesController.selectedSegmentIndex == 0) {
+
+                post = self.userPosts[indexPath.section - 1];
+            } else {
+
+                post = self.likedPosts[indexPath.section - 1];
+            }
+            cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
+            cell.commentsLabel.text = [NSString stringWithFormat:@"%@ Comments", post[@"numOfComments"]];
+
+            cell.delegate = self;
+            cell.tag = indexPath.section - 1;
+            cell.backgroundColor = [UIColor whiteColor];
+
+            cell.likesLabel.tag = indexPath.section - 1;
+            cell.commentsLabel.tag = indexPath.section - 1;
+
+            UITapGestureRecognizer *likesGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(likesLabelTapped:)];
+            UITapGestureRecognizer *commentsGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentsLabelTapped:)];
+
+            [cell.likesLabel setUserInteractionEnabled:YES];
+            [cell.likesLabel addGestureRecognizer:likesGestureRecognizer];
+            [cell.commentsLabel setUserInteractionEnabled:YES];
+            [cell.commentsLabel addGestureRecognizer:commentsGestureRecognizer];
+            
+            return cell;
+        }   
+    }
+
+    return nil;
+}
+
+// Deals with color for post cells
+- (UIColor *) colorWithHexString: (NSString *) hexString {
+    NSString *colorString = [[hexString stringByReplacingOccurrencesOfString: @"#" withString: @""] uppercaseString];
+    CGFloat alpha, red, blue, green;
+
+    // #RGB
+    alpha = 1.0f;
+    red   = [self colorComponentFrom: colorString start: 0 length: 2];
+    green = [self colorComponentFrom: colorString start: 2 length: 2];
+    blue  = [self colorComponentFrom: colorString start: 4 length: 2];
+
+    return [UIColor colorWithRed: red green: green blue: blue alpha: alpha];
+}
+
+// Deals with color for post cells
+- (CGFloat)colorComponentFrom: (NSString *) string start: (NSUInteger) start length: (NSUInteger) length {
+    NSString *substring = [string substringWithRange: NSMakeRange(start, length)];
+    NSString *fullHex = length == 2 ? substring : [NSString stringWithFormat: @"%@%@", substring, substring];
+    unsigned hexComponent;
+    [[NSScanner scannerWithString: fullHex] scanHexInt: &hexComponent];
+    return hexComponent / 255.0;
 }
 
 #pragma mark - Manage Audio
@@ -773,43 +835,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-
-
-- (void)uploadToParse {
-    NSData *fileData;
-    NSString *fileName;
-
-    if (self.image != nil) {
-        // UIImage *newImage =self.image;
-        // self.nImage = [SettingsViewController imageWithImage:self.image scaledToSize:CGSizeMake(15, 15)];
-        fileData = UIImageJPEGRepresentation(self.image, 0.5);
-        fileName = @"profileImage.jpg";
-    }
-
-    PFFile *file = [PFFile fileWithName:fileName data:fileData];
-    [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (error) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!" message:@"Please try again." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alertView show];
-        } else {
-            PFUser *user = [PFUser currentUser];
-            [user setObject:file forKey:@"profileImage"];
-            [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (error) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"An error occurred!"
-                                                                        message:@"Please try again."
-                                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                    [alertView show];
-                } else {
-                    // Everything was successful!
-                    self.imagePicker = nil;
-                }
-            }];
-        }
-        // don't touch!!!! - please let us know why
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"TestProfilePic" object:self];
-    }];
-}
+#pragma mark - Navigation Bar Scroll Customization
 
 - (void)updateBarButtonItems:(CGFloat)alpha {
 
@@ -834,93 +860,53 @@
     }];
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0 && indexPath.section == 0) {
-        return 200;
-    } else if (indexPath.row == 1 && indexPath.section == 0) {
-        return 88;
-    } else if (indexPath.row == 0 && indexPath.section != 0){
-        return self.view.frame.size.width;
-    }
-    return 50;
-}
-
-- (UIColor *) colorWithHexString: (NSString *) hexString {
-    NSString *colorString = [[hexString stringByReplacingOccurrencesOfString: @"#" withString: @""] uppercaseString];
-    CGFloat alpha, red, blue, green;
-
-    // #RGB
-    alpha = 1.0f;
-    red   = [self colorComponentFrom: colorString start: 0 length: 2];
-    green = [self colorComponentFrom: colorString start: 2 length: 2];
-    blue  = [self colorComponentFrom: colorString start: 4 length: 2];
-
-    return [UIColor colorWithRed: red green: green blue: blue alpha: alpha];
-}
-
-- (CGFloat) colorComponentFrom: (NSString *) string start: (NSUInteger) start length: (NSUInteger) length {
-    NSString *substring = [string substringWithRange: NSMakeRange(start, length)];
-    NSString *fullHex = length == 2 ? substring : [NSString stringWithFormat: @"%@%@", substring, substring];
-    unsigned hexComponent;
-    [[NSScanner scannerWithString: fullHex] scanHexInt: &hexComponent];
-    return hexComponent / 255.0;
-}
-
 #pragma mark - Segue
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 
     if ([segue.identifier isEqualToString:@"LikeSegue"]) {
-
         LikesTableViewController *likesVC = segue.destinationViewController;
         Post *post;
-        if (self.postLikesController.selectedSegmentIndex == 0) {
 
+        if (self.postLikesController.selectedSegmentIndex == 0) {
             post = self.userPosts[((UITapGestureRecognizer *)sender).view.tag];
         } else {
-
             post = self.likedPosts[((UITapGestureRecognizer *)sender).view.tag];
         }
+
         likesVC.post = post;
-//        likesVC.post = self.posts[((UITapGestureRecognizer *)sender).view.tag];
         likesVC.likesLabel = (UILabel *)((UITapGestureRecognizer *)sender).view;
 
     } else if ([segue.identifier isEqualToString:@"CommentSegue"]) {
 
-        NSLog(@"Comments VC Segue");
-
         if ([sender isKindOfClass:[UITapGestureRecognizer class]]) {
-
             CommentTableViewController *commentsVC = segue.destinationViewController;
             Post *post;
-            if (self.postLikesController.selectedSegmentIndex == 0) {
 
+            if (self.postLikesController.selectedSegmentIndex == 0) {
                 post = self.userPosts[((UITapGestureRecognizer *)sender).view.tag];
             } else {
-
                 post = self.likedPosts[((UITapGestureRecognizer *)sender).view.tag];
             }
-//            commentsVC.post = self.posts[((UITapGestureRecognizer *)sender).view.tag];
+
             commentsVC.post = post;
             commentsVC.commentsLabel = (UILabel *)((UITapGestureRecognizer *)sender).view;
         } else {
-
             CommentTableViewController *commentsVC = segue.destinationViewController;
-            //            NSLog(@"add comment segue tag: %ld", (long)((UIButton *)sender).superview.superview.tag);
             LikesAndCommentsCell *cell = (LikesAndCommentsCell *)((UIButton *)sender).superview.superview;
             Post *post;
             NSLog(@"Cell tag: %ld", (long)cell.tag);
-            if (self.postLikesController.selectedSegmentIndex == 0) {
 
+            if (self.postLikesController.selectedSegmentIndex == 0) {
                 post = self.userPosts[cell.tag];
             } else {
-
                 post = self.likedPosts[cell.tag];
             }
-//            commentsVC.post = self.posts[cell.tag];
+
             commentsVC.post = post;
             commentsVC.commentsLabel = cell.commentsLabel;
         }
     }
 }
+
 @end
