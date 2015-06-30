@@ -95,6 +95,7 @@
     [activityQuery whereKey:@"type" equalTo:@"Like"];
     [activityQuery includeKey:@"post"];
     [activityQuery includeKey:@"toUser"];
+    [activityQuery orderByDescending:@"createdAt"];
     activityQuery.limit = 5;
     [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *likeActivities, NSError *error) {
 
@@ -108,6 +109,7 @@
 
                     Post *post = activity[@"post"];
                     post[@"author"] = activity[@"toUser"];
+                    NSLog(@"Post: %@", post);
                     [posts addObject: post];
                 }
             }
