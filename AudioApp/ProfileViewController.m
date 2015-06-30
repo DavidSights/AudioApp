@@ -723,8 +723,6 @@
     //activates alertcontroler
     [self presentViewController:alertController animated:true completion:nil];
 
-
-
 }
 
 - (IBAction)onProfilePicButtonTapped:(UIButton *)sender {
