@@ -58,6 +58,7 @@
 		9A6AF9A71B31E07A0040D5FF /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9A61B31E07A0040D5FF /* PostCell.m */; };
 		9A6AF9AA1B31EC800040D5FF /* LikesAndCommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9A91B31EC800040D5FF /* LikesAndCommentsCell.m */; };
 		9A6AF9AD1B31ED760040D5FF /* PostHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AF9AC1B31ED760040D5FF /* PostHeaderCell.m */; };
+		9A8890D11B41CA8000469F9A /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8890D01B41CA8000469F9A /* ActivityTableViewCell.m */; };
 		9AB2659C1B3DE461009E8638 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB2659A1B3DE460009E8638 /* Fabric.framework */; };
 		9AB2659D1B3DE461009E8638 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB2659B1B3DE461009E8638 /* Crashlytics.framework */; };
 /* End PBXBuildFile section */
@@ -156,6 +157,8 @@
 		9A6AF9A91B31EC800040D5FF /* LikesAndCommentsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikesAndCommentsCell.m; sourceTree = "<group>"; };
 		9A6AF9AB1B31ED760040D5FF /* PostHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostHeaderCell.h; sourceTree = "<group>"; };
 		9A6AF9AC1B31ED760040D5FF /* PostHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostHeaderCell.m; sourceTree = "<group>"; };
+		9A8890CF1B41CA8000469F9A /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
+		9A8890D01B41CA8000469F9A /* ActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTableViewCell.m; sourceTree = "<group>"; };
 		9AB2659A1B3DE460009E8638 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		9AB2659B1B3DE461009E8638 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -345,6 +348,8 @@
 		9A6AF9A41B31E0510040D5FF /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				9A8890CF1B41CA8000469F9A /* ActivityTableViewCell.h */,
+				9A8890D01B41CA8000469F9A /* ActivityTableViewCell.m */,
 				47B3B63A1B3C7B1200AE286C /* LikesTableView Cell */,
 				9A6AF9A51B31E07A0040D5FF /* PostCell.h */,
 				9A6AF9A61B31E07A0040D5FF /* PostCell.m */,
@@ -491,6 +496,7 @@
 				972AE7FD1B3A0C0E009B92F6 /* PasswordViewController.m in Sources */,
 				9777D2DB1B3076F400ED2B46 /* EditViewController.m in Sources */,
 				97C642551B3C956700F3658D /* ActvityViewController.m in Sources */,
+				9A8890D11B41CA8000469F9A /* ActivityTableViewCell.m in Sources */,
 				9A6AF9A71B31E07A0040D5FF /* PostCell.m in Sources */,
 				47B3B6401B3CA61600AE286C /* ProfileMiddleTableViewCell.m in Sources */,
 				9A1A03761B2F361C003243ED /* LoginViewController.m in Sources */,

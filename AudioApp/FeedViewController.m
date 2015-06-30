@@ -45,7 +45,7 @@
     self.yellow = [UIColor colorWithRed:249/255.0 green:217/255.0 blue:119/255.0 alpha:1.0];
     self.red = [UIColor colorWithRed:205/255.0 green:124/255.0 blue:135/255.0 alpha:1.0];
     self.purple = [UIColor colorWithRed:176/255.0 green:150/255.0 blue:193/255.0 alpha:1.0];
-    self.green = [UIColor colorWithRed:124/255.0 green:191/255.0 blue:183/255.0 alpha:1.0];
+    self.green = [UIColor colorWithRed:177/255.0 green:215/255.0 blue:165/255.0 alpha:1.0];
     self.darkBlue = [UIColor colorWithRed:83/255.0 green:153/255.0 blue:174/255.0 alpha:1.0];
     self.darkYellow = [UIColor colorWithRed:204/255.0 green:164/255.0 blue:42/255.0 alpha:1.0];
     self.darkRed = [UIColor colorWithRed:166/255.0 green:81/255.0 blue:92/255.0 alpha:1.0];
@@ -236,6 +236,7 @@
                 if (self.player.playing) {
                     [self.player pause];
                 }
+
                 Post *post = self.posts[indexPath.section];
                 NSData *data = [post[@"audio"] getData];// Get audio from specific post in Parse - Can we avoid this query?
 
@@ -331,7 +332,24 @@
 - (void)viewWillAppear:(BOOL)animated {
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
     if (currentUser) {
-//        [self queryFromParse];
+        NSLog(@"Current user: %@", currentUser.username);
+        //        [self queryFromParse];
+
+        self.currentUser.userObject = currentUser;
+
+        [User queryFriendsWithUser:self.currentUser.userObject withCompletion:^(NSArray *friends, NSError *error) {
+
+            if (!error) {
+
+                currentUserFriends = friends;
+
+                [self queryFromParse];
+
+            } else {
+
+                NSLog(@"Error: %@", error);
+            }
+        }];
     } else {
         [self performSegueWithIdentifier:@"login" sender:self];
     }
@@ -552,5 +570,39 @@
         }
     }
 
+}
+- (IBAction)onDeleteButtonTapped:(id)sender {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"delete" message:nil preferredStyle:UIAlertControllerStyleAlert];
+
+    //cancels alert controller
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    //
+    //saves what you wrote
+    UIAlertAction *deleteAction =  [UIAlertAction actionWithTitle:@"DELETE FOREVER!!!" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+
+        //        self.uploadPhoto = [[UploadPhoto alloc]init];
+
+        //        [self.selectedPhotos deleteInBackground];
+
+        NSIndexPath *indexPath = self.tableView.indexPathsForSelectedRows[0];
+        Post *post = self.posts[indexPath.section];
+        [post deleteInBackground];
+        [self queryFromParse];
+
+    }];
+
+    //add cancelAction variable to alertController
+    [alertController addAction:cancelAction];
+
+
+    [alertController addAction:deleteAction];
+
+
+    //activates alertcontroler
+    [self presentViewController:alertController animated:true completion:nil];
+    
+    
+
+    
 }
 @end

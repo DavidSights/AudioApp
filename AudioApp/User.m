@@ -38,9 +38,7 @@ NSDictionary *currentUserFollowDictionary;
 
                 [friends addObject:activity[@"toUser"]];
             }
-
             currentUserFollowDictionary = followDictionaryMutable;
-
             complete(friends, nil);
         } else {
 

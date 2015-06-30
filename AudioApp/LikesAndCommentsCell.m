@@ -22,6 +22,8 @@
 }
 
 - (IBAction)commentsButtonPressed:(UIButton *)button {
+
+    NSLog(@"CommentsButtonPRessed");
     [self.delegate didTapAddCommentButton:button];
 }
 
