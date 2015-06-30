@@ -396,6 +396,49 @@
     [alert show];
 }
 
+-(void)didTapDeleteButton:(UIButton *)button{
+
+
+
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"delete" message:nil preferredStyle:UIAlertControllerStyleAlert];
+
+    //cancels alert controller
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    //
+    //saves what you wrote
+    UIAlertAction *deleteAction =  [UIAlertAction actionWithTitle:@"DELETE FOREVER!!!" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+
+        //        self.uploadPhoto = [[UploadPhoto alloc]init];
+
+        //        [self.selectedPhotos deleteInBackground];
+
+        LikesAndCommentsCell *cell = (LikesAndCommentsCell *)button.superview.superview;
+        NSIndexPath *indexPath =[self.tableView indexPathForCell:cell];
+        Post *post = self.userPosts[indexPath.section -1];
+
+
+        [post deleteInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+            if (completed && !error) {
+
+                NSMutableArray *userPostsMutable = [self.userPosts mutableCopy];
+                [userPostsMutable removeObjectAtIndex:indexPath.section - 1];
+                self.userPosts = userPostsMutable;
+            }
+        }];
+    }];
+
+    //add cancelAction variable to alertController
+    [alertController addAction:cancelAction];
+
+    [alertController addAction:deleteAction];
+
+    //activates alertcontroler
+    [self presentViewController:alertController animated:true completion:nil];
+    
+
+
+}
 - (IBAction)onDeleteTapped:(id)sender {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"delete" message:nil preferredStyle:UIAlertControllerStyleAlert];
 
