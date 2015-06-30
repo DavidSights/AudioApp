@@ -442,24 +442,77 @@
     //saves what you wrote
     UIAlertAction *deleteAction =  [UIAlertAction actionWithTitle:@"DELETE FOREVER!!!" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
 
+
+        if (self.postLikesController.selectedSegmentIndex == 0) {
+
+
+            LikesAndCommentsCell *cell = (LikesAndCommentsCell *)button.superview.superview;
+            NSIndexPath *indexPath =[self.tableView indexPathForCell:cell];
+            Post *post = self.userPosts[indexPath.section -1];
+            PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
+
+            [activityQuery whereKey:@"post" equalTo:post];
+
+            [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+
+                if (!error) {
+
+                    for (PFObject *object in objects) {
+                        [object deleteInBackground];
+                    }
+
+                }
+            }];
+
+
+            [post deleteInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+                if (completed && !error) {
+
+                    NSMutableArray *userPostsMutable = [self.userPosts mutableCopy];
+                    [userPostsMutable removeObjectAtIndex:indexPath.section - 1];
+                    self.userPosts = userPostsMutable;
+                }
+            }];
+
+
+        } else {
+            LikesAndCommentsCell *cell = (LikesAndCommentsCell *)button.superview.superview;
+            NSIndexPath *indexPath =[self.tableView indexPathForCell:cell];
+            Post *post = self.likedPosts[indexPath.section -1];
+            PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
+
+            [activityQuery whereKey:@"post" equalTo:post];
+
+            [activityQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+
+                if (!error) {
+
+                    for (PFObject *object in objects) {
+                        [object deleteInBackground];
+                    }
+
+                }
+            }];
+
+
+            [post deleteInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+                if (completed && !error) {
+
+                    NSMutableArray *userPostsMutable = [self.likedPosts mutableCopy];
+                    [userPostsMutable removeObjectAtIndex:indexPath.section - 1];
+                    self.likedPosts = userPostsMutable;
+                }
+            }];
+
+
+//            post = self.likedPosts[indexPath.section - 1];
+        }
+
         //        self.uploadPhoto = [[UploadPhoto alloc]init];
 
         //        [self.selectedPhotos deleteInBackground];
-
-        LikesAndCommentsCell *cell = (LikesAndCommentsCell *)button.superview.superview;
-        NSIndexPath *indexPath =[self.tableView indexPathForCell:cell];
-        Post *post = self.userPosts[indexPath.section -1];
-
-
-        [post deleteInBackgroundWithBlock:^(BOOL completed, NSError *error) {
-
-            if (completed && !error) {
-
-                NSMutableArray *userPostsMutable = [self.userPosts mutableCopy];
-                [userPostsMutable removeObjectAtIndex:indexPath.section - 1];
-                self.userPosts = userPostsMutable;
-            }
-        }];
     }];
 
     //add cancelAction variable to alertController
