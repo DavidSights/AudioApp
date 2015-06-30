@@ -104,7 +104,7 @@
                 currentUserFollowDictionary = followDictionaryMutable;
 
                 NSMutableArray *friendsMutable = [currentUserFriends mutableCopy];
-                [friendsMutable removeObject:guser];
+                [friendsMutable removeObject:user];
                 currentUserFriends = friendsMutable;
 
                 [button setTitle:@"Follow" forState:UIControlStateNormal];
