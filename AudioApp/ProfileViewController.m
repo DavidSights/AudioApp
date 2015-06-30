@@ -69,6 +69,11 @@
     self.settingsButton.title = @"Settings";
 }
 
+- (void) viewDidDisappear:(BOOL)animated{
+    [self.player stop];
+}
+
+
 - (void)viewDidAppear:(BOOL)animated {
 
     if (self.postLikesController == 0) {
@@ -681,6 +686,39 @@
 //
 //    }
 //}
+- (IBAction)onDeleteTapped:(id)sender {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"delete" message:nil preferredStyle:UIAlertControllerStyleAlert];
+
+    //cancels alert controller
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    //
+    //saves what you wrote
+    UIAlertAction *deleteAction =  [UIAlertAction actionWithTitle:@"DELETE FOREVER!!!" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+
+        //        self.uploadPhoto = [[UploadPhoto alloc]init];
+
+//        [self.selectedPhotos deleteInBackground];
+
+        NSIndexPath *indexPath = self.tableView.indexPathsForSelectedRows[0];
+        Post *post = self.userPosts[indexPath.section - 1];
+        [post deleteInBackground];
+        [self queryUserPosts];
+
+    }];
+
+    //add cancelAction variable to alertController
+    [alertController addAction:cancelAction];
+
+
+    [alertController addAction:deleteAction];
+
+
+    //activates alertcontroler
+    [self presentViewController:alertController animated:true completion:nil];
+
+
+
+}
 
 - (IBAction)onProfilePicButtonTapped:(UIButton *)sender {
 //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Add Profile Picture" message:@"Do you want to take a picture or upload a picture?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Upload", @"Take Picture", nil];
