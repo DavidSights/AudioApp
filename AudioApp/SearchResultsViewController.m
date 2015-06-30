@@ -9,6 +9,7 @@
 #import "SearchResultsViewController.h"
 #import "LikesTableViewController.h"
 #import "CommentTableViewController.h"
+#import "ProfileViewController.h"
 #import "PostHeaderCell.h"
 #import "PostCell.h"
 #import "LikesAndCommentsCell.h"
@@ -75,6 +76,11 @@
     if (self.searchSegmentedControl.selectedSegmentIndex == 1) {
 
         PostHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
+
+        UITapGestureRecognizer *headerGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTapped:)];
+
+        cell.userInteractionEnabled = YES;
+        [cell addGestureRecognizer:headerGestureRecognizer];
 
         Post *post = self.searchResults[section];
         PFUser *user = post[@"author"];
@@ -230,6 +236,18 @@
             }
         }
     }
+}
+
+-(void)sectionHeaderTapped:(UITapGestureRecognizer *)sender {
+
+    NSLog(@"Header tapped");
+
+    PostHeaderCell *cell = (PostHeaderCell *)((UITapGestureRecognizer *)sender).view;
+    Post *post = self.searchResults[cell.tag];
+
+    PFUser *user = post[@"author"];
+
+    [self.delegate onHeaderCellTapped:user];
 }
 
 -(void)didTapLikeButton:(UIButton *)button {

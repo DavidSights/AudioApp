@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -28,7 +28,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oIk-3N-Pk4" id="jE1-0I-EDO">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="following 0   •   0 followers" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxb-18-lP5">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="following 0   •   0 followers" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxb-18-lP5">
                                                     <rect key="frame" x="8" y="109" width="384" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="yzZ-BP-GyR"/>
@@ -68,7 +68,7 @@
                                                         <constraint firstAttribute="height" constant="70" id="fPG-ne-ffP"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjg-dN-G6E">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="About" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjg-dN-G6E">
                                                     <rect key="frame" x="8" y="161" width="384" height="34"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1350,6 +1350,7 @@
                         <segue destination="DKP-sw-KJf" kind="presentation" identifier="login" id="9ZU-SX-AB3"/>
                         <segue destination="560-kE-GQz" kind="show" identifier="LikeSegue" id="98c-iR-cXf"/>
                         <segue destination="FhN-7t-sUG" kind="show" identifier="CommentSegue" id="WgL-K0-LpU"/>
+                        <segue destination="bB1-qa-1hX" kind="show" identifier="ProfileSegue" id="lyt-xR-4l8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -1696,6 +1697,7 @@
                         <outlet property="tableView" destination="sEZ-Hq-SUm" id="1jT-Zj-BNy"/>
                         <segue destination="560-kE-GQz" kind="show" identifier="LikeSegue" id="ZJl-fo-H8z"/>
                         <segue destination="FhN-7t-sUG" kind="show" identifier="CommentSegue" id="xfh-Tb-IaH"/>
+                        <segue destination="bB1-qa-1hX" kind="show" identifier="ProfileSegue" id="mSF-dP-dQe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y2B-GT-sj0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1896,7 +1898,8 @@
                                                             <exclude reference="sf7-us-Z1H"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="283" y="8" width="29" height="11"/>
                                                         <mask key="constraints">
                                                             <include reference="BnC-8w-aFU"/>
                                                             <include reference="sf7-us-Z1H"/>
@@ -1918,7 +1921,8 @@
                                                             <exclude reference="e92-Ia-fmh"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="275" y="31" width="37" height="11"/>
                                                         <mask key="constraints">
                                                             <include reference="aHE-qE-utN"/>
                                                             <include reference="e92-Ia-fmh"/>
@@ -2021,6 +2025,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="200"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="8" y="8" width="304" height="489"/>
+                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -2103,7 +2110,8 @@
                                                             <exclude reference="REE-TK-JV3"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="200" y="5" width="68" height="30"/>
                                                         <mask key="constraints">
                                                             <include reference="2iU-IV-pdB"/>
                                                             <include reference="REE-TK-JV3"/>
@@ -2132,7 +2140,8 @@
                                                             <exclude reference="sbb-3i-p3C"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="282" y="5" width="30" height="30"/>
                                                         <mask key="constraints">
                                                             <exclude reference="5ET-MN-8xZ"/>
                                                             <include reference="g0u-wX-3OJ"/>
@@ -2184,7 +2193,8 @@
                                                             <exclude reference="qQh-YA-lZ7"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="141" y="5" width="44" height="30"/>
                                                         <mask key="constraints">
                                                             <exclude reference="Lk7-MC-gXb"/>
                                                             <exclude reference="bFd-0B-Ehz"/>
@@ -3323,8 +3333,8 @@
         <image name="Record" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ix1-uV-Ket"/>
-        <segue reference="bH0-wl-Tib"/>
-        <segue reference="1FF-xO-mmz"/>
+        <segue reference="xfh-Tb-IaH"/>
+        <segue reference="mSF-dP-dQe"/>
+        <segue reference="ZJl-fo-H8z"/>
     </inferredMetricsTieBreakers>
 </document>

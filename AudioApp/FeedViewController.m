@@ -17,6 +17,7 @@
 #import "AudioPlayerWithTag.h"
 #import "LikesTableViewController.h"
 #import "CommentTableViewController.h"
+#import "ProfileViewController.h"
 
 @interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, AVAudioPlayerDelegate, LikesAndCommentsCellDelegate>
 
@@ -154,6 +155,11 @@
 
     PostHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
 
+    UITapGestureRecognizer *headerGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTapped:)];
+
+    cell.userInteractionEnabled = YES;
+    [cell addGestureRecognizer:headerGestureRecognizer];
+
     Post *post = self.posts[section];
     PFUser *user = post[@"author"];
     NSLog(@"User: %@", user.username);
@@ -162,6 +168,8 @@
     cell.displayNameLabel.text = displayNameText;
     [cell.displayNameLabel sizeToFit];
     cell.backgroundColor = [UIColor whiteColor];
+
+    cell.tag = section;
 
     return cell;
 }
@@ -474,6 +482,13 @@
     [self performSegueWithIdentifier:@"CommentSegue" sender:button];
 }
 
+-(void)sectionHeaderTapped:(UITapGestureRecognizer *)sender {
+
+    NSLog(@"Header tapped");
+
+    [self performSegueWithIdentifier:@"ProfileSegue" sender:sender];
+}
+
 -(void)likesLabelTapped:(UITapGestureRecognizer *)sender {
 
     [self performSegueWithIdentifier:@"LikeSegue" sender:sender];
@@ -568,6 +583,14 @@
             commentsVC.post = self.posts[cell.tag];
             commentsVC.commentsLabel = cell.commentsLabel;
         }
+    } else if ([segue.identifier isEqualToString:@"ProfileSegue"]) {
+
+        ProfileViewController *profileVC = segue.destinationViewController;
+        PostHeaderCell *cell = (PostHeaderCell *)((UITapGestureRecognizer *)sender).view;
+        Post *post = self.posts[cell.tag];
+
+        profileVC.user = post[@"author"];
+        
     }
 
 }
