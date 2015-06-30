@@ -7,7 +7,7 @@
 //
 
 #import "CommentTableViewController.h"
-
+#import "ProfileViewController.h"
 @interface CommentTableViewController ()
 
 @property (nonatomic)  NSArray *comments;
@@ -119,5 +119,19 @@
     
     [self presentViewController:alert animated:YES completion:nil];
     
+}
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+
+    if ([segue.identifier isEqualToString:@"ProfileSegueID"]) {
+
+        ProfileViewController *profileVC = segue.destinationViewController;
+        UITableViewCell *cell = sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        PFObject *like = self.comments[indexPath.row];
+        PFUser *user = like[@"fromUser"];
+        profileVC.user = user;
+    }
 }
 @end
