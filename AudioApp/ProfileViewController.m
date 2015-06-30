@@ -254,6 +254,13 @@
     }
 }
 
+-(void)didTapAddCommentButton:(UIButton *)button {
+
+    NSLog(@"Comment button tapped");
+
+    [self performSegueWithIdentifier:@"CommentSegue" sender:button];
+}
+
 -(void)middleCellButtonTapped:(UIButton *)button {
 
     button.enabled = NO;
