@@ -369,8 +369,7 @@
                                                         </mask>
                                                     </variation>
                                                     <connections>
-                                                        <action selector="deleteButtonPressed:" destination="E0F-Ib-20W" eventType="touchUpInside" id="yhv-Jd-ELQ"/>
-                                                        <action selector="likeButtonPressed:" destination="E0F-Ib-20W" eventType="touchUpInside" id="Lib-aR-sdi"/>
+                                                        <action selector="deleteButtonPressed:" destination="E0F-Ib-20W" eventType="touchUpInside" id="5TH-mZ-ww5"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Likes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IhM-Ce-FjB">
@@ -1189,7 +1188,6 @@
                                                     </variation>
                                                     <connections>
                                                         <action selector="deleteButtonPressed:" destination="G5L-hD-9aF" eventType="touchUpInside" id="WQw-WS-60u"/>
-                                                        <action selector="likeButtonPressed:" destination="G5L-hD-9aF" eventType="touchUpInside" id="dkf-W0-k0v"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Likes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DUV-LO-4Dg">
@@ -2201,7 +2199,6 @@
                                                     </variation>
                                                     <connections>
                                                         <action selector="deleteButtonPressed:" destination="ocU-bV-gRX" eventType="touchUpInside" id="AGE-xk-khk"/>
-                                                        <action selector="likeButtonPressed:" destination="ocU-bV-gRX" eventType="touchUpInside" id="v1c-dr-qD6"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -3330,8 +3327,8 @@
         <image name="Record" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xfh-Tb-IaH"/>
-        <segue reference="mSF-dP-dQe"/>
-        <segue reference="ZJl-fo-H8z"/>
+        <segue reference="1FF-xO-mmz"/>
+        <segue reference="Ix1-uV-Ket"/>
+        <segue reference="bH0-wl-Tib"/>
     </inferredMetricsTieBreakers>
 </document>
