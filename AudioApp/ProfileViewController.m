@@ -386,20 +386,16 @@
             if (completed && !error) {
 
                 NSMutableArray *userPostsMutable = [self.userPosts mutableCopy];
-                [userPostsMutable removeObjectAtIndex:indexPath.section -1];
+                [userPostsMutable removeObjectAtIndex:indexPath.section - 1];
                 self.userPosts = userPostsMutable;
             }
         }];
-
-
     }];
 
     //add cancelAction variable to alertController
     [alertController addAction:cancelAction];
 
-
     [alertController addAction:deleteAction];
-
 
     //activates alertcontroler
     [self presentViewController:alertController animated:true completion:nil];
