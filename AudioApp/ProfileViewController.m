@@ -111,12 +111,33 @@
     [followerQuery countObjectsInBackgroundWithBlock:^(int count, NSError *error) {
 
         self.numFollowers = count;
-        self.numFollowing = currentUserFollowDictionary.count;
 
     }];
 
+    PFQuery *followingQuery = [PFQuery queryWithClassName:@"Activity"];
+    [followingQuery whereKey:@"type" equalTo:@"Follow"];
+    [followingQuery whereKey:@"fromUser" equalTo:self.user];
+    [followingQuery countObjectsInBackgroundWithBlock:^(int count, NSError *error) {
+
+        self.numFollowing = count;
+
+    }];
 
     [self queryUserPosts];
+}
+
+-(void)setNumFollowers:(NSInteger)numFollowers {
+
+    _numFollowers = numFollowers;
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+}
+
+-(void)setNumFollowing:(NSInteger)numFollowing {
+
+    _numFollowing = numFollowing;
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
