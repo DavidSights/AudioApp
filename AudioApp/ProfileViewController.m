@@ -38,6 +38,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *profilePicButton;
 @property NSIndexPath *indexPath2;
 
+@property NSInteger numFollowers;
+@property NSInteger numFollowing;
+
 @end
 
 //static const CGFloat kNavBarHeight = 52.0f;
@@ -51,6 +54,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.numFollowers = 0;
+    self.numFollowing = 0;
 
     if (self.postLikesController == 0) {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -67,6 +73,7 @@
         [self.tableView addSubview:refreshControl];
     }
     self.settingsButton.title = @"Settings";
+
 }
 
 - (void) viewDidDisappear:(BOOL)animated{
@@ -97,6 +104,17 @@
     if (self.user == nil) {
         self.user = [PFUser currentUser];
     }
+
+    PFQuery *followerQuery = [PFQuery queryWithClassName:@"Activity"];
+    [followerQuery whereKey:@"type" equalTo:@"Follow"];
+    [followerQuery whereKey:@"toUser" equalTo:self.user];
+    [followerQuery countObjectsInBackgroundWithBlock:^(int count, NSError *error) {
+
+        self.numFollowers = count;
+        self.numFollowing = currentUserFollowDictionary.count;
+
+    }];
+
 
     [self queryUserPosts];
 }
@@ -169,12 +187,12 @@
 }
 
 - (void)queryUserProfilePic{
-    ProfileInfoTableViewCell *cell = [self.tableView cellForRowAtIndexPath:self.indexPath2];
+    ProfileInfoTableViewCell *cell = (ProfileInfoTableViewCell *)[self.tableView cellForRowAtIndexPath:self.indexPath2];
     PFFile *file = self.user[@"profileImage"];
     NSData *data = [file getData];
     UIImage *image = [UIImage imageWithData:data];
     //cell.imageView.image = image;
-    cell.profileImagevIEW.image = image;
+    cell.profileImageView.image = image;
 }
 
 - (void)uploadToParse {
@@ -416,8 +434,6 @@
 
 -(void)didTapDeleteButton:(UIButton *)button{
 
-
-
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"delete" message:nil preferredStyle:UIAlertControllerStyleAlert];
 
     //cancels alert controller
@@ -456,33 +472,6 @@
     
 
 
-}
-- (IBAction)onDeleteTapped:(id)sender {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"delete" message:nil preferredStyle:UIAlertControllerStyleAlert];
-
-    //cancels alert controller
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-    //
-    //saves what you wrote
-    UIAlertAction *deleteAction =  [UIAlertAction actionWithTitle:@"DELETE FOREVER!!!" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-
-        //        self.uploadPhoto = [[UploadPhoto alloc]init];
-
-        //        [self.selectedPhotos deleteInBackground];
-
-        NSIndexPath *indexPath = self.tableView.indexPathsForSelectedRows[0];
-        Post *post = self.userPosts[indexPath.section - 1];
-        [post deleteInBackground];
-        [self queryUserPosts];
-
-    }];
-
-    // add cancelAction variable to alertController
-    [alertController addAction:cancelAction];
-    [alertController addAction:deleteAction];
-
-    // activates alertcontroler
-    [self presentViewController:alertController animated:true completion:nil];
 }
 
 - (IBAction)onProfilePicButtonTapped:(UIButton *)sender {
@@ -668,10 +657,12 @@
             NSData *data = [file getData];
             UIImage *image = [UIImage imageWithData:data];
 
-            cell.profileImagevIEW.image = image;
+            cell.profileImageView.image = image;
+
+            cell.followingFollowersLabel.text = [NSString stringWithFormat:@"%li following • %li followers", (long)self.numFollowing, (long)self.numFollowers];
 
             UITapGestureRecognizer *imageview = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedImageView:)];
-            [cell.profileImagevIEW addGestureRecognizer:imageview];
+            [cell.profileImageView addGestureRecognizer:imageview];
 
             return cell;
         } else if (indexPath.row == 1) {
