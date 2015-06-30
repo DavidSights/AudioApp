@@ -10,6 +10,7 @@
 		47B3B6391B3B0B7100AE286C /* LikesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47B3B6381B3B0B7100AE286C /* LikesTableViewController.m */; };
 		47B3B63D1B3C7B4800AE286C /* LikeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47B3B63C1B3C7B4800AE286C /* LikeCell.m */; };
 		47B3B6401B3CA61600AE286C /* ProfileMiddleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47B3B63F1B3CA61600AE286C /* ProfileMiddleTableViewCell.m */; };
+		47B3B6431B419B9A00AE286C /* SearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47B3B6421B419B9A00AE286C /* SearchResultsViewController.m */; };
 		972AE7F71B39FCF0009B92F6 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 972AE7F61B39FCF0009B92F6 /* UserViewController.m */; };
 		972AE7FA1B39FDDE009B92F6 /* CommentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 972AE7F91B39FDDE009B92F6 /* CommentTableViewController.m */; };
 		972AE7FD1B3A0C0E009B92F6 /* PasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 972AE7FC1B3A0C0E009B92F6 /* PasswordViewController.m */; };
@@ -78,6 +79,8 @@
 		47B3B63C1B3C7B4800AE286C /* LikeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikeCell.m; sourceTree = "<group>"; };
 		47B3B63E1B3CA61600AE286C /* ProfileMiddleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileMiddleTableViewCell.h; sourceTree = "<group>"; };
 		47B3B63F1B3CA61600AE286C /* ProfileMiddleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileMiddleTableViewCell.m; sourceTree = "<group>"; };
+		47B3B6411B419B9A00AE286C /* SearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsViewController.h; sourceTree = "<group>"; };
+		47B3B6421B419B9A00AE286C /* SearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsViewController.m; sourceTree = "<group>"; };
 		972AE7F51B39FCF0009B92F6 /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserViewController.h; path = ../UserViewController.h; sourceTree = "<group>"; };
 		972AE7F61B39FCF0009B92F6 /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserViewController.m; path = ../UserViewController.m; sourceTree = "<group>"; };
 		972AE7F81B39FDDE009B92F6 /* CommentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableViewController.h; sourceTree = "<group>"; };
@@ -241,6 +244,8 @@
 				47B3B6381B3B0B7100AE286C /* LikesTableViewController.m */,
 				9A1A03791B2F54DB003243ED /* DiscoverViewController.h */,
 				9A1A037A1B2F54DB003243ED /* DiscoverViewController.m */,
+				47B3B6411B419B9A00AE286C /* SearchResultsViewController.h */,
+				47B3B6421B419B9A00AE286C /* SearchResultsViewController.m */,
 				9777D2D41B305E7700ED2B46 /* RecordViewController.h */,
 				9777D2D51B305E7700ED2B46 /* RecordViewController.m */,
 				9777D2D91B3076F400ED2B46 /* EditViewController.h */,
@@ -493,6 +498,7 @@
 				47B3B6391B3B0B7100AE286C /* LikesTableViewController.m in Sources */,
 				9A1A037E1B2F57C1003243ED /* OptionsViewController.m in Sources */,
 				9A1A03201B2E0889003243ED /* AppDelegate.m in Sources */,
+				47B3B6431B419B9A00AE286C /* SearchResultsViewController.m in Sources */,
 				9A1A03261B2E0889003243ED /* FeedViewController.m in Sources */,
 				9A1A037B1B2F54DB003243ED /* DiscoverViewController.m in Sources */,
 				972AE7F71B39FCF0009B92F6 /* UserViewController.m in Sources */,

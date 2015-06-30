@@ -11,6 +11,8 @@
 @protocol LikesAndCommentsCellDelegate <NSObject>
 
 - (void)didTapLikeButton:(UIButton *)button;
+- (void)didTapAddCommentButton:(UIButton *)button;
+- (void)didTapDeleteButton:(UIButton *)button;
 
 @end
 

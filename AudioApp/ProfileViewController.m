@@ -240,6 +240,11 @@
     }
 }
 
+-(void)didTapAddCommentButton:(UIButton *)button {
+
+    [self performSegueWithIdentifier:@"CommentSegue" sender:button];
+}
+
 -(void)middleCellButtonTapped:(UIButton *)button {
 
     button.enabled = NO;

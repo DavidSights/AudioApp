@@ -451,6 +451,11 @@
     }
 }
 
+-(void)didTapAddCommentButton:(UIButton *)button {
+
+    [self performSegueWithIdentifier:@"CommentSegue" sender:button];
+}
+
 -(void)likesLabelTapped:(UITapGestureRecognizer *)sender {
 
     [self performSegueWithIdentifier:@"LikeSegue" sender:sender];
