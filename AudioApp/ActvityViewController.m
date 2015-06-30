@@ -35,8 +35,6 @@
                        action:@selector(queryAll:)
              forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
-
-
     self.likesActivities = [NSArray new];
     self.followsActivities = [NSArray new];
     self.commentActivities = [NSArray new];
@@ -125,38 +123,45 @@
 - (ActivityTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ActivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
     if (indexPath.row == 0) {
-        // Total number of likes count.
+        // Total number of likes.
         cell.titleLabel.text = @"Total Number of Likes";
         cell.statLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.likesActivities.count];
         return cell;
     } else if (indexPath.row == 1) {
-        // Total number of followers count.
+        // Total number of followers.
         cell.titleLabel.text = @"Total Number of Followers";
         cell.statLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
         cell.contentView.backgroundColor = self.purple;
         return cell;
    } else if (indexPath.row == 2){
+       // Total number of posts.
        cell.titleLabel.text = @"Total Number of Comments";
        cell.statLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
        cell.backgroundColor = self.yellow;
        return cell;
    } else if (indexPath.row == 3) {
+       // Total number of comments recieved.
        cell.titleLabel.text = @"Total Number of Followers";
        cell.backgroundColor = self.red;
        return cell;
    } else if (indexPath.row == 4) {
+       // Number of likes this week.
        cell.titleLabel.text = @"Number of Likes This Week";
        return cell;
    } else if (indexPath.row == 5) {
+       // Number of followers this week.
        cell.titleLabel.text = @"Number of Posts This Week";
        return cell;
    } else if (indexPath.row == 6) {
+       // Number of posts this week.
        cell.titleLabel.text = @"Number of Comments This Week";
        return cell;
    } else if (indexPath.row == 7) {
+       // Number of comments recieved this week.
        cell.titleLabel.text = @"Number of Followers This Week";
        return cell;
    } else if (indexPath.row == 8) {
+       // Age of account
        cell.titleLabel.text = @"Account Age";
        return cell;
    }

@@ -562,7 +562,6 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-
     if (section == 0) {
         return 0;
     }
@@ -570,36 +569,28 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-
     PostHeaderCell *cell = nil;
     cell.alpha = 0;
 
     if (section != 0) {
-
         cell.alpha = 1;
         cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
-
         Post *post;
-        if (self.postLikesController.selectedSegmentIndex == 0) {
 
+        if (self.postLikesController.selectedSegmentIndex == 0) {
             post = self.userPosts[section - 1];
         } else {
-
             post = self.likedPosts[section - 1];
         }
 
         PFUser *user = post[@"author"];
-//        NSLog(@"User: %@", user.username);
         NSString *displayNameText;
         displayNameText = user[@"displayName"];
-//        NSLog(@"Display Name: %@", displayNameText);
-
         displayNameText = user.username;
         cell.displayNameLabel.text = displayNameText;
         [cell.displayNameLabel sizeToFit];
         cell.backgroundColor = [UIColor whiteColor];
     }
-
     return cell;
 }
 
@@ -612,7 +603,6 @@
 
             ProfileInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProfileCell"];
             cell.usernameLabel.text = self.user.username;
-            PFUser *currentUser = [PFUser currentUser];
             PFFile *file = self.user[@"profileImage"];
             NSData *data = [file getData];
             UIImage *image = [UIImage imageWithData:data];
@@ -763,6 +753,54 @@
     }
 }
 
+#pragma mark - Manage Profile Picture
+
+- (void)uploadFromPhotoAlbum {
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.delegate = self;
+    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    [self presentViewController:imagePicker animated:YES completion:nil];
+}
+
+- (void)uploadFromCamera {
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.delegate = self;
+    imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+    imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    [self presentViewController:imagePicker animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    self.image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    [self uploadToParse];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Navigation Bar Scroll Customization
+
+- (void)updateBarButtonItems:(CGFloat)alpha {
+
+    [self.navigationItem.leftBarButtonItems enumerateObjectsUsingBlock:^(UIBarButtonItem* item, NSUInteger i, BOOL *stop) {
+        item.customView.alpha = alpha;
+    }];
+    [self.navigationItem.rightBarButtonItems enumerateObjectsUsingBlock:^(UIBarButtonItem* item, NSUInteger i, BOOL *stop) {
+        item.customView.alpha = alpha;
+    }];
+    self.navigationItem.titleView.alpha = alpha;
+    self.navigationController.navigationBar.tintColor = [self.navigationController.navigationBar.tintColor colorWithAlphaComponent:alpha];
+//    self.urlTextField.alpha = alpha;
+}
+
+- (void)animateNavBarTo:(CGFloat)y {
+    [UIView animateWithDuration:0.2 animations:^{
+        CGRect frame = self.navigationController.navigationBar.frame;
+        CGFloat alpha = (frame.origin.y >= y ? 0 : 1);
+        frame.origin.y = y;
+        [self.navigationController.navigationBar setFrame:frame];
+        [self updateBarButtonItems:alpha];
+    }];
+}
+
 //- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 //    CGRect frame = self.navigationController.navigationBar.frame;
 //    CGFloat size = frame.size.height - 21;
@@ -811,54 +849,6 @@
 //
 //    }
 //}
-
-#pragma mark - Manage Profile Picture
-
-- (void)uploadFromPhotoAlbum {
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.delegate = self;
-    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    [self presentViewController:imagePicker animated:YES completion:nil];
-}
-
-- (void)uploadFromCamera {
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.delegate = self;
-    imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
-    imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    [self presentViewController:imagePicker animated:YES completion:nil];
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    self.image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    [self uploadToParse];
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - Navigation Bar Scroll Customization
-
-- (void)updateBarButtonItems:(CGFloat)alpha {
-
-    [self.navigationItem.leftBarButtonItems enumerateObjectsUsingBlock:^(UIBarButtonItem* item, NSUInteger i, BOOL *stop) {
-        item.customView.alpha = alpha;
-    }];
-    [self.navigationItem.rightBarButtonItems enumerateObjectsUsingBlock:^(UIBarButtonItem* item, NSUInteger i, BOOL *stop) {
-        item.customView.alpha = alpha;
-    }];
-    self.navigationItem.titleView.alpha = alpha;
-    self.navigationController.navigationBar.tintColor = [self.navigationController.navigationBar.tintColor colorWithAlphaComponent:alpha];
-//    self.urlTextField.alpha = alpha;
-}
-
-- (void)animateNavBarTo:(CGFloat)y {
-    [UIView animateWithDuration:0.2 animations:^{
-        CGRect frame = self.navigationController.navigationBar.frame;
-        CGFloat alpha = (frame.origin.y >= y ? 0 : 1);
-        frame.origin.y = y;
-        [self.navigationController.navigationBar setFrame:frame];
-        [self updateBarButtonItems:alpha];
-    }];
-}
 
 #pragma mark - Segue
 
