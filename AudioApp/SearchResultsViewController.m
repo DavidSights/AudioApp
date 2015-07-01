@@ -31,13 +31,6 @@
 
 @implementation SearchResultsViewController
 
-
-/*
- 
- The search results tableview isn't updating because it's not beng accessed. The data source methods that would fill the tableview are never being called.
-
- */
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.searchBar.delegate = self;
@@ -456,6 +449,37 @@
         PFUser *user = self.searchResults[indexPath.row];
         [self.delegate onHeaderCellTapped:user];
 //        [self performSegueWithIdentifier:@"profile" sender:self];
+    }
+}
+
+- (IBAction)segmentedConrollerChanged:(id)sender { // Search based on selection of 'people' or 'posts' and store results in self.searchResults.
+
+    if (![self.searchBar.text isEqualToString:@""]) { // Make sure search bar isn't empty
+
+        if (self.searchSegmentedControl.selectedSegmentIndex == 0) { // If 'people' is selected...
+            PFQuery *usernameQuery = [PFUser query];
+            [usernameQuery whereKey:@"username" matchesRegex:self.searchBar.text modifiers:@"i"]; // What is happening with that modifier? - David
+
+            PFQuery *displayNameQuery = [PFUser query];
+            [displayNameQuery whereKey:@"displayName" matchesRegex:self.searchBar.text modifiers:@"i"];
+
+            PFQuery *searchQuery = [PFQuery orQueryWithSubqueries:@[usernameQuery, displayNameQuery]];
+            [searchQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+                if (results && !error) {
+                    self.searchResults = results;
+                    NSLog(@"Retrieved search results for users. Number of results: %lu And results saved: %lu", (unsigned long)results.count, (unsigned long)self.searchResults.count);
+                }
+            }];
+        } else { // If 'posts' is selected...
+            PFQuery *searchQuery = [PFQuery queryWithClassName:@"Post"];
+            [searchQuery whereKey:@"descriptionComment" matchesRegex:self.searchBar.text modifiers:@"i"];
+            [searchQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+                if (results && !error) {
+                    NSLog(@"Retrieved search results for posts. Number of posts retrieved: %lu", (unsigned long)results.count);
+                    self.searchResults = results;
+                }
+            }];
+        }
     }
 }
 

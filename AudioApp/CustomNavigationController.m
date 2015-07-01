@@ -22,14 +22,13 @@
 //    self.navigationBar.tintColor = [UIColor whiteColor];
 //    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:100/255.0 green:100/255.0 blue:100/255.0 alpha:1.0]}];
 
-    UIImage *logoLoginImage = [UIImage imageNamed:@"Lillo_navbar"];
+    UIImage *logoLoginImage = [UIImage imageNamed:@"logo_navbar"];
     if (logoLoginImage != nil) {
         NSLog(@"Logo image successfully assigned: %@", logoLoginImage);
         self.navigationBar.topItem.titleView = [[UIImageView alloc] initWithImage:logoLoginImage];
     } else {
         NSLog(@"Tried to load navbar image but the iamge was nil.");
     }
-
 //    [self.navigationBar setTranslucent:YES];
 }
 

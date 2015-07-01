@@ -168,8 +168,6 @@
 
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)];
 
-    headerView.backgroundColor = [UIColor lightGrayColor];
-
     UIImageView *profileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 30, 30)];
     profileImageView.clipsToBounds = YES;
     profileImageView.layer.cornerRadius = 15;
@@ -179,17 +177,13 @@
     [headerView addSubview:profileImageView];
 
     UILabel *displayNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, headerView.frame.size.width - 90, headerView.frame.size.height/2 - 5)];
-    displayNameLabel.backgroundColor = [UIColor orangeColor];
     displayNameLabel.textAlignment = NSTextAlignmentLeft;
     displayNameLabel.center = headerView.center;
     [displayNameLabel setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
     [headerView addSubview:displayNameLabel];
 
     UILabel *createdAtLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerView.frame.size.width - 50, 5, 45, headerView.frame.size.height/2 - 5)];
-    createdAtLabel.backgroundColor = [UIColor greenColor];
-
     UILabel *loopsLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerView.frame.size.width - 50, headerView.frame.size.height/2, 45, headerView.frame.size.height/2 - 5)];
-    loopsLabel.backgroundColor = [UIColor redColor];
 
     createdAtLabel.textAlignment = NSTextAlignmentRight;
     [createdAtLabel setFont:[UIFont fontWithName:@"Helvetica" size:10.0]];
@@ -211,7 +205,7 @@
 
     if (!user[@"profileImage"]) {
         profileImageView.image = [UIImage imageNamed:@"Profile"];
-    } else{
+    } else {
         PFFile *file = user[@"profileImage"];
         NSData *data = [file getData];
         UIImage *image = [UIImage imageWithData:data];
@@ -222,8 +216,17 @@
 
     headerView.userInteractionEnabled = YES;
     [headerView addGestureRecognizer:headerGestureRecognizer];
-
     headerView.tag = section;
+
+    // Color
+    headerView.backgroundColor = [UIColor colorWithRed:65/255.0 green:91/255.0 blue:113/255.0 alpha:1.0];
+//    displayNameLabel.backgroundColor = [UIColor orangeColor];
+//    createdAtLabel.backgroundColor = [UIColor greenColor];
+//    loopsLabel.backgroundColor = [UIColor redColor];
+    UIColor *lightBlueText = [UIColor colorWithRed:120/255.0 green:166/255.0 blue:205/255.0 alpha:1.0];
+    displayNameLabel.textColor = [UIColor whiteColor];
+    createdAtLabel.textColor = lightBlueText;
+    loopsLabel.textColor = lightBlueText;
 
     return headerView ;
 }
@@ -231,15 +234,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     if (indexPath.row == 0) {
-
         PostCell* postCell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
         CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
         postCell.timerLabel.text = @"0";
-
         postCell.coloredView.frame = cellRect;
         postCell.layoutMargins = UIEdgeInsetsZero;
         postCell.preservesSuperviewLayoutMargins = NO;
-
         Post *post = self.posts[indexPath.section];
 
         if (post[@"colorHex"] != nil) {
@@ -251,7 +251,6 @@
 
         return postCell;
     } else {
-
         LikesAndCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikesAndCommentsCell"];
 
         Post *post = self.posts[indexPath.section];
@@ -283,36 +282,25 @@
 }
 
 - (void)insertToTableViewFromBottom {
-
     if (self.postQuery) {
-
         self.postQuery.skip += 5;
         [self.postQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
-
             if (!error) {
-
                 for (Post *post in posts) {
-
                     NSLog(@"Post: %@", post);
-
                     int64_t delayInSeconds = 1.0;
                     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
                     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                         [self.tableView beginUpdates];
-
                         [self.posts addObject:post];
-
                         [self.tableView insertSections:[NSIndexSet indexSetWithIndex:self.posts.count-1] withRowAnimation:UITableViewRowAnimationMiddle];
-                        
                         [self.tableView endUpdates];
-                        
                         [self.tableView.infiniteScrollingView stopAnimating];
                     });
                 }
             }
         }];
     }
-    
 }
 
 #pragma mark - Audio
