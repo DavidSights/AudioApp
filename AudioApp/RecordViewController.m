@@ -46,6 +46,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [self setUpRecording];
+
     // Reset button, reset timer.
     [self resetButtonStyle];
 }

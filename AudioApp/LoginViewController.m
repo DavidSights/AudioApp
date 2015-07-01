@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginToggleButton;
 @property (weak, nonatomic) IBOutlet UIButton *signUpToggleButton;
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
+@property UIColor *blue, *yellow, *red, *purple, *green, *darkBlue, *darkYellow, *darkRed, *darkPurple, *darkGreen, *pink, *deepBlue;
 @property BOOL loginToggled;
 
 @end
@@ -27,6 +28,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+
+    // App color theme.
+    self.blue = [UIColor colorWithRed:160/255.0 green:215/255.0 blue:231/255.0 alpha:1.0];
+    self.yellow = [UIColor colorWithRed:251/255.0 green:247/255.0 blue:199/255.0 alpha:1.0];
+    self.red = [UIColor colorWithRed:205/255.0 green:124/255.0 blue:135/255.0 alpha:1.0];
+    self.purple = [UIColor colorWithRed:176/255.0 green:150/255.0 blue:193/255.0 alpha:1.0];
+    self.green = [UIColor colorWithRed:177/255.0 green:215/255.0 blue:165/255.0 alpha:1.0];
+    self.darkBlue = [UIColor colorWithRed:83/255.0 green:153/255.0 blue:174/255.0 alpha:1.0];
+    self.darkYellow = [UIColor colorWithRed:204/255.0 green:164/255.0 blue:42/255.0 alpha:1.0];
+    self.darkRed = [UIColor colorWithRed:166/255.0 green:81/255.0 blue:92/255.0 alpha:1.0];
+    self.darkPurple = [UIColor colorWithRed:121/255.0 green:192/255.0 blue:140/255.0 alpha:1.0];
+    self.darkGreen = [UIColor colorWithRed:75/255.0 green:151/255.0 blue:142/255.0 alpha:1.0];
+    self.pink = [UIColor colorWithRed:255/255.0 green:187/255.0 blue:208/255.0 alpha:1.0];
+    self.deepBlue = [UIColor colorWithRed:21/255.0 green:42/255.0 blue:59/255.0 alpha:1.0];
+
+
     self.passwordTextField.secureTextEntry = YES;
     self.usernameTextField.delegate = self;
     self.passwordTextField.delegate = self;
@@ -34,7 +52,26 @@
     self.loginToggleButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     self.signUpToggleButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
 
+    NSArray *textfields = [NSArray arrayWithObjects:self.usernameTextField, self.passwordTextField, self.emailTextField, nil];
+    for (UITextField *textField in textfields) {
+        if ([textField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
+            UIColor *color = [UIColor colorWithRed:124/255.0 green:165/255.0 blue:206/255.0 alpha:1.0];
+            textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:textField.placeholder attributes:@{NSForegroundColorAttributeName: color}];
+        } else {
+            NSLog(@"Cannot set placeholder text's color, because deployment target is earlier than iOS 6.0");
+            // TODO: Add fall-back code to set placeholder color.
+        }
+    }
+
     [self toggleSignUp];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    // Format button style
+    self.loginButton.backgroundColor = self.yellow;
+    self.signUpButton.backgroundColor = self.yellow;
+    self.loginButton.layer.cornerRadius = self.loginButton.frame.size.width/25;
+    self.signUpButton.layer.cornerRadius = self.signUpButton.frame.size.width/25;
 }
 
 - (void)toggleLogin {
@@ -59,10 +96,12 @@
 
 - (IBAction)signUpTogglePressed:(id)sender {
     [self toggleSignUp];
+    [self dismissKeyboard];
 }
 
 - (IBAction)loginTogglePressed:(id)sender {
     [self toggleLogin];
+    [self dismissKeyboard];
 }
 
 - (IBAction)forgotPasswordButtonPressed:(id)sender {
@@ -112,6 +151,12 @@
             }
         }];
     }
+}
+
+- (void) dismissKeyboard {
+    [self.usernameTextField resignFirstResponder];
+    [self.passwordTextField resignFirstResponder];
+    [self.emailTextField resignFirstResponder];
 }
 
 - (IBAction)loginButton:(id)sender {

@@ -106,7 +106,6 @@
 }
 
 -(void)onHeaderCellTapped:(PFUser *)user {
-
     self.searchResultsUser = user;
     [self performSegueWithIdentifier:@"ProfileSegue" sender:self];
 }
