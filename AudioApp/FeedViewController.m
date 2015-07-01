@@ -32,7 +32,7 @@
 @property NSIndexPath *indexPath;
 @property User *currentUser;
 @property UIRefreshControl *refreshControl;
-@property UIColor *blue, *yellow, *red, *purple, *green, *darkBlue, *darkYellow, *darkRed, *darkPurple, *darkGreen, *pink;
+@property UIColor *blue, *yellow, *red, *purple, *green, *darkBlue, *darkYellow, *darkRed, *darkPurple, *darkGreen, *pink, *deepBlue;
 
 @end
 
@@ -53,9 +53,14 @@
     self.darkPurple = [UIColor colorWithRed:121/255.0 green:192/255.0 blue:140/255.0 alpha:1.0];
     self.darkGreen = [UIColor colorWithRed:75/255.0 green:151/255.0 blue:142/255.0 alpha:1.0];
     self.pink = [UIColor colorWithRed:255/255.0 green:187/255.0 blue:208/255.0 alpha:1.0];
+    self.deepBlue = [UIColor colorWithRed:21/255.0 green:42/255.0 blue:59/255.0 alpha:1.0];
+
+    self.view.backgroundColor = self.deepBlue;
+    self.tableView.backgroundColor = self.deepBlue;
+
 
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    refreshControl.backgroundColor = self.pink;
+//    refreshControl.backgroundColor = self.pink;
     refreshControl.tintColor = [UIColor whiteColor];
     [refreshControl addTarget:self
                             action:@selector(getLastPost:)
@@ -170,12 +175,15 @@
     [cell.displayNameLabel sizeToFit];
     cell.backgroundColor = [UIColor whiteColor];
     if (!user[@"profileImage"]) {
-
-    }else{
-    PFFile *file = user[@"profileImage"];
-    NSData *data = [file getData];
-    UIImage *image = [UIImage imageWithData:data];
-    cell.profileImageView.image = image;}
+        // Create a default iamge for when a user doesn't have an image.
+    } else {
+        PFFile *file = user[@"profileImage"];
+        NSData *data = [file getData];
+        UIImage *image = [UIImage imageWithData:data];
+        cell.profileImageView.image = image;
+        cell.profileImageView.layer.masksToBounds = YES;
+        cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.size.width/2;
+    }
 
     cell.tag = section;
 

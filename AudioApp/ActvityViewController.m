@@ -17,7 +17,7 @@
 @property NSArray *followsActivities;
 @property NSArray *commentActivities;
 @property NSArray *posts;
-@property UIColor *blue, *yellow, *red, *purple, *green, *darkBlue, *darkYellow, *darkRed, *darkPurple, *darkGreen, *pink;
+@property UIColor *blue, *yellow, *red, *purple, *green, *darkBlue, *darkYellow, *darkRed, *darkPurple, *darkGreen, *pink, *deepBlue;
 
 @end
 
@@ -27,8 +27,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+
+
+
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    refreshControl.backgroundColor = [UIColor purpleColor];
+    refreshControl.backgroundColor = self.deepBlue;
     refreshControl.tintColor = [UIColor whiteColor];
     [refreshControl addTarget:self action:@selector(queryAll:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
@@ -48,6 +51,9 @@
     self.darkPurple = [UIColor colorWithRed:121/255.0 green:192/255.0 blue:140/255.0 alpha:1.0];
     self.darkGreen = [UIColor colorWithRed:75/255.0 green:151/255.0 blue:142/255.0 alpha:1.0];
     self.pink = [UIColor colorWithRed:255/255.0 green:187/255.0 blue:208/255.0 alpha:1.0];
+    self.deepBlue = [UIColor colorWithRed:21/255.0 green:42/255.0 blue:59/255.0 alpha:1.0];
+
+    self.view.backgroundColor = self.deepBlue;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -131,7 +137,7 @@
 #pragma mark - TableView Datasource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return 4;
 }
 
 - (ActivityTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
