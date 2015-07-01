@@ -171,6 +171,11 @@
 
     cell.tag = section;
 
+    UIImageView *profileImageView;
+    UILabel *displayNameLabel;
+    UILabel *createdAtLabel;
+    UILabel *loopsLabel;
+
     return cell;
 }
 
