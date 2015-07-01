@@ -767,6 +767,7 @@
             cell.delegate = self;
             self.postLikesController = cell.profileSegmentedControl;
 
+    
             if ([self.user isEqual:[PFUser currentUser]]) {
 
                 [cell.cellButton setTitle:@"Edit Profile" forState:UIControlStateNormal];
