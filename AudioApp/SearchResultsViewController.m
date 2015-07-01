@@ -76,7 +76,6 @@
         ProfileViewController *profileVC = segue.destinationViewController;
         NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
         PFUser *user = self.searchResults[indexPath.row];
-
         profileVC.user = user;
     }
 }
@@ -194,68 +193,6 @@
         }
     }
     return nil;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    self.indexPath = indexPath;
-
-    if (self.searchSegmentedControl.selectedSegmentIndex == 1) {
-        
-        if (indexPath.row == 0) { // Only respond to audio display cell.
-
-            NSLog(@"TAP");
-
-            if (self.player.tag == indexPath.section) { // Check if user is trying to play the same audio again.
-                if (self.player.playing) {
-                    [self.player pause];
-                } else if (self.player.tag == 0) { // Audio tag is automatically set to 0, so the first post requires special attention.
-                    if (self.player.playing) {
-                        [self.player pause];
-                    }
-                    Post *post = self.searchResults[indexPath.section];
-                    NSData *data = [post[@"audio"] getData];// Get audio from specific post in Parse - Can we avoid this query?
-
-                    //do NOT DELETE CODE BELOW;
-                    AVAudioSession *session = [AVAudioSession sharedInstance];
-                    NSError *setCategoryError = nil;
-                    if (![session setCategory:AVAudioSessionCategoryPlayback
-                                  withOptions:AVAudioSessionCategoryOptionMixWithOthers
-                                        error:&setCategoryError]) {
-                        NSLog(@"Error creating new audio session: %@", setCategoryError.localizedDescription);
-                    }
-
-                    self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
-                    [self playRecordedAudio];
-                } else if (!self.player.playing) {
-                    [self.player play];
-                }
-            } else { // A new post was tapped - stop whatever audio the player is playing, load up the new audio, and play it.
-                [self.player stop];
-                Post *post = self.searchResults[indexPath.section];
-                NSData *data = [post[@"audio"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
-
-                //do NOT DELETE CODE BELOW;
-                AVAudioSession *session = [AVAudioSession sharedInstance];
-                NSError *setCategoryError = nil;
-                if (![session setCategory:AVAudioSessionCategoryPlayback
-                              withOptions:AVAudioSessionCategoryOptionMixWithOthers
-                                    error:&setCategoryError]) {
-                    NSLog(@"Error creating new audio session: %@", setCategoryError.localizedDescription);
-                }
-
-                self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
-                self.player.tag = (int)indexPath.section;
-                self.integer = 0;
-                
-                [self playRecordedAudio];
-            }
-        }
-    }
-    else if (self.searchSegmentedControl.selectedSegmentIndex == 0) { // We're in the 'people' segment
-        // Grab user from cell
-        [self performSegueWithIdentifier:@"profile" sender:self];
-    }
-
 }
 
 #pragma mark - Audio
@@ -463,11 +400,63 @@
     [self.delegate onDeleteTapped];
 }
 
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (self.searchSegmentedControl.selectedSegmentIndex == 0) { // We're in the 'people' segment
-//        // Grab user from cell
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //    self.indexPath = indexPath;
+    if (self.searchSegmentedControl.selectedSegmentIndex == 1) { // 'Posts' selected.
+        if (indexPath.row == 0) { // Only respond to audio display cell.
+            if (self.player.tag == indexPath.section) { // Check if user is trying to play the same audio again.
+                if (self.player.playing) {
+                    [self.player pause];
+                } else if (self.player.tag == 0) { // Audio tag is automatically set to 0, so the first post requires special attention.
+                    if (self.player.playing) {
+                        [self.player pause];
+                    }
+                    Post *post = self.searchResults[indexPath.section];
+                    NSData *data = [post[@"audio"] getData];// Get audio from specific post in Parse - Can we avoid this query?
+
+                    //do NOT DELETE CODE BELOW;
+                    AVAudioSession *session = [AVAudioSession sharedInstance];
+                    NSError *setCategoryError = nil;
+                    if (![session setCategory:AVAudioSessionCategoryPlayback
+                                  withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                                        error:&setCategoryError]) {
+                        NSLog(@"Error creating new audio session: %@", setCategoryError.localizedDescription);
+                    }
+
+                    self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
+                    [self playRecordedAudio];
+                } else if (!self.player.playing) {
+                    [self.player play];
+                }
+            } else { // A new post was tapped - stop whatever audio the player is playing, load up the new audio, and play it.
+                [self.player stop];
+                Post *post = self.searchResults[indexPath.section];
+                NSData *data = [post[@"audio"] getData]; // Get audio from specific post in Parse - Can we avoid this query?
+
+                //do NOT DELETE CODE BELOW;
+                AVAudioSession *session = [AVAudioSession sharedInstance];
+                NSError *setCategoryError = nil;
+                if (![session setCategory:AVAudioSessionCategoryPlayback
+                              withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                                    error:&setCategoryError]) {
+                    NSLog(@"Error creating new audio session: %@", setCategoryError.localizedDescription);
+                }
+
+                self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
+                self.player.tag = (int)indexPath.section;
+                self.integer = 0;
+
+                [self playRecordedAudio];
+            }
+        }
+    }
+    else if (self.searchSegmentedControl.selectedSegmentIndex == 0) { // We're in the 'people' segment
+        // Grab user from cell
+        NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
+        PFUser *user = self.searchResults[indexPath.row];
+        [self.delegate onHeaderCellTapped:user];
 //        [self performSegueWithIdentifier:@"profile" sender:self];
-//    }
+    }
 }
 
 #pragma mark - Update Results
