@@ -860,15 +860,15 @@
                                                     <include reference="Z0W-TS-Fkq"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="82w-nP-97M"/>
-                                                    <include reference="oYQ-Ye-Pdh"/>
-                                                    <include reference="AF7-vP-S3b"/>
-                                                    <include reference="Vrj-gU-kHV"/>
-                                                    <include reference="SH7-a5-Ztc"/>
-                                                    <include reference="vfg-XP-yBD"/>
                                                     <include reference="Ay5-H2-e70"/>
                                                     <include reference="PtX-sg-aqz"/>
                                                     <include reference="gzd-xn-7l4"/>
+                                                    <include reference="AF7-vP-S3b"/>
+                                                    <include reference="Vrj-gU-kHV"/>
+                                                    <include reference="82w-nP-97M"/>
+                                                    <include reference="oYQ-Ye-Pdh"/>
+                                                    <include reference="SH7-a5-Ztc"/>
+                                                    <include reference="vfg-XP-yBD"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>

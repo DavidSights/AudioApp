@@ -14,6 +14,8 @@
     // Initialization code
     self.displayNameLabel.textColor = [UIColor grayColor];
     self.loopsLabel.textColor = [UIColor grayColor];
+    self.loopsLabel.alpha = 0;
+    self.createdAtLabel.alpha = 0;
     self.createdAtLabel.textColor = [UIColor grayColor];
 }
 
