@@ -73,6 +73,8 @@
             commentsVC.commentsLabel = cell.commentsLabel;
         }
     }
+
+
 }
 
 #pragma mark - TableView Datasource
