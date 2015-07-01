@@ -766,7 +766,14 @@
             PFFile *file = self.user[@"profileImage"];
             NSData *data = [file getData];
             UIImage *image = [UIImage imageWithData:data];
-
+            cell.locationLabel.alpha = 0;
+            if ([cell.aboutLabel.text isEqualToString:@""]) {
+                cell.aboutLabel.alpha = 0;
+            }else if(![cell.aboutLabel.text isEqualToString:@""]){
+                cell.aboutLabel.text = self.user[@"about"];
+//                [self.tableView reloadData];
+            }
+//            cell.aboutLabel.text = self.user[@"about"];
             cell.profileImageView.image = image;
 
             cell.followingFollowersLabel.text = [NSString stringWithFormat:@"%li following • %li followers", (long)self.numFollowing, (long)self.numFollowers];
