@@ -56,6 +56,24 @@
     [super viewDidLoad];
 //    self.user = [PFUser currentUser];
 
+
+    if (![PFUser currentUser]) {
+        [self.tabBarController setSelectedIndex:0];
+    }
+
+    if (self.user == nil) {
+        self.user = [PFUser currentUser];
+    }
+
+    if ([self.user isEqual:[PFUser currentUser]]) {
+        NSLog(@"Current user detected in profile. Profile's user: %@, Current user: %@", self.user, [PFUser currentUser]);
+    } else {
+        NSLog(@"Profile does not match current user. Profile user: %@, Current user: %@", self.user, [PFUser currentUser]);
+        UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:nil];
+        self.navigationItem.rightBarButtonItem = editButton;
+    }
+
+
     self.numFollowers = 0;
     self.numFollowing = 0;
 
@@ -361,59 +379,54 @@
 
 -(void)middleCellButtonTapped:(UIButton *)button {
 
-    button.enabled = NO;
+    if ([self.user isEqual:[PFUser currentUser]]) {
+        NSLog(@"User tapped settings button.");
+        [self performSegueWithIdentifier:@"settingID2" sender:self];
+    } else {
+        NSLog(@"User tapped follow/unfollow button.");
+        button.enabled = NO;
 
-    if ([button.titleLabel.text isEqualToString:@"Unfollow"]) {
+        if ([button.titleLabel.text isEqualToString:@"Unfollow"]) {
+            PFObject *followActivity = currentUserFollowDictionary[self.user.objectId];
+            [followActivity deleteInBackgroundWithBlock:^(BOOL completed, NSError *error) {
 
-        PFObject *followActivity = currentUserFollowDictionary[self.user.objectId];
+                if (completed && !error) {
+                    NSMutableDictionary *followDictionaryMutable = [currentUserFollowDictionary mutableCopy];
+                    [followDictionaryMutable removeObjectForKey:self.user.objectId];
+                    currentUserFollowDictionary = followDictionaryMutable;
+                    NSMutableArray *friendsMutable = [currentUserFriends mutableCopy];
+                    [friendsMutable removeObject:self.user];
+                    currentUserFriends = friendsMutable;
+                    [button setTitle:@"Follow" forState:UIControlStateNormal];
+                    button.enabled = YES;
+                } else {
+                    button.enabled = YES;
+                }
+            }];
+        } else if ([button.titleLabel.text isEqualToString:@"Follow"]) {
+            PFObject *newFollowActivity = [PFObject objectWithClassName:@"Activity"];
+            newFollowActivity[@"type"] = @"Follow";
+            newFollowActivity[@"fromUser"] = [PFUser currentUser];
+            newFollowActivity[@"toUser"] = self.user;
+            [newFollowActivity saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
 
-        [followActivity deleteInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+                if (completed && !error) {
+                    NSMutableDictionary *followDictionaryMutable = [currentUserFollowDictionary mutableCopy];
+                    [followDictionaryMutable setObject:newFollowActivity forKey:[newFollowActivity[@"toUser"] objectId]];
+                    currentUserFollowDictionary = followDictionaryMutable;
 
+                    NSMutableArray *friendsMutable = [currentUserFriends mutableCopy];
+                    [friendsMutable addObject:newFollowActivity[@"toUser"]];
+                    currentUserFriends = friendsMutable;
 
-            if (completed && !error) {
-
-                NSMutableDictionary *followDictionaryMutable = [currentUserFollowDictionary mutableCopy];
-                [followDictionaryMutable removeObjectForKey:self.user.objectId];
-                currentUserFollowDictionary = followDictionaryMutable;
-
-                NSMutableArray *friendsMutable = [currentUserFriends mutableCopy];
-                [friendsMutable removeObject:self.user];
-                currentUserFriends = friendsMutable;
-
-                [button setTitle:@"Follow" forState:UIControlStateNormal];
-                button.enabled = YES;
-            } else {
-
-                button.enabled = YES;
-            }
-        }];
-
-    } else if ([button.titleLabel.text isEqualToString:@"Follow"]) {
-
-        PFObject *newFollowActivity = [PFObject objectWithClassName:@"Activity"];
-        newFollowActivity[@"type"] = @"Follow";
-        newFollowActivity[@"fromUser"] = [PFUser currentUser];
-        newFollowActivity[@"toUser"] = self.user;
-
-        [newFollowActivity saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
-
-            if (completed && !error) {
-
-                NSMutableDictionary *followDictionaryMutable = [currentUserFollowDictionary mutableCopy];
-                [followDictionaryMutable setObject:newFollowActivity forKey:[newFollowActivity[@"toUser"] objectId]];
-                currentUserFollowDictionary = followDictionaryMutable;
-
-                NSMutableArray *friendsMutable = [currentUserFriends mutableCopy];
-                [friendsMutable addObject:newFollowActivity[@"toUser"]];
-                currentUserFriends = friendsMutable;
-                
-                [button setTitle:@"Unfollow" forState:UIControlStateNormal];
-                button.enabled = YES;
-            } else {
-
-                button.enabled = YES;
-            }
-        }];
+                    [button setTitle:@"Unfollow" forState:UIControlStateNormal];
+                    button.enabled = YES;
+                } else {
+                    
+                    button.enabled = YES;
+                }
+            }];
+        }
     }
 }
 
@@ -767,7 +780,7 @@
             cell.delegate = self;
             self.postLikesController = cell.profileSegmentedControl;
 
-    
+
             if ([self.user isEqual:[PFUser currentUser]]) {
 
                 [cell.cellButton setTitle:@"Edit Profile" forState:UIControlStateNormal];
