@@ -44,7 +44,6 @@
     self.pink = [UIColor colorWithRed:255/255.0 green:187/255.0 blue:208/255.0 alpha:1.0];
     self.deepBlue = [UIColor colorWithRed:21/255.0 green:42/255.0 blue:59/255.0 alpha:1.0];
 
-
     self.passwordTextField.secureTextEntry = YES;
     self.usernameTextField.delegate = self;
     self.passwordTextField.delegate = self;
