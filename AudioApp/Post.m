@@ -24,7 +24,7 @@
 //    return self;
 //}
 
-+(void)queryPostsWithFriends:(NSArray *)friends andUser:(PFUser *)user withCompletion:(void(^)(NSArray *posts))complete {
++(PFQuery *)queryPostsWithFriends:(NSArray *)friends andUser:(PFUser *)user withCompletion:(void(^)(NSArray *posts))complete {
 
     NSMutableArray *searchArray = [friends mutableCopy];
     [searchArray addObject:user];
@@ -35,6 +35,7 @@
     [postQuery whereKey:@"author" containedIn:searchArray];
     [postQuery includeKey:@"author"];
     [postQuery orderByDescending:@"createdAt"];
+    postQuery.skip = 0;
     postQuery.limit = 5;
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
 
@@ -45,6 +46,8 @@
             complete(posts);
         }
     }];
+
+    return postQuery;
 }
 
 

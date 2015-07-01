@@ -18,7 +18,7 @@
 
 //- (instancetype)initWithAudioFile:(PFFile *)audioFile andComment:(NSString *)comment;
 
-+(void)queryPostsWithFriends:(NSArray *)friends andUser:(PFUser *)user withCompletion:(void(^)(NSArray *posts))complete;
++(PFQuery *)queryPostsWithFriends:(NSArray *)friends andUser:(PFUser *)user withCompletion:(void(^)(NSArray *posts))complete;
 
 +(void)queryPostsWithFriends:(NSArray *)friends withCompletion:(void(^)(NSArray *posts))complete;
 

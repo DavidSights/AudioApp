@@ -23,7 +23,7 @@
 @interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, AVAudioPlayerDelegate, LikesAndCommentsCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic)  NSArray *posts;
+@property (nonatomic)  NSMutableArray *posts;
 @property NSArray *likes;
 @property NSTimer *timer;
 @property AudioPlayerWithTag *player;
@@ -34,6 +34,8 @@
 @property User *currentUser;
 @property UIRefreshControl *refreshControl;
 @property UIColor *blue, *yellow, *red, *purple, *green, *darkBlue, *darkYellow, *darkRed, *darkPurple, *darkGreen, *pink, *deepBlue;
+
+@property PFQuery *postQuery;
 
 @end
 
@@ -75,7 +77,7 @@
 
     self.integer = 0;
     self.scrollview.delegate = self;
-    self.posts = [[NSArray alloc]init];
+    self.posts = [[NSMutableArray alloc]init];
     self.currentUser = [User new];
     PFUser *currentUser = [PFUser currentUser]; //show current user in console
     
@@ -91,7 +93,7 @@
 
                 currentUserFriends = friends;
 
-                [self queryFromParse];
+                self.postQuery = [self queryFromParse];
 
             } else {
 
@@ -122,7 +124,7 @@
     [self.player stop];
 }
 
--(void)setPosts:(NSArray *)posts {
+-(void)setPosts:(NSMutableArray *)posts {
 
     _posts = posts;
     [self.tableView reloadData];
@@ -282,6 +284,34 @@
 
 - (void)insertToTableViewFromBottom {
 
+    if (self.postQuery) {
+
+        self.postQuery.skip += 5;
+        [self.postQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
+
+            if (!error) {
+
+                for (Post *post in posts) {
+
+                    NSLog(@"Post: %@", post);
+
+                    int64_t delayInSeconds = 1.0;
+                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                        [self.tableView beginUpdates];
+
+                        [self.posts addObject:post];
+
+                        [self.tableView insertSections:[NSIndexSet indexSetWithIndex:self.posts.count-1] withRowAnimation:UITableViewRowAnimationNone];
+                        
+                        [self.tableView endUpdates];
+                        
+                        [self.tableView.infiniteScrollingView stopAnimating];
+                    });
+                }
+            }
+        }];
+    }
     
 }
 
@@ -382,14 +412,16 @@
 
 #pragma mark - Parse
 
-- (void)queryFromParse {
+- (PFQuery *)queryFromParse {
 
     NSLog(@"Querying from parse");
 
-    [Post queryPostsWithFriends:currentUserFriends andUser:self.currentUser.userObject withCompletion:^(NSArray *posts) {
+    PFQuery *query = [Post queryPostsWithFriends:currentUserFriends andUser:self.currentUser.userObject withCompletion:^(NSArray *posts) {
 
-        self.posts = posts;
+        self.posts = [posts mutableCopy];
     }];
+
+    return query;
 }
 
 #pragma mark - Update Information
