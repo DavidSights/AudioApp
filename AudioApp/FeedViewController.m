@@ -18,6 +18,7 @@
 #import "LikesTableViewController.h"
 #import "CommentTableViewController.h"
 #import "ProfileViewController.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 
 @interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, AVAudioPlayerDelegate, LikesAndCommentsCellDelegate>
 
@@ -40,6 +41,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+
+        [self insertToTableViewFromBottom];
+    }];
 
     // App color theme.
     self.blue = [UIColor colorWithRed:160/255.0 green:215/255.0 blue:231/255.0 alpha:1.0];
@@ -270,6 +276,11 @@
         }
         return cell;
     }
+}
+
+- (void)insertToTableViewFromBottom {
+
+    
 }
 
 #pragma mark - Audio
