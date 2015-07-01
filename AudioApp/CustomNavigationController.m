@@ -18,9 +18,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationBar.barTintColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:244/255.0 alpha:1.0];
-    self.navigationBar.tintColor = [UIColor blackColor];
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:100/255.0 green:100/255.0 blue:100/255.0 alpha:1.0]}];
+    self.navigationBar.barTintColor = [UIColor colorWithRed:21/255.0 green:42/255.0 blue:59/255.0 alpha:1.0];
+    self.navigationBar.tintColor = [UIColor whiteColor];
+//    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:100/255.0 green:100/255.0 blue:100/255.0 alpha:1.0]}];
+
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_login"]];
+
 
 //    [self.navigationBar setTranslucent:YES];
 }
