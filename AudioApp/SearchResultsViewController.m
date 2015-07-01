@@ -20,50 +20,75 @@
 @interface SearchResultsViewController () <UITableViewDataSource, UITableViewDelegate, LikesAndCommentsCellDelegate, AVAudioPlayerDelegate>
 
 @property (nonatomic)  NSArray *searchResults;
-
 @property AudioPlayerWithTag *player;
 @property NSTimer *timer;
 @property NSInteger *integer;
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *searchSegmentedControl;
 
 @end
 
+
 @implementation SearchResultsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     self.searchBar.delegate = self;
 }
 
--(void)setSearchResults:(NSArray *)searchResults {
+#pragma mark - Setters
 
-    _searchResults = searchResults;
+- (void)setSearchResults:(NSArray *)searchResults {
+    self.searchResults = searchResults;
     [self.tableView reloadData];
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+#pragma mark - Segue
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+
+    if ([segue.identifier isEqualToString:@"LikeSegue"]) {
+        LikesTableViewController *likesVC = segue.destinationViewController;
+        likesVC.post = self.searchResults[((UITapGestureRecognizer *)sender).view.tag];
+        likesVC.likesLabel = (UILabel *)((UITapGestureRecognizer *)sender).view;
+
+    } else if ([segue.identifier isEqualToString:@"CommentSegue"]) {
+
+        if ([sender isKindOfClass:[UITapGestureRecognizer class]]) {
+            CommentTableViewController *commentsVC = segue.destinationViewController;
+            commentsVC.post = self.searchResults[((UITapGestureRecognizer *)sender).view.tag];
+            commentsVC.commentsLabel = (UILabel *)((UITapGestureRecognizer *)sender).view;
+        } else {
+            CommentTableViewController *commentsVC = segue.destinationViewController;
+            //            NSLog(@"add comment segue tag: %ld", (long)((UIButton *)sender).superview.superview.tag);
+            LikesAndCommentsCell *cell = (LikesAndCommentsCell *)((UIButton *)sender).superview.superview;
+            commentsVC.post = self.searchResults[cell.tag];
+            commentsVC.commentsLabel = cell.commentsLabel;
+        }
+    }
+}
+
+#pragma mark - TableView Datasource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
     if (self.searchSegmentedControl.selectedSegmentIndex == 0) {
         return 1;
     } else {
-
         return self.searchResults.count;
     }
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
     if (self.searchSegmentedControl.selectedSegmentIndex == 0) {
         return self.searchResults.count;
     } else {
-
         return 2;
     }
 }
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
 
     if (self.searchSegmentedControl.selectedSegmentIndex == 1) {
         return 50;
@@ -73,60 +98,44 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 
-    if (self.searchSegmentedControl.selectedSegmentIndex == 1) {
-
+    if (self.searchSegmentedControl.selectedSegmentIndex == 1) { // Customize header cell when posts are selected.
         PostHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
-
         UITapGestureRecognizer *headerGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTapped:)];
-
-        cell.userInteractionEnabled = YES;
+        cell.userInteractionEnabled = YES; // Does this need to be set here if user interaction is already enabled from Storyboard?
         [cell addGestureRecognizer:headerGestureRecognizer];
-
         Post *post = self.searchResults[section];
         PFUser *user = post[@"author"];
-        NSLog(@"User: %@", user.username);
         NSString *displayNameText = user.username;
-        NSLog(@"Display Name: %@", displayNameText);
         cell.displayNameLabel.text = displayNameText;
         [cell.displayNameLabel sizeToFit];
         cell.backgroundColor = [UIColor whiteColor];
 
         return cell;
     }
-
     return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     if (self.searchSegmentedControl.selectedSegmentIndex == 1) {
-
         if (indexPath.row == 0) { // First cell should display the audio view.
             return self.view.frame.size.width; // Height for audio view.
-            //        return [UIScreen mainScreen].bounds.size.width;
         }
     }
-
     return  50;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-
     if (self.searchSegmentedControl.selectedSegmentIndex == 0) {
-
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserCell"];
-
         PFUser *user = self.searchResults[indexPath.row];
-
         cell.textLabel.text = user.username;
         cell.detailTextLabel.text = user[@"displayName"];
 
         return cell;
     } else {
-
         if (indexPath.row == 0) {
-
             PostCell* postCell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
             CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
             postCell.timerLabel.text = @"0";
@@ -143,20 +152,15 @@
             }else{
                 postCell.backgroundColor = [UIColor yellowColor];
             }
-            
             return postCell;
         } else {
-
             LikesAndCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikesAndCommentsCell"];
-
             Post *post = self.searchResults[indexPath.section];
             cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
             cell.commentsLabel.text = [NSString stringWithFormat:@"%@ Comments", post[@"numOfComments"]];
-
             cell.delegate = self;
             cell.tag = indexPath.section;
             cell.backgroundColor = [UIColor whiteColor];
-
             cell.likesLabel.tag = indexPath.section;
             cell.commentsLabel.tag = indexPath.section;
 
@@ -177,7 +181,6 @@
             return cell;
         }
     }
-
     return nil;
 }
 
@@ -238,117 +241,12 @@
     }
 }
 
--(void)sectionHeaderTapped:(UITapGestureRecognizer *)sender {
-
-    NSLog(@"Header tapped");
-
-    PostHeaderCell *cell = (PostHeaderCell *)((UITapGestureRecognizer *)sender).view;
-    Post *post = self.searchResults[cell.tag];
-
-    PFUser *user = post[@"author"];
-
-    [self.delegate onHeaderCellTapped:user];
-}
-
--(void)didTapLikeButton:(UIButton *)button {
-
-    NSLog(@"Tapped");
-
-    LikesAndCommentsCell *cell = (LikesAndCommentsCell *)button.superview.superview;
-
-    PFUser *currentUser = [PFUser currentUser];
-    Post *post = self.searchResults[cell.tag];
-    NSMutableArray *likes = [post[@"likes"] mutableCopy];
-
-    if ([likes containsObject:currentUser.objectId]) {
-
-        NSLog(@"User already liked this post");
-
-        button.enabled = NO;
-
-        PFQuery *likeQuery = [PFQuery queryWithClassName:@"Activity"];
-        [likeQuery whereKey:@"type" equalTo:@"Like"];
-        [likeQuery whereKey:@"fromUser" equalTo:currentUser];
-        [likeQuery whereKey:@"toUser" equalTo:post[@"author"]];
-
-        [likeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-
-            if (!error) {
-
-                for (PFObject *likeActivity in objects) {
-
-                    [likeActivity deleteEventually];
-                }
-            }
-        }];
-
-        [post removeObject:currentUser.objectId forKey:@"likes"];
-        [post incrementKey:@"numOfLikes" byAmount:[NSNumber numberWithInt:-1]];
-
-        cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
-
-        [post saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
-
-            if (completed && !error) {
-
-                NSLog(@"Likes uploaded successfully");
-
-                button.enabled = YES;
-            } else {
-
-                button.enabled = YES;
-            }
-        }];
-
-    } else {
-
-        button.enabled = NO;
-
-        PFObject *activity = [PFObject objectWithClassName:@"Activity"];
-        activity[@"fromUser"] = currentUser;
-        activity[@"toUser"] = post[@"author"];
-        activity[@"post"] = post;
-        activity[@"type"] = @"Like";
-        activity[@"content"] = @"";
-
-        [post addObject:currentUser.objectId forKey:@"likes"];
-        [post incrementKey:@"numOfLikes"];
-
-        cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
-
-        [activity saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
-
-            if (completed && !error) {
-
-                NSLog(@"Activity Saved");
-
-                [post saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
-
-                    if (completed && !error) {
-
-                        NSLog(@"Likes uploaded successfully");
-
-                        button.enabled = YES;
-                    } else {
-                        
-                        button.enabled = YES;
-                    }
-                }];
-            } else {
-                NSLog(@"button enabled");
-                
-                button.enabled = YES;
-            }
-        }];
-    }
-}
+#pragma mark - Audio
 
 - (void)playRecordedAudio {
     //    self.player.numberOfLoops = -1;
     self.player.delegate = self;
     [self.player play];
-
-
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(playingTime) userInfo:nil repeats:YES];
 }
 
@@ -359,49 +257,144 @@
 }
 
 -(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
-
-
     if (!self.player.playing) {
-
         if (flag == YES) {
-
             //            Post *post = self.posts[self.indexPath.section];
             //            NSData *data = [post.audioFile getData]; // Get audio from specific post in Parse - Can we avoid this query?
             //            self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
             //            [self playRecordedAudio];
-
             [self.player play];
-
             self.integer = self.integer +1;
-            
-            NSLog(@"%i_______",self.integer);
+//            NSLog(@"%i_______",self.integer);
         }
     }
 }
 
--(void)likesLabelTapped:(UITapGestureRecognizer *)sender {
+#pragma mark - User Interaction
 
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+
+    // Search based on selection of 'people' or 'posts' and store results in self.searchResults.
+
+    if (![searchBar.text isEqualToString:@""]) { // Make sure search bar isn't empty
+
+        if (self.searchSegmentedControl.selectedSegmentIndex == 0) { // If 'people' is selected...
+            PFQuery *usernameQuery = [PFUser query];
+            [usernameQuery whereKey:@"username" matchesRegex:searchBar.text modifiers:@"i"]; // What is happening with that modifier? - David
+
+            PFQuery *displayNameQuery = [PFUser query];
+            [displayNameQuery whereKey:@"displayName" matchesRegex:searchBar.text modifiers:@"i"];
+
+            PFQuery *searchQuery = [PFQuery orQueryWithSubqueries:@[usernameQuery, displayNameQuery]];
+            [searchQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+                if (results && !error) {
+                    NSLog(@"Retrieved search results for users.");
+                    self.searchResults = results;
+                }
+            }];
+        } else { // If 'posts' is selected...
+            PFQuery *searchQuery = [PFQuery queryWithClassName:@"Post"];
+            [searchQuery whereKey:@"descriptionComment" matchesRegex:searchBar.text modifiers:@"i"];
+            [searchQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
+                if (results && !error) {
+                    NSLog(@"Retrieved search results for posts.");
+                    self.searchResults = results;
+                }
+            }];
+        }
+    }
+}
+
+-(void)sectionHeaderTapped:(UITapGestureRecognizer *)sender {
+    PostHeaderCell *cell = (PostHeaderCell *)((UITapGestureRecognizer *)sender).view;
+    Post *post = self.searchResults[cell.tag];
+    PFUser *user = post[@"author"];
+    [self.delegate onHeaderCellTapped:user];
+}
+
+-(void)didTapLikeButton:(UIButton *)button {
+    LikesAndCommentsCell *cell = (LikesAndCommentsCell *)button.superview.superview;
+    PFUser *currentUser = [PFUser currentUser];
+    Post *post = self.searchResults[cell.tag];
+    NSMutableArray *likes = [post[@"likes"] mutableCopy];
+
+    if ([likes containsObject:currentUser.objectId]) {
+        NSLog(@"User disliked a post.");
+        button.enabled = NO;
+        PFQuery *likeQuery = [PFQuery queryWithClassName:@"Activity"];
+        [likeQuery whereKey:@"type" equalTo:@"Like"];
+        [likeQuery whereKey:@"fromUser" equalTo:currentUser];
+        [likeQuery whereKey:@"toUser" equalTo:post[@"author"]];
+        [likeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+
+            if (!error) {
+                for (PFObject *likeActivity in objects) {
+                    [likeActivity deleteEventually];
+                }
+            } else {
+                NSLog(@"Error processing like button in search results: %@", error.localizedDescription);
+            }
+        }];
+
+        [post removeObject:currentUser.objectId forKey:@"likes"];
+        [post incrementKey:@"numOfLikes" byAmount:[NSNumber numberWithInt:-1]];
+        cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
+        [post saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+            if (completed && !error) {
+                NSLog(@"Likes uploaded successfully");
+                button.enabled = YES;
+            } else {
+                button.enabled = YES;
+            }
+        }];
+
+    } else {
+        button.enabled = NO;
+        PFObject *activity = [PFObject objectWithClassName:@"Activity"];
+        activity[@"fromUser"] = currentUser;
+        activity[@"toUser"] = post[@"author"];
+        activity[@"post"] = post;
+        activity[@"type"] = @"Like";
+        activity[@"content"] = @"";
+        [post addObject:currentUser.objectId forKey:@"likes"];
+        [post incrementKey:@"numOfLikes"];
+        cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
+        [activity saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+
+            if (completed && !error) {
+                NSLog(@"User like saved to Parse.");
+                [post saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
+                    if (completed && !error) {
+                        button.enabled = YES;
+                    } else {
+                        NSLog(@"Error saving like to Post class: %@", error.localizedDescription);
+                        button.enabled = YES;
+                    }
+                }];
+            } else {
+                button.enabled = YES;
+            }
+        }];
+    }
+}
+
+-(void)likesLabelTapped:(UITapGestureRecognizer *)sender {
     Post *post = self.searchResults[((UITapGestureRecognizer *)sender).view.tag];
     UILabel *likesLabel = (UILabel *)((UITapGestureRecognizer *)sender).view;
-
     [self.delegate onLikesLabelTapped:likesLabel andPost:post];
 }
 
 -(void)commentsLabelTapped:(UITapGestureRecognizer *)sender {
-
     Post *post = self.searchResults[((UITapGestureRecognizer *)sender).view.tag];
     UILabel *commentsLabel = (UILabel *)((UITapGestureRecognizer *)sender).view;
-
-
     [self.delegate onCommentsLabelTapped:commentsLabel andPost:post];
 }
 
 -(void)didTapAddCommentButton:(UIButton *)button {
-
     LikesAndCommentsCell *cell = (LikesAndCommentsCell *)(button).superview.superview;
     Post *post = self.searchResults[cell.tag];
     UILabel *commentsLabel = cell.commentsLabel;
-
     [self.delegate onAddCommentTapped:commentsLabel andPost:post];
 }
 
@@ -435,95 +428,40 @@
                 
             }
         }];
-        //
-        
-
-
         [post deleteInBackgroundWithBlock:^(BOOL completed, NSError *error) {
 
             if (completed && !error) {
-
                 NSMutableArray *userPostsMutable = [self.searchResults mutableCopy];
                 [userPostsMutable removeObjectAtIndex:indexPath.section];
                 self.searchResults = userPostsMutable;
             }
         }];
     }];
-
     //add cancelAction variable to alertController
     [alertController addAction:cancelAction];
-
     [alertController addAction:deleteAction];
 
     //activates alertcontroler
     [self presentViewController:alertController animated:true completion:nil];
-    
-
-
     [self.delegate onDeleteTapped];
 }
 
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-
-    NSLog(@"Search button clicked");
-
-    if (![searchBar.text isEqualToString:@""]) {
-
-        if (self.searchSegmentedControl.selectedSegmentIndex == 0) {
-
-            PFQuery *usernameQuery = [PFUser query];
-//            [usernameQuery whereKey:@"username" containsString:searchBar.text];
-            [usernameQuery whereKey:@"username" matchesRegex:searchBar.text modifiers:@"i"];
-
-            PFQuery *displayNameQuery = [PFUser query];
-//            [displayNameQuery whereKey:@"displayName" containsString:searchBar.text];
-            [displayNameQuery whereKey:@"displayName" matchesRegex:searchBar.text modifiers:@"i"];
-
-            PFQuery *searchQuery = [PFQuery orQueryWithSubqueries:@[usernameQuery, displayNameQuery]];
-            [searchQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-
-                if (results && !error) {
-
-                    NSLog(@"%@", results);
-
-                    self.searchResults = results;
-                }
-            }];
-            
-        } else {
-
-            PFQuery *searchQuery = [PFQuery queryWithClassName:@"Post"];
-//            [searchQuery whereKey:@"descriptionComment" containsString:searchBar.text];
-            [searchQuery whereKey:@"descriptionComment" matchesRegex:searchBar.text modifiers:@"i"];
-
-            [searchQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-
-                if (results && !error) {
-
-                    self.searchResults = results;
-
-                    NSLog(@"%@", results);
-                }
-            }];
-        }
-    }
-}
+#pragma mark - Update Results
 
 -(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
 
     if (![searchController.searchBar.text isEqualToString:@""]) {
-
-        NSLog(@"%@", searchController.searchBar.text);
-
+//        NSLog(@"%@", searchController.searchBar.text);
         if (self.searchSegmentedControl.selectedSegmentIndex == 0) {
-
-
+            // Do something based on segmented controller being people?
         }
     } else {
-        
-        self.searchResults = nil;
+        // Do something based on segmented controller being posts?
+        self.searchResults = nil; // Why set searchResults to nothing when users selected?
     }
 }
+
+#pragma mark - Set Color of Posts
 
 - (UIColor *) colorWithHexString: (NSString *) hexString {
     NSString *colorString = [[hexString stringByReplacingOccurrencesOfString: @"#" withString: @""] uppercaseString];
@@ -545,35 +483,6 @@
     [[NSScanner scannerWithString: fullHex] scanHexInt: &hexComponent];
     return hexComponent / 255.0;
 }
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-
-    if ([segue.identifier isEqualToString:@"LikeSegue"]) {
-
-        LikesTableViewController *likesVC = segue.destinationViewController;
-        likesVC.post = self.searchResults[((UITapGestureRecognizer *)sender).view.tag];
-        likesVC.likesLabel = (UILabel *)((UITapGestureRecognizer *)sender).view;
-
-    } else if ([segue.identifier isEqualToString:@"CommentSegue"]) {
-
-        NSLog(@"Comments VC Segue");
-
-        if ([sender isKindOfClass:[UITapGestureRecognizer class]]) {
-
-            CommentTableViewController *commentsVC = segue.destinationViewController;
-            commentsVC.post = self.searchResults[((UITapGestureRecognizer *)sender).view.tag];
-            commentsVC.commentsLabel = (UILabel *)((UITapGestureRecognizer *)sender).view;
-        } else {
-
-            CommentTableViewController *commentsVC = segue.destinationViewController;
-            //            NSLog(@"add comment segue tag: %ld", (long)((UIButton *)sender).superview.superview.tag);
-            LikesAndCommentsCell *cell = (LikesAndCommentsCell *)((UIButton *)sender).superview.superview;
-            commentsVC.post = self.searchResults[cell.tag];
-            commentsVC.commentsLabel = cell.commentsLabel;
-        }
-    }
-}
-
 
 //UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"delete" message:nil preferredStyle:UIAlertControllerStyleAlert];
 //
