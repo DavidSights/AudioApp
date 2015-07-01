@@ -31,6 +31,13 @@
 
 @implementation SearchResultsViewController
 
+
+/*
+ 
+ The search results tableview isn't updating because it's not beng accessed. The data source methods that would fill the tableview are never being called.
+
+ */
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.searchBar.delegate = self;
@@ -81,7 +88,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    if (self.searchSegmentedControl.selectedSegmentIndex == 0) {
+    if (self.searchSegmentedControl.selectedSegmentIndex == 0) { // This is not being called during reload either... is the TableView actually reloading?
         return self.searchResults.count;
     } else {
         return 2;
