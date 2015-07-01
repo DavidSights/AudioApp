@@ -54,6 +54,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    self.user = [PFUser currentUser];
 
     self.numFollowers = 0;
     self.numFollowing = 0;
@@ -83,6 +84,23 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 
+
+    if (![PFUser currentUser]) {
+        [self.tabBarController setSelectedIndex:0];
+    }
+
+    if (self.user == nil) {
+        self.user = [PFUser currentUser];
+    }
+
+    if ([self.user isEqual:[PFUser currentUser]]) {
+        NSLog(@"Current user detected in profile. Profile's user: %@, Current user: %@", self.user, [PFUser currentUser]);
+    } else {
+        NSLog(@"Profile does not match current user. Profile user: %@, Current user: %@", self.user, [PFUser currentUser]);
+        UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:nil];
+        self.navigationItem.rightBarButtonItem = editButton;
+    }
+
     if (self.postLikesController == 0) {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
         refreshControl.backgroundColor = [UIColor purpleColor];
@@ -95,14 +113,6 @@
         refreshControl.tintColor = [UIColor whiteColor];
         [refreshControl addTarget:self action:@selector(queryLike:) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:refreshControl];
-    }
-
-    if (![PFUser currentUser]) {
-        [self.tabBarController setSelectedIndex:0];
-    }
-
-    if (self.user == nil) {
-        self.user = [PFUser currentUser];
     }
 
     PFQuery *followerQuery = [PFQuery queryWithClassName:@"Activity"];
@@ -142,6 +152,18 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+
+//
+//    PFUser *currentUser = [PFUser currentUser]; //show current user in console
+//    if ([self.user isEqual:currentUser]) {
+//        NSLog(@"Current user: %@", currentUser.username);
+//
+//        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+//    }else if(![self.user isEqual:currentUser]){
+//
+//        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+//
+//    }
 
     if (self.postLikesController == 0) {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -274,7 +296,7 @@
     }
     NSMutableArray *likes = [post[@"likes"] mutableCopy];
     if ([likes containsObject:currentUser.objectId]) {
-        NSLog(@"User already liked this post");
+//        NSLog(@"User already liked this post");
         button.enabled = NO;
         PFQuery *likeQuery = [PFQuery queryWithClassName:@"Activity"];
         [likeQuery whereKey:@"type" equalTo:@"Like"];
@@ -293,7 +315,7 @@
         cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
         [post saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
             if (completed && !error) {
-                NSLog(@"Likes uploaded successfully");
+//                NSLog(@"Likes uploaded successfully");
                 button.enabled = YES;
             } else {
                 button.enabled = YES;
@@ -312,18 +334,18 @@
         cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
         [activity saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
             if (completed && !error) {
-                NSLog(@"Activity Saved");
+//                NSLog(@"Activity Saved");
                 [post saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
                     if (completed && !error) {
-                        NSLog(@"Likes uploaded successfully");
+//                        NSLog(@"Likes uploaded successfully");
                         button.enabled = YES;
                     } else {
                         button.enabled = YES;
                     }
                 }];
             } else {
-                NSLog(@"button enabled");
-                
+//                NSLog(@"button enabled");
+
                 button.enabled = YES;
             }
         }];
@@ -332,7 +354,7 @@
 
 -(void)didTapAddCommentButton:(UIButton *)button {
 
-    NSLog(@"Comment button tapped");
+//    NSLog(@"Comment button tapped");
 
     [self performSegueWithIdentifier:@"CommentSegue" sender:button];
 }
@@ -397,7 +419,7 @@
 
 -(void)segmentedControlChanged:(UISegmentedControl *)segmentedControl {
 
-    NSLog(@"Segmented control changed");
+//    NSLog(@"Segmented control changed");
 
     if (segmentedControl.selectedSegmentIndex == 0) {
 
@@ -565,14 +587,14 @@
 
 -(void)likesLabelTapped:(UITapGestureRecognizer *)sender {
 
-    NSLog(@"Likes label tapped");
+//    NSLog(@"Likes label tapped");
 
     [self performSegueWithIdentifier:@"LikeSegue" sender:sender];
 }
 
 -(void)commentsLabelTapped:(UITapGestureRecognizer *)sender {
 
-    NSLog(@"Comments label tapped");
+//    NSLog(@"Comments label tapped");
 
     [self performSegueWithIdentifier:@"CommentSegue" sender:sender];
 }
@@ -607,7 +629,7 @@
                     if (![session setCategory:AVAudioSessionCategoryPlayback
                                   withOptions:AVAudioSessionCategoryOptionMixWithOthers
                                         error:&setCategoryError]) {
-                        NSLog(@"%@)))))))))", setCategoryError);
+//                        NSLog(@"%@)))))))))", setCategoryError);
                     }
 
                     self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
@@ -634,7 +656,7 @@
                 if (![session setCategory:AVAudioSessionCategoryPlayback
                               withOptions:AVAudioSessionCategoryOptionMixWithOthers
                                     error:&setCategoryError]) {
-                    NSLog(@"%@)))))))))", setCategoryError);
+//                    NSLog(@"%@)))))))))", setCategoryError);
                 }
 
                 self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
@@ -664,11 +686,11 @@
 
     if (self.postLikesController.selectedSegmentIndex == 0) {
 
-        NSLog(@"Segmented index is 0. Returning %lu + 1", (unsigned long)self.userPosts.count);
+//        NSLog(@"Segmented index is 0. Returning %lu + 1", (unsigned long)self.userPosts.count);
         return self.userPosts.count + 1;
     } else {
 
-        NSLog(@"Segmented index is 1. Returning %lu + 1", (unsigned long)self.likedPosts.count);
+//        NSLog(@"Segmented index is 1. Returning %lu + 1", (unsigned long)self.likedPosts.count);
         return self.likedPosts.count + 1;
     }
 }
@@ -875,7 +897,7 @@
             //            [self playRecordedAudio];
             [self.player play];
             self.integer = self.integer +1;
-            NSLog(@"%d_______",self.integer);
+//            NSLog(@"%d_______",self.integer);
         }
     }
 }
@@ -1012,7 +1034,7 @@
             CommentTableViewController *commentsVC = segue.destinationViewController;
             LikesAndCommentsCell *cell = (LikesAndCommentsCell *)((UIButton *)sender).superview.superview;
             Post *post;
-            NSLog(@"Cell tag: %ld", (long)cell.tag);
+//            NSLog(@"Cell tag: %ld", (long)cell.tag);
 
             if (self.postLikesController.selectedSegmentIndex == 0) {
                 post = self.userPosts[cell.tag];
