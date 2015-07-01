@@ -1043,14 +1043,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="cgA-Ol-lGD">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="auJ-N5-S8e">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="onRefreshBarButtonItemTapped:" destination="vXZ-lx-hvc" id="k9I-Y3-9Ba"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="cgA-Ol-lGD"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="400" height="1000"/>
                     <connections>
@@ -2438,8 +2431,8 @@
         <image name="logo_login" width="150" height="103"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mdV-8S-PsQ"/>
-        <segue reference="bH0-wl-Tib"/>
-        <segue reference="1FF-xO-mmz"/>
+        <segue reference="lyt-xR-4l8"/>
+        <segue reference="98c-iR-cXf"/>
+        <segue reference="WgL-K0-LpU"/>
     </inferredMetricsTieBreakers>
 </document>
