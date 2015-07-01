@@ -153,12 +153,40 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 
-    PostHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)];
 
-    UITapGestureRecognizer *headerGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTapped:)];
+    headerView.backgroundColor = [UIColor lightGrayColor];
 
-    cell.userInteractionEnabled = YES;
-    [cell addGestureRecognizer:headerGestureRecognizer];
+    UIImageView *profileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 30, 30)];
+    profileImageView.clipsToBounds = YES;
+    profileImageView.layer.cornerRadius = 15;
+    profileImageView.contentMode = UIViewContentModeScaleAspectFill;
+    profileImageView.image = [UIImage imageNamed:@"Profile"];
+
+    [headerView addSubview:profileImageView];
+
+    UILabel *displayNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, headerView.frame.size.width - 90, headerView.frame.size.height/2 - 5)];
+    displayNameLabel.backgroundColor = [UIColor orangeColor];
+    displayNameLabel.textAlignment = NSTextAlignmentLeft;
+    displayNameLabel.center = headerView.center;
+    [displayNameLabel setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
+    [headerView addSubview:displayNameLabel];
+
+    UILabel *createdAtLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerView.frame.size.width - 50, 5, 45, headerView.frame.size.height/2 - 5)];
+    createdAtLabel.backgroundColor = [UIColor greenColor];
+
+    UILabel *loopsLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerView.frame.size.width - 50, headerView.frame.size.height/2, 45, headerView.frame.size.height/2 - 5)];
+    loopsLabel.backgroundColor = [UIColor redColor];
+
+    createdAtLabel.textAlignment = NSTextAlignmentRight;
+    [createdAtLabel setFont:[UIFont fontWithName:@"Helvetica" size:10.0]];
+    createdAtLabel.text = @"Time";
+    [headerView addSubview:createdAtLabel];
+
+    loopsLabel.textAlignment = NSTextAlignmentRight;
+    [loopsLabel setFont:[UIFont fontWithName:@"Helvetica" size:10.0]];
+    loopsLabel.text = @"Loops";
+    [headerView addSubview:loopsLabel];
 
     Post *post = self.posts[section];
 
@@ -166,25 +194,28 @@
     NSLog(@"User: %@", user.username);
     NSString *displayNameText = user.username;
     NSLog(@"Display Name: %@", displayNameText);
-    cell.displayNameLabel.text = displayNameText;
-    [cell.displayNameLabel sizeToFit];
-    cell.backgroundColor = [UIColor whiteColor];
+    displayNameLabel.text = displayNameText;
+
     if (!user[@"profileImage"]) {
 
+        profileImageView.image = [UIImage imageNamed:@"Profile"];
+
     }else{
-    PFFile *file = user[@"profileImage"];
-    NSData *data = [file getData];
-    UIImage *image = [UIImage imageWithData:data];
-    cell.profileImageView.image = image;}
 
-    cell.tag = section;
+        PFFile *file = user[@"profileImage"];
+        NSData *data = [file getData];
+        UIImage *image = [UIImage imageWithData:data];
+        profileImageView.image = image;
+    }
 
-    UIImageView *profileImageView;
-    UILabel *displayNameLabel;
-    UILabel *createdAtLabel;
-    UILabel *loopsLabel;
+    UITapGestureRecognizer *headerGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTapped:)];
 
-    return cell;
+    headerView.userInteractionEnabled = YES;
+    [headerView addGestureRecognizer:headerGestureRecognizer];
+
+    headerView.tag = section;
+
+    return headerView ;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
