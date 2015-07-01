@@ -17,13 +17,10 @@
 
 @property SearchResultsViewController *searchResultsViewController;
 @property UISearchController *searchController;
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
 @property PFUser *searchResultsUser;
 @property Post *searchResultsVCPost;
 @property UILabel *searchResultsVCLabel;
-
 @property NSArray *tests;
 
 @end
@@ -36,9 +33,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     self.searchResultsViewController = [storyboard instantiateViewControllerWithIdentifier:@"SearchResultsViewController"];
     self.searchResultsViewController.delegate = self;
-
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultsViewController];
-
     self.searchResultsViewController.searchBar = self.searchController.searchBar;
     self.searchController.searchResultsUpdater = self.searchResultsViewController;
     self.searchController.delegate = self;
@@ -66,12 +61,10 @@
 -(void)didPresentSearchController:(UISearchController *)searchController {
 
     NSLog(@"%d", self.searchController.active);
-
     //    searchController.searchResultsController.view.hidden = NO;
 }
 
 -(void)presentSearchController:(UISearchController *)searchController {
-
     NSLog(@"Present search controller");
     dispatch_async(dispatch_get_main_queue(), ^{
         searchController.searchResultsController.view.hidden = NO;
@@ -79,21 +72,18 @@
 }
 
 -(void)willDismissSearchController:(UISearchController *)searchController {
-
-    NSLog(@"Will dismiss");
+    NSLog(@"Will dismiss search controller.");
 }
 
 -(void)didDismissSearchController:(UISearchController *)searchController {
-
-    NSLog(@"Did dismiss");
+    NSLog(@"Did dismiss search controller.");
 }
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
 
     NSLog(@"%@", searchBar.text);
     //Prevents searchController from disappearing
-    if ([searchText isEqualToString:@""])
-    {
+    if ([searchText isEqualToString:@""]) {
         [self presentSearchController:self.searchController];
     }
 }
@@ -105,14 +95,11 @@
 //}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
     return self.tests.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
-
     cell.textLabel.text = [NSString stringWithFormat:@"%@", self.tests[indexPath.row]];
 
     return cell;
@@ -125,21 +112,18 @@
 }
 
 -(void)onLikesLabelTapped:(UILabel *)label andPost:(Post *)post {
-
     self.searchResultsVCPost = post;
     self.searchResultsVCLabel = label;
     [self performSegueWithIdentifier:@"LikeSegue" sender:self];
 }
 
 -(void)onCommentsLabelTapped:(UILabel *)label andPost:(Post *)post {
-
     self.searchResultsVCPost = post;
     self.searchResultsVCLabel = label;
     [self performSegueWithIdentifier:@"CommentSegue" sender:self];
 }
 
 -(void)onAddCommentTapped:(UILabel *)label andPost:(Post *)post {
-
     self.searchResultsVCPost = post;
     self.searchResultsVCLabel = label;
     [self performSegueWithIdentifier:@"CommentSegue" sender:self];
@@ -150,23 +134,17 @@
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-
     if ([segue.identifier isEqualToString:@"LikeSegue"]) {
-
         LikesTableViewController *likesVC = segue.destinationViewController;
         likesVC.post = self.searchResultsVCPost;
         likesVC.likesLabel = self.searchResultsVCLabel;
     } else if ([segue.identifier isEqualToString:@"CommentSegue"]) {
-
         CommentTableViewController *commentVC = segue.destinationViewController;
         commentVC.post = self.searchResultsVCPost;
         commentVC.commentsLabel = self.searchResultsVCLabel;
     }else if ([segue.identifier isEqualToString:@"ProfileSegue"]) {
-
         ProfileViewController *profileVC = segue.destinationViewController;
-
         profileVC.user = self.searchResultsUser;
-        
     }
 }
 

@@ -147,13 +147,11 @@
             PostCell* postCell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
             CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
             postCell.timerLabel.text = @"0";
-
             postCell.coloredView.frame = cellRect;
             postCell.layoutMargins = UIEdgeInsetsZero;
             postCell.preservesSuperviewLayoutMargins = NO;
 
             Post *post = self.searchResults[indexPath.section];
-
             if (post[@"colorHex"] != nil) {
                 NSString *string = post[@"colorHex"];
                 postCell.backgroundColor = [self colorWithHexString:string];
