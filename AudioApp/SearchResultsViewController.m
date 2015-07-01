@@ -39,7 +39,7 @@
 #pragma mark - Setters
 
 - (void)setSearchResults:(NSArray *)searchResults {
-    self.searchResults = searchResults;
+    _searchResults = searchResults;
     [self.tableView reloadData];
 }
 
@@ -126,12 +126,13 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    NSLog(@"Updated tableview cells."); // Not being called - which is why results aren't displaying.
     if (self.searchSegmentedControl.selectedSegmentIndex == 0) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserCell"];
         PFUser *user = self.searchResults[indexPath.row];
         cell.textLabel.text = user.username;
         cell.detailTextLabel.text = user[@"displayName"];
+        NSLog(@"Created a row for a user.");
 
         return cell;
     } else {
@@ -209,7 +210,7 @@
                     if (![session setCategory:AVAudioSessionCategoryPlayback
                                   withOptions:AVAudioSessionCategoryOptionMixWithOthers
                                         error:&setCategoryError]) {
-                        NSLog(@"%@)))))))))", setCategoryError);
+                        NSLog(@"Error creating new audio session: %@", setCategoryError.localizedDescription);
                     }
 
                     self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
@@ -228,7 +229,7 @@
                 if (![session setCategory:AVAudioSessionCategoryPlayback
                               withOptions:AVAudioSessionCategoryOptionMixWithOthers
                                     error:&setCategoryError]) {
-                    NSLog(@"%@)))))))))", setCategoryError);
+                    NSLog(@"Error creating new audio session: %@", setCategoryError.localizedDescription);
                 }
 
                 self.player = [[AudioPlayerWithTag alloc] initWithData:data error:nil];
@@ -288,8 +289,8 @@
             PFQuery *searchQuery = [PFQuery orQueryWithSubqueries:@[usernameQuery, displayNameQuery]];
             [searchQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
                 if (results && !error) {
-                    NSLog(@"Retrieved search results for users.");
                     self.searchResults = results;
+                    NSLog(@"Retrieved search results for users. Number of results: %lu And results saved: %lu", (unsigned long)results.count, (unsigned long)self.searchResults.count);
                 }
             }];
         } else { // If 'posts' is selected...
@@ -297,7 +298,7 @@
             [searchQuery whereKey:@"descriptionComment" matchesRegex:searchBar.text modifiers:@"i"];
             [searchQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
                 if (results && !error) {
-                    NSLog(@"Retrieved search results for posts.");
+                    NSLog(@"Retrieved search results for posts. Number of posts retrieved: %lu", (unsigned long)results.count);
                     self.searchResults = results;
                 }
             }];
