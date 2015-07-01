@@ -302,7 +302,7 @@
 
                         [self.posts addObject:post];
 
-                        [self.tableView insertSections:[NSIndexSet indexSetWithIndex:self.posts.count-1] withRowAnimation:UITableViewRowAnimationNone];
+                        [self.tableView insertSections:[NSIndexSet indexSetWithIndex:self.posts.count-1] withRowAnimation:UITableViewRowAnimationMiddle];
                         
                         [self.tableView endUpdates];
                         
