@@ -480,7 +480,7 @@
                     <navigationItem key="navigationItem" title="Profile" id="YHp-lv-hRP">
                         <barButtonItem key="rightBarButtonItem" id="DvV-Mg-KA4">
                             <connections>
-                                <segue destination="FcA-i7-x2K" kind="presentation" id="2F9-fW-vvX"/>
+                                <segue destination="FcA-i7-x2K" kind="presentation" identifier="settingID2" id="2F9-fW-vvX"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -496,7 +496,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QIU-CT-gho" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="448" y="2533"/>
+            <point key="canvasLocation" x="3964" y="2193"/>
         </scene>
         <!--Title-->
         <scene sceneID="NGZ-vz-D74">
@@ -670,7 +670,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dk2-q0-qNH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5544" y="2282"/>
+            <point key="canvasLocation" x="5721" y="1973"/>
         </scene>
         <!--Change Password-->
         <scene sceneID="Xyo-k1-Twj">
@@ -1043,14 +1043,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="cgA-Ol-lGD">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="auJ-N5-S8e">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="onRefreshBarButtonItemTapped:" destination="vXZ-lx-hvc" id="k9I-Y3-9Ba"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="cgA-Ol-lGD"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="400" height="1000"/>
                     <connections>
@@ -1063,7 +1056,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-423" y="1675"/>
+            <point key="canvasLocation" x="1283" y="3641"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="bSf-1M-ME9">
@@ -2295,7 +2288,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MF3-sm-qpm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4626" y="1993"/>
+            <point key="canvasLocation" x="4956" y="1973"/>
         </scene>
         <!--Likes-->
         <scene sceneID="nb7-Lq-Ir4">
@@ -2441,8 +2434,8 @@
         <image name="logo_login" width="150" height="103"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="1FF-xO-mmz"/>
-        <segue reference="T4V-QK-uzo"/>
-        <segue reference="bH0-wl-Tib"/>
+        <segue reference="lyt-xR-4l8"/>
+        <segue reference="98c-iR-cXf"/>
+        <segue reference="WgL-K0-LpU"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -181,19 +181,37 @@
     displayNameLabel.center = headerView.center;
     [displayNameLabel setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
     [headerView addSubview:displayNameLabel];
+//
+//    UILabel *createdAtLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerView.frame.size.width - 50, 5, 45, headerView.frame.size.height/2 - 5)];
+//    createdAtLabel.backgroundColor = [UIColor greenColor];
+//
+//    UILabel *loopsLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerView.frame.size.width - 50, headerView.frame.size.height/2, 45, headerView.frame.size.height/2 - 5)];
+//    loopsLabel.backgroundColor = [UIColor redColor];
+//
+//    createdAtLabel.textAlignment = NSTextAlignmentRight;
+//    [createdAtLabel setFont:[UIFont fontWithName:@"Helvetica" size:10.0]];
+//    createdAtLabel.text = @"Time";
+//    [headerView addSubview:createdAtLabel];
+//
+//    loopsLabel.textAlignment = NSTextAlignmentRight;
+//    [loopsLabel setFont:[UIFont fontWithName:@"Helvetica" size:10.0]];
+//    loopsLabel.text = @"Loops";
+//    [headerView addSubview:loopsLabel];
 
-    UILabel *createdAtLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerView.frame.size.width - 50, 5, 45, headerView.frame.size.height/2 - 5)];
-    UILabel *loopsLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerView.frame.size.width - 50, headerView.frame.size.height/2, 45, headerView.frame.size.height/2 - 5)];
 
-    createdAtLabel.textAlignment = NSTextAlignmentRight;
-    [createdAtLabel setFont:[UIFont fontWithName:@"Helvetica" size:10.0]];
-    createdAtLabel.text = @"Time";
-    [headerView addSubview:createdAtLabel];
-
-    loopsLabel.textAlignment = NSTextAlignmentRight;
-    [loopsLabel setFont:[UIFont fontWithName:@"Helvetica" size:10.0]];
-    loopsLabel.text = @"Loops";
-    [headerView addSubview:loopsLabel];
+    // Removing labels because we aren't updating these for the graduation event.
+//    UILabel *createdAtLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerView.frame.size.width - 50, 5, 45, headerView.frame.size.height/2 - 5)];
+//    UILabel *loopsLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerView.frame.size.width - 50, headerView.frame.size.height/2, 45, headerView.frame.size.height/2 - 5)];
+//
+//    createdAtLabel.textAlignment = NSTextAlignmentRight;
+//    [createdAtLabel setFont:[UIFont fontWithName:@"Helvetica" size:10.0]];
+//    createdAtLabel.text = @"Time";
+//    [headerView addSubview:createdAtLabel];
+//
+//    loopsLabel.textAlignment = NSTextAlignmentRight;
+//    [loopsLabel setFont:[UIFont fontWithName:@"Helvetica" size:10.0]];
+//    loopsLabel.text = @"Loops";
+//    [headerView addSubview:loopsLabel];
 
     Post *post = self.posts[section];
 
@@ -223,10 +241,10 @@
 //    displayNameLabel.backgroundColor = [UIColor orangeColor];
 //    createdAtLabel.backgroundColor = [UIColor greenColor];
 //    loopsLabel.backgroundColor = [UIColor redColor];
-    UIColor *lightBlueText = [UIColor colorWithRed:120/255.0 green:166/255.0 blue:205/255.0 alpha:1.0];
+//    UIColor *lightBlueText = [UIColor colorWithRed:120/255.0 green:166/255.0 blue:205/255.0 alpha:1.0];
     displayNameLabel.textColor = [UIColor whiteColor];
-    createdAtLabel.textColor = lightBlueText;
-    loopsLabel.textColor = lightBlueText;
+//    createdAtLabel.textColor = lightBlueText;
+//    loopsLabel.textColor = lightBlueText;
 
     return headerView ;
 }
