@@ -137,7 +137,7 @@
     }
     return  50;
 }
-
+//
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"Updated tableview cells."); // Not being called - which is why results aren't displaying.
     if (self.searchSegmentedControl.selectedSegmentIndex == 0) {
