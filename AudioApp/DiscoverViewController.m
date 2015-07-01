@@ -100,7 +100,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", self.tests[indexPath.row]];
+//    cell.textLabel.text = [NSString stringWithFormat:@"%@", self.tests[indexPath.row]];
 
     return cell;
 }

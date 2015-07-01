@@ -72,6 +72,12 @@
             commentsVC.post = self.searchResults[cell.tag];
             commentsVC.commentsLabel = cell.commentsLabel;
         }
+    } else if ([segue.identifier isEqualToString:@"profile"]) {
+        ProfileViewController *profileVC = segue.destinationViewController;
+        NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
+        PFUser *user = self.searchResults[indexPath.row];
+
+        profileVC.user = user;
     }
 }
 
@@ -131,7 +137,7 @@
     }
     return  50;
 }
-
+//
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"Updated tableview cells."); // Not being called - which is why results aren't displaying.
     if (self.searchSegmentedControl.selectedSegmentIndex == 0) {
@@ -245,6 +251,11 @@
             }
         }
     }
+    else if (self.searchSegmentedControl.selectedSegmentIndex == 0) { // We're in the 'people' segment
+        // Grab user from cell
+        [self performSegueWithIdentifier:@"profile" sender:self];
+    }
+
 }
 
 #pragma mark - Audio
@@ -450,6 +461,13 @@
     //activates alertcontroler
     [self presentViewController:alertController animated:true completion:nil];
     [self.delegate onDeleteTapped];
+}
+
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (self.searchSegmentedControl.selectedSegmentIndex == 0) { // We're in the 'people' segment
+//        // Grab user from cell
+//        [self performSegueWithIdentifier:@"profile" sender:self];
+//    }
 }
 
 #pragma mark - Update Results
