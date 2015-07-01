@@ -2438,8 +2438,8 @@
         <image name="logo_login" width="150" height="103"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="98c-iR-cXf"/>
         <segue reference="lyt-xR-4l8"/>
-        <segue reference="WgL-K0-LpU"/>
+        <segue reference="bH0-wl-Tib"/>
+        <segue reference="1FF-xO-mmz"/>
     </inferredMetricsTieBreakers>
 </document>
