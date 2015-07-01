@@ -9,7 +9,7 @@
 #import "SettingsViewController.h"
 #import "ProfileViewController.h"
 #import <Parse/Parse.h>
-@interface SettingsViewController ()<UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate>
+@interface SettingsViewController ()<UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *username;
 @property (weak, nonatomic) IBOutlet UITextField *displaynameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;

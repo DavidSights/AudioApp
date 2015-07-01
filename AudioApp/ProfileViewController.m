@@ -22,7 +22,7 @@
 //#import <AVFoundation/AVFoundation.h>
 
 
-@interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ProfileMiddleTableViewCellDelegate, LikesAndCommentsCellDelegate, AVAudioPlayerDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate>
+@interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ProfileMiddleTableViewCellDelegate, LikesAndCommentsCellDelegate, AVAudioPlayerDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate, UINavigationControllerDelegate>
 @property UIImage *image;
 @property UIImagePickerController *imagePicker;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsButton;
@@ -38,8 +38,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *profilePicButton;
 @property NSIndexPath *indexPath2;
 
-@property NSInteger numFollowers;
-@property NSInteger numFollowing;
+@property (nonatomic)  NSInteger numFollowers;
+@property (nonatomic)  NSInteger numFollowing;
 
 @end
 
@@ -132,6 +132,7 @@
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
     [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
 }
+
 
 -(void)setNumFollowing:(NSInteger)numFollowing {
 

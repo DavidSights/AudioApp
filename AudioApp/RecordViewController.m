@@ -158,7 +158,7 @@
     [self.recordButton setTitle:@"Done!" forState:UIControlStateNormal];
     [self.recordButton setTitleColor:[UIColor colorWithRed:156/255.0 green:234/255.0 blue:135/255.0 alpha:1.0] forState:UIControlStateNormal];
     if (self.resetButton.alpha == 0) {
-        self.resetButton.alpha == 1;
+        self.resetButton.alpha = 1;
     }
 }
 
