@@ -161,6 +161,7 @@
     [cell addGestureRecognizer:headerGestureRecognizer];
 
     Post *post = self.posts[section];
+
     PFUser *user = post[@"author"];
     NSLog(@"User: %@", user.username);
     NSString *displayNameText = user.username;
@@ -168,6 +169,13 @@
     cell.displayNameLabel.text = displayNameText;
     [cell.displayNameLabel sizeToFit];
     cell.backgroundColor = [UIColor whiteColor];
+    if (!user[@"profileImage"]) {
+
+    }else{
+    PFFile *file = user[@"profileImage"];
+    NSData *data = [file getData];
+    UIImage *image = [UIImage imageWithData:data];
+    cell.profileImageView.image = image;}
 
     cell.tag = section;
 
