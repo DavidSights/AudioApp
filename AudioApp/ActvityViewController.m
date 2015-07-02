@@ -27,6 +27,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self getUserActivity];
+
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     refreshControl.backgroundColor = self.deepBlue;
     refreshControl.tintColor = [UIColor whiteColor];
@@ -61,6 +63,8 @@
     [self likesQuery];
     [self commentsQuery];
     [self followsQuery];
+    [self postsQuery];
+
 }
 
 - (void)queryAll:(UIRefreshControl *)sender{
@@ -120,7 +124,7 @@
 
 - (void) postsQuery {
     PFQuery *postsQuery = [PFQuery queryWithClassName:@"Post"];
-    [postsQuery whereKey:@"author" equalTo:[PFUser currentUser].objectId];
+    [postsQuery whereKey:@"author" equalTo:[PFUser currentUser]];
     [postsQuery findObjectsInBackgroundWithBlock:^(NSArray *result, NSError *error) {
         if (!error) {
         self.posts = result;
@@ -154,7 +158,7 @@
    } else if (indexPath.row == 2) {
        // Total number of posts.
        cell.titleLabel.text = @"Posts From You";
-       cell.statLabel.text = [NSString stringWithFormat:@"%ld", (long)indexPath.row]; // <------- Get number of posts
+       cell.statLabel.text = [NSString stringWithFormat:@"%ld",self.posts.count]; // <------- Get number of posts
        cell.contentView.backgroundColor = self.yellow;
        return cell;
    } else if (indexPath.row == 3) {
