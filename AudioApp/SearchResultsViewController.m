@@ -39,6 +39,9 @@
  The search results tableview isn't updating because it's not beng accessed. The data source methods that would fill the tableview are never being called.
 
  */
+- (void) viewDidDisappear:(BOOL)animated{
+    [self.player stop];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
