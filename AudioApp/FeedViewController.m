@@ -275,6 +275,11 @@
         Post *post = self.posts[indexPath.section];
         cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
         cell.commentsLabel.text = [NSString stringWithFormat:@"%@ Comments", post[@"numOfComments"]];
+
+        if ([post[@"likes"] containsObject:[[PFUser currentUser] objectId]]) {
+            cell.likesButton.imageView.image = [UIImage imageNamed:@"heartFilled"];
+        }
+
         cell.delegate = self;
         cell.tag = indexPath.section;
         cell.backgroundColor = [UIColor whiteColor];
@@ -535,6 +540,7 @@
 
         [post removeObject:currentUser.objectId forKey:@"likes"];
         [post incrementKey:@"numOfLikes" byAmount:[NSNumber numberWithInt:-1]];
+        cell.likesButton.imageView.image = [UIImage imageNamed:@"heart"];
 
         cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
 
@@ -564,6 +570,7 @@
 
         [post addObject:currentUser.objectId forKey:@"likes"];
         [post incrementKey:@"numOfLikes"];
+        cell.likesButton.imageView.image = [UIImage imageNamed:@"heartFilled"];
 
         cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
 
