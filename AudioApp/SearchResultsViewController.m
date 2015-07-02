@@ -51,6 +51,8 @@
 
         [self insertToTableViewFromBottom];
     }];
+    [self.tableView.infiniteScrollingView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+
 }
 
 #pragma mark - Setters

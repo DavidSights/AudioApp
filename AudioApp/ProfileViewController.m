@@ -65,6 +65,8 @@
 
         [self insertToTableViewFromBottom];
     }];
+    [self.tableView.infiniteScrollingView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+
 
     if (![PFUser currentUser]) {
         [self.tabBarController setSelectedIndex:0];

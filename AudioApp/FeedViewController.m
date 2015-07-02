@@ -54,6 +54,7 @@
     [self.tableView addInfiniteScrollingWithActionHandler:^{
         [self insertToTableViewFromBottom];
     }];
+    [self.tableView.infiniteScrollingView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
 
     // App color theme.
     self.blue = [UIColor colorWithRed:160/255.0 green:215/255.0 blue:231/255.0 alpha:1.0];
