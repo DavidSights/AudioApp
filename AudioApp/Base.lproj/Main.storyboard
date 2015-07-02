@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -498,7 +498,7 @@
                     <navigationItem key="navigationItem" title="Profile" id="YHp-lv-hRP">
                         <barButtonItem key="rightBarButtonItem" id="DvV-Mg-KA4">
                             <connections>
-                                <segue destination="FcA-i7-x2K" kind="presentation" id="2F9-fW-vvX"/>
+                                <segue destination="FcA-i7-x2K" kind="presentation" identifier="settingID2" id="2F9-fW-vvX"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -514,7 +514,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QIU-CT-gho" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1056" y="4405"/>
+            <point key="canvasLocation" x="3964" y="2193"/>
         </scene>
         <!--Title-->
         <scene sceneID="NGZ-vz-D74">
@@ -688,7 +688,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dk2-q0-qNH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5544" y="2282"/>
+            <point key="canvasLocation" x="5721" y="1973"/>
         </scene>
         <!--Change Password-->
         <scene sceneID="Xyo-k1-Twj">
@@ -1072,14 +1072,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="cgA-Ol-lGD">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="auJ-N5-S8e">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="onRefreshBarButtonItemTapped:" destination="vXZ-lx-hvc" id="k9I-Y3-9Ba"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="cgA-Ol-lGD"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="400" height="1000"/>
                     <connections>
@@ -1092,7 +1085,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-423" y="1675"/>
+            <point key="canvasLocation" x="1283" y="3641"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="bSf-1M-ME9">
@@ -1588,6 +1581,9 @@
                                     <segment title="People"/>
                                     <segment title="Posts"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentedConrollerChanged:" destination="tsm-C7-V9w" eventType="valueChanged" id="eA9-bk-8gU"/>
+                                </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="vUf-hK-GhY">
                                 <rect key="frame" x="0.0" y="108" width="600" height="892"/>
@@ -1867,7 +1863,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wD0-1d-Z7k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="359" y="2523"/>
+            <point key="canvasLocation" x="1047" y="3012"/>
         </scene>
         <!--Edit View Controller-->
         <scene sceneID="BhW-ix-iCx">
@@ -2338,7 +2334,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MF3-sm-qpm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4626" y="1993"/>
+            <point key="canvasLocation" x="4956" y="1973"/>
         </scene>
         <!--Likes-->
         <scene sceneID="nb7-Lq-Ir4">
@@ -2485,7 +2481,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="lyt-xR-4l8"/>
-        <segue reference="bH0-wl-Tib"/>
         <segue reference="1FF-xO-mmz"/>
+        <segue reference="bH0-wl-Tib"/>
     </inferredMetricsTieBreakers>
 </document>
