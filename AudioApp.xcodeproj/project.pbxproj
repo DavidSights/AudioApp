@@ -371,9 +371,9 @@
 		9A6AF9A41B31E0510040D5FF /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				47B3B63A1B3C7B1200AE286C /* LikesTableView Cell */,
 				9A8890CF1B41CA8000469F9A /* ActivityTableViewCell.h */,
 				9A8890D01B41CA8000469F9A /* ActivityTableViewCell.m */,
-				47B3B63A1B3C7B1200AE286C /* LikesTableView Cell */,
 				9A6AF9A51B31E07A0040D5FF /* PostCell.h */,
 				9A6AF9A61B31E07A0040D5FF /* PostCell.m */,
 				9A6AF9A81B31EC800040D5FF /* LikesAndCommentsCell.h */,
