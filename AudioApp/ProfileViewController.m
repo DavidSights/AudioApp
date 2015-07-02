@@ -981,6 +981,13 @@
 
                 post = self.likedPosts[indexPath.section - 1];
             }
+
+            if (post[@"author"] == [PFUser currentUser] ) {
+                cell.deleteButton.alpha = 1;
+
+            }else{
+                cell.deleteButton.alpha = 0;
+            }
             cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
             cell.commentsLabel.text = [NSString stringWithFormat:@"%@ Comments", post[@"numOfComments"]];
 
