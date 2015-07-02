@@ -29,6 +29,7 @@
     } else {
         NSLog(@"Tried to load navbar image but the iamge was nil.");
     }
+
 //    [self.navigationBar setTranslucent:YES];
 }
 

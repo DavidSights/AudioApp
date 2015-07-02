@@ -44,8 +44,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self.tableView addInfiniteScrollingWithActionHandler:^{
+    // Hide cell dividers.
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
+    // Change status bar to white text.
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
         [self insertToTableViewFromBottom];
     }];
 
@@ -62,10 +67,8 @@
     self.darkGreen = [UIColor colorWithRed:75/255.0 green:151/255.0 blue:142/255.0 alpha:1.0];
     self.pink = [UIColor colorWithRed:255/255.0 green:187/255.0 blue:208/255.0 alpha:1.0];
     self.deepBlue = [UIColor colorWithRed:21/255.0 green:42/255.0 blue:59/255.0 alpha:1.0];
-
     self.view.backgroundColor = self.deepBlue;
     self.tableView.backgroundColor = self.deepBlue;
-
 
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
 //    refreshControl.backgroundColor = self.pink;
@@ -84,19 +87,12 @@
     if (currentUser) {
         NSLog(@"Current user: %@", currentUser.username);
 //        [self queryFromParse];
-
         self.currentUser.userObject = currentUser;
-
         [User queryFriendsWithUser:self.currentUser.userObject withCompletion:^(NSArray *friends, NSError *error) {
-
             if (!error) {
-
                 currentUserFriends = friends;
-
                 self.postQuery = [self queryFromParse];
-
             } else {
-
                 NSLog(@"Error: %@", error);
             }
         }];
@@ -112,8 +108,9 @@
         // handle error
     }
 }
+
 //DO NOT TOUCH METHOD BELOW. please:)
--(void)getLastPost:(UIRefreshControl *)refresh{
+- (void)getLastPost:(UIRefreshControl *)refresh{
 
     [self queryFromParse];
     [refresh endRefreshing];
@@ -160,7 +157,6 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-
     return 50.0;
 }
 
@@ -172,7 +168,8 @@
     profileImageView.clipsToBounds = YES;
     profileImageView.layer.cornerRadius = 15;
     profileImageView.contentMode = UIViewContentModeScaleAspectFill;
-    profileImageView.image = [UIImage imageNamed:@"Profile"];
+    profileImageView.image = [UIImage imageNamed:@"Photo"];
+//    profileImageView.backgroundColor = [UIColor whiteColor];
 
     [headerView addSubview:profileImageView];
 
@@ -222,7 +219,7 @@
     displayNameLabel.text = displayNameText;
 
     if (!user[@"profileImage"]) {
-        profileImageView.image = [UIImage imageNamed:@"Profile"];
+        profileImageView.image = [UIImage imageNamed:@"emptyPhoto"];
     } else {
         PFFile *file = user[@"profileImage"];
         NSData *data = [file getData];
@@ -237,14 +234,9 @@
     headerView.tag = section;
 
     // Color
-    headerView.backgroundColor = [UIColor colorWithRed:65/255.0 green:91/255.0 blue:113/255.0 alpha:1.0];
-//    displayNameLabel.backgroundColor = [UIColor orangeColor];
-//    createdAtLabel.backgroundColor = [UIColor greenColor];
-//    loopsLabel.backgroundColor = [UIColor redColor];
-//    UIColor *lightBlueText = [UIColor colorWithRed:120/255.0 green:166/255.0 blue:205/255.0 alpha:1.0];
-    displayNameLabel.textColor = [UIColor whiteColor];
-//    createdAtLabel.textColor = lightBlueText;
-//    loopsLabel.textColor = lightBlueText;
+//    headerView.backgroundColor = [UIColor colorWithRed:65/255.0 green:91/255.0 blue:113/255.0 alpha:1.0];
+    headerView.backgroundColor = [UIColor colorWithRed:237/255.0 green:237/255.0 blue:237/255.0 alpha:1.0];
+    displayNameLabel.textColor = [UIColor blackColor];
 
     return headerView ;
 }
@@ -263,27 +255,32 @@
         if (post[@"colorHex"] != nil) {
             NSString *string = post[@"colorHex"];
             postCell.backgroundColor = [self colorWithHexString:string];
-        }else{
+        } else {
             postCell.backgroundColor = [UIColor yellowColor];
         }
-
         return postCell;
     } else {
         LikesAndCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikesAndCommentsCell"];
-
         Post *post = self.posts[indexPath.section];
         cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
         cell.commentsLabel.text = [NSString stringWithFormat:@"%@ Comments", post[@"numOfComments"]];
-
         cell.delegate = self;
         cell.tag = indexPath.section;
         cell.backgroundColor = [UIColor whiteColor];
-
         cell.likesLabel.tag = indexPath.section;
         cell.commentsLabel.tag = indexPath.section;
-
         UITapGestureRecognizer *likesGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(likesLabelTapped:)];
         UITapGestureRecognizer *commentsGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentsLabelTapped:)];
+
+        // Colors
+//        cell.contentView.backgroundColor = [UIColor colorWithRed:87/255.0 green:122/255.0 blue:151/255.0 alpha:1.0];
+        cell.contentView.backgroundColor = [UIColor whiteColor];
+        cell.commentsLabel.textColor = [UIColor grayColor];
+        cell.likesLabel.textColor = [UIColor grayColor];
+
+//        cell.separatorInset = UIEdgeInsetsMake(0.f, cell.bounds.size.width, 0.f, 0.f);
+        cell.separatorInset = UIEdgeInsetsMake(0.f, 0.f, 0.f, cell.bounds.size.width);
+
 
         [cell.likesLabel setUserInteractionEnabled:YES];
         [cell.likesLabel addGestureRecognizer:likesGestureRecognizer];

@@ -44,6 +44,7 @@
     self.definesPresentationContext = YES;
 
     self.tests = @[@1, @2, @3, @4, @5, @6];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
 -(void)willPresentSearchController:(UISearchController *)searchController {

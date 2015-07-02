@@ -14,6 +14,7 @@
     // Initialization code
     self.likesLabel.textColor = [UIColor grayColor];
     self.commentsLabel.textColor = [UIColor grayColor];
+    self.separatorInset = UIEdgeInsetsMake(0.f, self.bounds.size.width, 0.f, 0.f); // No effect in trying to remove seperator line.
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

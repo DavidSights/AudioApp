@@ -21,16 +21,26 @@
     self.tabBar.tintColor = [UIColor colorWithRed:50/255.0 green:50/255.0 blue:50/255.0 alpha:1.0];
     //    self.tabBar.barTintColor = [UIColor colorWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1.0];
     [self.tabBar setTranslucent:YES];
-    //
-    //    NSArray *tabBarItemImages = [NSArray arrayWithObjects:[[UIImage imageNamed:@"HomeIcon02"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal],
-    //                                 [[UIImage imageNamed:@"Discover"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal],
-    //                                 [UIImage imageNamed:@"Record"],
-    //                                 [UIImage imageNamed:@"Heart"],
-    //                                 [UIImage imageNamed:@"Profile"] , nil];
+
+    [[UITabBar appearance] setTintColor:[UIColor whiteColor]]; // for unselected items that are gray
+    UIColor * unselectedColor = [UIColor greenColor];
+    self.tabBar.selectionIndicatorImage = [UIImage imageNamed:@"selectedBackground"];
+
+//        NSArray *tabBarItemImages = [NSArray arrayWithObjects:[UIImage imageNamed:@"selectedBackground"],
+//                                     [UIImage imageNamed:@"selectedBackground"],
+//                                     [UIImage imageNamed:@"selectedBackground"],
+//                                     [UIImage imageNamed:@"selectedBackground"],
+//                                     [UIImage imageNamed:@"selectedBackground"] , nil];
     int i = 0;
     for (UITabBarItem *item in self.tabBar.items) {
         if (i < 5) {
             item.imageInsets = UIEdgeInsetsMake(8, 0, -8, 0);
+//            NSLog(@"Filling tab %i", i);
+//            item.selectedImageind = tabBarItemImages[i];
+
+            // set color of unselected text
+            [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:unselectedColor, NSForegroundColorAttributeName, nil]
+                                                     forState:UIControlStateNormal];
             i++;
         }
     }
@@ -42,6 +52,7 @@
     [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+
     return newImage;
 }
 
