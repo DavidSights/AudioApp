@@ -1553,7 +1553,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Record" id="gnX-DG-dDM">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="VYX-nH-ZGr"/>
-                        <barButtonItem key="rightBarButtonItem" title="Customize" id="gBY-b2-5jk">
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="gBY-b2-5jk">
                             <connections>
                                 <segue destination="obR-pD-bym" kind="show" id="ax0-0m-tGv"/>
                             </connections>
