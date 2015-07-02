@@ -45,6 +45,35 @@
 
     self.tests = @[@1, @2, @3, @4, @5, @6];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+
+    for (UIView *subView in self.searchController.searchBar.subviews) {
+        for(id field in subView.subviews){
+            if ([field isKindOfClass:[UITextField class]]) {
+                UITextField *textField = (UITextField *)field;
+                [textField setBackgroundColor:[UIColor colorWithRed:65/255.0 green:91/255.0 blue:113/255.0 alpha:1.0]];
+                textField.textColor = [UIColor whiteColor];
+                textField.tintColor = [UIColor whiteColor];
+
+                // Magnifying glass icon.
+                UIImageView *leftImageView = (UIImageView *)textField.leftView;
+                leftImageView.image = [leftImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                leftImageView.tintColor = [UIColor whiteColor];
+
+                // Clear button
+                UIButton *clearButton = [textField valueForKey:@"_clearButton"];
+                [clearButton setImage:[clearButton.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+                clearButton.tintColor = [UIColor whiteColor];
+
+                if ([field respondsToSelector:@selector(setAttributedPlaceholder:)]) {
+                    UIColor *color = [UIColor colorWithRed:124/255.0 green:165/255.0 blue:206/255.0 alpha:1.0];
+                    textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:textField.placeholder attributes:@{NSForegroundColorAttributeName: color}];
+                } else {
+                    NSLog(@"Cannot set placeholder text's color, because deployment target is earlier than iOS 6.0");
+                    // TODO: Add fall-back code to set placeholder color.
+                }
+            }
+        }
+    }
 }
 
 -(void)willPresentSearchController:(UISearchController *)searchController {

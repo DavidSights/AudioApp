@@ -112,8 +112,8 @@
 
 - (void) setUpRecording {
     self.navigationItem.rightBarButtonItem.enabled = false;
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"✕" style:UIBarButtonItemStylePlain target:self action:@selector(editButtonPressed:)];
-    self.navigationItem.leftBarButtonItem = editButton;
+//    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"✕" style:UIBarButtonItemStylePlain target:self action:@selector(editButtonPressed:)];
+//    self.navigationItem.leftBarButtonItem = editButton;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentPath = paths.lastObject;
     NSString *pathToSave = [documentPath stringByAppendingPathComponent:@".m4a"];

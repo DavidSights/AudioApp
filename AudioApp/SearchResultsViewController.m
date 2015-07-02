@@ -132,9 +132,6 @@
 //        return cell;
 
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)];
-
-        headerView.backgroundColor = [UIColor lightGrayColor];
-
         UIImageView *profileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 30, 30)];
         profileImageView.clipsToBounds = YES;
         profileImageView.layer.cornerRadius = 15;
@@ -144,27 +141,26 @@
         [headerView addSubview:profileImageView];
 
         UILabel *displayNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, headerView.frame.size.width - 90, headerView.frame.size.height/2 - 5)];
-        displayNameLabel.backgroundColor = [UIColor orangeColor];
         displayNameLabel.textAlignment = NSTextAlignmentLeft;
         displayNameLabel.center = headerView.center;
         [displayNameLabel setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
         [headerView addSubview:displayNameLabel];
 
-        UILabel *createdAtLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerView.frame.size.width - 50, 5, 45, headerView.frame.size.height/2 - 5)];
-        createdAtLabel.backgroundColor = [UIColor greenColor];
+//        UILabel *createdAtLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerView.frame.size.width - 50, 5, 45, headerView.frame.size.height/2 - 5)];
+//        createdAtLabel.backgroundColor = [UIColor greenColor];
+//
+//        UILabel *loopsLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerView.frame.size.width - 50, headerView.frame.size.height/2, 45, headerView.frame.size.height/2 - 5)];
+//        loopsLabel.backgroundColor = [UIColor redColor];
 
-        UILabel *loopsLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerView.frame.size.width - 50, headerView.frame.size.height/2, 45, headerView.frame.size.height/2 - 5)];
-        loopsLabel.backgroundColor = [UIColor redColor];
+//        createdAtLabel.textAlignment = NSTextAlignmentRight;
+//        [createdAtLabel setFont:[UIFont fontWithName:@"Helvetica" size:10.0]];
+//        createdAtLabel.text = @"Time";
+//        [headerView addSubview:createdAtLabel];
 
-        createdAtLabel.textAlignment = NSTextAlignmentRight;
-        [createdAtLabel setFont:[UIFont fontWithName:@"Helvetica" size:10.0]];
-        createdAtLabel.text = @"Time";
-        [headerView addSubview:createdAtLabel];
-
-        loopsLabel.textAlignment = NSTextAlignmentRight;
-        [loopsLabel setFont:[UIFont fontWithName:@"Helvetica" size:10.0]];
-        loopsLabel.text = @"Loops";
-        [headerView addSubview:loopsLabel];
+//        loopsLabel.textAlignment = NSTextAlignmentRight;
+//        [loopsLabel setFont:[UIFont fontWithName:@"Helvetica" size:10.0]];
+//        loopsLabel.text = @"Loops";
+//        [headerView addSubview:loopsLabel];
 
         Post *post = self.searchResults[section];
 
@@ -175,7 +171,7 @@
         displayNameLabel.text = displayNameText;
 
         if (!user[@"profileImage"]) {
-            profileImageView.image = [UIImage imageNamed:@"Profile"];
+            profileImageView.image = [UIImage imageNamed:@"emptyPhoto"];
         } else{
             PFFile *file = user[@"profileImage"];
             NSData *data = [file getData];
@@ -189,7 +185,10 @@
         [headerView addGestureRecognizer:headerGestureRecognizer];
         
         headerView.tag = section;
-        
+
+        headerView.backgroundColor = [UIColor colorWithRed:237/255.0 green:237/255.0 blue:237/255.0 alpha:1.0];
+        displayNameLabel.textColor = [UIColor blackColor];
+
         return headerView;
     }
     return nil;

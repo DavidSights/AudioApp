@@ -263,20 +263,13 @@
         }
         return postCell;
     } else if (indexPath.row == 1) {
-
         DescriptionCell *descriptionCell = [tableView dequeueReusableCellWithIdentifier:@"DescriptionCell"];
-
         if ([post[@"descriptionComment"] isEqualToString:@""]) {
-
-            descriptionCell.descriptionLabel.text = @"No description for post";
-
+            descriptionCell.descriptionLabel.text = @"";
         } else {
-
             descriptionCell.descriptionLabel.text = post[@"descriptionComment"];
         }
-
         return descriptionCell;
-
     } else {
         LikesAndCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikesAndCommentsCell"];
         Post *post = self.posts[indexPath.section];

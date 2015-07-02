@@ -87,19 +87,26 @@
 
     if (self.postLikesController == 0) {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-        refreshControl.backgroundColor = [UIColor purpleColor];
+        refreshControl.backgroundColor = [UIColor colorWithRed:21/255.0 green:42/255.0 blue:59/255.0 alpha:1.0];
         refreshControl.tintColor = [UIColor whiteColor];
 
         [refreshControl addTarget:self action:@selector(queryUserPost:) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:refreshControl];
     } else {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-        refreshControl.backgroundColor = [UIColor purpleColor];
+        refreshControl.backgroundColor = [UIColor colorWithRed:21/255.0 green:42/255.0 blue:59/255.0 alpha:1.0];
         refreshControl.tintColor = [UIColor whiteColor];
         [refreshControl addTarget:self action:@selector(queryLike:) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:refreshControl];
     }
     self.settingsButton.title = @"Settings";
+
+
+    // Hide cell dividers.
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+    self.tableView.backgroundColor = [UIColor colorWithRed:21/255.0 green:42/255.0 blue:59/255.0 alpha:1.0];
+
 
 }
 
@@ -129,13 +136,13 @@
 
     if (self.postLikesController == 0) {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-        refreshControl.backgroundColor = [UIColor purpleColor];
+        refreshControl.backgroundColor = [UIColor colorWithRed:21/255.0 green:42/255.0 blue:59/255.0 alpha:1.0];
         refreshControl.tintColor = [UIColor whiteColor];
         [refreshControl addTarget:self action:@selector(queryUserPost:) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:refreshControl];
     } else {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-        refreshControl.backgroundColor = [UIColor purpleColor];
+        refreshControl.backgroundColor = [UIColor colorWithRed:21/255.0 green:42/255.0 blue:59/255.0 alpha:1.0];
         refreshControl.tintColor = [UIColor whiteColor];
         [refreshControl addTarget:self action:@selector(queryLike:) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:refreshControl];
@@ -199,13 +206,13 @@
 
     if (self.postLikesController == 0) {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-        refreshControl.backgroundColor = [UIColor purpleColor];
+        refreshControl.backgroundColor = [UIColor colorWithRed:21/255.0 green:42/255.0 blue:59/255.0 alpha:1.0];
         refreshControl.tintColor = [UIColor whiteColor];
         [refreshControl addTarget:self action:@selector(queryUserPost:) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:refreshControl];
     } else {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-        refreshControl.backgroundColor = [UIColor purpleColor];
+        refreshControl.backgroundColor = [UIColor colorWithRed:21/255.0 green:42/255.0 blue:59/255.0 alpha:1.0];
         refreshControl.tintColor = [UIColor whiteColor];
         [refreshControl addTarget:self action:@selector(queryLike:) forControlEvents:UIControlEventValueChanged];
         [self.tableView addSubview:refreshControl];
@@ -262,13 +269,18 @@
     }];
 }
 
-- (void)queryUserProfilePic{
+- (void)queryUserProfilePic {
     ProfileInfoTableViewCell *cell = (ProfileInfoTableViewCell *)[self.tableView cellForRowAtIndexPath:self.indexPath2];
     PFFile *file = self.user[@"profileImage"];
     NSData *data = [file getData];
     UIImage *image = [UIImage imageWithData:data];
-    //cell.imageView.image = image;
-    cell.profileImageView.image = image;
+    if (!self.user[@"profileImage"]) {
+        NSLog(@"Checked profile image and found image: %@", self.user[@"profileImage"]);
+        cell.profileImageView.image = image;
+    } else {
+        NSLog(@"No profile image found for current user.");
+        cell.profileImageView.image = [UIImage imageNamed:@"emptyPhoto"];
+    }
 }
 
 - (void)uploadToParse {
@@ -458,7 +470,7 @@
 
             self.player = nil;
             UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-            refreshControl.backgroundColor = [UIColor purpleColor];
+            refreshControl.backgroundColor = [UIColor colorWithRed:21/255.0 green:42/255.0 blue:59/255.0 alpha:1.0];
             refreshControl.tintColor = [UIColor whiteColor];
             
             [refreshControl addTarget:self
@@ -477,7 +489,7 @@
 
             self.player = nil;
             UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-            refreshControl.backgroundColor = [UIColor purpleColor];
+            refreshControl.backgroundColor = [UIColor colorWithRed:21/255.0 green:42/255.0 blue:59/255.0 alpha:1.0];
             refreshControl.tintColor = [UIColor whiteColor];
             
             [refreshControl addTarget:self
@@ -777,8 +789,6 @@
         headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)];
 
         headerView.alpha = 1;
-        headerView.backgroundColor = [UIColor lightGrayColor];
-
         UIImageView *profileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 30, 30)];
         profileImageView.clipsToBounds = YES;
         profileImageView.layer.cornerRadius = 15;
@@ -788,7 +798,6 @@
         [headerView addSubview:profileImageView];
 
         UILabel *displayNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, headerView.frame.size.width - 90, headerView.frame.size.height/2 - 5)];
-        displayNameLabel.backgroundColor = [UIColor orangeColor];
         displayNameLabel.textAlignment = NSTextAlignmentLeft;
         displayNameLabel.center = headerView.center;
         [displayNameLabel setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
@@ -825,7 +834,7 @@
         displayNameLabel.text = displayNameText;
 
         if (!user[@"profileImage"]) {
-            profileImageView.image = [UIImage imageNamed:@"Profile"];
+            profileImageView.image = [UIImage imageNamed:@"emptyPhoto"];
         } else{
             PFFile *file = user[@"profileImage"];
             NSData *data = [file getData];
@@ -842,6 +851,10 @@
 //        }
 
         headerView.tag = section;
+        // Color
+        headerView.backgroundColor = [UIColor colorWithRed:237/255.0 green:237/255.0 blue:237/255.0 alpha:1.0];
+        displayNameLabel.textColor = [UIColor blackColor];
+        
     }
     
     return headerView ;
@@ -859,6 +872,15 @@
             PFFile *file = self.user[@"profileImage"];
             NSData *data = [file getData];
             UIImage *image = [UIImage imageWithData:data];
+            if (self.user[@"profileImage"] != nil) {
+                NSLog(@"Checked profile image and found image: %@", self.user[@"profileImage"]);
+                cell.profileImageView.image = image;
+            } else {
+                NSLog(@"No profile image found for current user.");
+                cell.profileImageView.image = [UIImage imageNamed:@"emptyPhoto"];
+            }
+            cell.profileImageView.clipsToBounds = YES;
+            cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.size.width/2;
             cell.locationLabel.alpha = 0;
             if ([cell.aboutLabel.text isEqualToString:@""]) {
                 cell.aboutLabel.alpha = 0;
@@ -867,7 +889,6 @@
 //                [self.tableView reloadData];
             }
 //            cell.aboutLabel.text = self.user[@"about"];
-            cell.profileImageView.image = image;
 
             cell.followingFollowersLabel.text = [NSString stringWithFormat:@"%li following • %li followers", (long)self.numFollowing, (long)self.numFollowers];
 
@@ -939,7 +960,7 @@
             }
             if ([post[@"descriptionComment"] isEqualToString:@""]) {
 
-                descriptionCell.descriptionLabel.text = @"No description for post";
+                descriptionCell.descriptionLabel.text = @"";
 
             } else {
 

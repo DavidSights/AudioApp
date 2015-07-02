@@ -19,6 +19,10 @@
     [super viewDidLoad];
 
     self.navigationBar.barTintColor = [UIColor colorWithRed:21/255.0 green:42/255.0 blue:59/255.0 alpha:1.0];
+    self.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                              [UIColor whiteColor],
+                                              NSForegroundColorAttributeName,
+                                              nil];
 //    self.navigationBar.tintColor = [UIColor whiteColor];
 //    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:100/255.0 green:100/255.0 blue:100/255.0 alpha:1.0]}];
 
@@ -29,6 +33,8 @@
     } else {
         NSLog(@"Tried to load navbar image but the iamge was nil.");
     }
+
+    self.navigationBar.tintColor = [UIColor whiteColor];
 
 //    [self.navigationBar setTranslucent:YES];
 }

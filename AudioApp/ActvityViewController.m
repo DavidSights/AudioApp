@@ -27,9 +27,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-
-
-
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     refreshControl.backgroundColor = self.deepBlue;
     refreshControl.tintColor = [UIColor whiteColor];
@@ -144,7 +141,7 @@
     ActivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID"];
     if (indexPath.row == 0) {
         // Total number of likes.
-        cell.titleLabel.text = @"People Have Liked Your Posts";
+        cell.titleLabel.text = @"Likes Given to You";
         cell.statLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.likesActivities.count];
         cell.contentView.backgroundColor = self.green;
         return cell;
