@@ -63,6 +63,27 @@
     PFObject *like = self.likes[indexPath.row];
     PFUser *user = like[@"fromUser"];
 
+    // Grab like user.
+    PFObject *likeActivity = self.likes[indexPath.row];
+    PFObject *likeUser = likeActivity[@"fromUser"];
+
+    // Get profile image.
+    PFFile *imageFile = likeUser[@"profileImage"];
+    NSData *imageData = [imageFile getData];
+    UIImage *profileImage = [UIImage imageWithData:imageData];
+    NSLog(@"Checked profile image and found image: %@", likeUser[@"profileImage"]);
+
+    cell.profileImageView.clipsToBounds = YES;
+    cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.size.width/2;
+
+    // Show appropriate image.
+    if (profileImage != nil) {
+        cell.profileImageView.image = profileImage;
+    } else {
+        NSLog(@"No profile image found for current user.");
+        cell.profileImageView.image = [UIImage imageNamed:@"emptyPhoto"];
+    }
+
     if ([user isEqual:[PFUser currentUser]]) {
 
         cell.followButton.hidden = YES;
@@ -77,6 +98,7 @@
     }
 
     cell.usernameLabel.text = [NSString stringWithFormat:@"%@", user.username];
+
     cell.delegate = self;
 
     return cell;
