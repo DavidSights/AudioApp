@@ -76,7 +76,7 @@
         cell.followButton.titleLabel.text = @"Follow";
     }
 
-    cell.usernameLabel.text = [NSString stringWithFormat:@"%@ liked this post!", user.username];
+    cell.usernameLabel.text = [NSString stringWithFormat:@"%@", user.username];
     cell.delegate = self;
 
     return cell;

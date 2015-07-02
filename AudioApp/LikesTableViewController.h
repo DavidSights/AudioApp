@@ -14,5 +14,6 @@
 
 @property Post *post;
 @property UILabel *likesLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *userImageView;
 
 @end

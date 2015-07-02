@@ -29,6 +29,22 @@
     self.navigationItem.leftBarButtonItem = cancelButton;
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(saveButtonPressed:)];
     self.navigationItem.rightBarButtonItem = saveButton;
+
+    if ([self.nPasswordTextField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
+        UIColor *color = [UIColor colorWithRed:124/255.0 green:165/255.0 blue:206/255.0 alpha:1.0];
+        self.nPasswordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.nPasswordTextField.placeholder attributes:@{NSForegroundColorAttributeName: color}];
+    } else {
+        NSLog(@"Cannot set placeholder text's color, because deployment target is earlier than iOS 6.0");
+        // TODO: Add fall-back code to set placeholder color.
+    }
+
+    if ([self.repeatNewPasswordTextField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
+        UIColor *color = [UIColor colorWithRed:124/255.0 green:165/255.0 blue:206/255.0 alpha:1.0];
+        self.repeatNewPasswordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.repeatNewPasswordTextField.placeholder attributes:@{NSForegroundColorAttributeName: color}];
+    } else {
+        NSLog(@"Cannot set placeholder text's color, because deployment target is earlier than iOS 6.0");
+        // TODO: Add fall-back code to set placeholder color.
+    }
 }
 
 - (void)leftButtonPressed:(id)sender {
