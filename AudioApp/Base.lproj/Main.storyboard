@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="LrU-Kj-C3h">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -2141,7 +2141,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.80000000000000004" contentMode="scaleToFill" keyboardDismissMode="interactive" text="Tap here to enter a description, or just tap below to publish your post!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="O3Q-Vd-JYg">
-                                <rect key="frame" x="0.0" y="64" width="600" height="812"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="762"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
@@ -2164,13 +2164,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.08235294118" green="0.1647058824" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="O3Q-Vd-JYg" firstAttribute="leading" secondItem="u8N-0p-05n" secondAttribute="leadingMargin" constant="-16" id="4vX-P8-wFE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Rml-e3-OcX" secondAttribute="trailing" constant="-16" id="8gM-V9-pDc"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="O3Q-Vd-JYg" secondAttribute="trailing" constant="-16" id="EWz-hl-noz"/>
-                            <constraint firstItem="O3Q-Vd-JYg" firstAttribute="top" secondItem="AnT-cf-4qK" secondAttribute="bottom" id="f3W-5h-Ljp"/>
+                            <constraint firstItem="O3Q-Vd-JYg" firstAttribute="leading" secondItem="u8N-0p-05n" secondAttribute="leadingMargin" constant="-16" id="EF8-gy-DtU"/>
+                            <constraint firstItem="O3Q-Vd-JYg" firstAttribute="top" secondItem="AnT-cf-4qK" secondAttribute="bottom" id="FSh-66-nYG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="O3Q-Vd-JYg" secondAttribute="trailing" constant="-16" id="OOR-Jp-GpV"/>
                             <constraint firstItem="Rml-e3-OcX" firstAttribute="leading" secondItem="u8N-0p-05n" secondAttribute="leadingMargin" constant="-16" id="lEI-y9-WNP"/>
                             <constraint firstItem="4S2-Ck-8SY" firstAttribute="top" secondItem="Rml-e3-OcX" secondAttribute="bottom" constant="25" id="oSF-of-cmz"/>
-                            <constraint firstItem="4S2-Ck-8SY" firstAttribute="top" secondItem="O3Q-Vd-JYg" secondAttribute="bottom" constant="75" id="qH5-fk-rMz"/>
+                            <constraint firstItem="Rml-e3-OcX" firstAttribute="top" secondItem="O3Q-Vd-JYg" secondAttribute="bottom" constant="25" id="pw6-qo-Dsh"/>
                         </constraints>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
