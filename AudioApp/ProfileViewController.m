@@ -356,6 +356,9 @@
         }];
         [post removeObject:currentUser.objectId forKey:@"likes"];
         [post incrementKey:@"numOfLikes" byAmount:[NSNumber numberWithInt:-1]];
+        [button setImage:[UIImage imageNamed:@"heart"] forState:UIControlStateNormal];
+
+
         cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
         [post saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
             if (completed && !error) {
@@ -376,6 +379,9 @@
         [post addObject:currentUser.objectId forKey:@"likes"];
         [post incrementKey:@"numOfLikes"];
         cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
+
+        [button setImage:[UIImage imageNamed:@"heartFilled"] forState:UIControlStateNormal];
+
         [activity saveInBackgroundWithBlock:^(BOOL completed, NSError *error) {
             if (completed && !error) {
 //                NSLog(@"Activity Saved");
@@ -983,6 +989,13 @@
             }
             cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
             cell.commentsLabel.text = [NSString stringWithFormat:@"%@ Comments", post[@"numOfComments"]];
+
+            if ([post[@"likes"] containsObject:[[PFUser currentUser] objectId]]) {
+                [cell.likesButton setImage:[UIImage imageNamed:@"heartFilled"] forState:UIControlStateNormal];
+            } else {
+
+                [cell.likesButton setImage:[UIImage imageNamed:@"heart"] forState:UIControlStateNormal];
+            }
 
             cell.delegate = self;
             cell.tag = indexPath.section - 1;
