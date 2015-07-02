@@ -889,7 +889,7 @@
 //                [self.tableView reloadData];
             }
 //            cell.aboutLabel.text = self.user[@"about"];
-
+            cell.contentView.backgroundColor = [UIColor colorWithRed:237/255.0 green:237/255.0 blue:237/255.0 alpha:1.0];
             cell.followingFollowersLabel.text = [NSString stringWithFormat:@"%li following • %li followers", (long)self.numFollowing, (long)self.numFollowers];
 
             UITapGestureRecognizer *imageview = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedImageView:)];
