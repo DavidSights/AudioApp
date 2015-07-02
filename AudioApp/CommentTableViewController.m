@@ -8,6 +8,7 @@
 
 #import "CommentTableViewController.h"
 #import "ProfileViewController.h"
+#import "CommentTableViewCell.h"
 @interface CommentTableViewController ()
 
 @property (nonatomic)  NSArray *comments;
@@ -50,13 +51,30 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
+    CommentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
 
     PFObject *comment = self.comments[indexPath.row];
     PFUser *user = comment[@"fromUser"];
 
-    cell.textLabel.text = user.username;
-    cell.detailTextLabel.text = comment[@"content"];
+    cell.usernameLabel.text = user.username;
+    cell.commentLabel.text =  comment[@"content"];
+
+    // Get profile image.
+    PFFile *imageFile = user[@"profileImage"];
+    NSData *imageData = [imageFile getData];
+    UIImage *profileImage = [UIImage imageWithData:imageData];
+    NSLog(@"Checked profile image and found image: %@", user[@"profileImage"]);
+
+    cell.profileImage.clipsToBounds = YES;
+    cell.profileImage.layer.cornerRadius = cell.profileImage.frame.size.width/2;
+
+    // Show appropriate image.
+    if (profileImage != nil) {
+        cell.profileImage.image = profileImage;
+    } else {
+        NSLog(@"No profile image found for current user.");
+        cell.profileImage.image = [UIImage imageNamed:@"emptyPhoto"];
+    }
 
     return cell;
 }
