@@ -12,6 +12,7 @@
 #import "PostHeaderCell.h"
 #import "LikesAndCommentsCell.h"
 #import "PostCell.h"
+#import "DescriptionCell.h"
 #import "Post.h"
 #import "User.h"
 #import "AudioPlayerWithTag.h"
@@ -153,7 +154,8 @@
 //    } else {
 //        return 8;
 //    }
-    return 2;
+
+    return 3;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -243,6 +245,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
+    Post *post = self.posts[indexPath.section];
+
     if (indexPath.row == 0) {
         PostCell* postCell = [tableView dequeueReusableCellWithIdentifier:@"PostCell"];
         CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
@@ -250,7 +254,6 @@
         postCell.coloredView.frame = cellRect;
         postCell.layoutMargins = UIEdgeInsetsZero;
         postCell.preservesSuperviewLayoutMargins = NO;
-        Post *post = self.posts[indexPath.section];
 
         if (post[@"colorHex"] != nil) {
             NSString *string = post[@"colorHex"];
@@ -259,6 +262,21 @@
             postCell.backgroundColor = [UIColor yellowColor];
         }
         return postCell;
+    } else if (indexPath.row == 1) {
+
+        DescriptionCell *descriptionCell = [tableView dequeueReusableCellWithIdentifier:@"DescriptionCell"];
+
+        if ([post[@"descriptionComment"] isEqualToString:@""]) {
+
+            descriptionCell.descriptionLabel.text = @"No description for post";
+
+        } else {
+
+            descriptionCell.descriptionLabel.text = post[@"descriptionComment"];
+        }
+
+        return descriptionCell;
+
     } else {
         LikesAndCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikesAndCommentsCell"];
         Post *post = self.posts[indexPath.section];
@@ -300,18 +318,32 @@
     if (self.postQuery) {
         self.postQuery.skip += 5;
         [self.postQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
-            if (!error) {
-                for (Post *post in posts) {
-                    NSLog(@"Post: %@", post);
-                    int64_t delayInSeconds = 1.0;
-                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                        [self.tableView beginUpdates];
-                        [self.posts addObject:post];
-                        [self.tableView insertSections:[NSIndexSet indexSetWithIndex:self.posts.count-1] withRowAnimation:UITableViewRowAnimationMiddle];
-                        [self.tableView endUpdates];
-                        [self.tableView.infiniteScrollingView stopAnimating];
-                    });
+
+            if (!error && posts) {
+
+                if (posts.count != 0) {
+
+                    for (Post *post in posts) {
+
+                        NSLog(@"Post: %@", post);
+
+                        int64_t delayInSeconds = 1.0;
+                        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                            [self.tableView beginUpdates];
+
+                            [self.posts addObject:post];
+
+                            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:self.posts.count-1] withRowAnimation:UITableViewRowAnimationMiddle];
+                            
+                            [self.tableView endUpdates];
+                            
+                            [self.tableView.infiniteScrollingView stopAnimating];
+                        });
+                    }
+                } else {
+
+                    [self.tableView.infiniteScrollingView stopAnimating];
                 }
             }
         }];

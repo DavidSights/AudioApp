@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		475C766E1B44804400F629B2 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 475C766B1B44804400F629B2 /* UIScrollView+SVInfiniteScrolling.m */; };
 		475C766F1B44804400F629B2 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 475C766D1B44804400F629B2 /* UIScrollView+SVPullToRefresh.m */; };
+		475C76721B449E3600F629B2 /* DescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 475C76711B449E3600F629B2 /* DescriptionCell.m */; };
 		47B3B6391B3B0B7100AE286C /* LikesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47B3B6381B3B0B7100AE286C /* LikesTableViewController.m */; };
 		47B3B63D1B3C7B4800AE286C /* LikeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47B3B63C1B3C7B4800AE286C /* LikeCell.m */; };
 		47B3B6401B3CA61600AE286C /* ProfileMiddleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47B3B63F1B3CA61600AE286C /* ProfileMiddleTableViewCell.m */; };
@@ -81,6 +82,8 @@
 		475C766B1B44804400F629B2 /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
 		475C766C1B44804400F629B2 /* UIScrollView+SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVPullToRefresh.h"; sourceTree = "<group>"; };
 		475C766D1B44804400F629B2 /* UIScrollView+SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVPullToRefresh.m"; sourceTree = "<group>"; };
+		475C76701B449E3600F629B2 /* DescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DescriptionCell.h; sourceTree = "<group>"; };
+		475C76711B449E3600F629B2 /* DescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DescriptionCell.m; sourceTree = "<group>"; };
 		47B3B6371B3B0B7100AE286C /* LikesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikesTableViewController.h; sourceTree = "<group>"; };
 		47B3B6381B3B0B7100AE286C /* LikesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikesTableViewController.m; sourceTree = "<group>"; };
 		47B3B63B1B3C7B4800AE286C /* LikeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeCell.h; sourceTree = "<group>"; };
@@ -375,6 +378,8 @@
 				9A6AF9A61B31E07A0040D5FF /* PostCell.m */,
 				9A6AF9A81B31EC800040D5FF /* LikesAndCommentsCell.h */,
 				9A6AF9A91B31EC800040D5FF /* LikesAndCommentsCell.m */,
+				475C76701B449E3600F629B2 /* DescriptionCell.h */,
+				475C76711B449E3600F629B2 /* DescriptionCell.m */,
 				9A6AF9AB1B31ED760040D5FF /* PostHeaderCell.h */,
 				9A6AF9AC1B31ED760040D5FF /* PostHeaderCell.m */,
 				9A2E7FD41B3590F700A372CE /* ProfileInfoTableViewCell.h */,
@@ -514,6 +519,7 @@
 				9A1A03231B2E0889003243ED /* AudioApp.xcdatamodeld in Sources */,
 				9A627E261B3A19C200D5A195 /* CustomNavigationController.m in Sources */,
 				972AE7FD1B3A0C0E009B92F6 /* PasswordViewController.m in Sources */,
+				475C76721B449E3600F629B2 /* DescriptionCell.m in Sources */,
 				475C766E1B44804400F629B2 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				9777D2DB1B3076F400ED2B46 /* EditViewController.m in Sources */,
 				97C642551B3C956700F3658D /* ActvityViewController.m in Sources */,

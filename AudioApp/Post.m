@@ -57,6 +57,7 @@
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Post"];
     [postQuery whereKey:@"author" containedIn:friends];
     [postQuery includeKey:@"author"];
+    postQuery.skip = 0;
     postQuery.limit = 5;
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
 
@@ -69,11 +70,12 @@
     }];
 }
 
-+(void)queryPostsWithUser:(PFUser *)user withCompletion:(void(^)(NSArray *posts, NSError *error))complete {
++(PFQuery *)queryPostsWithUser:(PFUser *)user withCompletion:(void(^)(NSArray *posts, NSError *error))complete {
 
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Post"];
     [postQuery whereKey:@"author" equalTo:user];
 //    [postQuery includeKey:@"author"];
+    postQuery.skip = 0;
     postQuery.limit = 5;
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
 
@@ -89,9 +91,11 @@
             complete(nil, error);
         }
     }];
+
+    return postQuery;
 }
 
-+(void)queryActivityWithUser:(PFUser *)user forLikedPostsWithCompletion:(void(^)(NSArray *posts, NSError *error))complete {
++(PFQuery *)queryActivityWithUser:(PFUser *)user forLikedPostsWithCompletion:(void(^)(NSArray *posts, NSError *error))complete {
 
     PFQuery *activityQuery = [PFQuery queryWithClassName:@"Activity"];
     [activityQuery whereKey:@"fromUser" equalTo:user];
@@ -123,6 +127,8 @@
             complete(nil, error);
         }
     }];
+
+    return activityQuery;
 }
 
 +(void)queryPostsForFeedWithCompletion:(void(^)(NSArray *posts))complete {

@@ -22,9 +22,9 @@
 
 +(void)queryPostsWithFriends:(NSArray *)friends withCompletion:(void(^)(NSArray *posts))complete;
 
-+(void)queryPostsWithUser:(PFUser *)user withCompletion:(void(^)(NSArray *posts, NSError *error))complete;
++(PFQuery *)queryPostsWithUser:(PFUser *)user withCompletion:(void(^)(NSArray *posts, NSError *error))complete;
 
-+(void)queryActivityWithUser:(PFUser *)user forLikedPostsWithCompletion:(void(^)(NSArray *posts, NSError *error))complete;
++(PFQuery *)queryActivityWithUser:(PFUser *)user forLikedPostsWithCompletion:(void(^)(NSArray *posts, NSError *error))complete;
 
 + (void)queryPostsForFeedWithCompletion:(void(^)(NSArray *posts))complete;
 
