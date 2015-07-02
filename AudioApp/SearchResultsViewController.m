@@ -12,26 +12,28 @@
 #import "ProfileViewController.h"
 #import "PostHeaderCell.h"
 #import "PostCell.h"
+#import "DescriptionCell.h"
 #import "LikesAndCommentsCell.h"
 #import "Post.h"
 #import "AudioPlayerWithTag.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 #import <Parse/Parse.h>
 
 @interface SearchResultsViewController () <UITableViewDataSource, UITableViewDelegate, LikesAndCommentsCellDelegate, AVAudioPlayerDelegate>
 
-@property (nonatomic)  NSArray *searchResults;
+@property (nonatomic)  NSMutableArray *searchResults;
 @property AudioPlayerWithTag *player;
 @property NSTimer *timer;
 @property NSInteger *integer;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *searchSegmentedControl;
 
+@property PFQuery *searchQuery;
+
 @end
 
 
 @implementation SearchResultsViewController
-
-
 /*
  
  The search results tableview isn't updating because it's not beng accessed. The data source methods that would fill the tableview are never being called.
@@ -41,11 +43,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.searchBar.delegate = self;
+
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+
+        [self insertToTableViewFromBottom];
+    }];
 }
 
 #pragma mark - Setters
 
-- (void)setSearchResults:(NSArray *)searchResults {
+- (void)setSearchResults:(NSMutableArray *)searchResults {
     _searchResults = searchResults;
     [self.tableView reloadData];
 }
@@ -96,7 +103,7 @@
     if (self.searchSegmentedControl.selectedSegmentIndex == 0) { // This is not being called during reload either... is the TableView actually reloading?
         return self.searchResults.count;
     } else {
-        return 2;
+        return 3;
     }
 }
 
@@ -111,18 +118,79 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 
     if (self.searchSegmentedControl.selectedSegmentIndex == 1) { // Customize header cell when posts are selected.
-        PostHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
-        UITapGestureRecognizer *headerGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTapped:)];
-        cell.userInteractionEnabled = YES; // Does this need to be set here if user interaction is already enabled from Storyboard?
-        [cell addGestureRecognizer:headerGestureRecognizer];
-        Post *post = self.searchResults[section];
-        PFUser *user = post[@"author"];
-        NSString *displayNameText = user.username;
-        cell.displayNameLabel.text = displayNameText;
-        [cell.displayNameLabel sizeToFit];
-        cell.backgroundColor = [UIColor whiteColor];
+//        PostHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HeaderCell"];
+//        UITapGestureRecognizer *headerGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTapped:)];
+//        cell.userInteractionEnabled = YES; // Does this need to be set here if user interaction is already enabled from Storyboard?
+//        [cell addGestureRecognizer:headerGestureRecognizer];
+//        Post *post = self.searchResults[section];
+//        PFUser *user = post[@"author"];
+//        NSString *displayNameText = user.username;
+//        cell.displayNameLabel.text = displayNameText;
+//        [cell.displayNameLabel sizeToFit];
+//        cell.backgroundColor = [UIColor whiteColor];
+//
+//        return cell;
 
-        return cell;
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 50)];
+
+        headerView.backgroundColor = [UIColor lightGrayColor];
+
+        UIImageView *profileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 30, 30)];
+        profileImageView.clipsToBounds = YES;
+        profileImageView.layer.cornerRadius = 15;
+        profileImageView.contentMode = UIViewContentModeScaleAspectFill;
+        profileImageView.image = [UIImage imageNamed:@"Profile"];
+
+        [headerView addSubview:profileImageView];
+
+        UILabel *displayNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, headerView.frame.size.width - 90, headerView.frame.size.height/2 - 5)];
+        displayNameLabel.backgroundColor = [UIColor orangeColor];
+        displayNameLabel.textAlignment = NSTextAlignmentLeft;
+        displayNameLabel.center = headerView.center;
+        [displayNameLabel setFont:[UIFont fontWithName:@"Helvetica" size:15.0]];
+        [headerView addSubview:displayNameLabel];
+
+        UILabel *createdAtLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerView.frame.size.width - 50, 5, 45, headerView.frame.size.height/2 - 5)];
+        createdAtLabel.backgroundColor = [UIColor greenColor];
+
+        UILabel *loopsLabel = [[UILabel alloc] initWithFrame:CGRectMake(headerView.frame.size.width - 50, headerView.frame.size.height/2, 45, headerView.frame.size.height/2 - 5)];
+        loopsLabel.backgroundColor = [UIColor redColor];
+
+        createdAtLabel.textAlignment = NSTextAlignmentRight;
+        [createdAtLabel setFont:[UIFont fontWithName:@"Helvetica" size:10.0]];
+        createdAtLabel.text = @"Time";
+        [headerView addSubview:createdAtLabel];
+
+        loopsLabel.textAlignment = NSTextAlignmentRight;
+        [loopsLabel setFont:[UIFont fontWithName:@"Helvetica" size:10.0]];
+        loopsLabel.text = @"Loops";
+        [headerView addSubview:loopsLabel];
+
+        Post *post = self.searchResults[section];
+
+        PFUser *user = post[@"author"];
+        NSLog(@"User: %@", user.username);
+        NSString *displayNameText = user.username;
+        NSLog(@"Display Name: %@", displayNameText);
+        displayNameLabel.text = displayNameText;
+
+        if (!user[@"profileImage"]) {
+            profileImageView.image = [UIImage imageNamed:@"Profile"];
+        } else{
+            PFFile *file = user[@"profileImage"];
+            NSData *data = [file getData];
+            UIImage *image = [UIImage imageWithData:data];
+            profileImageView.image = image;
+        }
+
+        UITapGestureRecognizer *headerGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTapped:)];
+        
+        headerView.userInteractionEnabled = YES;
+        [headerView addGestureRecognizer:headerGestureRecognizer];
+        
+        headerView.tag = section;
+        
+        return headerView;
     }
     return nil;
 }
@@ -164,7 +232,25 @@
                 postCell.backgroundColor = [UIColor yellowColor];
             }
             return postCell;
+
+    } else if (indexPath.row == 1) {
+
+        DescriptionCell *descriptionCell = [tableView dequeueReusableCellWithIdentifier:@"DescriptionCell"];
+
+        Post *post = self.searchResults[indexPath.section];
+
+        if ([post[@"descriptionComment"] isEqualToString:@""]) {
+
+            descriptionCell.descriptionLabel.text = @"No description for post";
+
         } else {
+
+            descriptionCell.descriptionLabel.text = post[@"descriptionComment"];
+        }
+        
+        return descriptionCell;
+        
+    } else {
             LikesAndCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LikesAndCommentsCell"];
             Post *post = self.searchResults[indexPath.section];
             cell.likesLabel.text = [NSString stringWithFormat:@"%@ Likes", post[@"numOfLikes"]];
@@ -240,21 +326,29 @@
             [displayNameQuery whereKey:@"displayName" matchesRegex:searchBar.text modifiers:@"i"];
 
             PFQuery *searchQuery = [PFQuery orQueryWithSubqueries:@[usernameQuery, displayNameQuery]];
+            searchQuery.skip = 0;
+            searchQuery.limit = 20;
             [searchQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
                 if (results && !error) {
-                    self.searchResults = results;
+                    self.searchResults = [results mutableCopy];
                     NSLog(@"Retrieved search results for users. Number of results: %lu And results saved: %lu", (unsigned long)results.count, (unsigned long)self.searchResults.count);
                 }
             }];
+
+            self.searchQuery = searchQuery;
         } else { // If 'posts' is selected...
             PFQuery *searchQuery = [PFQuery queryWithClassName:@"Post"];
             [searchQuery whereKey:@"descriptionComment" matchesRegex:searchBar.text modifiers:@"i"];
+            searchQuery.limit = 0;
+            searchQuery.limit = 5;
             [searchQuery findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
                 if (results && !error) {
                     NSLog(@"Retrieved search results for posts. Number of posts retrieved: %lu", (unsigned long)results.count);
-                    self.searchResults = results;
+                    self.searchResults = [results mutableCopy];;
                 }
             }];
+
+            self.searchQuery = searchQuery;
         }
     }
 }
@@ -471,6 +565,51 @@
     } else {
         // Do something based on segmented controller being posts?
         self.searchResults = nil; // Why set searchResults to nothing when users selected?
+    }
+}
+
+- (void)insertToTableViewFromBottom {
+
+    if (self.searchQuery) {
+
+        if (self.searchQuery.limit == 5) {
+
+            self.searchQuery.skip += 5;
+        } else {
+
+            self.searchQuery.skip += 20;
+        }
+
+        [self.searchQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
+
+            if (!error && posts) {
+
+                if (posts.count != 0) {
+
+                    for (Post *post in posts) {
+
+                        NSLog(@"Post: %@", post);
+
+                        int64_t delayInSeconds = 1.0;
+                        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                            [self.tableView beginUpdates];
+
+                            [self.searchResults addObject:post];
+
+                            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:self.searchResults.count-1] withRowAnimation:UITableViewRowAnimationMiddle];
+
+                            [self.tableView endUpdates];
+
+                            [self.tableView.infiniteScrollingView stopAnimating];
+                        });
+                    }
+                } else {
+
+                    [self.tableView.infiniteScrollingView stopAnimating];
+                }
+            }
+        }];
     }
 }
 
