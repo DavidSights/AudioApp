@@ -27,6 +27,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    // Hide cell dividers.
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
     [self getUserActivity];
 
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];

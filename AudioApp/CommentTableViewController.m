@@ -33,6 +33,10 @@
             }
         }];
     }
+
+    // Hide cell dividers.
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
 }
 
 -(void)setComments:(NSArray *)comments {
@@ -58,6 +62,8 @@
 
     cell.usernameLabel.text = user.username;
     cell.commentLabel.text =  comment[@"content"];
+    [cell.commentLabel sizeToFit];
+//    cell.commentTextField.text = comment[@"content"];
 
     // Get profile image.
     PFFile *imageFile = user[@"profileImage"];
